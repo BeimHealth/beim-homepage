@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beim Health — Unlock Products Your HSA/FSA Can Buy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0f0f1a;--bg-card:#1a1a2e;--bg-elev:#22223a;--border:rgba(255,255,255,0.07);--cyan:#6ee0f5;--purple:#6454f0;--blue:#6aa3f3;--cyan-dim:rgba(110,224,245,0.10);--purple-dim:rgba(100,84,240,0.12);--border-c:rgba(110,224,245,0.22);--border-p:rgba(100,84,240,0.30);--green:#3dd9b6;--green-dim:rgba(61,217,182,0.10);--gold:#f59e0b;--text:#f0f0ff;--muted:#8a8da8;--dim:#5a5d78;--radius:16px}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    .orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+    .orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(100,84,240,0.11),transparent 70%);top:-20%;left:-15%}
+    .orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(110,224,245,0.07),transparent 70%);bottom:-10%;right:-10%}
+    .orb-3{width:400px;height:400px;background:radial-gradient(circle,rgba(106,163,243,0.06),transparent 70%);top:50%;left:60%}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 40px;height:64px;background:rgba(15,15,26,0.90);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:-0.5px;flex-shrink:0}
+    .nav-links{display:flex;gap:8px;list-style:none;align-items:center;margin-left:auto}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:8px 14px;border-radius:8px;transition:color 0.2s,background 0.2s;white-space:nowrap}
+    .nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+    .nav-cta{background:linear-gradient(135deg,var(--purple),var(--blue))!important;color:#fff!important;font-weight:700!important;padding:10px 18px!important;border-radius:10px;font-size:14px!important;transition:box-shadow 0.2s,transform 0.15s!important}
+    .nav-cta:hover{box-shadow:0 0 24px rgba(100,84,240,0.5)!important;transform:translateY(-1px)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto;flex-direction:column;gap:5px;z-index:901}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--muted);border-radius:2px;transition:0.3s}
+
+    /* ── HERO ── */
+    .hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:140px 48px 80px;overflow:hidden}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 80% at 50% 40%,black 30%,transparent 100%)}
+    .hero-content{position:relative;z-index:2;max-width:600px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--purple-dim);border:1px solid var(--border-p);color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:28px;animation:fadeUp 0.6s ease both}
+    .hero-badge::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 2s infinite}
+    @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+    .hero h1{font-size:clamp(40px,5vw,66px);font-weight:800;line-height:1.06;letter-spacing:-2.5px;margin-bottom:24px;animation:fadeUp 0.6s 0.1s ease both;color:#ffffff}
+    .grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:17px;font-weight:400;line-height:1.7;color:rgba(240,240,255,0.65);max-width:500px;margin-bottom:36px;animation:fadeUp 0.6s 0.2s ease both}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both}
+    .btn-primary{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:15px 30px;border-radius:var(--radius);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:box-shadow 0.25s,transform 0.2s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(100,84,240,0.45)}
+    .btn-secondary{background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;padding:15px 30px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.12);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:border-color 0.2s,background 0.2s,color 0.2s}
+    .btn-secondary:hover{border-color:var(--border-c);background:var(--cyan-dim);color:var(--cyan)}
+    .nav-preview{display:flex;align-items:center;gap:10px;margin-top:20px;animation:fadeUp 0.6s 0.4s ease both}
+    .nav-preview-av{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(124,106,240,0.35);flex-shrink:0}
+    .nav-preview-text{font-size:13px;color:var(--muted);line-height:1.4}
+
+    /* ── HERO WIDGET (enriched product cards) ── */
+    .hero-widget{position:absolute;right:48px;top:50%;transform:translateY(-50%);width:380px;background:rgba(26,26,46,0.80);border:1px solid rgba(255,255,255,0.10);border-radius:24px;padding:24px;backdrop-filter:blur(32px);animation:fadeUp 0.8s 0.45s ease both;z-index:2}
+    .hw-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .hw-label{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim)}
+    .hw-live{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--green)}
+    .hw-live::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1.8s infinite}
+    .hw-guide{display:flex;align-items:center;gap:10px;background:rgba(124,106,240,0.08);border:1px solid rgba(124,106,240,0.2);border-radius:14px;padding:10px 14px;margin-bottom:16px}
+    .hw-guide-av{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(124,106,240,0.3);flex-shrink:0}
+    .hw-guide-text{font-size:12px;color:rgba(240,240,255,0.6);line-height:1.4;font-style:italic}
+    .hw-guide-text strong{color:var(--text);font-style:normal}
+    .hw-products{display:flex;flex-direction:column;gap:10px}
+    .hw-prod{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px;transition:border-color 0.2s}
+    .hw-prod:hover{border-color:var(--border-c)}
+    .hw-prod-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .hw-prod-img{width:44px;height:44px;border-radius:10px;object-fit:cover;background:var(--purple-dim);flex-shrink:0}
+    .hw-prod-info{flex:1;min-width:0}
+    .hw-prod-name{font-size:12px;font-weight:700;color:#fff;line-height:1.3}
+    .hw-prod-price{font-size:11px;color:var(--green);margin-top:1px}
+    .hw-prod-grade{font-size:11px;font-weight:800;color:var(--cyan);background:var(--cyan-dim);padding:3px 8px;border-radius:6px;border:1px solid rgba(110,224,245,0.2);flex-shrink:0}
+    .hw-prod-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+    .hw-tag{font-size:8px;font-weight:700;padding:2px 7px;border-radius:100px;text-transform:uppercase}
+    .hw-tag.hsa{background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);color:var(--green)}
+    .hw-tag.lmn{background:rgba(100,84,240,0.08);border:1px solid rgba(100,84,240,0.2);color:var(--purple)}
+    .hw-tag.pool{background:rgba(110,224,245,0.06);border:1px solid rgba(110,224,245,0.15);color:var(--cyan)}
+    .hw-prod-conf{display:flex;align-items:center;gap:8px}
+    .hw-conf-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden}
+    .hw-conf-fill{height:100%;border-radius:4px;transition:width 1.5s cubic-bezier(0.4,0,0.2,1)}
+    .hw-conf-val{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;min-width:28px;text-align:right}
+    .hw-prod-split{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.05)}
+    .hw-split-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600}
+    .hw-split-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+    /* ── STATS ── */
+    .stats-strip{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0 48px;display:flex;align-items:stretch;overflow:hidden}
+    .stat-item{display:flex;flex-direction:column;justify-content:center;padding:28px 36px;flex:1;border-right:1px solid var(--border)}
+    .stat-item:last-child{border-right:none}
+    .stat-number{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:5px;opacity:0;transform:translateY(16px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .stat-item.counted .stat-number{opacity:1;transform:translateY(0)}
+    .stat-label{font-size:13px;color:var(--muted);line-height:1.4}
+    .stat-sub{font-size:11px;color:var(--dim);margin-top:3px}
+
+    /* ── SECTION COMMON ── */
+    section{position:relative;z-index:1;padding:96px 48px}
+    .section-tag{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+    .section-title{font-size:clamp(32px,3.5vw,48px);font-weight:800;line-height:1.08;letter-spacing:-1.5px;margin-bottom:14px;color:#ffffff}
+    .section-sub{font-size:16px;font-weight:400;color:rgba(240,240,255,0.60);line-height:1.75;max-width:520px}
+    .how-bg{background:rgba(26,26,46,0.4)}
+    .section-divider{height:1px;background:var(--border);margin:0 48px}
+
+    /* ── FEATURE ROW (alternating) ── */
+    .feature-row{display:flex;align-items:center;gap:56px;padding:80px 48px;position:relative;z-index:1}
+    .feature-row.alt{flex-direction:row-reverse}
+    .feature-row .fr-text{flex:1;min-width:0}
+    .feature-row .fr-visual{flex:1;min-width:0;position:relative}
+    .fr-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);background:var(--cyan-dim);border:1px solid var(--border-c);padding:5px 14px;border-radius:100px;margin-bottom:20px}
+    .fr-title{font-size:clamp(26px,2.8vw,38px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;color:#fff}
+    .fr-desc{font-size:15px;color:rgba(240,240,255,0.60);line-height:1.75;margin-bottom:24px;max-width:480px}
+    .fr-pills{display:flex;flex-wrap:wrap;gap:8px}
+    .fr-pill{font-size:12px;font-weight:600;color:var(--text);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:6px 14px;border-radius:100px}
+    .fr-pill.accent{color:var(--cyan);border-color:var(--border-c);background:var(--cyan-dim)}
+
+    /* ── SLIDE ANIMATIONS ── */
+    .slide-r{opacity:0;transform:translateX(80px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+    .slide-l{opacity:0;transform:translateX(-80px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+    .slide-up{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease}
+    .in-view{opacity:1!important;transform:translate(0)!important}
+
+    /* ── NAVIGATOR SHOWCASE ── */
+    .nav-showcase{display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative}
+    .nav-card-mini{background:rgba(15,15,28,0.65);border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:24px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;overflow:hidden}
+    .nav-card-mini::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.3s}
+    .nav-card-mini.active{transform:translateY(-4px)}
+    .nav-card-mini.ev{border-color:rgba(110,224,245,0.15)}.nav-card-mini.ev.active{border-color:rgba(110,224,245,0.35);box-shadow:0 16px 48px rgba(110,224,245,0.08)}.nav-card-mini.ev::before{background:linear-gradient(90deg,transparent,var(--cyan),var(--blue),transparent)}.nav-card-mini.ev.active::before{opacity:1}
+    .nav-card-mini.br{border-color:rgba(100,84,240,0.15)}.nav-card-mini.br.active{border-color:rgba(100,84,240,0.35);box-shadow:0 16px 48px rgba(100,84,240,0.08)}.nav-card-mini.br::before{background:linear-gradient(90deg,transparent,var(--purple),var(--blue),transparent)}.nav-card-mini.br.active::before{opacity:1}
+    .ncm-av{width:72px;height:72px;border-radius:50%;margin:0 auto 12px;overflow:hidden;position:relative}
+    .ncm-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .ncm-dot{position:absolute;bottom:2px;right:2px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid rgba(15,15,28,0.9)}
+    .ncm-name{font-size:18px;font-weight:800;color:#fff;margin-bottom:2px}
+    .ncm-role{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px}
+    .ev .ncm-role{color:var(--cyan)}.br .ncm-role{color:var(--purple)}
+    .ncm-focus{display:inline-flex;font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;margin-bottom:10px}
+    .ev .ncm-focus{background:var(--cyan-dim);border:1px solid var(--border-c);color:var(--cyan)}
+    .br .ncm-focus{background:var(--purple-dim);border:1px solid var(--border-p);color:var(--purple)}
+    .ncm-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+    .ncm-tag{font-size:9px;font-weight:600;padding:3px 9px;border-radius:100px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--muted)}
+    .nav-chat-preview{margin-top:16px;background:rgba(15,15,28,0.65);border:1px solid rgba(255,255,255,0.10);border-radius:18px;overflow:hidden;min-height:220px}
+    .ncp-header{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .ncp-av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0}.ncp-av img{width:100%;height:100%;object-fit:cover}
+    .ncp-nm{font-size:13px;font-weight:700;color:#fff}.ncp-st{font-size:10px;color:var(--green);font-weight:600}
+    .ncp-msgs{padding:14px 16px;display:flex;flex-direction:column;gap:8px;max-height:200px;overflow:hidden}
+    .ncp-msg{font-size:12px;line-height:1.6;padding:8px 12px;border-radius:12px;max-width:85%;animation:fadeUp 0.4s ease both}
+    .ncp-msg.nav-msg{color:rgba(240,240,255,0.8);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)}
+    .ncp-msg.usr-msg{align-self:flex-end;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(240,240,255,0.7)}
+    .ncp-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+    .ncp-chip{font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--muted)}
+
+    /* ── COMMUNITY POOL FEATURE ── */
+    .pool-demo{background:rgba(61,217,182,0.04);border:1px solid rgba(61,217,182,0.15);border-radius:20px;padding:24px;overflow:hidden}
+    .pool-demo-header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+    .pool-demo-title{font-size:14px;font-weight:700;color:#fff}.pool-demo-badge{font-size:9px;font-weight:700;color:var(--green);background:rgba(61,217,182,0.1);border:1px solid rgba(61,217,182,0.2);padding:3px 8px;border-radius:100px}
+    .pool-item{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;margin-bottom:8px}
+    .pool-item-grade{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;background:rgba(61,217,182,0.1);color:var(--green);border:2px solid rgba(61,217,182,0.3)}
+    .pool-item-info{flex:1;min-width:0}
+    .pool-item-name{font-size:12px;font-weight:700;color:#fff}.pool-item-brand{font-size:10px;color:var(--dim)}
+    .pool-item-right{text-align:right;flex-shrink:0}
+    .pool-item-old{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);text-decoration:line-through}
+    .pool-item-new{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)}
+    .pool-bar{margin-top:12px}
+    .pool-bar-track{height:8px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;margin-bottom:6px}
+    .pool-bar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--green),#7ed4b5);transition:width 1.5s cubic-bezier(0.4,0,0.2,1)}
+    .pool-bar-meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+    .pool-bar-meta strong{color:var(--text)}
+
+    /* ── CEL PRODUCT GRID ── */
+    .cel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .cel-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:16px;transition:border-color 0.2s,transform 0.2s}
+    .cel-card:hover{border-color:var(--border-c);transform:translateY(-2px)}
+    .cel-card-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+    .cel-grade{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+    .cel-grade.ga{background:rgba(61,217,182,0.1);color:var(--green);border:2px solid rgba(61,217,182,0.3)}
+    .cel-grade.gb{background:rgba(110,224,245,0.08);color:var(--cyan);border:2px solid rgba(110,224,245,0.25)}
+    .cel-card-name{font-size:12px;font-weight:700;color:#fff;line-height:1.3;flex:1}
+    .cel-conf{margin-top:8px}
+    .cel-conf-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+    .cel-conf-lbl{font-size:9px;color:var(--dim);flex-shrink:0;min-width:50px}
+    .cel-conf-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden}
+    .cel-conf-fill{height:100%;border-radius:4px}
+    .cel-conf-val{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;min-width:24px;text-align:right}
+    .cel-card-price{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-top:8px}
+    .cel-card-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
+
+    /* ── LMN FEATURE MOCKUP ── */
+    .lmn-mockup{background:rgba(15,15,28,0.65);border:1px solid rgba(255,255,255,0.10);border-radius:20px;overflow:hidden;padding:24px}
+    .lmn-mockup-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--purple);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+    .lmn-opts{display:flex;flex-direction:column;gap:8px}
+    .lmn-opt{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:12px;transition:all 0.2s}
+    .lmn-opt.active{border-color:rgba(100,84,240,0.35);background:rgba(100,84,240,0.06)}
+    .lmn-opt-radio{width:14px;height:14px;border-radius:50%;border:2px solid var(--dim);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .lmn-opt.active .lmn-opt-radio{border-color:var(--purple);background:var(--purple)}
+    .lmn-opt.active .lmn-opt-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff}
+    .lmn-opt-text{font-size:11px;color:var(--muted);line-height:1.4}
+    .lmn-opt-text strong{color:var(--text);display:block;margin-bottom:1px}
+    .lmn-hsa-tag{font-size:8px;font-weight:700;color:var(--green);background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.18);padding:2px 6px;border-radius:100px;margin-left:4px}
+    .lmn-timeline{margin-top:16px;display:flex;align-items:center;gap:0;padding:0 8px}
+    .lmn-step{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1}
+    .lmn-step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;margin-bottom:6px;background:rgba(100,84,240,0.1);border:1.5px solid rgba(100,84,240,0.25);color:var(--purple)}
+    .lmn-step-dot.done{background:rgba(61,217,182,0.1);border-color:rgba(61,217,182,0.3);color:var(--green)}
+    .lmn-step-text{font-size:9px;color:var(--dim);font-weight:600;line-height:1.3}
+    .lmn-step-line{flex:1;height:1px;background:rgba(255,255,255,0.08);margin:0 -4px;align-self:flex-start;margin-top:14px}
+
+    /* ── SPLIT PAY MOCKUP ── */
+    .split-mockup{background:rgba(15,15,28,0.65);border:1px solid rgba(255,255,255,0.10);border-radius:20px;padding:24px;overflow:hidden}
+    .split-vis{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .split-bar-wrap{flex:1}
+    .split-bar-track{height:12px;display:flex;border-radius:8px;overflow:hidden;margin-bottom:6px}
+    .split-bar-hsa{background:linear-gradient(90deg,var(--green),#7ed4b5);transition:width 1s}
+    .split-bar-oop{background:linear-gradient(90deg,var(--gold),#fbbf24);transition:width 1s}
+    .split-labels{display:flex;justify-content:space-between}
+    .split-label{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600}
+    .split-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .split-amount{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;text-align:center;margin-bottom:16px}
+    .split-amount .hsa-val{color:var(--green)}.split-amount .plus{color:var(--dim);margin:0 8px}.split-amount .oop-val{color:var(--gold)}
+    .split-features{display:flex;flex-direction:column;gap:6px}
+    .split-feat{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);padding:6px 0}
+    .split-feat::before{content:'✓';color:var(--green);font-weight:700;font-size:10px;flex-shrink:0}
+
+    /* ── INTELLIGENCE MOCKUP ── */
+    .intel-mockup{background:rgba(15,15,28,0.65);border:1px solid rgba(124,106,240,0.18);border-radius:20px;overflow:hidden}
+    .intel-header{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .intel-av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0}.intel-av img{width:100%;height:100%;object-fit:cover}
+    .intel-nm{font-size:13px;font-weight:700;color:#fff}
+    .intel-msgs{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+    .intel-msg{font-size:11px;line-height:1.6;padding:8px 12px;border-radius:12px;max-width:88%}
+    .intel-msg.nav{background:rgba(124,106,240,0.06);border:1px solid rgba(124,106,240,0.14);color:rgba(240,240,255,0.8)}
+    .intel-msg.usr{align-self:flex-end;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(240,240,255,0.7)}
+    .intel-actions{display:flex;gap:6px;padding:0 16px 14px;flex-wrap:wrap}
+    .intel-btn{font-size:10px;font-weight:700;padding:6px 12px;border-radius:100px;cursor:pointer;transition:all 0.2s;border:none;font-family:'DM Sans',sans-serif}
+    .intel-btn.keep{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
+    .intel-btn.drop{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);color:var(--muted)}
+    .intel-btn.ask{background:rgba(110,224,245,0.06);border:1px solid rgba(110,224,245,0.15);color:var(--cyan)}
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+    .testi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:border-color 0.3s,transform 0.3s}
+    .testi-card:hover{border-color:var(--border-p);transform:translateY(-4px)}
+    .testi-stars{font-size:14px;letter-spacing:2px;margin-bottom:14px;color:var(--blue)}
+    .testi-quote{font-size:15px;font-style:italic;line-height:1.7;color:rgba(240,240,255,0.80);margin-bottom:22px}
+    .testi-author{display:flex;align-items:center;gap:12px}
+    .testi-av{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--border-p);background:var(--bg-elev)}
+    .testi-av img{width:100%;height:100%;object-fit:cover}
+    .testi-name{font-size:14px;font-weight:700;color:#fff}
+    .testi-role{font-size:12px;color:var(--muted)}
+    .testi-metric{margin-left:auto;text-align:right}
+    .testi-metric-val{font-family:'DM Mono',monospace;font-size:18px;color:var(--green)}
+    .testi-metric-label{font-size:11px;color:var(--dim)}
+
+    /* ── CTA ── */
+    .cta-wrap{position:relative;z-index:1;padding:96px 48px;text-align:center;overflow:hidden}
+    .cta-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(100,84,240,0.08),transparent 70%);pointer-events:none}
+    .cta-wrap .section-title{max-width:600px;margin:0 auto 16px}
+    .cta-wrap .section-sub{max-width:480px;margin:0 auto 40px}
+    .hsa-bar{display:flex;max-width:520px;margin:0 auto 14px;background:rgba(26,26,46,0.8);border:1px solid rgba(255,255,255,0.10);border-radius:14px;overflow:hidden;transition:border-color 0.2s}
+    .hsa-bar:focus-within{border-color:var(--cyan)}
+    .hsa-prefix{padding:18px 12px 18px 20px;font-family:'DM Mono',monospace;font-size:20px;color:var(--cyan);background:transparent;border:none;pointer-events:none}
+    .hsa-input{flex:1;background:transparent;border:none;outline:none;font-family:'DM Mono',monospace;font-size:20px;color:var(--text);padding:18px 0;min-width:0}
+    .hsa-input::placeholder{color:var(--dim)}
+    .hsa-btn{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:18px 24px;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;flex-shrink:0}
+    .hsa-btn:hover{opacity:0.88}
+    .cta-micro{font-size:13px;color:var(--dim)}
+
+    /* ── FOOTER ── */
+    footer{position:relative;z-index:1;border-top:1px solid var(--border);background:rgba(15,15,26,0.95)}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:40px;padding:64px 48px 48px}
+    .footer-brand-logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:block;margin-bottom:14px}
+    .footer-tagline{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:280px}
+    .footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;text-decoration:none;transition:box-shadow 0.2s,transform 0.2s}
+    .footer-cta-btn:hover{box-shadow:0 8px 24px rgba(100,84,240,0.4);transform:translateY(-1px)}
+    .footer-socials{display:flex;gap:10px;margin-top:20px;align-items:center}
+    .footer-social-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);transition:border-color 0.2s,background 0.2s,transform 0.2s;overflow:hidden}
+    .footer-social-link:hover{border-color:var(--border-c);background:rgba(110,224,245,0.06);transform:translateY(-2px)}
+    .footer-social-link img{width:20px;height:20px;object-fit:contain;border-radius:3px;opacity:0.7;transition:opacity 0.2s}
+    .footer-social-link:hover img{opacity:1}
+    .footer-col-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+    .footer-links-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-links-list a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+    .footer-links-list a:hover{color:var(--text)}
+    .footer-contact-item{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+    .footer-contact-item a{color:var(--muted);text-decoration:none}
+    .footer-contact-item a:hover{color:var(--cyan)}
+    .footer-bottom{padding:20px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-size:13px;color:var(--dim)}
+    .footer-legal-links{display:flex;gap:20px}
+    .footer-legal-links a{font-size:12px;color:var(--dim);text-decoration:none;transition:color 0.2s}
+    .footer-legal-links a:hover{color:var(--muted)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1100px){.steps-grid{grid-template-columns:1fr 1fr}
+      .hero-widget{display:none}
+      .testi-grid{grid-template-columns:1fr 1fr}
+      .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+      .feature-row,.feature-row.alt{flex-direction:column;gap:40px;padding:60px 48px}
+      .cel-grid{grid-template-columns:1fr 1fr}
+      .nav-showcase{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      .steps-grid{grid-template-columns:1fr}
+      nav{padding:0 20px}
+      .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);flex-direction:column;padding:20px;border-bottom:1px solid var(--border);gap:4px}
+      .nav-links.open{display:flex}
+      .hamburger{display:flex}
+      .hero{padding:120px 24px 60px}
+      section,.cta-wrap{padding:60px 24px}
+      .feature-row,.feature-row.alt{padding:48px 24px;gap:32px}
+      .stats-strip{padding:0 24px;flex-wrap:wrap}
+      .stat-item{flex:1 1 50%;border-right:none;border-bottom:1px solid var(--border)}
+      .testi-grid{grid-template-columns:1fr}
+      .cel-grid{grid-template-columns:1fr}
+      .nav-showcase{grid-template-columns:1fr}
+      .hsa-bar{flex-direction:column}
+      .hsa-bar .hsa-prefix{display:none}
+      .hsa-input{padding:18px 20px;font-size:18px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06)}
+      .hsa-btn{padding:16px 24px;font-size:15px;width:100%;text-align:center}
+      .footer-top{grid-template-columns:1fr;padding:40px 24px 32px;gap:32px}
+      .footer-bottom{flex-direction:column;gap:12px;text-align:center;padding:16px 24px}
+      .section-divider{margin:0 24px}
+      .lmn-timeline{flex-wrap:wrap;gap:8px}
+      .lmn-step-line{display:none}
+    }
+
+
+    
+    /* ── TRUST CAROUSEL ── */
+    .trust-strip{position:relative;z-index:1;padding:32px 48px;background:rgba(26,26,46,0.3);border-bottom:1px solid var(--border);overflow:hidden}
+    .trust-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:20px}
+    .trust-logos{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+    .trust-logo{display:flex;align-items:center;gap:10px;opacity:0.5;transition:opacity 0.3s;cursor:default}
+    .trust-logo:hover{opacity:0.8}
+    .trust-logo-icon{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+    .trust-logo-icon img{width:100%;height:100%;object-fit:contain;padding:6px}
+    .trust-logo-name{font-size:15px;font-weight:700;color:var(--muted);letter-spacing:-0.3px}
+    .trust-logo-sub{font-size:10px;color:var(--dim);margin-top:1px}
+    @media(max-width:768px){.trust-strip{padding:24px 20px}.trust-logos{gap:24px}.trust-logo-name{font-size:13px}}
+
+    /* ── INTERACTIVE PILLS ── */
+    .fr-pill{cursor:pointer;transition:all 0.25s}
+    .fr-pill:hover{border-color:var(--border-c);background:var(--cyan-dim);color:var(--cyan)}
+    .fr-pill.active{color:var(--cyan);border-color:var(--border-c);background:var(--cyan-dim);box-shadow:0 0 12px rgba(110,224,245,0.1)}
+    .fr-pill.accent{color:var(--cyan);border-color:var(--border-c);background:var(--cyan-dim)}
+    .fr-visual-panel{display:none;animation:fadeUp 0.4s ease both}
+    .fr-visual-panel.active{display:block}
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:56px}
+    .step-card{background:var(--bg-card);padding:36px 28px;opacity:0;transform:translateX(60px);transition:background 0.3s,opacity 0.6s ease,transform 0.6s ease}
+    .step-card.slide-in{opacity:1;transform:translateX(0)}
+    .step-card:hover{background:var(--bg-elev)}
+    .step-card:nth-child(1){transition-delay:0s}.step-card:nth-child(2){transition-delay:0.08s}.step-card:nth-child(3){transition-delay:0.16s}.step-card:nth-child(4){transition-delay:0.24s}.step-card:nth-child(5){transition-delay:0.32s}.step-card:nth-child(6){transition-delay:0.4s}
+    .step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--purple);letter-spacing:1px;margin-bottom:20px;display:block}
+    .step-icon-wrap{width:52px;height:52px;border-radius:14px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
+    .step-icon-wrap.c1{background:rgba(110,224,245,0.10);border:1px solid rgba(110,224,245,0.2)}
+    .step-icon-wrap.c2{background:rgba(100,84,240,0.12);border:1px solid rgba(100,84,240,0.25)}
+    .step-icon-wrap.c3{background:rgba(61,217,182,0.10);border:1px solid rgba(61,217,182,0.2)}
+    .step-icon-wrap.c4{background:rgba(106,163,243,0.10);border:1px solid rgba(106,163,243,0.2)}
+    .step-icon-wrap.c5{background:rgba(100,84,240,0.12);border:1px solid rgba(100,84,240,0.25)}
+    .step-icon-wrap.c6{background:rgba(110,224,245,0.10);border:1px solid rgba(110,224,245,0.2)}
+    .step-icon-img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+    .step-title{font-size:17px;font-weight:700;margin-bottom:10px;line-height:1.3;color:#fff}
+    .step-desc{font-size:14px;color:var(--muted);line-height:1.7}
+    .step-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--cyan);background:var(--cyan-dim);border:1px solid var(--border-c);padding:3px 10px;border-radius:100px;margin-top:12px}
+
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <a href="#" class="nav-logo">Beim Health</a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#testimonials">Results</a></li>
+      <li><a href="https://www.beim.ai/marketplace">Marketplace</a></li>
+      <li><a href="https://www.beim.ai/start" class="nav-cta">Unlock My Products →</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <span class="hero-badge">Your Products, Unlocked</span>
+      <h1>We unlock products<br>your <span class="grad">HSA/FSA can buy.</span></h1>
+      <p class="hero-sub">Thousands of health products are waiting — but nobody made them accessible. Your Care Navigator matches you to clinically graded products, handles Letters of Medical Necessity and physician orders, and gives you more choices with better quality and precision decision-making.</p>
+      <div class="hero-actions">
+        <a href="https://www.beim.ai/start" class="btn-primary">Unlock My Products →</a>
+        <a href="https://www.beim.ai/marketplace" class="btn-secondary">Browse Marketplace</a>
+      </div>
+      <div class="nav-preview">
+        <img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" class="nav-preview-av"/>
+        <div class="nav-preview-text">Your personal Care Navigator matches you to clinically vetted products, handles the paperwork, and makes sure every dollar works harder.</div>
+      </div>
+    </div>
+
+    <!-- ── ENRICHED WIDGET ── -->
+    <div class="hero-widget">
+      <div class="hw-top"><span class="hw-label">Products Unlocked</span><span class="hw-live">Live</span></div>
+      <div class="hw-guide">
+        <img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" class="hw-guide-av"/>
+        <div class="hw-guide-text"><strong>Brooks unlocked 12 products</strong> you didn't know your HSA could buy.</div>
+      </div>
+      <div class="hw-products">
+        <!-- Product 1 -->
+        <div class="hw-prod">
+          <div class="hw-prod-top">
+            <img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa48983ba63feff508fea9_025535a0-73b2-4f05-ab04-94c80eef4468.png" alt="ProLon" class="hw-prod-img"/>
+            <div class="hw-prod-info"><div class="hw-prod-name">ProLon 5-Day Fasting Kit</div><div class="hw-prod-price">$190 · HSA Eligible</div></div>
+            <div class="hw-prod-grade">A</div>
+          </div>
+          <div class="hw-prod-tags"><span class="hw-tag hsa">✓ HSA/FSA</span><span class="hw-tag lmn">📋 LMN</span><span class="hw-tag pool">🤝 Pool</span></div>
+          <div class="hw-prod-conf"><span style="font-size:9px;color:var(--dim);margin-right:4px">Dr. Confidence</span><div class="hw-conf-bar"><div class="hw-conf-fill" style="width:92%;background:var(--green)"></div></div><span class="hw-conf-val" style="color:var(--green)">92%</span></div>
+          <div class="hw-prod-split"><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA: $190</span></div><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">OOP: $0</span></div></div>
+        </div>
+        <!-- Product 2 -->
+        <div class="hw-prod">
+          <div class="hw-prod-top">
+            <img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/6999eb675885894b091a63a2_Oura%20Black%20Ring.webp" alt="Oura Ring" class="hw-prod-img"/>
+            <div class="hw-prod-info"><div class="hw-prod-name">Oura Ring 4</div><div class="hw-prod-price">$349 · With LMN</div></div>
+            <div class="hw-prod-grade">A</div>
+          </div>
+          <div class="hw-prod-tags"><span class="hw-tag hsa">✓ HSA/FSA</span><span class="hw-tag lmn">📋 LMN</span></div>
+          <div class="hw-prod-conf"><span style="font-size:9px;color:var(--dim);margin-right:4px">Dr. Confidence</span><div class="hw-conf-bar"><div class="hw-conf-fill" style="width:88%;background:var(--cyan)"></div></div><span class="hw-conf-val" style="color:var(--cyan)">88%</span></div>
+          <div class="hw-prod-split"><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA: $349</span></div><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">OOP: $0</span></div></div>
+        </div>
+        <!-- Product 3 -->
+        <div class="hw-prod">
+          <div class="hw-prod-top">
+            <img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adbee81dca436edbe5d16a_Men%20Growth%20Pack%20Image.JPEG" alt="Nutrafol" class="hw-prod-img"/>
+            <div class="hw-prod-info"><div class="hw-prod-name">Nutrafol Men's 3-Month</div><div class="hw-prod-price">$209 · With LMN</div></div>
+            <div class="hw-prod-grade">A</div>
+          </div>
+          <div class="hw-prod-tags"><span class="hw-tag hsa">✓ HSA/FSA</span><span class="hw-tag lmn">📋 LMN</span><span class="hw-tag pool">🤝 Pool</span></div>
+          <div class="hw-prod-conf"><span style="font-size:9px;color:var(--dim);margin-right:4px">Dr. Confidence</span><div class="hw-conf-bar"><div class="hw-conf-fill" style="width:85%;background:var(--cyan)"></div></div><span class="hw-conf-val" style="color:var(--cyan)">85%</span></div>
+          <div class="hw-prod-split"><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA: $209</span></div><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">OOP: $0</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STATS ══ -->
+  <div class="stats-strip">
+    <div class="stat-item"><div class="stat-number">1,000+</div><div class="stat-label">Clinically graded products in our marketplace</div><div class="stat-sub">Every one rated A–D on our CEL rubric</div></div>
+    <div class="stat-item"><div class="stat-number">85%</div><div class="stat-label">Of shoppers give up at the LMN paperwork wall</div><div class="stat-sub">Drops to 25% with Beim's instant pathway</div></div>
+    <div class="stat-item"><div class="stat-number">&lt;4 hrs</div><div class="stat-label">From product match to signed LMN</div><div class="stat-sub">vs. 3 weeks the traditional way</div></div>
+    <div class="stat-item"><div class="stat-number">A–D</div><div class="stat-label">Clinical Evidence Level grading</div><div class="stat-sub">RCTs · physician confidence · real science</div></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ══ FEATURES ══ -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <!-- ── F1: AI CARE NAVIGATORS (dual card + chat preview) ── -->
+  
+  <!-- ── TRUST STRIP ── -->
+  <div class="trust-strip">
+    <div class="trust-label">Trusted by employers using</div>
+    <div class="trust-logos">
+      <div class="trust-logo">
+        <div class="trust-logo-icon"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69b58471c203f76642dbb1bb_adp-logo-11530966707d7ig28joww.png" alt="ADP"/></div>
+        <div><div class="trust-logo-name">ADP</div><div class="trust-logo-sub">Payroll & HR</div></div>
+      </div>
+      <div class="trust-logo">
+        <div class="trust-logo-icon"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69b584b7977af07715db7996_gusto-logo.png" alt="Gusto"/></div>
+        <div><div class="trust-logo-name">Gusto</div><div class="trust-logo-sub">Payroll & Benefits</div></div>
+      </div>
+      <div class="trust-logo">
+        <div class="trust-logo-icon"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69b584a1151f193063e20649_02AcSy2pzn58bI7xBKIA1J3-20.webp" alt="Rippling"/></div>
+        <div><div class="trust-logo-name">Rippling</div><div class="trust-logo-sub">HR Platform</div></div>
+      </div>
+      <div class="trust-logo">
+        <div class="trust-logo-icon"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69b584a1f9940463f9a412e9_images%20(10).png" alt="Paychex"/></div>
+        <div><div class="trust-logo-name">Paychex</div><div class="trust-logo-sub">Payroll & HCM</div></div>
+      </div>
+      <div class="trust-logo">
+        <div class="trust-logo-icon"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69b58501151f193063e20b74_BambooHR-Logo.jpg" alt="BambooHR"/></div>
+        <div><div class="trust-logo-name">BambooHR</div><div class="trust-logo-sub">HR Software</div></div>
+      </div>
+    </div>
+  </div>
+
+<section id="features" style="padding-bottom:0">
+    <div class="slide-up" style="text-align:center;max-width:640px;margin:0 auto">
+      <span class="section-tag">Platform Features</span>
+      <h2 class="section-title">Everything you need to unlock<br><span class="grad">smarter health purchases.</span></h2>
+      <p class="section-sub" style="max-width:560px;margin:0 auto">Six powerful tools working together — from AI-powered product discovery to instant Letters of Medical Necessity, clinical grading, split payment, group buying, and intelligent product review.</p>
+    </div>
+  </section>
+
+  <div class="feature-row">
+    <div class="fr-text slide-l">
+      <span class="fr-badge">🧭 AI Care Navigation</span>
+      <h2 class="fr-title">AI Care Navigators that find your perfect products.</h2>
+      <p class="fr-desc">Everly and Brooks are your AI-powered guides. They ask about your health goals, analyze your benefits, and match you with clinically vetted products you never knew existed. They handle Letters of Medical Necessity, monitor your HSA/FSA balance for new products, and let you scan any product — even ones not in our system — to discuss eligibility and evidence. Available 24/7 on any device.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('nav-panels','matching',this)">AI-Powered Matching</span>
+        <span class="fr-pill" onclick="switchPanel('nav-panels','goals',this)">Goal-Based Questions</span>
+        <span class="fr-pill" onclick="switchPanel('nav-panels','monitoring',this)">HSA/FSA Monitoring & Scanner</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-r">
+      <div id="nav-panels">
+        <div class="fr-visual-panel active" data-pill="matching">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:rgba(15,15,28,.65);border:1px solid rgba(110,224,245,.2);border-radius:18px;padding:18px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 10px;overflow:hidden;border:2px solid rgba(110,224,245,.2)"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly" style="width:100%;height:100%;object-fit:cover"/></div>
+              <div style="font-size:18px;font-weight:800;color:#fff">Everly</div>
+              <div style="font-size:11px;font-weight:600;color:var(--cyan);text-transform:uppercase;margin-bottom:6px">Women's Health</div>
+              <div style="font-size:11px;color:rgba(240,240,255,.55);line-height:1.5;font-style:italic">"I found 8 products for your hair &amp; sleep goals — all Grade A."</div>
+            </div>
+            <div style="background:rgba(15,15,28,.65);border:1px solid rgba(100,84,240,.2);border-radius:18px;padding:18px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 10px;overflow:hidden;border:2px solid rgba(100,84,240,.2)"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" style="width:100%;height:100%;object-fit:cover"/></div>
+              <div style="font-size:18px;font-weight:800;color:#fff">Brooks</div>
+              <div style="font-size:11px;font-weight:600;color:var(--purple);text-transform:uppercase;margin-bottom:6px">Men's Health</div>
+              <div style="font-size:11px;color:rgba(240,240,255,.55);line-height:1.5;font-style:italic">"Your HSA has $3,240. I matched 12 products for recovery &amp; testosterone."</div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="goals">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(100,84,240,.18);border-radius:18px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.06)">
+              <div style="width:28px;height:28px;border-radius:50%;overflow:hidden"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" style="width:100%;height:100%;object-fit:cover"/></div>
+              <div><div style="font-size:13px;font-weight:700;color:#fff">Brooks — Goal Setting</div><div style="font-size:10px;color:var(--green)">Online now</div></div>
+            </div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:12px;line-height:1.6;padding:10px 14px;border-radius:12px;background:rgba(100,84,240,.06);border:1px solid rgba(100,84,240,.14);color:rgba(240,240,255,.8)">What are your top health priorities? Pick your top 3 and I'll match products to your goals.</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:4px"><span style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:100px;background:rgba(100,84,240,.1);border:1px solid rgba(100,84,240,.3);color:#fff">🏋️ Recovery</span><span style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:100px;background:rgba(100,84,240,.1);border:1px solid rgba(100,84,240,.3);color:#fff">💤 Sleep</span><span style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted)">⚖️ Weight</span><span style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted)">🧠 Focus</span></div>
+              <div style="font-size:12px;line-height:1.6;padding:10px 14px;border-radius:12px;align-self:flex-end;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(240,240,255,.7)">Recovery and Sleep are my top priorities.</div>
+              <div style="font-size:12px;line-height:1.6;padding:10px 14px;border-radius:12px;background:rgba(100,84,240,.06);border:1px solid rgba(100,84,240,.14);color:rgba(240,240,255,.8)">Got it! I found <strong>6 products</strong> that match Recovery + Sleep — all CEL Grade A or B. Let me walk you through them.</div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="monitoring">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(61,217,182,.18);border-radius:18px;padding:20px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:16px">📊</span><div style="font-size:14px;font-weight:700;color:#fff">HSA/FSA Balance Monitor</div><span style="font-size:10px;font-weight:700;color:var(--green);background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.2);padding:3px 8px;border-radius:100px">Live</span></div>
+            <div style="font-family:'DM Mono',monospace;font-size:36px;font-weight:500;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px">$3,240</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Available to spend tax-free</div>
+            <div style="height:6px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin-bottom:12px"><div style="height:100%;width:68%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:6px"></div></div>
+            <div style="background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:12px;padding:12px;margin-bottom:8px"><div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">🔔 New product alert</div><div style="font-size:12px;color:rgba(240,240,255,.7);line-height:1.5">Brooks found a new CEL Grade A product that matches your sleep goals: <strong style="color:#fff">Eight Sleep Pod Cover</strong> — $2,049, fully HSA eligible with LMN.</div></div>
+            <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px"><div style="font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">📱 Product scanner</div><div style="font-size:12px;color:rgba(240,240,255,.6);line-height:1.5">Scan any health product barcode or paste a URL — Brooks will tell you if it's HSA eligible and what evidence supports it.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── F2: COMMUNITY POOL (unique feature) ── -->
+  <div class="feature-row alt">
+    <div class="fr-text slide-r">
+      <span class="fr-badge">🤝 Community Pool</span>
+      <h2 class="fr-title">Community Pool — group buying that actually saves you money.</h2>
+      <p class="fr-desc">Join other buyers on the same product and unlock a lower price together. More people join, everyone saves. HSA/FSA eligible, auto-refund if the pool doesn't fill. No other HSA platform offers group buying — this is unique to Beim.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('pool-panels','active',this)">Active Pools</span>
+        <span class="fr-pill" onclick="switchPanel('pool-panels','how',this)">How It Works</span>
+        <span class="fr-pill" onclick="switchPanel('pool-panels','share',this)">Share &amp; Save</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-l">
+      <div id="pool-panels">
+        <div class="fr-visual-panel active" data-pill="active">
+          <div class="pool-demo">
+            <div class="pool-demo-header"><span style="font-size:18px">🤝</span><div class="pool-demo-title">Community Pool — Live</div><div class="pool-demo-badge">3 pools open</div></div>
+            <div class="pool-item"><div class="pool-item-grade">A</div><div class="pool-item-info"><div class="pool-item-name">ProLon 5-Day Fasting Kit</div><div class="pool-item-brand">ProLon · Metabolic Health</div></div><div class="pool-item-right"><div class="pool-item-old">$199.00</div><div class="pool-item-new">$169.00</div></div></div>
+            <div class="pool-bar"><div class="pool-bar-track"><div class="pool-bar-fill" style="width:72%"></div></div><div class="pool-bar-meta"><span><strong>18</strong> of 25 spots filled</span><span>Save <strong>$30</strong> (15%)</span></div></div>
+            <div class="pool-item" style="margin-top:10px"><div class="pool-item-grade">A</div><div class="pool-item-info"><div class="pool-item-name">Oura Ring 4</div><div class="pool-item-brand">Oura · Wearable Tech</div></div><div class="pool-item-right"><div class="pool-item-old">$349.00</div><div class="pool-item-new">$299.00</div></div></div>
+            <div class="pool-bar"><div class="pool-bar-track"><div class="pool-bar-fill" style="width:58%"></div></div><div class="pool-bar-meta"><span><strong>14</strong> of 25 spots</span><span>Save <strong>$50</strong> (14%)</span></div></div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="how">
+          <div style="background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:20px;padding:24px">
+            <div style="font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:20px">How Community Pool Works</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,.02);border:1px solid rgba(61,217,182,.12);border-radius:14px"><div style="width:40px;height:40px;border-radius:50%;background:rgba(61,217,182,.1);border:1.5px solid rgba(61,217,182,.25);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--green);flex-shrink:0">1</div><div><div style="font-size:13px;font-weight:700;color:#fff">Join a Pool</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Commit to a product you want. No charge until the pool fills — your card isn't charged yet.</div></div></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,.02);border:1px solid rgba(61,217,182,.12);border-radius:14px"><div style="width:40px;height:40px;border-radius:50%;background:rgba(61,217,182,.1);border:1.5px solid rgba(61,217,182,.25);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--green);flex-shrink:0">2</div><div><div style="font-size:13px;font-weight:700;color:#fff">Pool Fills Up</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Share the pool link with friends. More people join, the group price locks in for everyone.</div></div></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,.02);border:1px solid rgba(61,217,182,.12);border-radius:14px"><div style="width:40px;height:40px;border-radius:50%;background:rgba(61,217,182,.1);border:1.5px solid rgba(61,217,182,.25);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--green);flex-shrink:0">3</div><div><div style="font-size:13px;font-weight:700;color:#fff">Everyone Saves</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Pool fills → pay the discounted price with your HSA/FSA. Doesn't fill → automatic full refund.</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="share">
+          <div style="background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:20px;padding:24px;text-align:center">
+            <div style="font-size:32px;margin-bottom:12px">🔗</div>
+            <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:6px">Share the Pool, Drop the Price</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.6;max-width:320px;margin:0 auto 20px">Every person who joins your pool link brings the price down for everyone. Share via text, email, or social.</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px">💬</div>
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px">📧</div>
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px">🔗</div>
+            </div>
+            <div style="background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.2);border-radius:12px;padding:14px">
+              <div style="font-size:11px;color:var(--dim);margin-bottom:6px">Example savings with 3 referrals</div>
+              <div style="display:flex;justify-content:space-around"><div><div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--green)">$50</div><div style="font-size:10px;color:var(--muted)">You save</div></div><div><div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--green)">$50</div><div style="font-size:10px;color:var(--muted)">Each friend saves</div></div><div><div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--cyan)">$200</div><div style="font-size:10px;color:var(--muted)">Total saved</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── F3: CLINICAL EVIDENCE GRADING ── -->
+  <div class="feature-row">
+    <div class="fr-text slide-l">
+      <span class="fr-badge">🔬 Clinical Evidence Grading</span>
+      <h2 class="fr-title">Every product graded by clinical evidence — not ad copy.</h2>
+      <p class="fr-desc">Our Clinical Evidence Level (CEL) rubric grades every product A through D based on randomized controlled trials, physician confidence scores, and peer-reviewed data. Grade A means multi-RCT, 90–100% physician confidence. You see the science behind every recommendation.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('cel-panels','cards',this)">Graded Products</span>
+        <span class="fr-pill" onclick="switchPanel('cel-panels','rubric',this)">The CEL Rubric</span>
+        <span class="fr-pill" onclick="switchPanel('cel-panels','confidence',this)">Confidence Scores</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-r">
+      <div id="cel-panels">
+        <div class="fr-visual-panel active" data-pill="cards">
+          <div class="cel-grid">
+            <div class="cel-card"><div class="cel-card-top"><div class="cel-grade ga">A</div><div class="cel-card-name">ProLon 5-Day Kit</div></div><div class="cel-conf"><div class="cel-conf-row"><span class="cel-conf-lbl">Dr. Conf.</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:92%;background:var(--green)"></div></div><span class="cel-conf-val" style="color:var(--green)">92%</span></div><div class="cel-conf-row"><span class="cel-conf-lbl">Profile</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:88%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">88%</span></div></div><div class="cel-card-price">$190</div><div class="cel-card-tags"><span class="hw-tag hsa">HSA</span><span class="hw-tag lmn">LMN</span></div></div>
+            <div class="cel-card"><div class="cel-card-top"><div class="cel-grade ga">A</div><div class="cel-card-name">Oura Ring 4</div></div><div class="cel-conf"><div class="cel-conf-row"><span class="cel-conf-lbl">Dr. Conf.</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:88%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">88%</span></div><div class="cel-conf-row"><span class="cel-conf-lbl">Profile</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:82%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">82%</span></div></div><div class="cel-card-price">$349</div><div class="cel-card-tags"><span class="hw-tag hsa">HSA</span><span class="hw-tag lmn">LMN</span></div></div>
+            <div class="cel-card"><div class="cel-card-top"><div class="cel-grade ga">A</div><div class="cel-card-name">Theragun Pro</div></div><div class="cel-conf"><div class="cel-conf-row"><span class="cel-conf-lbl">Dr. Conf.</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:95%;background:var(--green)"></div></div><span class="cel-conf-val" style="color:var(--green)">95%</span></div><div class="cel-conf-row"><span class="cel-conf-lbl">Profile</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:90%;background:var(--green)"></div></div><span class="cel-conf-val" style="color:var(--green)">90%</span></div></div><div class="cel-card-price">$399</div><div class="cel-card-tags"><span class="hw-tag hsa">HSA</span></div></div>
+            <div class="cel-card"><div class="cel-card-top"><div class="cel-grade gb">B</div><div class="cel-card-name">InsideTracker</div></div><div class="cel-conf"><div class="cel-conf-row"><span class="cel-conf-lbl">Dr. Conf.</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:78%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">78%</span></div><div class="cel-conf-row"><span class="cel-conf-lbl">Profile</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:74%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">74%</span></div></div><div class="cel-card-price">$189</div><div class="cel-card-tags"><span class="hw-tag hsa">HSA</span></div></div>
+            <div class="cel-card"><div class="cel-card-top"><div class="cel-grade ga">A</div><div class="cel-card-name">Nutrafol Men 3-Mo</div></div><div class="cel-conf"><div class="cel-conf-row"><span class="cel-conf-lbl">Dr. Conf.</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:85%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">85%</span></div><div class="cel-conf-row"><span class="cel-conf-lbl">Profile</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:80%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">80%</span></div></div><div class="cel-card-price">$209</div><div class="cel-card-tags"><span class="hw-tag hsa">HSA</span><span class="hw-tag lmn">LMN</span></div></div>
+            <div class="cel-card"><div class="cel-card-top"><div class="cel-grade ga">A</div><div class="cel-card-name">Eight Sleep Pod</div></div><div class="cel-conf"><div class="cel-conf-row"><span class="cel-conf-lbl">Dr. Conf.</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:90%;background:var(--green)"></div></div><span class="cel-conf-val" style="color:var(--green)">90%</span></div><div class="cel-conf-row"><span class="cel-conf-lbl">Profile</span><div class="cel-conf-bar"><div class="cel-conf-fill" style="width:86%;background:var(--cyan)"></div></div><span class="cel-conf-val" style="color:var(--cyan)">86%</span></div></div><div class="cel-card-price">$2,049</div><div class="cel-card-tags"><span class="hw-tag hsa">HSA</span><span class="hw-tag lmn">LMN</span></div></div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="rubric">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:24px">
+            <div style="font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:18px">Beim Clinical Evidence Level Rubric</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:14px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(61,217,182,.1);border:2.5px solid rgba(61,217,182,.35);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--green);flex-shrink:0">A</div><div><div style="font-size:13px;font-weight:700;color:#fff">Gold Standard</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Multiple RCTs · 90–100% physician confidence · Peer-reviewed meta-analyses</div></div></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(110,224,245,.03);border:1px solid rgba(110,224,245,.12);border-radius:14px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(110,224,245,.08);border:2.5px solid rgba(110,224,245,.25);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--cyan);flex-shrink:0">B</div><div><div style="font-size:13px;font-weight:700;color:#fff">Strong Evidence</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Single RCT or large cohort · 75–89% physician confidence · Published clinical data</div></div></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(245,158,11,.03);border:1px solid rgba(245,158,11,.12);border-radius:14px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(245,158,11,.08);border:2.5px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--gold);flex-shrink:0">C</div><div><div style="font-size:13px;font-weight:700;color:#fff">Emerging Evidence</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Pilot studies or mechanistic data · 50–74% confidence · Promising but early</div></div></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:14px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.04);border:2.5px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--dim);flex-shrink:0">D</div><div><div style="font-size:13px;font-weight:700;color:#fff">Anecdotal / Limited</div><div style="font-size:11px;color:var(--muted);line-height:1.5">Case reports or anecdotal · Below 50% confidence · Needs more research</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="confidence">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:24px">
+            <div style="font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:6px">Physician Confidence Score</div>
+            <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.5">What percentage of physicians would recommend this product for the matched condition?</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px;font-weight:700;color:#fff">Theragun Pro</span><span style="font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:var(--green)">95%</span></div><div style="height:8px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden"><div style="height:100%;width:95%;background:linear-gradient(90deg,var(--green),#7ed4b5);border-radius:8px"></div></div><div style="font-size:10px;color:var(--dim);margin-top:4px">Very High · 3 multi-center RCTs · FDA cleared</div></div>
+              <div style="padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px;font-weight:700;color:#fff">ProLon Fasting Kit</span><span style="font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:var(--green)">92%</span></div><div style="height:8px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden"><div style="height:100%;width:92%;background:linear-gradient(90deg,var(--green),#7ed4b5);border-radius:8px"></div></div><div style="font-size:10px;color:var(--dim);margin-top:4px">Very High · 2 RCTs · Peer-reviewed in Cell Metabolism</div></div>
+              <div style="padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px;font-weight:700;color:#fff">InsideTracker</span><span style="font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:var(--cyan)">78%</span></div><div style="height:8px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden"><div style="height:100%;width:78%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:8px"></div></div><div style="font-size:10px;color:var(--dim);margin-top:4px">High · Large cohort study · Published in Aging journal</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── F4: INSTANT LMN & PHYSICIAN ORDERS ── -->
+  <div class="feature-row alt">
+    <div class="fr-text slide-r">
+      <span class="fr-badge">📋 LMN &amp; Physician Orders</span>
+      <h2 class="fr-title">Letters of Medical Necessity and physician orders in hours, not weeks.</h2>
+      <p class="fr-desc">The #1 reason people can't access the products they need? Paperwork that takes weeks of back-and-forth. With Beim, choose your pathway at checkout — use our network physician ($35, signed in ~4 hours), get a template for your own doctor, or upload one you already have. Products unlock instantly.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('lmn-panels','beim',this)">Beim Network Physician</span>
+        <span class="fr-pill" onclick="switchPanel('lmn-panels','own',this)">Use Your Own Doctor</span>
+        <span class="fr-pill" onclick="switchPanel('lmn-panels','upload',this)">Upload Existing LMN</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-l">
+      <div id="lmn-panels">
+        <div class="fr-visual-panel active" data-pill="beim">
+          <div class="lmn-mockup">
+            <div class="lmn-mockup-title">📋 Beim Network Physician — $35</div>
+            <div class="lmn-opts">
+              <div class="lmn-opt active"><div class="lmn-opt-radio"></div><div class="lmn-opt-text"><strong>Beim network physician — $35 <span class="lmn-hsa-tag">HSA/FSA eligible</span></strong>Signed in ~4 hours. Short intake after checkout.</div></div>
+            </div>
+            <div class="lmn-timeline">
+              <div class="lmn-step"><div class="lmn-step-dot done">✓</div><div class="lmn-step-text">Select<br>products</div></div>
+              <div class="lmn-step-line"></div>
+              <div class="lmn-step"><div class="lmn-step-dot done">✓</div><div class="lmn-step-text">Choose<br>pathway</div></div>
+              <div class="lmn-step-line"></div>
+              <div class="lmn-step"><div class="lmn-step-dot" style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--gold)">⏳</div><div class="lmn-step-text">Physician<br>reviews</div></div>
+              <div class="lmn-step-line"></div>
+              <div class="lmn-step"><div class="lmn-step-dot">📋</div><div class="lmn-step-text">LMN<br>signed</div></div>
+              <div class="lmn-step-line"></div>
+              <div class="lmn-step"><div class="lmn-step-dot">🔓</div><div class="lmn-step-text">Product<br>unlocked</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="own">
+          <div class="lmn-mockup">
+            <div class="lmn-mockup-title">📄 Use Your Own Doctor</div>
+            <div class="lmn-opts">
+              <div class="lmn-opt active"><div class="lmn-opt-radio"></div><div class="lmn-opt-text"><strong>Auto-generated Letter of Medical Necessity</strong>We create a pre-filled template with your product details, ICD-10 codes, and clinical justification. Your doctor reviews, edits, and signs.</div></div>
+            </div>
+            <div style="margin-top:16px;background:rgba(61,217,182,.03);border:1px solid rgba(61,217,182,.12);border-radius:12px;padding:14px">
+              <div style="font-size:12px;color:rgba(240,240,255,.6);line-height:1.6;margin-bottom:10px">Template includes: <strong style="color:#fff">patient info, product details, ICD-10 codes, clinical justification, and signature block</strong>.</div>
+              <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.2);border-radius:9px;font-size:12px;font-weight:700;color:var(--green);cursor:pointer">📄 Download Template (PDF)</div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="upload">
+          <div class="lmn-mockup">
+            <div class="lmn-mockup-title">✅ Upload Existing LMN</div>
+            <div class="lmn-opts">
+              <div class="lmn-opt active"><div class="lmn-opt-radio"></div><div class="lmn-opt-text"><strong>Already have a Letter of Medical Necessity?</strong>No charge — upload at checkout. Ensure your HSA admin has it on file. Products ship immediately.</div></div>
+            </div>
+            <div style="margin-top:16px;border:2px dashed rgba(255,255,255,.12);border-radius:14px;padding:28px;text-align:center">
+              <div style="font-size:28px;margin-bottom:8px;opacity:.4">📋</div>
+              <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px">Drop your LMN here</div>
+              <div style="font-size:11px;color:var(--dim)">PDF, JPG, or PNG · Max 10MB</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── F5: SPLIT PAY ── -->
+  <div class="feature-row">
+    <div class="fr-text slide-l">
+      <span class="fr-badge">💳 HSA/OOP Split Pay</span>
+      <h2 class="fr-title">HSA/OOP split pay — your HSA covers what it can, debit covers the rest.</h2>
+      <p class="fr-desc">Split any purchase between your HSA/FSA card and a debit or credit card in one smooth transaction. No math, no separate checkouts, no confusion. We verify insurance first, then HSA, then debit — so you always pay the least possible out of pocket.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('split-panels','split',this)">Split Pay View</span>
+        <span class="fr-pill" onclick="switchPanel('split-panels','waterfall',this)">Payment Waterfall</span>
+        <span class="fr-pill" onclick="switchPanel('split-panels','receipt',this)">IRS Receipt</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-r">
+      <div id="split-panels">
+        <div class="fr-visual-panel active" data-pill="split">
+          <div class="split-mockup">
+            <div class="split-amount"><span class="hsa-val">$748 HSA</span><span class="plus">+</span><span class="oop-val">$52 OOP</span></div>
+            <div class="split-bar-wrap"><div class="split-bar-track"><div class="split-bar-hsa" style="width:93%"></div><div class="split-bar-oop" style="width:7%"></div></div><div class="split-labels"><div class="split-label"><span class="split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA/FSA — $748</span></div><div class="split-label"><span class="split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">Out of Pocket — $52</span></div></div></div>
+            <div class="split-features" style="margin-top:16px">
+              <div class="split-feat">One checkout — two payment sources</div>
+              <div class="split-feat">HSA card charged first, debit covers the rest</div>
+              <div class="split-feat">LMN fee ($35) also HSA/FSA eligible</div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="waterfall">
+          <div class="split-mockup">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:16px;text-align:center">Payment Waterfall — You Always Pay Least</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:12px"><span style="font-size:20px">🛡️</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">1. Insurance First</div><div style="font-size:11px;color:var(--muted)">$0 copay items deducted automatically</div></div><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)">-$0</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:12px"><span style="font-size:20px">💳</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">2. HSA/FSA Card</div><div style="font-size:11px;color:var(--muted)">Charged for eligible portion</div></div><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)">-$748</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.15);border-radius:12px"><span style="font-size:20px">💰</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">3. Debit/Credit</div><div style="font-size:11px;color:var(--muted)">Covers any remainder</div></div><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--gold)">$52</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="receipt">
+          <div class="split-mockup">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:16px;text-align:center">📧 IRS-Compliant HSA Receipt</div>
+            <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:12px">Receipt Preview</div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span style="color:var(--muted)">HSA Charged</span><span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--green)">$748.00</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span style="color:var(--muted)">Out of Pocket</span><span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--gold)">$52.00</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)"><span style="color:var(--muted)">LMN Fee (HSA eligible)</span><span style="font-family:'DM Mono',monospace;font-weight:600">$35.00</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding:8px 0;color:#fff"><span>Total</span><span style="font-family:'DM Mono',monospace">$835.00</span></div>
+            </div>
+            <div style="font-size:11px;color:var(--dim);margin-top:10px;text-align:center">Emailed automatically · IRS Publication 502 compliant</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── F6: PRODUCT INTELLIGENCE ── -->
+  <div class="feature-row alt">
+    <div class="fr-text slide-r">
+      <span class="fr-badge">🧠 Product Intelligence</span>
+      <h2 class="fr-title">Once you pick products, our AI makes sure they're right for you.</h2>
+      <p class="fr-desc">Before you checkout, your Care Navigator gives you a full clinical breakdown of every product — physician confidence, HSA math, LMN status, and an honest recommendation. Keep it, drop it, or ask more. This is the product intelligence layer that no other HSA platform offers.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('intel-panels','breakdown',this)">Clinical Breakdown</span>
+        <span class="fr-pill" onclick="switchPanel('intel-panels','decide',this)">Keep / Drop / Ask</span>
+        <span class="fr-pill" onclick="switchPanel('intel-panels','math',this)">HSA Math</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-l">
+      <div id="intel-panels">
+        <div class="fr-visual-panel active" data-pill="breakdown">
+          <div class="intel-mockup">
+            <div class="intel-header"><div class="intel-av"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks"/></div><div><div class="intel-nm">Brooks — Clinical Breakdown</div><div style="font-size:10px;color:var(--green);font-weight:600">Reviewing your rescue plan</div></div></div>
+            <div class="intel-msgs">
+              <div class="intel-msg nav">📊 <strong>Oura Ring 4 · Grade A</strong> · Gold Standard<br>Physician confidence: <strong>88%</strong><br>🎯 Targets: Sleep quality, HRV, stress recovery<br>💳 $349 — your HSA <strong>covers it completely</strong><br>📋 Needs LMN — $35, signed ~4 hours</div>
+              <div class="intel-msg usr">Is it worth the money compared to Whoop?</div>
+              <div class="intel-msg nav">Oura has 3 multi-RCTs for sleep tracking vs Whoop's 1. For your sleep goals, Oura is the stronger clinical match. I'd keep it.</div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="decide">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(100,84,240,.18);border-radius:18px;overflow:hidden">
+            <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06)"><div style="font-size:13px;font-weight:700;color:#fff">Your Rescue Plan — 4 Products</div></div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:10px"><div style="width:24px;height:24px;border-radius:50%;background:rgba(61,217,182,.1);border:1.5px solid rgba(61,217,182,.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--green)">A</div><div style="flex:1;font-size:12px;font-weight:600;color:#fff">Oura Ring 4</div><span style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(61,217,182,.1);color:var(--green)">✓ Kept</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:10px"><div style="width:24px;height:24px;border-radius:50%;background:rgba(61,217,182,.1);border:1.5px solid rgba(61,217,182,.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--green)">A</div><div style="flex:1;font-size:12px;font-weight:600;color:#fff">Theragun Pro</div><span style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(61,217,182,.1);color:var(--green)">✓ Kept</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:10px;opacity:.5"><div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--dim)">B</div><div style="flex:1;font-size:12px;font-weight:600;color:var(--muted)">AG1 Greens</div><span style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.05);color:var(--dim)">✕ Dropped</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(100,84,240,.04);border:1px solid rgba(100,84,240,.15);border-radius:10px"><div style="width:24px;height:24px;border-radius:50%;background:rgba(100,84,240,.1);border:1.5px solid rgba(100,84,240,.25);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--purple)">A</div><div style="flex:1;font-size:12px;font-weight:600;color:#fff">ProLon 5-Day</div><span style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(100,84,240,.08);color:var(--purple)">⟳ Reviewing</span></div>
+            </div>
+            <div style="padding:0 16px 14px;display:flex;gap:6px"><button class="intel-btn keep">✓ Keep</button><button class="intel-btn drop">✕ Remove</button><button class="intel-btn ask">Ask Brooks</button></div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="math">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(100,84,240,.18);border-radius:18px;padding:20px">
+            <div style="font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px">HSA Math — Your Rescue</div>
+            <div style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:16px">HSA Balance: $3,240</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px"><div><div style="font-size:12px;font-weight:700;color:#fff">Oura Ring 4</div><div style="font-size:10px;color:var(--dim)">Grade A · LMN</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--green)">HSA: $349</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--dim)">OOP: $0</div></div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px"><div><div style="font-size:12px;font-weight:700;color:#fff">Theragun Pro</div><div style="font-size:10px;color:var(--dim)">Grade A · Direct</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--green)">HSA: $399</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--dim)">OOP: $0</div></div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px"><div><div style="font-size:12px;font-weight:700;color:#fff">LMN Fee</div><div style="font-size:10px;color:var(--dim)">Network physician</div></div><div style="text-align:right"><div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--green)">HSA: $35</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--dim)">OOP: $0</div></div></div>
+            </div>
+            <div style="margin-top:14px;padding:14px;background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.18);border-radius:12px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--muted)">Total</span><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:#fff">$783</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--muted)">HSA Covers</span><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)">$783</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--muted)">Out of Pocket</span><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)">$0 ✓</span></div>
+              <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:6px"><span style="font-size:12px;color:var(--muted)">HSA After</span><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--cyan)">$2,457</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  </div>
+
+
+  
+  <div class="section-divider"></div>
+
+  <!-- ── F7: INSURANCE & BENEFITS CHECKER ── -->
+  <div class="feature-row">
+    <div class="fr-text slide-l">
+      <span class="fr-badge">🛡️ Insurance &amp; Benefits Checker</span>
+      <h2 class="fr-title">We pull your full benefits picture — so you never buy what insurance already covers.</h2>
+      <p class="fr-desc">Before you spend a dollar, Beim connects to your employer's benefits system through Finch and verifies your insurance eligibility through Stedi. We pull your exact HSA and FSA balances, check what your insurance covers at $0, and build a complete picture — so your Care Navigator can tell you precisely what to pay with insurance, what to pay with HSA, and what's truly out of pocket.</p>
+      <div class="fr-pills">
+        <span class="fr-pill active" onclick="switchPanel('ins-panels','benefits',this)">Benefits Pull</span>
+        <span class="fr-pill" onclick="switchPanel('ins-panels','eligibility',this)">Insurance Eligibility</span>
+        <span class="fr-pill" onclick="switchPanel('ins-panels','waterfall',this)">Smart Payment Order</span>
+      </div>
+    </div>
+    <div class="fr-visual slide-r">
+      <div id="ins-panels">
+        <div class="fr-visual-panel active" data-pill="benefits">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(61,217,182,.18);border-radius:20px;padding:24px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px"><span style="font-size:18px">🔗</span><div style="font-size:14px;font-weight:700;color:#fff">Benefits Connected</div><span style="font-size:10px;font-weight:700;color:var(--green);background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.2);padding:3px 8px;border-radius:100px">✓ Verified via Finch</span></div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:14px"><span style="font-size:20px">💳</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">HSA Balance</div><div style="font-size:11px;color:var(--muted)">HealthEquity · Auto-synced</div></div><span style="font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:var(--green)">$3,240</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:14px"><span style="font-size:20px">🏥</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">Insurance Plan</div><div style="font-size:11px;color:var(--muted)">Blue Cross PPO · In-network verified</div></div><span style="font-size:11px;font-weight:700;color:var(--green);background:rgba(61,217,182,.1);padding:3px 10px;border-radius:100px">Active</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:14px"><span style="font-size:20px">📋</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">FSA Balance</div><div style="font-size:11px;color:var(--muted)">Employer-funded · Expires Dec 31</div></div><span style="font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:var(--gold)">$820</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(110,224,245,.03);border:1px solid rgba(110,224,245,.1);border-radius:14px"><span style="font-size:20px">👤</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">Employer</div><div style="font-size:11px;color:var(--muted)">Connected via Finch API</div></div><span style="font-size:11px;font-weight:600;color:var(--cyan)">Acme Corp</span></div>
+            </div>
+            <div style="margin-top:14px;font-size:10px;color:var(--dim);text-align:center">Powered by Finch · Connects to 200+ payroll providers · Read-only access</div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="eligibility">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(100,84,240,.18);border-radius:20px;padding:24px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px"><span style="font-size:18px">🩺</span><div style="font-size:14px;font-weight:700;color:#fff">Insurance Eligibility Check</div><span style="font-size:10px;font-weight:700;color:var(--green);background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.2);padding:3px 8px;border-radius:100px">✓ Via Stedi</span></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:12px 14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:12px;font-weight:700;color:#fff">Annual Blood Panel</div><span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--green)">$0 copay</span></div><div style="font-size:10px;color:var(--green);margin-top:2px">✓ Covered by insurance — don't use HSA</div></div>
+              <div style="padding:12px 14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:12px;font-weight:700;color:#fff">Annual Wellness Visit</div><span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--green)">$0 copay</span></div><div style="font-size:10px;color:var(--green);margin-top:2px">✓ Preventive care — fully covered</div></div>
+              <div style="padding:12px 14px;background:rgba(245,158,11,.03);border:1px solid rgba(245,158,11,.12);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:12px;font-weight:700;color:#fff">Theragun Pro</div><span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--gold)">$399 HSA</span></div><div style="font-size:10px;color:var(--gold);margin-top:2px">Not covered by insurance — use HSA</div></div>
+              <div style="padding:12px 14px;background:rgba(245,158,11,.03);border:1px solid rgba(245,158,11,.12);border-radius:12px"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:12px;font-weight:700;color:#fff">Oura Ring 4</div><span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--gold)">$349 HSA + LMN</span></div><div style="font-size:10px;color:var(--gold);margin-top:2px">Requires LMN — then HSA eligible</div></div>
+            </div>
+            <div style="margin-top:14px;font-size:10px;color:var(--dim);text-align:center">Powered by Stedi · Real-time eligibility verification · 1,800+ payers</div>
+          </div>
+        </div>
+        <div class="fr-visual-panel" data-pill="waterfall">
+          <div style="background:rgba(15,15,28,.65);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:24px">
+            <div style="font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:6px">Smart Payment Order</div>
+            <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:18px">We always pay from the cheapest source first</div>
+            <div style="display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.18);border-radius:14px 14px 4px 4px"><div style="width:40px;height:40px;border-radius:50%;background:rgba(61,217,182,.12);border:2px solid rgba(61,217,182,.3);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--green);flex-shrink:0">1</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">Insurance — $0</div><div style="font-size:11px;color:var(--muted)">Preventive screenings, wellness visits, labs — all covered</div></div><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--green)">FREE</span></div>
+              <div style="width:2px;height:12px;background:rgba(255,255,255,.1);margin-left:35px"></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(110,224,245,.04);border:1px solid rgba(110,224,245,.12);border-radius:4px"><div style="width:40px;height:40px;border-radius:50%;background:rgba(110,224,245,.08);border:2px solid rgba(110,224,245,.2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--cyan);flex-shrink:0">2</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">HSA/FSA — Pre-tax</div><div style="font-size:11px;color:var(--muted)">Tax-free dollars for eligible products (save 25–35%)</div></div><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--cyan)">$748</span></div>
+              <div style="width:2px;height:12px;background:rgba(255,255,255,.1);margin-left:35px"></div>
+              <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.12);border-radius:4px 4px 14px 14px"><div style="width:40px;height:40px;border-radius:50%;background:rgba(245,158,11,.08);border:2px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--gold);flex-shrink:0">3</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#fff">Out of Pocket — Last resort</div><div style="font-size:11px;color:var(--muted)">Debit/credit only for what's left after insurance + HSA</div></div><span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--gold)">$52</span></div>
+            </div>
+            <div style="margin-top:16px;padding:12px;background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.18);border-radius:10px;text-align:center"><span style="font-size:12px;font-weight:700;color:var(--green)">You saved $748 in pre-tax dollars + $0 copay items</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ── HOW IT WORKS ── -->
+  <section class="how-bg" id="how">
+    <div class="slide-up"><span class="section-tag">The Journey</span><h2 class="section-title">From balance to products<br>in six steps.</h2><p class="section-sub">No spreadsheets. No expired benefits. No guesswork. Your Care Navigator unlocks the entire journey.</p></div>
+    <div class="steps-grid slide-up" id="stepsGrid">
+      <div class="step-card"><span class="step-num">01 —</span><div class="step-icon-wrap c1"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Care Navigator" class="step-icon-img"/></div><div class="step-title">Meet Your Care Navigator</div><p class="step-desc">Choose Everly or Brooks as your personal guide. They walk you through the entire process — from entering your balance to finding products, handling LMNs, and checkout.</p><span class="step-badge">✨ Guided from start to finish</span></div>
+      <div class="step-card"><span class="step-num">02 —</span><div class="step-icon-wrap c2">💳</div><div class="step-title">Enter Your HSA / FSA Balance</div><p class="step-desc">Tell us your HSA or FSA balance — and remember, FSA funds can expire at year-end. We unlock products competitors can't, through Letters of Medical Necessity and physician orders that open the door to 1,000+ eligible items.</p><span class="step-badge">⏳ Don't let funds expire</span></div>
+      <div class="step-card"><span class="step-num">03 —</span><div class="step-icon-wrap c3">📋</div><div class="step-title">Benefits Summary Review</div><p class="step-desc">Before spending a dime, your navigator generates a clear summary of your benefits — so you know what insurance covers, what your HSA can buy, and what you'd pay out of pocket. No surprises.</p><span class="step-badge">🔍 Zero overpayment</span></div>
+      <div class="step-card"><span class="step-num">04 —</span><div class="step-icon-wrap c4">🎯</div><div class="step-title">Set Health Goals &amp; AI Precision Matching</div><p class="step-desc">Set your personal health goals and our AI narrows down the full catalog to the products that matter most to you. Every recommendation is graded A–D on the Beim Clinical Evidence Level rubric — you see the science, not just marketing.</p><span class="step-badge">🧠 Clinically graded results</span></div>
+      <div class="step-card"><span class="step-num">05 —</span><div class="step-icon-wrap c5">🤝</div><div class="step-title">Flexible Checkout Options</div><p class="step-desc">Split any purchase between your HSA/FSA and a debit card, or join a Community Pool — group up with other buyers on the same product and unlock a lower price together.</p><span class="step-badge">💰 Split pay + group discounts</span></div>
+      <div class="step-card"><span class="step-num">06 —</span><div class="step-icon-wrap c6">🔬</div><div class="step-title">Precision Portal</div><p class="step-desc">For deeper personalization, connect your biometrics, lab results, and doctor documents in our HIPAA-compliant portal. The AI uses your real health data for truly precise product matching.</p><span class="step-badge">🏥 Biometrics + Labs + Docs</span></div>
+    </div>
+  </section>
+
+  <!-- ══ TESTIMONIALS ══ -->
+  <section id="testimonials">
+    <div class="slide-up"><span class="section-tag">Success Stories</span><h2 class="section-title">Real people. New products.<br>Unlocked for the first time.</h2></div>
+    <div class="testi-grid slide-up">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"I had no idea my HSA could buy an Oura Ring or a fasting kit. Beim matched me with 14 products I never would have found — and handled the Letter of Medical Necessity for all of them."</p><div class="testi-author"><div class="testi-av"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68c999ea1c04e08164421989_Provider%20(512%20x%20512%20px)%20(40%20x%2040%20px)%20(3).png" alt="Sarah M."/></div><div><div class="testi-name">Sarah M.</div><div class="testi-role">Marketing Director · Austin, TX</div></div><div class="testi-metric"><div class="testi-metric-val">14</div><div class="testi-metric-label">products unlocked</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"The Letter of Medical Necessity was the game changer. I got a signed letter for my CPAP supplies in 4 hours. That used to mean 3 weeks of playing phone tag with my doctor."</p><div class="testi-author"><div class="testi-av"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68c999c44d25177c5c6d7805_Provider%20(512%20x%20512%20px)%20(40%20x%2040%20px)%20(2).png" alt="James R."/></div><div><div class="testi-name">James R.</div><div class="testi-role">Software Engineer · Denver, CO</div></div><div class="testi-metric"><div class="testi-metric-val">4 hrs</div><div class="testi-metric-label">vs. 3 weeks</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"My team saved 30% through the Community Pool on a group wellness purchase. The clinical grading made it easy to pick the right products — real evidence, not just marketing."</p><div class="testi-author"><div class="testi-av"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68c998f4dc5f1ed543882261_Provider%20(512%20x%20512%20px)%20(3).png" alt="Lisa K."/></div><div><div class="testi-name">Lisa K.</div><div class="testi-role">HR Benefits Manager · Seattle, WA</div></div><div class="testi-metric"><div class="testi-metric-val">30%</div><div class="testi-metric-label">group savings</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <div class="cta-wrap" id="cta">
+    <span class="section-tag">Start Unlocking</span>
+    <h2 class="section-title">Thousands of products are waiting behind a wall of paperwork.<br><span class="grad">Let's tear it down.</span></h2>
+    <p class="section-sub">Enter your balance and your Care Navigator will match you with clinically graded products — and handle the LMN and physician orders to unlock them.</p>
+    <div class="hsa-bar"><span class="hsa-prefix">$</span><input class="hsa-input" type="number" placeholder="0.00" id="hsaIn"/><button class="hsa-btn" onclick="goNav()">Unlock My Products →</button></div>
+    <p class="cta-micro">No account required · No data stored · HIPAA-compliant</p>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-brand-logo">Beim Health</a>
+        <p class="footer-tagline">We unlock products your HSA and FSA can buy — with AI-powered clinical grading, Letters of Medical Necessity, and a personal Care Navigator.</p>
+        <a href="https://www.beim.ai/start" class="footer-cta-btn">Unlock My Products →</a>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/profile.php?id=61578840364487" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a2e3c8654df8d0a3b_facebook-icon-logo-png-transparent.png" alt="Facebook"/></a>
+          <a href="https://www.youtube.com/@BeimHealth" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09aa6694417fa32be52_Youtube_logo.png" alt="YouTube"/></a>
+          <a href="https://www.tiktok.com/@beim_health" target="_blank" rel="noopener" class="footer-social-link" aria-label="TikTok"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09adce691913c58d4e1_15f9f8356f985754c1fbe4824c6e770d.jpg" alt="TikTok"/></a>
+          <a href="https://www.instagram.com/beim_health/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a26cffc65b9613863_instagram%20logo.jpg" alt="Instagram"/></a>
+          <a href="https://www.linkedin.com/company/beim-health/?viewAsMember=true" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09ac7dd69a0b52a5b00_LI-In-Bug.png" alt="LinkedIn"/></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links-list">
+          <li><a href="https://www.beim.ai/">Home</a></li>
+          <li><a href="https://www.beim.ai/about">About Us</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="https://www.beim.ai/terms-of-service">Terms of Service</a></li>
+          <li><a href="https://www.beim.ai/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://www.beim.ai/shipping-policy">Shipping Policy</a></li>
+          <li><a href="https://www.beim.ai/refund-return-policy">Refund &amp; Return Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links-list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="https://www.beim.ai/marketplace">Marketplace</a></li>
+          <li><a href="https://www.beim.ai/community-pool">Community Pool</a></li>
+          <li><a href="https://beta.joinfreely.com/beim-patient-portal">Patient Portal</a></li>
+          <li><a href="https://www.beim.ai/start">Start Your Journey</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">For Partners</div>
+        <ul class="footer-links-list">
+          <li><a href="https://www.beim.ai/for-brokers">For Brokers</a></li>
+          <li><a href="https://www.beim.ai/for-employers">For Employers</a></li>
+          <li><a href="https://www.beim.ai/for-clinics">For Clinics</a></li>
+          <li><a href="https://www.beim.ai/for-investors">Investor Inquiries</a></li>
+          <li><a href="mailto:partnerships@beim.ai">Partnership Inquiries</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-item"><a href="mailto:support@beim.ai">support@beim.ai</a></div>
+        <div class="footer-contact-item">5900 Balcones Dr<br>Austin, TX 78731</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 All rights reserved. Beim Health, LLC.</span>
+      <div class="footer-legal-links">
+        <a href="https://www.beim.ai/privacy-policy">Privacy</a>
+        <a href="https://www.beim.ai/terms-of-service">Terms</a>
+        <a href="https://www.beim.ai/shipping-policy">Shipping</a>
+        <a href="https://www.beim.ai/refund-return-policy">Returns</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Smooth scroll ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id==='#')return;const t=document.querySelector(id);if(!t)return;e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-64,behavior:'smooth'})})});
+
+    /* ── Scroll-triggered animations ── */
+    const animEls=document.querySelectorAll('.slide-l,.slide-r,.slide-up');
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in-view')})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+    animEls.forEach(el=>obs.observe(el));
+
+    /* ── Stat strip counter ── */
+    const statItems=document.querySelectorAll('.stat-item');
+    const statObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('counted');statObs.unobserve(e.target)})},{threshold:0.3});
+    statItems.forEach(el=>statObs.observe(el));
+
+    /* ── Navigator switcher ── */
+    const navData={
+      ev:{
+        img:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',
+        name:'Everly — Care Navigator',
+        msgs:[
+          {type:'nav',text:'Hey Sarah! I see your HSA has $2,400 available. Based on your goals — <strong>hair health, sleep, and stress</strong> — I\'ve found 8 products that match. Want me to walk you through them?'},
+          {type:'usr',text:'Yes! Show me what\'s available.'},
+          {type:'nav',text:'Here are your top 3. Each is CEL Grade A with physician confidence above 85%. I\'ll handle the LMN for all of them — $35, signed in ~4 hours.'},
+          {type:'chips',items:['💊 Nutrafol Women · $88','⌚ Oura Ring 4 · $349','🧴 SkinCeuticals · $182']}
+        ]
+      },
+      br:{
+        img:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png',
+        name:'Brooks — Care Navigator',
+        msgs:[
+          {type:'nav',text:'Hey James! Your HSA has $3,240. I matched you against your goals — <strong>recovery, testosterone, and sleep</strong> — and found 12 products. Ready to see the best fits?'},
+          {type:'usr',text:'Show me the top picks.'},
+          {type:'nav',text:'Here are your top 3. All Grade A with physician confidence above 82%. Two need an LMN — I handle that for $35, signed in ~4 hours.'},
+          {type:'chips',items:['🏋️ Theragun Pro · $399','⌚ Whoop 4.0 · $239','💤 Eight Sleep · $2,049']}
+        ]
+      }
+    };
+
+    function switchNav(key){
+      document.querySelectorAll('.nav-card-mini').forEach(c=>{c.classList.remove('active')});
+      document.querySelector('.nav-card-mini.'+key).classList.add('active');
+      const d=navData[key];
+      document.getElementById('ncpAvImg').src=d.img;
+      document.getElementById('ncpNm').textContent=d.name;
+      const mc=document.getElementById('ncpMsgs');
+      mc.innerHTML='';
+      d.msgs.forEach((m,i)=>{
+        const el=document.createElement('div');
+        if(m.type==='chips'){
+          el.className='ncp-chips';
+          m.items.forEach(t=>{const s=document.createElement('span');s.className='ncp-chip';s.textContent=t;el.appendChild(s)});
+        }else{
+          el.className='ncp-msg '+(m.type==='nav'?'nav-msg':'usr-msg');
+          el.innerHTML=m.text;
+        }
+        el.style.animationDelay=(i*0.15)+'s';
+        mc.appendChild(el);
+      });
+    }
+
+    /* ── CTA navigation ── */
+
+    const stepCards=document.querySelectorAll('.step-card');
+    const stepsGrid=document.getElementById('stepsGrid');
+    if(stepsGrid){const sObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;stepCards.forEach((c,i)=>setTimeout(()=>c.classList.add('slide-in'),i*120));sObs.unobserve(e.target)})},{threshold:0.08});sObs.observe(stepsGrid);}
+
+
+    function switchPanel(containerId,panelName,el){
+      var container=document.getElementById(containerId);
+      if(!container)return;
+      container.querySelectorAll('.fr-visual-panel').forEach(function(p){p.classList.remove('active')});
+      var target=container.querySelector('[data-pill="'+panelName+'"]');
+      if(target)target.classList.add('active');
+      var pills=el.parentElement.querySelectorAll('.fr-pill');
+      pills.forEach(function(p){p.classList.remove('active')});
+      el.classList.add('active');
+    }
+
+    function goNav(){
+      const v=document.getElementById('hsaIn').value;
+      window.location.href=v?`https://www.beim.ai/start?balance=${encodeURIComponent(v)}&acct=HSA`:'https://www.beim.ai/start';
+    }
+    document.getElementById('hsaIn').addEventListener('keydown',e=>{if(e.key==='Enter')goNav()});
+  </script>
+</body>
+</html>
