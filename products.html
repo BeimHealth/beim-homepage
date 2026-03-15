@@ -33,10 +33,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ch-status{font-size:11px;color:var(--gn);font-weight:600}
 
 /* Triage step indicator */
-.triage-steps{display:flex;gap:4px;flex-shrink:0}
-.ts{display:flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);color:var(--dm);transition:all .4s}
-.ts.active{background:rgba(124,106,240,.1);border-color:rgba(124,106,240,.25);color:var(--pu)}
-.ts.done{background:rgba(61,217,182,.06);border-color:rgba(61,217,182,.18);color:var(--gn)}
+.step-indicator{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
+.step-dot.done{background:var(--gn)}
+.step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
 
 /* ── MESSAGES ── */
 .messages{flex:1;overflow-y:auto;padding:20px 24px 120px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
@@ -142,7 +142,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .tally-clear{background:none;border:1px solid rgba(255,255,255,.1);color:var(--dm);padding:11px 14px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;cursor:pointer}
 
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:680px){.messages{padding:16px 16px 120px}.chat-header{padding:12px 16px}.bubble{font-size:13px;padding:10px 14px;max-width:95%}.prod-grid{grid-template-columns:1fr}.triage-steps{display:none}.tally-bar{padding:10px 16px;gap:10px}}
+@media(max-width:680px){.messages{padding:16px 16px 120px}.chat-header{padding:12px 16px}.bubble{font-size:13px;padding:10px 14px;max-width:95%}.prod-grid{grid-template-columns:1fr}.step-indicator{display:none}.tally-bar{padding:10px 16px;gap:10px}}
 </style>
 </head>
 <body>
@@ -152,10 +152,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
     <a class="ch-back" href="goals.html" title="Back">←</a>
     <div class="ch-avatar" id="headerAvatar"></div>
     <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status">Unlocking Session</div></div>
-    <div class="triage-steps">
-      <span class="ts active" id="ts1">🛡️ Insurance</span>
-      <span class="ts" id="ts2">💳 HSA</span>
-      <span class="ts" id="ts3">⚡ Gaps</span>
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
     </div>
   </div>
   <div class="messages" id="messages"></div>
@@ -364,7 +367,7 @@ function startSession(){
 
 /* ── PHASE 1: Insurance Unlocks ── */
 function runPhase1(){
-  PHASE=1;document.getElementById('ts1').classList.add('active');
+  PHASE=1;
   var insProducts=allProducts.filter(function(p){return p._insMatch&&p._score>0});
   if(!insProducts.length){
     addNavBubble("No insurance-matched products found based on your profile. Let's move to your HSA.");
@@ -383,8 +386,8 @@ function runPhase1(){
 /* ── PHASE 2: HSA Optimization ── */
 function runPhase2(){
   PHASE=2;
-  document.getElementById('ts1').classList.remove('active');document.getElementById('ts1').classList.add('done');
-  document.getElementById('ts2').classList.add('active');
+  
+  
   var remaining=bal-getHsaAllocated();
   var hsaProducts=allProducts.filter(function(p){
     return!p._insMatch&&p._score>0&&p._goalMatch&&p.hsa_fsa_eligible==='Yes'&&p._price<=remaining+100;
@@ -408,8 +411,8 @@ function runPhase2(){
 /* ── PHASE 3: Performance Gaps ── */
 function runPhase3(){
   PHASE=3;
-  document.getElementById('ts2').classList.remove('active');document.getElementById('ts2').classList.add('done');
-  document.getElementById('ts3').classList.add('active');
+  
+  
 
   var alreadyShown=new Set();
   allProducts.forEach(function(p){if(p._insMatch||p._goalMatch)alreadyShown.add(p.product_name)});
@@ -434,7 +437,7 @@ function advancePhase(phase){
 
 function finishSession(){
   lockBtns();
-  document.getElementById('ts3').classList.remove('active');document.getElementById('ts3').classList.add('done');
+  
   PHASE=4;
   var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0;
   selectedProducts.forEach(function(p){
