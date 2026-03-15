@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Choose Your Care Navigator — Beim Health</title>
+<meta name="description" content="Meet your AI Care Navigator. They'll unlock products your HSA/FSA can buy, handle Letters of Medical Necessity and physician orders, and give you access to products you never knew existed."/>
+<meta property="og:title" content="Choose Your Care Navigator — Beim Health"/>
+<meta property="og:description" content="We unlock products your HSA/FSA can buy. Your Care Navigator handles LMNs, physician orders, and gives you access to 1,000+ clinically graded products."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#060610;--surface:rgba(14,14,28,.88);--card:rgba(16,16,32,.65);--card-hover:rgba(20,20,40,.75);--border:rgba(255,255,255,.07);--border-h:rgba(255,255,255,.14);--cyan:#6ee0f5;--purple:#7c6af0;--blue:#6aa3f3;--green:#3dd9b6;--gold:#f5a623;--red:#f56565;--text:#f0f0ff;--muted:#8a8da8;--dim:#5a5d78;--faint:#3d3f56;--cyd:rgba(110,224,245,.06);--pud:rgba(124,106,240,.08);--bdc:rgba(110,224,245,.18);--bdp:rgba(124,106,240,.22);--grd:rgba(61,217,182,.06);--bdr-g:rgba(61,217,182,.15);--radius:20px;--radius-s:14px;--radius-xs:10px;--ease:cubic-bezier(.16,1,.3,1);--ease-out:cubic-bezier(.33,1,.68,1);--ease-spring:cubic-bezier(.34,1.56,.64,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+
+/* ── AMBIENT BACKGROUND ── */
+.bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 15% 10%,rgba(124,106,240,.07),transparent 70%),radial-gradient(ellipse 600px 500px at 85% 75%,rgba(110,224,245,.045),transparent 70%),radial-gradient(ellipse 400px 350px at 50% 45%,rgba(61,217,182,.025),transparent 70%),radial-gradient(ellipse 300px 300px at 70% 20%,rgba(106,163,243,.03),transparent 70%);animation:meshDrift 35s ease-in-out infinite alternate}
+@keyframes meshDrift{0%{transform:translate(0,0) scale(1) rotate(0deg)}100%{transform:translate(30px,-20px) scale(1.03) rotate(.5deg)}}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 15%,transparent 100%);pointer-events:none;z-index:0}
+.noise{position:fixed;inset:0;z-index:0;opacity:.016;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
+.scanline{position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.003) 2px,rgba(255,255,255,.003) 4px)}
+
+/* ── LAYOUT ── */
+.page{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:48px 32px 80px;min-height:100vh}
+
+/* ── TOP BAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:52px;animation:fu .55s ease both}
+.logo{font-size:21px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px;text-decoration:none}
+.step-indicator{display:flex;align-items:center;gap:6px}
+.step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
+.step-dot.active{background:linear-gradient(90deg,var(--cyan),var(--purple));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
+.step-dot.done{background:var(--green)}
+
+/* ── HERO ── */
+.hero-section{text-align:center;margin-bottom:44px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.22);padding:7px 18px;border-radius:100px;margin-bottom:24px;animation:fu .5s .06s ease both}
+.hero-badge-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(61,217,182,.4)}50%{opacity:.7;box-shadow:0 0 0 7px rgba(61,217,182,0)}}
+.hero-badge-text{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(240,240,255,.8)}
+h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.06;letter-spacing:-2.2px;color:#fff;margin-bottom:18px;animation:fu .5s .1s ease both}
+.grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:rgba(240,240,255,.56);line-height:1.75;max-width:520px;margin:0 auto;font-weight:400;animation:fu .5s .16s ease both}
+.value-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:24px;animation:fu .5s .2s ease both}
+.vp{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(240,240,255,.55);padding:7px 16px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:all .3s var(--ease)}
+.vp:hover{border-color:rgba(110,224,245,.15);background:rgba(110,224,245,.04);color:rgba(240,240,255,.7)}
+.vp-icon{font-size:14px}
+
+/* ── SOCIAL PROOF ── */
+.social-proof{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:28px;margin-bottom:8px;animation:fu .5s .22s ease both}
+.sp-stat{text-align:center;padding:0 16px}
+.sp-stat:not(:last-child){border-right:1px solid rgba(255,255,255,.06)}
+.sp-num{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:4px}
+.sp-label{font-size:11px;color:var(--dim);font-weight:500;line-height:1.3}
+
+/* ── CAPTURE CARD ── */
+.capture-card{max-width:500px;margin:36px auto 40px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 26px 24px;backdrop-filter:blur(28px);animation:fu .55s .24s ease both;transition:border-color .4s,box-shadow .4s;position:relative;overflow:hidden}
+.capture-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(110,224,245,.15),rgba(124,106,240,.15),transparent);opacity:0;transition:opacity .4s}
+.capture-card:focus-within{border-color:rgba(110,224,245,.15);box-shadow:0 16px 64px rgba(0,0,0,.3),0 0 0 1px rgba(110,224,245,.06)}
+.capture-card:focus-within::before{opacity:1}
+.capture-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.capture-header-icon{width:36px;height:36px;border-radius:11px;background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.12);display:flex;align-items:center;justify-content:center;font-size:15px}
+.capture-header-text{font-size:14px;font-weight:700;color:rgba(240,240,255,.8)}
+.capture-header-secure{margin-left:auto;font-size:10px;font-weight:600;color:rgba(61,217,182,.55);display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.1)}
+.input-row{display:flex;gap:10px;margin-bottom:6px}
+.field-wrap{flex:1;position:relative}
+.capture-input{width:100%;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);border-radius:var(--radius-s);padding:13px 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:all .3s var(--ease)}
+.capture-input::placeholder{color:var(--dim);font-weight:400}
+.capture-input:focus{border-color:rgba(110,224,245,.35);box-shadow:0 0 0 3px rgba(110,224,245,.06);background:rgba(255,255,255,.055)}
+.capture-input.error{border-color:rgba(255,100,100,.4);box-shadow:0 0 0 3px rgba(255,100,100,.06)}
+.capture-input.success{border-color:rgba(61,217,182,.3)}
+.field-label{position:absolute;top:-8px;left:14px;font-size:10px;font-weight:600;color:var(--dim);background:linear-gradient(180deg,var(--bg) 50%,transparent 50%);padding:0 6px;opacity:0;transition:opacity .25s;pointer-events:none}
+.capture-input:focus ~ .field-label,.capture-input:not(:placeholder-shown) ~ .field-label{opacity:1}
+.capture-input:focus ~ .field-label{color:var(--cyan)}
+.field-error{font-size:11px;color:rgba(255,100,100,.75);height:16px;margin-bottom:2px;transition:opacity .2s;padding-left:2px}
+.employer-row{margin-bottom:4px}
+.employer-hint{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim);margin-top:6px;margin-bottom:16px;line-height:1.5}
+.finch-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;color:rgba(61,217,182,.6);background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.1);padding:2px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+.optin-row{display:flex;align-items:flex-start;gap:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.04)}
+.optin-check{width:16px;height:16px;min-width:16px;margin-top:2px;accent-color:var(--cyan);cursor:pointer;border-radius:4px}
+.optin-label{font-size:11px;color:rgba(240,240,255,.42);line-height:1.55;cursor:pointer}
+.optin-label a{color:var(--cyan);text-decoration:none;transition:color .2s}
+.optin-label a:hover{color:#fff}
+
+/* ── DIVIDER ── */
+.choose-label{text-align:center;margin-bottom:24px;animation:fu .5s .28s ease both}
+.choose-label-text{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:10px}
+.choose-label-line{width:48px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+
+/* ── NAVIGATOR CARDS ── */
+.nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px;animation:fu .55s .3s ease both}
+.nav-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 24px 24px;cursor:pointer;transition:all .4s var(--ease);overflow:hidden;text-align:center;user-select:none;backdrop-filter:blur(24px)}
+.nav-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .4s}
+.nav-card::after{content:'';position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity .4s;pointer-events:none}
+.nav-card:hover{transform:translateY(-5px);border-color:var(--border-h);box-shadow:0 24px 80px rgba(0,0,0,.4)}
+.nav-card:hover::before{opacity:1}
+.nav-card.disabled{pointer-events:none;opacity:.4}
+.nav-card.everly::before{background:linear-gradient(90deg,transparent,var(--cyan),var(--blue),transparent)}
+.nav-card.everly::after{background:radial-gradient(ellipse at 50% 0%,rgba(110,224,245,.035),transparent 60%)}
+.nav-card.everly:hover,.nav-card.everly.selected{border-color:rgba(110,224,245,.25)}
+.nav-card.everly:hover::after,.nav-card.everly.selected::after{opacity:1}
+.nav-card.everly.selected{border-color:rgba(110,224,245,.4);box-shadow:0 24px 80px rgba(110,224,245,.06),0 0 0 1px rgba(110,224,245,.1)}
+.nav-card.everly.selected::before{opacity:1}
+.nav-card.brooks::before{background:linear-gradient(90deg,transparent,var(--purple),var(--blue),transparent)}
+.nav-card.brooks::after{background:radial-gradient(ellipse at 50% 0%,rgba(124,106,240,.035),transparent 60%)}
+.nav-card.brooks:hover,.nav-card.brooks.selected{border-color:rgba(124,106,240,.25)}
+.nav-card.brooks:hover::after,.nav-card.brooks.selected::after{opacity:1}
+.nav-card.brooks.selected{border-color:rgba(124,106,240,.4);box-shadow:0 24px 80px rgba(124,106,240,.06),0 0 0 1px rgba(124,106,240,.1)}
+.nav-card.brooks.selected::before{opacity:1}
+.avatar-wrap{position:relative;width:84px;height:84px;margin:0 auto 14px}
+.avatar-ring{width:84px;height:84px;border-radius:50%;overflow:hidden;position:relative;transition:box-shadow .4s}
+.everly .avatar-ring{border:2px solid rgba(110,224,245,.18);box-shadow:0 0 24px rgba(110,224,245,.04)}
+.brooks .avatar-ring{border:2px solid rgba(124,106,240,.18);box-shadow:0 0 24px rgba(124,106,240,.04)}
+.nav-card.everly:hover .avatar-ring,.nav-card.everly.selected .avatar-ring{box-shadow:0 0 48px rgba(110,224,245,.12)}
+.nav-card.brooks:hover .avatar-ring,.nav-card.brooks.selected .avatar-ring{box-shadow:0 0 48px rgba(124,106,240,.12)}
+.avatar-img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.online-dot{position:absolute;bottom:3px;right:3px;width:13px;height:13px;border-radius:50%;background:var(--green);border:2.5px solid var(--bg);box-shadow:0 0 10px rgba(61,217,182,.5);z-index:2}
+.nav-name{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:2px}
+.nav-role{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.everly .nav-role{color:var(--cyan)}.brooks .nav-role{color:var(--purple)}
+.nav-focus{display:inline-flex;font-size:10px;font-weight:700;padding:5px 14px;border-radius:100px;margin-bottom:14px;letter-spacing:.3px}
+.everly .nav-focus{background:var(--cyd);border:1px solid var(--bdc);color:var(--cyan)}
+.brooks .nav-focus{background:var(--pud);border:1px solid var(--bdp);color:var(--purple)}
+.nav-quote{font-size:13px;font-style:italic;color:rgba(240,240,255,.52);line-height:1.65;max-width:280px;margin:0 auto 18px;min-height:56px}
+
+/* ── Navigator Stats ── */
+.nav-stats{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
+.nav-stat{text-align:center;padding:8px 12px;border-radius:var(--radius-xs);background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);flex:1}
+.nav-stat-num{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;line-height:1;margin-bottom:3px}
+.everly .nav-stat-num{color:var(--cyan)}.brooks .nav-stat-num{color:var(--purple)}
+.nav-stat-label{font-size:9px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.4px}
+
+/* ── Product Ticker ── */
+.ticker-label{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:5px}
+.ticker-label::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--green);animation:pulse 2.5s infinite}
+.ticker-wrap{position:relative;overflow:hidden;border-radius:var(--radius-xs);background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.04);margin-bottom:16px;height:34px}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:32px;z-index:2;pointer-events:none}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,rgba(16,16,32,.98),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(270deg,rgba(16,16,32,.98),transparent)}
+.ticker-track{display:flex;gap:8px;align-items:center;height:100%;width:max-content;animation:tickerScroll var(--dur,34s) linear infinite;padding:0 4px}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-pill{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;padding:5px 11px;border-radius:100px;white-space:nowrap;transition:border-color .25s}
+.tp-icon{font-size:11px;flex-shrink:0}.tp-text{color:rgba(240,240,255,.62)}.tp-grade{font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;flex-shrink:0}
+.everly .ticker-pill{background:rgba(110,224,245,.03);border:1px solid rgba(110,224,245,.07)}
+.everly .tp-grade{color:var(--cyan);background:rgba(110,224,245,.08);border:1px solid rgba(110,224,245,.14)}
+.nav-card.everly:hover .ticker-pill{border-color:rgba(110,224,245,.14)}
+.brooks .ticker-pill{background:rgba(124,106,240,.03);border:1px solid rgba(124,106,240,.07)}
+.brooks .tp-grade{color:var(--purple);background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.14)}
+.nav-card.brooks:hover .ticker-pill{border-color:rgba(124,106,240,.14)}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── Spec Tags ── */
+.nav-helps{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--dim);margin-bottom:8px}
+.nav-specs{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.spec-tag{font-size:9px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);color:var(--muted);transition:all .3s var(--ease)}
+.nav-card.everly:hover .spec-tag{border-color:rgba(110,224,245,.12);color:rgba(240,240,255,.6)}
+.nav-card.brooks:hover .spec-tag{border-color:rgba(124,106,240,.12);color:rgba(240,240,255,.6)}
+
+/* ── CTA Button ── */
+.nav-cta-btn{display:none;margin-top:16px;width:100%;padding:12px;border-radius:var(--radius-s);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:#fff;transition:all .3s var(--ease)}
+.everly .nav-cta-btn{background:linear-gradient(135deg,rgba(110,224,245,.2),rgba(106,163,243,.2));border:1px solid rgba(110,224,245,.25)}
+.brooks .nav-cta-btn{background:linear-gradient(135deg,rgba(124,106,240,.2),rgba(106,163,243,.2));border:1px solid rgba(124,106,240,.25)}
+.nav-card.selected .nav-cta-btn{display:block}
+
+/* ── SKIP ── */
+.skip-row{text-align:center;margin-bottom:36px;animation:fu .5s .34s ease both}
+.skip-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .25s;cursor:pointer;background:none;border:1px solid transparent;font-family:'DM Sans',sans-serif;font-weight:500;padding:10px 20px;border-radius:100px}
+.skip-link:hover{color:var(--text);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.skip-arrow{transition:transform .25s var(--ease-spring);display:inline-block}
+.skip-link:hover .skip-arrow{transform:translateX(4px)}
+
+/* ── BOTTOM TRUST ── */
+.bottom-trust{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;animation:fu .5s .38s ease both}
+.bt-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:rgba(240,240,255,.55);padding:7px 15px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:all .3s}
+.bt-item:hover{border-color:rgba(255,255,255,.12);color:rgba(240,240,255,.7)}
+.bt-item-icon{font-size:12px;opacity:.7}
+
+/* ── TRANSITION OVERLAY ── */
+.transition-overlay{position:fixed;inset:0;z-index:100;background:rgba(6,6,16,.98);backdrop-filter:blur(32px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.transition-overlay.active{opacity:1;pointer-events:all}
+.trans-avatar{width:92px;height:92px;border-radius:50%;overflow:hidden;margin-bottom:24px}
+.trans-avatar.ev{border:2px solid rgba(110,224,245,.25);box-shadow:0 0 36px rgba(110,224,245,.1);animation:transGlow 2.2s ease-in-out infinite}
+.trans-avatar.br{border:2px solid rgba(124,106,240,.25);box-shadow:0 0 36px rgba(124,106,240,.1);animation:transGlow 2.2s ease-in-out infinite}
+@keyframes transGlow{0%,100%{transform:scale(1);box-shadow:0 0 28px rgba(124,106,240,.06)}50%{transform:scale(1.04);box-shadow:0 0 48px rgba(124,106,240,.14)}}
+.trans-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.trans-skip-icon{width:92px;height:92px;border-radius:50%;background:rgba(106,163,243,.06);border:2px solid rgba(106,163,243,.18);display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:24px;animation:transGlow 2.2s ease-in-out infinite}
+.trans-text{font-size:22px;font-weight:700;color:rgba(240,240,255,.9);margin-bottom:6px;text-align:center}
+.trans-sub{font-size:14px;color:var(--dim);margin-bottom:40px;text-align:center;max-width:380px;line-height:1.5}
+.search-steps{display:flex;flex-direction:column;gap:12px;max-width:360px;width:100%}
+.search-step{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);transition:all .5s var(--ease)}
+.search-step.active{background:rgba(110,224,245,.03);border-color:rgba(110,224,245,.12);box-shadow:0 0 24px rgba(110,224,245,.04)}
+.search-step.done{background:rgba(61,217,182,.03);border-color:rgba(61,217,182,.12)}
+.step-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .4s}
+.search-step:not(.active):not(.done) .step-icon{background:rgba(255,255,255,.03);color:var(--dim)}
+.search-step.active .step-icon{background:rgba(110,224,245,.08);color:var(--cyan)}
+.search-step.done .step-icon{background:rgba(61,217,182,.06);color:var(--green)}
+.step-spinner{width:15px;height:15px;border:2px solid rgba(110,224,245,.12);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.step-text{font-size:13px;font-weight:600;color:var(--dim);transition:color .4s}
+.search-step.active .step-text{color:rgba(240,240,255,.65)}
+.search-step.done .step-text{color:rgba(61,217,182,.65)}
+
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){.page{padding:36px 18px 60px}.nav-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}h1{letter-spacing:-1.6px}.nav-card{padding:26px 20px 20px}.avatar-wrap{width:76px;height:76px}.avatar-ring{width:76px;height:76px}.input-row{flex-direction:column}.value-row{gap:6px}.vp{font-size:11px;padding:6px 12px}.social-proof{gap:20px}.sp-stat:not(:last-child){border-right:none}.bottom-trust{gap:6px}.bt-item{font-size:10px;padding:6px 12px}.capture-card{padding:22px 18px 18px;margin:28px auto 32px}.hero-sub{font-size:15px}.topbar{margin-bottom:40px}.trans-text{font-size:18px}}
+@media(max-width:400px){h1{font-size:28px;letter-spacing:-1.2px}.hero-sub{font-size:14px}.nav-name{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div><div class="bg-grid"></div><div class="noise"></div><div class="scanline"></div>
+
+<div class="page">
+  <div class="topbar">
+    <a href="https://www.beim.ai" class="logo">Beim Health</a>
+    <div class="step-indicator">
+      <div class="step-dot active" title="Navigator"></div>
+      <div class="step-dot" title="Calculator"></div>
+      <div class="step-dot" title="Insurance"></div>
+      <div class="step-dot" title="Goals"></div>
+      <div class="step-dot" title="Products"></div>
+      <div class="step-dot" title="Checkout"></div>
+    </div>
+  </div>
+
+  <div class="hero-section">
+    <div class="hero-badge"><span class="hero-badge-dot"></span><span class="hero-badge-text">Your Products, Unlocked</span></div>
+    <h1>We unlock products<br>your <span class="grad">HSA/FSA can buy.</span></h1>
+    <p class="hero-sub">Thousands of health products are waiting — but nobody made them accessible. Your Care Navigator matches you to clinically graded products, handles Letters of Medical Necessity and physician orders, and gives you more choices than you ever knew existed.</p>
+    <div class="value-row">
+      <span class="vp"><span class="vp-icon">📋</span> Letters of Medical Necessity</span>
+      <span class="vp"><span class="vp-icon">🩺</span> Physician orders</span>
+      <span class="vp"><span class="vp-icon">🔬</span> Clinical grading A–D</span>
+      <span class="vp"><span class="vp-icon">💳</span> HSA/FSA split pay</span>
+    </div>
+    <div class="social-proof">
+      <div class="sp-stat"><div class="sp-num">1,000+</div><div class="sp-label">Products unlocked</div></div>
+      <div class="sp-stat"><div class="sp-num">&lt;4 hrs</div><div class="sp-label">LMN turnaround</div></div>
+      <div class="sp-stat"><div class="sp-num">A–D</div><div class="sp-label">CEL grading</div></div>
+      <div class="sp-stat"><div class="sp-num">$35</div><div class="sp-label">Network physician</div></div>
+    </div>
+  </div>
+
+  <div class="capture-card">
+    <div class="capture-header">
+      <div class="capture-header-icon">👋</div>
+      <div class="capture-header-text">Let's unlock your products</div>
+      <div class="capture-header-secure">🔒 Secure</div>
+    </div>
+    <div class="input-row">
+      <div class="field-wrap"><input type="text" id="firstNameInput" class="capture-input" placeholder="First name" autocomplete="given-name"/><span class="field-label">First name</span></div>
+      <div class="field-wrap"><input type="text" id="lastNameInput" class="capture-input" placeholder="Last name" autocomplete="family-name"/><span class="field-label">Last name</span></div>
+    </div>
+    <div class="field-error" id="nameError">&nbsp;</div>
+    <div class="field-wrap" style="margin-bottom:6px"><input type="email" id="emailInput" class="capture-input" placeholder="Email address" autocomplete="email"/><span class="field-label">Email</span></div>
+    <div class="field-error" id="emailError">&nbsp;</div>
+    <div class="employer-row"><div class="field-wrap"><input type="text" id="employerInput" class="capture-input" placeholder="Your employer name (optional)" autocomplete="organization"/><span class="field-label">Employer (optional)</span></div></div>
+    <div class="employer-hint">If provided, we can connect with your employer's benefits <span class="finch-badge"><svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Via Finch</span></div>
+    <div class="optin-row">
+      <input type="checkbox" id="optinCheck" class="optin-check"/>
+      <label for="optinCheck" class="optin-label">I agree to receive emails and texts from Beim Health about my benefits, product recommendations, and savings. <a href="https://www.beim.ai/privacy-policy" target="_blank">Unsubscribe</a> anytime. <a href="https://www.beim.ai/privacy-policy" target="_blank">Privacy Policy</a>.</label>
+    </div>
+    <div class="field-error" id="optinError">&nbsp;</div>
+  </div>
+
+  <div class="choose-label"><div class="choose-label-text"><span class="choose-label-line"></span>Choose your navigator<span class="choose-label-line"></span></div></div>
+
+  <div class="nav-grid">
+    <div class="nav-card everly" id="cardEverly" onclick="selectNavigator('everly',this)" role="button" tabindex="0" aria-label="Select Everly as your Care Navigator">
+      <div class="avatar-wrap"><div class="avatar-ring"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly" class="avatar-img" loading="lazy"/></div><span class="online-dot"></span></div>
+      <div class="nav-name">Everly</div><div class="nav-role">Care Navigator</div>
+      <div class="nav-focus">Women's Health Focus</div>
+      <div class="nav-quote">"I'll unlock products your HSA can buy — and handle the LMNs and physician orders so you don't have to."</div>
+      <div class="nav-stats"><div class="nav-stat"><div class="nav-stat-num">500+</div><div class="nav-stat-label">Products</div></div><div class="nav-stat"><div class="nav-stat-num">92%</div><div class="nav-stat-label">Match rate</div></div><div class="nav-stat"><div class="nav-stat-num">4.9</div><div class="nav-stat-label">Rating</div></div></div>
+      <div class="ticker-label">Products she's unlocking now</div>
+      <div class="ticker-wrap"><div class="ticker-track" style="--dur:38s"><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Women · $88</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Oura Ring 4 · $349</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧴</span><span class="tp-text">SkinCeuticals CE Ferulic · $182</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩺</span><span class="tp-text">Everlywell Thyroid · $59</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💆</span><span class="tp-text">Theragun Mini · $199</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🌿</span><span class="tp-text">Ritual Prenatal · $39</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day Kit · $190</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧬</span><span class="tp-text">Perelel Postpartum · $50</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Women · $88</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Oura Ring 4 · $349</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧴</span><span class="tp-text">SkinCeuticals CE Ferulic · $182</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩺</span><span class="tp-text">Everlywell Thyroid · $59</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💆</span><span class="tp-text">Theragun Mini · $199</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🌿</span><span class="tp-text">Ritual Prenatal · $39</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day Kit · $190</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧬</span><span class="tp-text">Perelel Postpartum · $50</span><span class="tp-grade">B+</span></div></div></div>
+      <div class="nav-helps">She'll help with</div>
+      <div class="nav-specs"><span class="spec-tag">Hair & Skin</span><span class="spec-tag">Hormones</span><span class="spec-tag">Weight</span><span class="spec-tag">Sleep</span><span class="spec-tag">Postpartum</span></div>
+      <button class="nav-cta-btn" type="button">Continue with Everly →</button>
+    </div>
+
+    <div class="nav-card brooks" id="cardBrooks" onclick="selectNavigator('brooks',this)" role="button" tabindex="0" aria-label="Select Brooks as your Care Navigator">
+      <div class="avatar-wrap"><div class="avatar-ring"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" class="avatar-img" loading="lazy"/></div><span class="online-dot"></span></div>
+      <div class="nav-name">Brooks</div><div class="nav-role">Care Navigator</div>
+      <div class="nav-focus">Men's Health Focus</div>
+      <div class="nav-quote">"I'll unlock the products you never knew your HSA could buy — and make sure you pay the least possible."</div>
+      <div class="nav-stats"><div class="nav-stat"><div class="nav-stat-num">500+</div><div class="nav-stat-label">Products</div></div><div class="nav-stat"><div class="nav-stat-num">94%</div><div class="nav-stat-label">Match rate</div></div><div class="nav-stat"><div class="nav-stat-num">4.9</div><div class="nav-stat-label">Rating</div></div></div>
+      <div class="ticker-label">Products he's unlocking now</div>
+      <div class="ticker-wrap"><div class="ticker-track" style="--dur:36s"><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Men 3-Mo · $209</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Whoop 4.0 · $239</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🏋️</span><span class="tp-text">Theragun Pro · $399</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩸</span><span class="tp-text">InsideTracker · $189</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧊</span><span class="tp-text">Cold Plunge · $499</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💤</span><span class="tp-text">Eight Sleep Pod · $2,049</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day Kit · $190</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧬</span><span class="tp-text">AG1 Greens · $79</span><span class="tp-grade">B</span></div><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Men 3-Mo · $209</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Whoop 4.0 · $239</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🏋️</span><span class="tp-text">Theragun Pro · $399</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩸</span><span class="tp-text">InsideTracker · $189</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧊</span><span class="tp-text">Cold Plunge · $499</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💤</span><span class="tp-text">Eight Sleep Pod · $2,049</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day Kit · $190</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧬</span><span class="tp-text">AG1 Greens · $79</span><span class="tp-grade">B</span></div></div></div>
+      <div class="nav-helps">He'll help with</div>
+      <div class="nav-specs"><span class="spec-tag">Testosterone</span><span class="spec-tag">Weight Loss</span><span class="spec-tag">Heart</span><span class="spec-tag">Recovery</span><span class="spec-tag">Labs</span></div>
+      <button class="nav-cta-btn" type="button">Continue with Brooks →</button>
+    </div>
+  </div>
+
+  <div class="skip-row"><button class="skip-link" onclick="selectNavigator('skip',null)">Just show me all products <span class="skip-arrow">→</span></button></div>
+
+  <div class="bottom-trust">
+    <span class="bt-item"><span class="bt-item-icon">🔒</span> HIPAA compliant</span>
+    <span class="bt-item"><span class="bt-item-icon">⚡</span> No account needed</span>
+    <span class="bt-item"><span class="bt-item-icon">🩺</span> Physician-backed LMNs</span>
+    <span class="bt-item"><span class="bt-item-icon">💳</span> HSA/FSA ready</span>
+    <span class="bt-item"><span class="bt-item-icon">🔬</span> Clinically graded</span>
+  </div>
+</div>
+
+<div class="transition-overlay" id="transOverlay">
+  <div id="transAvatarWrap"></div>
+  <div class="trans-text" id="transText">Setting up your experience…</div>
+  <div class="trans-sub" id="transSub">Personalizing products and recommendations</div>
+  <div class="search-steps" id="searchSteps">
+    <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Saving your preferences</div></div>
+    <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Checking employer benefits</div></div>
+    <div class="search-step" id="step-products"><div class="step-icon">🔬</div><div class="step-text">Unlocking products for your profile</div></div>
+    <div class="search-step" id="step-ready"><div class="step-icon">✨</div><div class="step-text">Your products are ready</div></div>
+  </div>
+</div>
+
+<script>
+var WORKER_URL='https://beim-health-analyzer.steven-03f.workers.dev';
+var selected=null;
+var NAV_NAMES={everly:'Everly',brooks:'Brooks',skip:'Browse All'};
+function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+function showFieldError(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg||'\u00a0';el.style.opacity=msg?'1':'0'}
+document.getElementById('firstNameInput').addEventListener('input',function(){this.classList.remove('error');showFieldError('nameError','')});
+document.getElementById('lastNameInput').addEventListener('input',function(){this.classList.remove('error');showFieldError('nameError','')});
+document.getElementById('emailInput').addEventListener('input',function(){this.classList.remove('error');showFieldError('emailError','')});
+document.getElementById('optinCheck').addEventListener('change',function(){showFieldError('optinError','')});
+document.getElementById('emailInput').addEventListener('blur',function(){if(this.value&&validateEmail(this.value)){this.classList.add('success');this.classList.remove('error')}else{this.classList.remove('success')}});
+
+function activateStep(id){var s=document.getElementById(id);if(!s)return;s.classList.add('active');s.querySelector('.step-icon').innerHTML='<div class="step-spinner"></div>'}
+function completeStep(id){var s=document.getElementById(id);if(!s)return;s.classList.remove('active');s.classList.add('done');s.querySelector('.step-icon').textContent='✓'}
+
+async function selectNavigator(nav,cardEl){
+  if(selected)return;
+  var firstName=document.getElementById('firstNameInput').value.trim();
+  var lastName=document.getElementById('lastNameInput').value.trim();
+  var email=document.getElementById('emailInput').value.trim();
+  var employer=document.getElementById('employerInput').value.trim();
+  var optedIn=document.getElementById('optinCheck').checked;
+  if(!firstName){document.getElementById('firstNameInput').classList.add('error');showFieldError('nameError','Please enter your first name');document.getElementById('firstNameInput').focus();return}
+  if(!lastName){document.getElementById('lastNameInput').classList.add('error');showFieldError('nameError','Please enter your last name');document.getElementById('lastNameInput').focus();return}
+  if(!email){document.getElementById('emailInput').classList.add('error');showFieldError('emailError','Please enter your email');document.getElementById('emailInput').focus();return}
+  if(!validateEmail(email)){document.getElementById('emailInput').classList.add('error');showFieldError('emailError','Please enter a valid email address');document.getElementById('emailInput').focus();return}
+  if(!optedIn){showFieldError('optinError','Please agree to receive communications to continue');document.getElementById('optinCheck').focus();return}
+  selected=nav;
+  if(cardEl)cardEl.classList.add('selected');
+  var gender=nav==='everly'?'F':nav==='brooks'?'M':'all';
+  var navigatorName=NAV_NAMES[nav]||'Browse All';
+  try{sessionStorage.setItem('beim_nav',nav);sessionStorage.setItem('beim_nav_name',navigatorName);sessionStorage.setItem('beim_first_name',firstName);sessionStorage.setItem('beim_last_name',lastName);sessionStorage.setItem('beim_email',email);sessionStorage.setItem('beim_employer',employer);sessionStorage.setItem('beim_gender',gender);sessionStorage.setItem('beim_optin',optedIn?'true':'false')}catch(e){}
+  if(nav==='skip'){try{await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:'skip',navigator_name:'Browse All',email_opt_in:optedIn,source:'navigator_page',page:'navigator_page'})})}catch(e){}window.location.href='https://go.beim.ai/marketplace';return}
+  var overlay=document.getElementById('transOverlay');var wrap=document.getElementById('transAvatarWrap');var text=document.getElementById('transText');var sub=document.getElementById('transSub');
+  if(nav==='everly'){wrap.innerHTML='<div class="trans-avatar ev"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly"/></div>';text.textContent=firstName+', Everly is unlocking your products…';sub.textContent='Finding products your HSA/FSA can buy with LMNs and physician orders'}else{wrap.innerHTML='<div class="trans-avatar br"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks"/></div>';text.textContent=firstName+', Brooks is unlocking your products…';sub.textContent='Finding products your HSA/FSA can buy with LMNs and physician orders'}
+  document.querySelectorAll('.search-step').forEach(function(s){s.classList.remove('active','done')});
+  setTimeout(function(){overlay.classList.add('active')},200);
+  setTimeout(function(){activateStep('step-lead')},600);
+  var incoming=new URLSearchParams(window.location.search);var bal=incoming.get('balance')||'';var acct=incoming.get('acct')||'';
+  try{var leadRes=await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,navigator_name:navigatorName,email_opt_in:optedIn,source:'navigator_page',page:'navigator_page',acct_type:acct,balance:bal})});var leadData=await leadRes.json();if(leadData.lead_id){try{sessionStorage.setItem('beim_lead_id',leadData.lead_id)}catch(e){}}}catch(e){console.warn('Lead capture failed:',e)}
+  setTimeout(function(){completeStep('step-lead')},1800);
+  var finchData=null;setTimeout(function(){activateStep('step-benefits')},2200);
+  if(employer){try{var fRes=await fetch(WORKER_URL+'/api/finch/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({employer_name:employer,email:email})});finchData=await fRes.json();if(finchData.success&&finchData.connect_url){try{sessionStorage.setItem('beim_finch_url',finchData.connect_url);sessionStorage.setItem('beim_finch_session',finchData.session_id)}catch(e){}}}catch(e){console.warn('Finch session failed:',e)}}
+  setTimeout(function(){completeStep('step-benefits')},3800);
+  setTimeout(function(){activateStep('step-products')},4200);setTimeout(function(){completeStep('step-products')},5400);
+  setTimeout(function(){activateStep('step-ready')},5800);setTimeout(function(){completeStep('step-ready')},6400);
+  setTimeout(function(){var params=new URLSearchParams();if(bal)params.set('balance',bal);if(acct)params.set('acct',acct);params.set('nav',nav);params.set('first_name',encodeURIComponent(firstName));params.set('last_name',encodeURIComponent(lastName));params.set('email',encodeURIComponent(email));if(employer)params.set('employer',encodeURIComponent(employer));if(finchData&&finchData.success)params.set('finch','1');window.location.href='calculator.html?'+params.toString()},7000)
+}
+document.querySelectorAll('.nav-card').forEach(function(c){c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}})});
+window.addEventListener('pageshow',function(){selected=null;document.querySelectorAll('.nav-card').forEach(function(c){c.classList.remove('selected')});document.getElementById('transOverlay').classList.remove('active')});
+</script>
+</body>
+</html>
