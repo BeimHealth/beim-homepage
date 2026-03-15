@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Intelligence — Beim Health</title>
+<meta name="description" content="Your Care Navigator gives you a clinical deep-dive on every product — physician confidence, HSA math, and an honest recommendation before you checkout."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#060610;--card:rgba(16,16,32,.65);--border:rgba(255,255,255,.07);--cy:#6ee0f5;--pu:#7c6af0;--bl:#6aa3f3;--gn:#3dd9b6;--gd:#f59e0b;--rd:#ef4444;--tx:#f0f0ff;--mu:#8a8da8;--dm:#5a5d78;--radius:20px;--radius-s:14px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;min-height:100dvh;overflow-x:hidden;display:flex;flex-direction:column}
+.bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 20% 15%,rgba(124,106,240,.06),transparent 70%),radial-gradient(ellipse 500px 400px at 80% 70%,rgba(110,224,245,.04),transparent 70%);animation:meshDrift 35s ease-in-out infinite alternate}
+@keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(25px,-15px) scale(1.02)}}
+.noise{position:fixed;inset:0;z-index:0;opacity:.014;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
+
+.chat-app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:720px;margin:0 auto;width:100%}
+
+/* ── HEADER ── */
+.chat-header{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;backdrop-filter:blur(20px);background:rgba(6,6,16,.88)}
+.ch-back{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--mu);text-decoration:none;font-size:14px;transition:all .2s;flex-shrink:0}
+.ch-back:hover{border-color:rgba(255,255,255,.15);color:var(--tx)}
+.ch-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0}
+.ch-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.ch-avatar-dot{position:absolute;bottom:1px;right:1px;width:9px;height:9px;border-radius:50%;background:var(--gn);border:2px solid rgba(6,6,16,.9)}
+.ch-info{flex:1;min-width:0}
+.ch-name{font-size:14px;font-weight:700;color:#fff}
+.ch-status{font-size:10px;color:var(--gn);font-weight:600}
+.ch-tally{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.ct-item{text-align:center}
+.ct-num{font-family:'DM Mono',monospace;font-size:13px;font-weight:700}
+.ct-num.green{color:var(--gn)}.ct-num.cyan{color:var(--cy)}.ct-num.white{color:#fff}
+.ct-label{font-size:8px;color:var(--dm);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.ct-div{width:1px;height:16px;background:rgba(255,255,255,.08)}
+
+/* ── REVIEW TRAY (scrollable product strip) ── */
+.review-tray{flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.05);padding:10px 20px;overflow-x:auto;display:flex;gap:8px;-webkit-overflow-scrolling:touch;background:rgba(6,6,16,.6)}
+.review-tray::-webkit-scrollbar{display:none}
+.rt-card{flex-shrink:0;width:140px;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);cursor:pointer;transition:all .25s var(--ease);position:relative}
+.rt-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-1px)}
+.rt-card.active{border-color:rgba(124,106,240,.4);background:rgba(124,106,240,.06)}
+.rt-card.kept{border-color:rgba(61,217,182,.3);background:rgba(61,217,182,.04)}
+.rt-card.dropped{opacity:.25;pointer-events:none}
+.rt-status{position:absolute;top:6px;right:6px;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px}
+.rt-status.k{background:rgba(61,217,182,.1);color:var(--gn);border:1px solid rgba(61,217,182,.2)}
+.rt-status.d{background:rgba(255,255,255,.04);color:var(--dm);border:1px solid rgba(255,255,255,.08)}
+.rt-grade{display:inline-flex;width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;font-size:9px;font-weight:800;margin-bottom:4px}
+.rt-grade.ga{background:rgba(61,217,182,.1);color:var(--gn);border:1.5px solid rgba(61,217,182,.3)}
+.rt-grade.gb{background:rgba(106,163,243,.08);color:var(--bl);border:1.5px solid rgba(106,163,243,.25)}
+.rt-grade.gc{background:rgba(245,158,11,.08);color:var(--gd);border:1.5px solid rgba(245,158,11,.25)}
+.rt-name{font-size:10px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rt-price{font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
+.rt-price.free{color:var(--gn)}.rt-price.paid{color:var(--cy)}
+
+/* ── MESSAGES ── */
+.messages{flex:1;overflow-y:auto;padding:20px 20px 140px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.messages::-webkit-scrollbar{width:4px}
+.messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:4px}
+.msg{display:flex;gap:10px;animation:msgIn .4s var(--ease) both;max-width:100%}
+.msg.user{flex-direction:row-reverse}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.msg-avatar{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;margin-top:2px}
+.msg-avatar img{width:100%;height:100%;object-fit:cover}
+.msg-avatar.you{background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mu);font-weight:600}
+.bubble{font-size:14px;line-height:1.7;padding:12px 16px;border-radius:18px;max-width:92%;position:relative}
+.bubble.nav{color:rgba(240,240,255,.85);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.bubble.nav.ev{background:rgba(110,224,245,.04);border-color:rgba(110,224,245,.1)}
+.bubble.nav.br{background:rgba(124,106,240,.04);border-color:rgba(124,106,240,.1)}
+.bubble.usr{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:rgba(240,240,255,.75)}
+.typing-dots{display:flex;gap:4px;padding:12px 16px;border-radius:18px;align-items:center}
+.typing-dots.ev{background:rgba(110,224,245,.04);border:1px solid rgba(110,224,245,.1)}
+.typing-dots.br{background:rgba(124,106,240,.04);border:1px solid rgba(124,106,240,.1)}
+.typing-dots span{width:6px;height:6px;border-radius:50%;background:rgba(240,240,255,.25);animation:dotP 1.4s ease-in-out infinite}
+.typing-dots span:nth-child(2){animation-delay:.15s}
+.typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes dotP{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
+
+/* ── ACTION BUTTONS (inside messages) ── */
+.act-row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.act-btn{padding:9px 16px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:5px}
+.act-btn.keep{background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff}
+.act-btn.keep:hover{box-shadow:0 4px 16px rgba(124,106,240,.3)}
+.act-btn.drop{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:var(--mu)}
+.act-btn.drop:hover{color:var(--tx);border-color:rgba(255,255,255,.2)}
+.act-btn.ask{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.12);color:var(--cy)}
+.act-btn.ask:hover{background:rgba(110,224,245,.1)}
+.act-btn.go{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.18);color:var(--gn)}
+.act-btn.go:hover{background:rgba(61,217,182,.14)}
+.act-btn.locked{opacity:.35;pointer-events:none}
+
+/* Clinical report sections */
+.report-section{margin-top:8px;padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:12px}
+.report-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.report-row:last-child{border-bottom:none}
+.report-label{font-size:11px;color:var(--mu)}
+.report-value{font-size:12px;font-weight:700;color:#fff}
+.report-value.green{color:var(--gn)}.report-value.cyan{color:var(--cy)}.report-value.gold{color:var(--gd)}.report-value.purple{color:var(--pu)}
+.verdict-box{margin-top:10px;padding:12px;border-radius:12px;font-size:13px;line-height:1.6}
+.verdict-box.must{background:rgba(61,217,182,.05);border:1px solid rgba(61,217,182,.15);color:rgba(240,240,255,.8)}
+.verdict-box.nice{background:rgba(110,224,245,.04);border:1px solid rgba(110,224,245,.1);color:rgba(240,240,255,.7)}
+.verdict-box.skip{background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.12);color:rgba(240,240,255,.7)}
+.verdict-label{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+.verdict-label.must{color:var(--gn)}.verdict-label.nice{color:var(--cy)}.verdict-label.skip{color:var(--gd)}
+
+/* ── INPUT BAR ── */
+.input-bar{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,6,16,.92);backdrop-filter:blur(20px);padding:4px 8px}
+.input-field{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:14px 16px}
+.input-field::placeholder{color:var(--dm)}
+.send-btn{background:none;border:none;padding:14px 16px;cursor:pointer;font-size:16px;color:var(--dm);transition:color .2s}
+.send-btn:hover{color:var(--cy)}
+
+/* ── BOTTOM CTA ── */
+.bottom-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:10;padding:14px 24px;background:linear-gradient(to top,var(--bg) 70%,transparent);justify-content:center;gap:10px;flex-wrap:wrap}
+.bottom-cta.show{display:flex}
+.bct-main{flex:1;max-width:500px;padding:15px 20px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;border-radius:var(--radius-s);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .25s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.bct-main:hover{box-shadow:0 12px 48px rgba(124,106,240,.3);transform:translateY(-2px)}
+.bct-back{padding:15px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);border-radius:var(--radius-s);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px}
+.bct-back:hover{color:var(--tx);border-color:rgba(255,255,255,.2)}
+
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:680px){.messages{padding:16px 16px 140px}.chat-header{padding:10px 16px}.review-tray{padding:8px 16px}.rt-card{width:125px}.ch-tally{display:none}.bubble{max-width:95%}.act-row{flex-direction:column}.act-btn{width:100%;justify-content:center}}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div><div class="noise"></div>
+<div class="chat-app">
+  <div class="chat-header">
+    <a class="ch-back" href="products.html" title="Back">←</a>
+    <div class="ch-avatar" id="headerAvatar"></div>
+    <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status">Product Intelligence</div></div>
+    <div class="ch-tally" id="headerTally">
+      <div class="ct-item"><div class="ct-num green" id="htKept">0</div><div class="ct-label">Kept</div></div>
+      <div class="ct-div"></div>
+      <div class="ct-item"><div class="ct-num cyan" id="htHsa">$0</div><div class="ct-label">HSA</div></div>
+      <div class="ct-div"></div>
+      <div class="ct-item"><div class="ct-num white" id="htOop">$0</div><div class="ct-label">OOP</div></div>
+    </div>
+  </div>
+  <div class="review-tray" id="reviewTray"></div>
+  <div class="messages" id="messages"></div>
+  <div class="input-bar">
+    <input class="input-field" id="chatInput" type="text" placeholder="Ask about any product, LMNs, returns, payment…" autocomplete="off"/>
+    <button class="send-btn" onclick="sendFreeText()">➤</button>
+  </div>
+</div>
+<div class="bottom-cta" id="bottomCta">
+  <a class="bct-main" id="checkoutLink" href="#">Authorize & Checkout →</a>
+  <a class="bct-back" href="products.html">← Back</a>
+</div>
+
+<script>
+var W='https://beim-health-analyzer.steven-03f.workers.dev';
+var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
+var CONF_MAP={'Very High':95,'High':82,'Moderate':68,'Low':50};
+var TAX_RATE=0.30;
+
+var nav,firstName='',lastName='',employer='',email='',bal=0,acct='HSA',goals=[],ins=null;
+var products=[],kept=[],dropped=[],chatHistory=[],chatLog=[],activeProduct=null;
+
+function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+/* ── INIT ── */
+window.addEventListener('DOMContentLoaded',function(){
+  var p=new URLSearchParams(location.search);
+  nav=p.get('nav')||sGet('beim_nav')||'brooks';if(nav==='skip')nav='brooks';
+  firstName=p.get('first_name')?decodeURIComponent(p.get('first_name')):(sGet('beim_first_name')||'');
+  lastName=p.get('last_name')?decodeURIComponent(p.get('last_name')):(sGet('beim_last_name')||'');
+  employer=p.get('employer')?decodeURIComponent(p.get('employer')):(sGet('beim_employer')||'');
+  email=p.get('email')?decodeURIComponent(p.get('email')):(sGet('beim_email')||'');
+  bal=parseFloat(p.get('balance'))||0;acct=p.get('acct')||'HSA';
+  var gs=p.get('goals')||'';if(gs)goals=gs.split(',');else try{goals=JSON.parse(sGet('beim_goals')||'[]')}catch(e){}
+  try{ins=JSON.parse(sGet('beim_insurance'))}catch(e){}
+  try{products=JSON.parse(sGet('beim_selected_products')||'[]')}catch(e){products=[]}
+
+  var img=AVATARS[nav]||AVATARS.brooks,name=nav==='everly'?'Everly':'Brooks',cls=nav==='everly'?'ev':'br';
+  document.getElementById('headerAvatar').innerHTML='<img src="'+img+'"/><span class="ch-avatar-dot"></span>';
+  document.getElementById('headerName').textContent=name;
+  document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendFreeText()}});
+
+  buildTray();
+  if(!products.length){addNavBubble("No products selected. Head back to the Unlocking Session to pick products.");return}
+  startIntelligence();
+});
+
+/* ── REVIEW TRAY ── */
+function buildTray(){
+  var tray=document.getElementById('reviewTray');tray.innerHTML='';
+  products.forEach(function(p,i){
+    var isK=kept.some(function(k){return k.name===p.name});
+    var isD=dropped.some(function(d){return d.name===p.name});
+    var isActive=activeProduct&&activeProduct.name===p.name;
+    var grade=(p.grade||'B').toUpperCase();
+    var card=document.createElement('div');
+    card.className='rt-card'+(isActive?' active':'')+(isK?' kept':'')+(isD?' dropped':'');
+    var status=isK?'<span class="rt-status k">✓ Kept</span>':isD?'<span class="rt-status d">✕</span>':'';
+    card.innerHTML=status+'<div class="rt-grade g'+grade.toLowerCase()+'">'+grade+'</div><div class="rt-name">'+esc(p.name)+'</div><div class="rt-price '+(p.insured?'free':'paid')+'">'+(p.insured?'$0':'$'+(p.price||0).toFixed(0))+'</div>';
+    if(!isD)card.onclick=function(){selectProduct(i)};
+    tray.appendChild(card);
+  });
+  updateHeaderTally();
+}
+
+function selectProduct(i){
+  activeProduct=products[i];buildTray();
+  addUserBubble('Tell me about '+products[i].name);
+  reviewProduct(products[i]);
+}
+
+/* ── INTELLIGENCE SESSION ── */
+function startIntelligence(){
+  var name=nav==='everly'?'Everly':'Brooks';
+  var lmnCount=products.filter(function(p){return p.lmn}).length;
+  var insCount=products.filter(function(p){return p.insured}).length;
+  var tot=0;products.forEach(function(p){tot+=p.price||0});
+
+  var greeting=(firstName||'Hey')+', you have <strong>'+products.length+' product'+(products.length>1?'s':'')+'</strong> totaling <strong>$'+tot.toFixed(0)+'</strong>.';
+  if(insCount)greeting+=' <strong>'+insCount+'</strong> covered at $0 by insurance.';
+  if(lmnCount)greeting+=' <strong>'+lmnCount+'</strong> need an LMN — I handle that ($35, signed ~4 hours).';
+  greeting+='<br><br>Two ways to proceed:';
+  greeting+='<div class="act-row"><button class="act-btn ask" onclick="startWalkthrough()">📋 Walk me through each product</button><button class="act-btn go" onclick="skipToCheckout()">⚡ Skip to checkout — I trust you</button></div>';
+  addNavBubble(greeting);
+}
+
+function startWalkthrough(){
+  lockActions();addUserBubble("Walk me through each product");
+  activeProduct=products[0];buildTray();
+  reviewProduct(products[0]);
+}
+
+function skipToCheckout(){
+  lockActions();addUserBubble("⚡ I'm ready — let's checkout");
+  products.forEach(function(p){if(!kept.some(function(k){return k.name===p.name})&&!dropped.some(function(d){return d.name===p.name}))kept.push(p)});
+  buildTray();showCheckoutSummary();
+}
+
+/* ═══════════════════════════════════════
+   PRODUCT REVIEW (The Intelligence)
+   ═══════════════════════════════════════ */
+function reviewProduct(p){
+  var conf=CONF_MAP[p.conf]||70;
+  var hsaRemaining=getHsaRemaining();
+  var hsaCoverage=p.hsa&&!p.insured?Math.min(p.price,hsaRemaining):0;
+  var oop=p.insured?0:p.price-hsaCoverage;
+
+  // Build clinical report
+  var report=buildClinicalReport(p,conf,hsaCoverage,oop);
+  showTyping();
+  setTimeout(function(){
+    removeTyping();
+    addNavBubble(report);
+    // Fire deep research API call
+    deepResearch(p,conf,hsaCoverage,oop);
+  },1200);
+}
+
+function buildClinicalReport(p,conf,hsaCov,oop){
+  var grade=p.grade||'B';
+  var gradeLabel=grade==='A'?'Gold Standard — multi-RCT, top-tier evidence':grade==='B'?'Strong Evidence — well-supported by clinical research':'Emerging — promising but needs more data';
+  var verdictType=p.insured?'must':(grade==='A'&&conf>=80)?'must':(grade==='A'||grade==='B')?'nice':'skip';
+
+  var html='<strong>'+esc(p.name)+'</strong>';
+  if(p.brand)html+=' <span style="color:var(--dm)">by '+esc(p.brand)+'</span>';
+
+  // Clinical section
+  html+='<div class="report-section">';
+  html+='<div class="report-row"><span class="report-label">Clinical Grade</span><span class="report-value '+(grade==='A'?'green':grade==='B'?'cyan':'gold')+'">'+grade+' — '+gradeLabel+'</span></div>';
+  html+='<div class="report-row"><span class="report-label">Physician Confidence</span><span class="report-value '+(conf>=80?'green':conf>=60?'cyan':'gold')+'">'+conf+'%</span></div>';
+  if(p.conds)html+='<div class="report-row"><span class="report-label">Targets</span><span class="report-value">'+esc(p.conds)+'</span></div>';
+  if(p.goals)html+='<div class="report-row"><span class="report-label">Goal Match</span><span class="report-value purple">'+esc(p.goals)+'</span></div>';
+  html+='</div>';
+
+  // Financial section
+  html+='<div class="report-section">';
+  if(p.insured){
+    html+='<div class="report-row"><span class="report-label">Insurance</span><span class="report-value green">Covered at $0</span></div>';
+    html+='<div class="report-row"><span class="report-label">Retail Value</span><span class="report-value">$'+p.price.toFixed(0)+' (you save this)</span></div>';
+  } else {
+    html+='<div class="report-row"><span class="report-label">Price</span><span class="report-value">$'+p.price.toFixed(0)+'</span></div>';
+    if(p.hsa){
+      html+='<div class="report-row"><span class="report-label">'+acct+' Covers</span><span class="report-value green">$'+hsaCov.toFixed(0)+'</span></div>';
+      if(oop>0)html+='<div class="report-row"><span class="report-label">Out of Pocket</span><span class="report-value gold">$'+oop.toFixed(0)+'</span></div>';
+      html+='<div class="report-row"><span class="report-label">Tax Savings (~'+Math.round(TAX_RATE*100)+'%)</span><span class="report-value green">$'+Math.round(hsaCov*TAX_RATE)+'</span></div>';
+    } else {
+      html+='<div class="report-row"><span class="report-label">Payment</span><span class="report-value gold">Cash — not '+acct+' eligible</span></div>';
+    }
+  }
+  if(p.lmn){
+    html+='<div class="report-row"><span class="report-label">LMN Required</span><span class="report-value purple">$35 — Beim handles it (~4 hrs)</span></div>';
+    html+='<div style="font-size:11px;color:var(--pu);margin-top:4px;padding:0 2px">This is medically necessary for your goals because it addresses '+esc(p.conds||'your health priorities')+'. The LMN makes it '+acct+' eligible under IRS §213(d).</div>';
+  }
+  html+='</div>';
+
+  // Verdict
+  html+='<div class="verdict-box '+verdictType+'"><div class="verdict-label '+verdictType+'">'+(verdictType==='must'?'🟢 Navigator\'s Verdict: Must-Have':verdictType==='nice'?'🔵 Navigator\'s Verdict: Strong Pick':'🟡 Navigator\'s Verdict: Consider Carefully')+'</div>';
+  if(p.insured)html+='This is a benefit you\'ve already paid for through your insurance premiums. Leaving this on the table would be a mistake.';
+  else if(verdictType==='must')html+='Grade '+grade+' with '+conf+'% physician confidence — this is well-supported by clinical evidence and directly targets your goals.';
+  else if(verdictType==='nice')html+='Solid clinical backing. Good fit for your profile, though you could also explore alternatives in this category.';
+  else html+='The evidence is building but not conclusive. Consider if this aligns with your top priorities before committing.';
+  html+='</div>';
+
+  // Actions
+  var isKept=kept.some(function(k){return k.name===p.name});
+  html+='<div class="act-row">';
+  html+=isKept?'<button class="act-btn keep locked">✓ In Plan</button>':'<button class="act-btn keep" onclick="keepProduct(\''+esc(p.name).replace(/'/g,"\\'")+'\')">✓ Keep in Plan</button>';
+  html+='<button class="act-btn drop" onclick="dropProduct(\''+esc(p.name).replace(/'/g,"\\'")+'\')">✕ Remove</button>';
+  html+='<button class="act-btn ask" onclick="askDeeper(\''+esc(p.name).replace(/'/g,"\\'")+'\')">🔬 Deep Research</button>';
+  html+='<button class="act-btn go" onclick="skipToCheckout()">⚡ Checkout</button>';
+  html+='</div>';
+  return html;
+}
+
+/* ── DEEP RESEARCH (Gemini call) ── */
+function deepResearch(p,conf,hsaCov,oop){
+  var hsaRem=getHsaRemaining();
+  var productContext='Product: '+p.name+'\nPrice: $'+p.price+'\nGrade: '+p.grade+'\nPhysician Confidence: '+conf+'%\nBrand: '+(p.brand||'')+'\nCategory: '+(p.cat||'')+'\nConditions: '+(p.conds||'General wellness')+'\nHSA eligible: '+(p.hsa?'Yes':'No')+'\nRequires LMN: '+(p.lmn?'Yes':'No')+'\nInsurance $0: '+(p.insured?'Yes':'No')+'\nGoal match: '+(p.goals||'None')+'\nHeadline: '+(p.hl||'');
+
+  fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    message:"The user is reviewing '"+p.name+"' ($"+p.price+", Grade "+p.grade+"). Give a brief, conversational follow-up: 1) one specific clinical insight that helps them decide (e.g., why this form/ingredient matters), 2) your honest recommendation. 2-3 sentences max. Don't repeat the report facts — add new insight.",
+    history:chatHistory.slice(-4),navigator:nav,
+    context:{page:'intelligence',balance:bal,acctType:acct,currentProduct:productContext,firstName:firstName,hsaRemaining:hsaRem,goals:goals}
+  })}).then(function(r){return r.json()}).then(function(d){
+    if(d.reply&&d.reply.length>20)addNavBubble(d.reply);
+  }).catch(function(){});
+}
+
+function askDeeper(name){
+  addUserBubble('Tell me more about '+name+' — ingredients, research, what users say');
+  showTyping();
+  var p=products.find(function(x){return x.name===name});if(!p){removeTyping();return}
+  fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    message:"Deep research on '"+p.name+"' by "+(p.brand||'unknown')+": 1) What are the key active ingredients and why they work? 2) What does clinical research specifically show? 3) What do real users report (common positive and negative feedback)? 4) Is this a 'Must-Have' or 'Nice-to-Have' for someone focused on "+goals.join(', ')+"? Be specific and clinical but conversational. 4-6 sentences.",
+    history:chatHistory.slice(-4),navigator:nav,
+    context:{page:'intelligence',balance:bal,acctType:acct,currentProduct:p.name+' ($'+p.price+', Grade '+p.grade+', '+p.cat+')',firstName:firstName,goals:goals}
+  })}).then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'I couldn\'t pull deep research on this one. The clinical report above has the key data.')})
+  .catch(function(){removeTyping();addNavBubble('I hit a snag pulling research. The clinical report above is your best reference.')});
+}
+
+/* ── KEEP / DROP ── */
+function keepProduct(name){
+  var p=products.find(function(x){return x.name===name});
+  if(!p||kept.some(function(k){return k.name===name}))return;
+  kept.push(p);lockActions();buildTray();
+  addUserBubble('✓ Keeping '+name);
+  var remaining=products.length-kept.length-dropped.length;
+  if(remaining>0){
+    var next=products.find(function(x){return!kept.some(function(k){return k.name===x.name})&&!dropped.some(function(d){return d.name===x.name})});
+    addNavBubble('Locked in. <strong>'+remaining+' product'+(remaining>1?'s':'')+' left</strong> to review.'+(next?' Want me to cover <strong>'+esc(next.name)+'</strong> next?':''));
+    if(next){activeProduct=next;buildTray();setTimeout(function(){reviewProduct(next)},2000)}
+  } else {
+    showCheckoutSummary();
+  }
+}
+
+function dropProduct(name){
+  var p=products.find(function(x){return x.name===name});if(!p)return;
+  dropped.push(p);lockActions();buildTray();
+  addUserBubble('✕ Removing '+name);
+  addNavBubble('Removed. You can re-add from the product strip anytime.');
+  if(activeProduct&&activeProduct.name===name)activeProduct=null;
+  var remaining=products.length-kept.length-dropped.length;
+  if(remaining<=0&&kept.length>0)showCheckoutSummary();
+}
+
+/* ── CHECKOUT SUMMARY ── */
+function showCheckoutSummary(){
+  var hsaUsed=0,oopTotal=0,insValue=0;
+  kept.forEach(function(p){
+    if(p.insured){insValue+=p.price}
+    else{var hsaCov=p.hsa?Math.min(p.price,Math.max(0,bal-hsaUsed)):0;hsaUsed+=hsaCov;oopTotal+=p.price-hsaCov}
+  });
+  var lmnCount=kept.filter(function(p){return p.lmn}).length;
+  var lmnFee=lmnCount>0?35:0;
+  if(lmnFee>0){var lmnHsa=Math.min(lmnFee,Math.max(0,bal-hsaUsed));hsaUsed+=lmnHsa;oopTotal+=lmnFee-lmnHsa}
+  var taxSaved=Math.round(hsaUsed*TAX_RATE);
+
+  var html='<strong>Your plan is locked.</strong> Here\'s the financial breakdown:';
+  html+='<div class="report-section">';
+  if(insValue>0)html+='<div class="report-row"><span class="report-label">Insurance Unlocked</span><span class="report-value green">$'+insValue.toLocaleString()+' at $0</span></div>';
+  html+='<div class="report-row"><span class="report-label">Charge 1 ('+acct+')</span><span class="report-value cyan">$'+hsaUsed.toFixed(0)+'</span></div>';
+  if(oopTotal>0)html+='<div class="report-row"><span class="report-label">Charge 2 (Debit/Credit)</span><span class="report-value gold">$'+oopTotal.toFixed(0)+'</span></div>';
+  if(lmnFee>0)html+='<div class="report-row"><span class="report-label">LMN Fee ('+lmnCount+' product'+(lmnCount>1?'s':'')+')</span><span class="report-value purple">$'+lmnFee+' ('+acct+' eligible)</span></div>';
+  html+='<div class="report-row" style="font-weight:700"><span class="report-label" style="color:#fff">Tax Savings</span><span class="report-value green">$'+taxSaved+' saved</span></div>';
+  html+='<div class="report-row" style="font-weight:700;border-top:1px solid rgba(255,255,255,.08);padding-top:8px"><span class="report-label" style="color:#fff">Total Benefit Value</span><span class="report-value green" style="font-size:15px">$'+(insValue+hsaUsed+oopTotal+taxSaved).toLocaleString()+'</span></div>';
+  html+='</div>';
+  html+='<div style="margin-top:10px;font-size:12px;color:var(--mu)">Hit <strong>Authorize & Checkout</strong> below. I\'ll handle LMNs, split payment, and IRS-compliant receipts.</div>';
+
+  addNavBubble(html);
+  // Save and show CTA
+  try{sessionStorage.setItem('beim_checkout_products',JSON.stringify(kept))}catch(e){}
+  var cp=new URLSearchParams();cp.set('balance',bal.toFixed(2));cp.set('acct',acct);cp.set('nav',nav);cp.set('items',kept.length);
+  if(firstName)cp.set('first_name',encodeURIComponent(firstName));
+  if(lastName)cp.set('last_name',encodeURIComponent(lastName));
+  if(email)cp.set('email',encodeURIComponent(email));
+  if(employer)cp.set('employer',encodeURIComponent(employer));
+  document.getElementById('checkoutLink').href='checkout.html?'+cp.toString();
+  document.getElementById('checkoutLink').textContent='Authorize & Checkout — $'+(hsaUsed+oopTotal).toFixed(0)+' →';
+  document.getElementById('bottomCta').classList.add('show');
+  pushToZoho();
+}
+
+/* ── UTILITIES ── */
+function getHsaRemaining(){var used=0;kept.forEach(function(k){if(k.hsa&&!k.insured)used+=k.price});return Math.max(0,bal-used)}
+function updateHeaderTally(){
+  var hsaUsed=0,oopTotal=0;
+  kept.forEach(function(p){if(p.insured)return;var h=p.hsa?Math.min(p.price,Math.max(0,bal-hsaUsed)):0;hsaUsed+=h;oopTotal+=p.price-h});
+  document.getElementById('htKept').textContent=kept.length;
+  document.getElementById('htHsa').textContent='$'+hsaUsed.toFixed(0);
+  document.getElementById('htOop').textContent='$'+oopTotal.toFixed(0);
+}
+function lockActions(){document.querySelectorAll('.act-btn:not(.locked)').forEach(function(b){b.classList.add('locked')})}
+
+/* ── CHAT ── */
+function addNavBubble(html){
+  chatHistory.push({role:'nav',text:html});chatLog.push({t:Date.now(),r:'nav',m:html.replace(/<[^>]+>/g,'')});
+  var img=AVATARS[nav]||AVATARS.brooks,cls=nav==='everly'?'ev':'br';
+  var c=document.getElementById('messages'),d=document.createElement('div');d.className='msg';
+  d.innerHTML='<div class="msg-avatar"><img src="'+img+'"/></div><div class="bubble nav '+cls+'">'+html+'</div>';
+  c.appendChild(d);scrollToBottom();
+}
+function addUserBubble(text){
+  chatHistory.push({role:'user',text:text});chatLog.push({t:Date.now(),r:'user',m:text});
+  var c=document.getElementById('messages'),d=document.createElement('div');d.className='msg user';
+  d.innerHTML='<div class="msg-avatar you">You</div><div class="bubble usr">'+esc(text)+'</div>';
+  c.appendChild(d);scrollToBottom();
+}
+function showTyping(){
+  var img=AVATARS[nav]||AVATARS.brooks,cls=nav==='everly'?'ev':'br';
+  var c=document.getElementById('messages'),d=document.createElement('div');d.className='msg';d.id='typingMsg';
+  d.innerHTML='<div class="msg-avatar"><img src="'+img+'"/></div><div class="typing-dots '+cls+'"><span></span><span></span><span></span></div>';
+  c.appendChild(d);scrollToBottom();
+}
+function removeTyping(){var el=document.getElementById('typingMsg');if(el)el.remove()}
+function scrollToBottom(){var c=document.getElementById('messages');setTimeout(function(){c.scrollTop=c.scrollHeight},60)}
+
+function sendFreeText(){
+  var input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;input.value='';
+  addUserBubble(text);showTyping();
+  var prodSum=products.map(function(p){var st=kept.some(function(k){return k.name===p.name})?'KEPT':dropped.some(function(d){return d.name===p.name})?'DROPPED':'UNDECIDED';return p.name+' ($'+p.price+', '+p.grade+', '+st+')'}).join('\n');
+  fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    message:text,history:chatHistory.slice(-6),navigator:nav,
+    context:{page:'intelligence',balance:bal,acctType:acct,hsaRemaining:getHsaRemaining(),selectedProducts:prodSum,keptCount:kept.length,droppedCount:dropped.length,firstName:firstName,goals:goals,insurance:ins?ins.carrier:'none'}
+  })}).then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'Ask me about any product in your plan.')})
+  .catch(function(){removeTyping();addNavBubble('I hit a snag — try again.')});
+}
+
+/* ── ZOHO ── */
+function pushToZoho(){
+  var lid=sGet('beim_lead_id')||null;if(!email&&!lid)return;
+  var tx=chatLog.map(function(e){var d=new Date(e.t);return'['+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})+'] '+(e.r==='user'?'User':'Navigator')+': '+e.m}).join('\n');
+  var keptList=kept.map(function(k){return k.name+' ($'+k.price+')'}).join(', ');
+  var droppedList=dropped.map(function(d){return d.name}).join(', ');
+  tx+='\n\n[KEPT: '+keptList+']\n[DROPPED: '+droppedList+']';
+  var payload={first_name:firstName,last_name:lastName,employer:employer,navigator:nav,source:'intelligence',page:'intelligence',acct_type:acct,balance:bal,chat_transcript:tx};
+  if(email)payload.email=email;if(lid)payload.lead_id=lid;
+  // Capture stripe connect data for checkout
+  kept.forEach(function(p){
+    if(p.stripe_connect_id){
+      if(!payload.products_selected)payload.products_selected='';
+      payload.products_selected+=(payload.products_selected?', ':'')+p.name+' (connect:'+p.stripe_connect_id+', fee:'+p.platform_fee_pct+'%)';
+    }
+  });
+  if(!payload.products_selected)payload.products_selected=keptList;
+  payload.products_count=kept.length;
+  var totalValue=0;kept.forEach(function(p){totalValue+=p.price});
+  payload.rescue_plan_value=totalValue;
+  try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)try{sessionStorage.setItem('beim_lead_id',d.lead_id)}catch(e){}}).catch(function(){})}catch(e){}
+}
+</script>
+</body>
+</html>
