@@ -34,6 +34,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ch-name{font-size:15px;font-weight:700;color:#fff}
 .ch-status{font-size:11px;color:var(--gn);font-weight:600}
 .ch-progress{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.step-indicator{display:flex;align-items:center;gap:6px}
+.step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
+.step-dot.done{background:var(--gn)}
+.step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
 .ch-prog-bar{width:72px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
 .ch-prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pu),var(--cy));transition:width .6s var(--ease);width:0%}
 .ch-prog-label{font-size:10px;font-weight:700;color:var(--dm);min-width:26px;text-align:right;font-family:'DM Mono',monospace}
@@ -186,9 +190,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
       <div class="ch-name" id="headerName">Care Navigator</div>
       <div class="ch-status">Online now</div>
     </div>
-    <div class="ch-progress">
-      <div class="ch-prog-bar"><div class="ch-prog-fill" id="progFill"></div></div>
-      <div class="ch-prog-label" id="progLabel">0%</div>
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
     </div>
   </div>
 
@@ -237,11 +245,7 @@ function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent
 function goalObj(id){return GOALS.find(function(x){return x.id===id})}
 function goalLabel(id){var g=goalObj(id);return g?g.label:id}
 
-function setProgress(step){
-  var pct=Math.round((step/TOTAL_STEPS)*100);
-  document.getElementById('progFill').style.width=pct+'%';
-  document.getElementById('progLabel').textContent=pct+'%';
-}
+function setProgress(step){/* dots are static — no dynamic update needed */}
 
 /* ── INIT ── */
 window.addEventListener('DOMContentLoaded',function(){
