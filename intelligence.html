@@ -30,12 +30,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ch-info{flex:1;min-width:0}
 .ch-name{font-size:14px;font-weight:700;color:#fff}
 .ch-status{font-size:10px;color:var(--gn);font-weight:600}
-.ch-tally{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.ct-item{text-align:center}
-.ct-num{font-family:'DM Mono',monospace;font-size:13px;font-weight:700}
-.ct-num.green{color:var(--gn)}.ct-num.cyan{color:var(--cy)}.ct-num.white{color:#fff}
-.ct-label{font-size:8px;color:var(--dm);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-.ct-div{width:1px;height:16px;background:rgba(255,255,255,.08)}
+.step-indicator{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
+.step-dot.done{background:var(--gn)}
+.step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
 
 /* ── REVIEW TRAY (scrollable product strip) ── */
 .review-tray{flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.05);padding:10px 20px;overflow-x:auto;display:flex;gap:8px;-webkit-overflow-scrolling:touch;background:rgba(6,6,16,.6)}
@@ -122,7 +120,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .bct-back:hover{color:var(--tx);border-color:rgba(255,255,255,.2)}
 
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:680px){.messages{padding:16px 16px 140px}.chat-header{padding:10px 16px}.review-tray{padding:8px 16px}.rt-card{width:125px}.ch-tally{display:none}.bubble{max-width:95%}.act-row{flex-direction:column}.act-btn{width:100%;justify-content:center}}
+@media(max-width:680px){.messages{padding:16px 16px 140px}.chat-header{padding:10px 16px}.review-tray{padding:8px 16px}.rt-card{width:125px}.step-indicator{display:none}.bubble{max-width:95%}.act-row{flex-direction:column}.act-btn{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
@@ -132,12 +130,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
     <a class="ch-back" href="products.html" title="Back">←</a>
     <div class="ch-avatar" id="headerAvatar"></div>
     <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status">Product Intelligence</div></div>
-    <div class="ch-tally" id="headerTally">
-      <div class="ct-item"><div class="ct-num green" id="htKept">0</div><div class="ct-label">Kept</div></div>
-      <div class="ct-div"></div>
-      <div class="ct-item"><div class="ct-num cyan" id="htHsa">$0</div><div class="ct-label">HSA</div></div>
-      <div class="ct-div"></div>
-      <div class="ct-item"><div class="ct-num white" id="htOop">$0</div><div class="ct-label">OOP</div></div>
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
     </div>
   </div>
   <div class="review-tray" id="reviewTray"></div>
@@ -405,13 +404,7 @@ function showCheckoutSummary(){
 
 /* ── UTILITIES ── */
 function getHsaRemaining(){var used=0;kept.forEach(function(k){if(k.hsa&&!k.insured)used+=k.price});return Math.max(0,bal-used)}
-function updateHeaderTally(){
-  var hsaUsed=0,oopTotal=0;
-  kept.forEach(function(p){if(p.insured)return;var h=p.hsa?Math.min(p.price,Math.max(0,bal-hsaUsed)):0;hsaUsed+=h;oopTotal+=p.price-h});
-  document.getElementById('htKept').textContent=kept.length;
-  document.getElementById('htHsa').textContent='$'+hsaUsed.toFixed(0);
-  document.getElementById('htOop').textContent='$'+oopTotal.toFixed(0);
-}
+function updateHeaderTally(){/* tally removed — step dots are static */}
 function lockActions(){document.querySelectorAll('.act-btn:not(.locked)').forEach(function(b){b.classList.add('locked')})}
 
 /* ── CHAT ── */
