@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Order Confirmed — Beim Health</title>
+<meta name="description" content="Your order is confirmed. Track LMNs, download receipts, and access your health portal."/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#060610;--sf:#0d0d1a;--card:rgba(16,16,32,.65);--border:rgba(255,255,255,.07);--border-h:rgba(255,255,255,.14);--cy:#6ee0f5;--pu:#7c6af0;--bl:#6aa3f3;--gn:#3dd9b6;--gd:#f59e0b;--rd:#ef4444;--tx:#f0f0ff;--mu:#8a8da8;--dm:#5a5d78;--radius:18px;--radius-s:12px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+.bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 30% 20%,rgba(61,217,182,.06),transparent 70%),radial-gradient(ellipse 500px 400px at 70% 60%,rgba(124,106,240,.04),transparent 70%)}
+.noise{position:fixed;inset:0;z-index:0;opacity:.012;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
+
+/* ── NAV ── */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 32px;height:56px;background:rgba(6,6,16,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-right{display:flex;gap:8px;margin-left:auto;align-items:center}
+.step-indicator{display:flex;align-items:center;gap:6px}
+.step-dot{width:28px;height:4px;border-radius:4px;background:var(--gn)}
+.nav-link{font-size:12px;font-weight:600;color:var(--mu);padding:7px 14px;border-radius:9px;border:1px solid var(--border);text-decoration:none;transition:all .2s}
+.nav-link:hover{color:var(--tx);border-color:var(--border-h)}
+.nav-link.primary{background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none}
+.nav-link.primary:hover{box-shadow:0 4px 16px rgba(124,106,240,.3)}
+
+/* ── PAGE ── */
+.page{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:88px 24px 80px}
+
+/* ── HERO ── */
+.hero{text-align:center;margin-bottom:40px;animation:fu .5s ease both}
+.suc-ring{width:80px;height:80px;border-radius:50%;background:rgba(61,217,182,.1);border:2px solid rgba(61,217,182,.3);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 20px;animation:ringPulse 2s ease infinite}
+@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(61,217,182,.3)}50%{box-shadow:0 0 0 16px rgba(61,217,182,0)}}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.5px;color:#fff;margin-bottom:10px}
+.grad{background:linear-gradient(135deg,var(--cy),var(--bl),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:var(--mu);line-height:1.7;max-width:460px;margin:0 auto}
+
+/* ── ORDER CARD ── */
+.order-card{background:var(--sf);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:28px;animation:fu .5s .08s ease both}
+.oc-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:14px}
+.oc-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px;align-items:center}
+.oc-row:last-child{margin-bottom:0}
+.oc-key{color:var(--mu)}.oc-val{font-family:'DM Mono',monospace;font-weight:600}
+.oc-val.cy{color:var(--cy)}.oc-val.gn{color:var(--gn)}.oc-val.gd{color:var(--gd)}.oc-val.sm{color:var(--mu);font-size:11px}
+.oc-divider{border:none;border-top:1px solid rgba(255,255,255,.06);margin:10px 0}
+.oc-row.final .oc-key{color:var(--tx);font-weight:700}
+.oc-row.final .oc-val{font-size:16px;color:#fff}
+
+/* ── SECTION LABELS ── */
+.sec-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dm);display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:32px}
+.sec-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+
+/* ── WHAT HAPPENS NEXT CARDS ── */
+.whn-card{background:var(--sf);border-radius:16px;padding:20px;margin-bottom:12px;animation:fu .5s ease both;border:1px solid var(--border)}
+.whn-card.lmn{border-color:rgba(245,158,11,.15);background:linear-gradient(180deg,rgba(245,158,11,.02),var(--sf))}
+.whn-card.order{border-color:rgba(124,106,240,.15);background:linear-gradient(180deg,rgba(124,106,240,.02),var(--sf))}
+.whn-card.ready{border-color:rgba(61,217,182,.15);background:linear-gradient(180deg,rgba(61,217,182,.02),var(--sf))}
+.whn-card.digital{border-color:rgba(110,224,245,.15);background:linear-gradient(180deg,rgba(110,224,245,.02),var(--sf))}
+.whn-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.whn-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.whn-icon.lmn{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15)}
+.whn-icon.order{background:rgba(124,106,240,.06);border:1px solid rgba(124,106,240,.15)}
+.whn-icon.ready{background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.15)}
+.whn-icon.digital{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15)}
+.whn-title{font-size:15px;font-weight:800;color:#fff}
+.whn-badge{margin-left:auto;font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;flex-shrink:0}
+.whn-badge.pending{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--gd)}
+.whn-badge.action{background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.2);color:var(--pu)}
+.whn-badge.done{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.2);color:var(--gn)}
+.whn-badge.digital{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
+.whn-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.whn-pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:rgba(240,240,255,.6)}
+.whn-body{font-size:13px;color:rgba(240,240,255,.55);line-height:1.7;margin-bottom:14px}
+.whn-body strong{color:var(--tx)}
+/* Progress steps */
+.whn-progress{display:flex;gap:4px;margin-bottom:6px}
+.whn-step{flex:1;height:4px;border-radius:100px;background:rgba(255,255,255,.06)}
+.whn-step.done{background:var(--gn)}
+.whn-step.active{background:var(--gd);animation:stepPulse 1.5s ease infinite}
+@keyframes stepPulse{0%,100%{opacity:1}50%{opacity:.5}}
+.whn-step-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--dm);margin-bottom:12px}
+.whn-cta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none}
+.whn-cta.primary{background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff}
+.whn-cta.primary:hover{box-shadow:0 6px 24px rgba(124,106,240,.3)}
+.whn-cta.green{background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.15);color:var(--gn)}
+.whn-cta.green:hover{background:rgba(61,217,182,.1)}
+.whn-cta.amber{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);color:var(--gd)}
+.whn-cta.amber:hover{background:rgba(245,158,11,.1)}
+.whn-cta.cyan{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.12);color:var(--cy)}
+.whn-cta.cyan:hover{background:rgba(110,224,245,.1)}
+.whn-note{font-size:11px;color:var(--dm);margin-top:8px;line-height:1.5}
+/* Digital delivery QR placeholder */
+.qr-container{display:flex;align-items:center;gap:14px;padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:12px}
+.qr-box{width:80px;height:80px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.qr-box canvas{width:100%!important;height:100%!important}
+.qr-info{flex:1}
+.qr-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px}
+.qr-sub{font-size:11px;color:var(--dm);line-height:1.4}
+
+/* ── QUICK ACTIONS ── */
+.actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.act-card{background:var(--sf);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;cursor:pointer;transition:all .25s var(--ease);text-decoration:none;display:flex;flex-direction:column;align-items:center}
+.act-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.act-icon{font-size:28px;margin-bottom:8px}
+.act-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+.act-sub{font-size:11px;color:var(--dm);line-height:1.4}
+
+/* ── REFERRAL CARD ── */
+.ref-card{background:linear-gradient(135deg,rgba(124,106,240,.05),rgba(110,224,245,.03));border:1px solid rgba(124,106,240,.15);border-radius:var(--radius);padding:22px;margin-bottom:28px;text-align:center;animation:fu .5s .2s ease both}
+.ref-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:6px}
+.ref-sub{font-size:13px;color:var(--mu);line-height:1.6;margin-bottom:16px}
+.ref-code-wrap{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:14px}
+.ref-code{font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:var(--cy);background:rgba(8,8,18,.6);border:1px dashed rgba(110,224,245,.25);padding:10px 24px;border-radius:10px;letter-spacing:1px}
+.ref-copy{padding:10px 16px;background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;border-radius:10px;cursor:pointer;transition:all .2s}
+.ref-copy:hover{background:rgba(110,224,245,.12)}
+.ref-share{display:flex;gap:8px;justify-content:center}
+.ref-btn{padding:9px 16px;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:5px;border:1px solid}
+.ref-btn.sms{background:rgba(61,217,182,.06);border-color:rgba(61,217,182,.15);color:var(--gn)}
+.ref-btn.tw{background:rgba(124,106,240,.05);border-color:rgba(124,106,240,.14);color:var(--pu)}
+.ref-btn.link{background:rgba(110,224,245,.05);border-color:rgba(110,224,245,.12);color:var(--cy)}
+
+/* ── PORTAL CTA ── */
+.portal-cta{background:linear-gradient(135deg,rgba(124,106,240,.06),rgba(106,163,243,.04));border:1px solid rgba(124,106,240,.15);border-radius:20px;padding:28px;text-align:center;margin-bottom:28px;animation:fu .5s .28s ease both}
+.portal-icon{font-size:36px;margin-bottom:12px}
+.portal-title{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px}
+.portal-sub{font-size:13px;color:var(--mu);line-height:1.7;max-width:420px;margin:0 auto 18px}
+.portal-features{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px}
+.pf-tag{font-size:11px;font-weight:600;padding:5px 12px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--mu)}
+.portal-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:13px;cursor:pointer;text-decoration:none;transition:all .2s}
+.portal-btn:hover{box-shadow:0 8px 32px rgba(124,106,240,.35)}
+
+/* ── TRUST ── */
+.trust-footer{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.trust-footer span{display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(240,240,255,.4)}
+.trust-footer span::before{content:'✓';color:var(--gn);font-weight:700;font-size:9px}
+
+/* ── CONFETTI ── */
+.confetti{position:fixed;top:-10px;z-index:1000;pointer-events:none;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.top-nav{padding:0 18px}.page{padding:76px 16px 60px}.actions-grid{grid-template-columns:1fr}.ref-code-wrap{flex-direction:column}.ref-share{flex-wrap:wrap}.step-indicator{display:none}}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div><div class="noise"></div>
+<nav class="top-nav">
+  <a href="https://www.beim.ai/" class="logo">Beim Health</a>
+  <div class="nav-right">
+    <div class="step-indicator">
+      <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <a href="products.html" class="nav-link">Browse Products</a>
+    <a id="portalLink" href="https://beta.joinfreely.com/beim-patient-portal" class="nav-link primary">🔐 My Portal</a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="hero">
+    <div class="suc-ring">✓</div>
+    <h1 id="heroTitle">Order <span class="grad">Complete!</span></h1>
+    <div class="hero-sub" id="heroSub">Your products are on their way. Here's what happens next.</div>
+  </div>
+
+  <div class="order-card" id="orderCard"></div>
+
+  <div class="sec-label">What Happens Next</div>
+  <div id="whnContainer"></div>
+
+  <div class="sec-label">Quick Actions</div>
+  <div class="actions-grid">
+    <a class="act-card" onclick="downloadReceipt()"><span class="act-icon">📄</span><span class="act-title">Download HSA Receipt</span><span class="act-sub">IRS-compliant superbill for your records & HR</span></a>
+    <a class="act-card" id="portalAction" href="https://beta.joinfreely.com/beim-patient-portal"><span class="act-icon">🔐</span><span class="act-title">Open Health Portal</span><span class="act-sub">Track orders, LMNs, and benefits</span></a>
+    <a class="act-card" onclick="document.getElementById('refCard').scrollIntoView({behavior:'smooth'})"><span class="act-icon">🎁</span><span class="act-title">Refer a Friend</span><span class="act-sub">$20 HSA credit per referral</span></a>
+    <a class="act-card" href="products.html"><span class="act-icon">🛒</span><span class="act-title">Keep Shopping</span><span class="act-sub">More HSA/FSA-eligible products</span></a>
+  </div>
+
+  <div class="ref-card" id="refCard">
+    <div class="ref-title">Give $20, Get $20</div>
+    <div class="ref-sub">Share your code. They get $20 off their first HSA order, you get $20 in HSA credits.</div>
+    <div class="ref-code-wrap"><span class="ref-code" id="refCode">BEIM-XXXX</span><button class="ref-copy" onclick="copyRef()">Copy</button></div>
+    <div class="ref-share">
+      <button class="ref-btn sms" onclick="shareRef('sms')">💬 Text</button>
+      <a class="ref-btn tw" id="refTweet" href="#" target="_blank">𝕏 Post</a>
+      <button class="ref-btn link" onclick="shareRef('link')">🔗 Link</button>
+    </div>
+  </div>
+
+  <div class="portal-cta">
+    <div class="portal-icon">🏥</div>
+    <div class="portal-title">Your Health Wallet</div>
+    <div class="portal-sub">Everything in one place — HIPAA compliant. Track orders, manage LMNs, optimize your HSA. Clinical documents synced to your HIPAA-secured portal at Freely Health.</div>
+    <div class="portal-features">
+      <span class="pf-tag">📋 LMN Vault</span><span class="pf-tag">💳 HSA Tracker</span><span class="pf-tag">🔬 Clinical Records</span><span class="pf-tag">📊 Benefits Dashboard</span><span class="pf-tag">🔄 Auto-Refill</span><span class="pf-tag">📄 IRS Receipts</span>
+    </div>
+    <a id="portalBtnMain" href="https://beta.joinfreely.com/beim-patient-portal" class="portal-btn">🔐 Set Up Your Portal →</a>
+  </div>
+
+  <div class="trust-footer">
+    <span>HIPAA Compliant</span><span>256-bit SSL</span><span>Data Never Sold</span><span>30-Day Returns</span><span>IRS §213(d) Compliant</span>
+  </div>
+</div>
+
+<script>
+var W='https://beim-health-analyzer.steven-03f.workers.dev';
+var ORDER=null;
+
+function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+function emoji(c){var l=(c||'').toLowerCase();if(l.includes('sleep'))return'😴';if(l.includes('weight')||l.includes('fasting'))return'⚖️';if(l.includes('hair')||l.includes('skin'))return'✨';if(l.includes('cancer'))return'🧬';if(l.includes('monitor')||l.includes('wearable'))return'⌚';if(l.includes('heart'))return'❤️';if(l.includes('lab')||l.includes('test'))return'🔬';if(l.includes('recovery'))return'🏋️';if(l.includes('mental')||l.includes('stress'))return'🧠';if(l.includes('supplement')||l.includes('vitamin'))return'💊';return'🏥'}
+
+window.addEventListener('DOMContentLoaded',function(){
+  try{ORDER=JSON.parse(sGet('beim_order'))}catch(e){}
+  if(!ORDER){var p=new URLSearchParams(location.search);ORDER={orderNum:p.get('order')||'BH-UNKNOWN',email:p.get('email')?decodeURIComponent(p.get('email')):'',products:[],totals:{subtotal:0,hsaCov:0,oop:0,lmnFee:0,discount:0},acctType:'HSA',balance:0,lmnPath:'none'}}
+  var fn=sGet('beim_first_name')||'';
+  if(fn)document.getElementById('heroTitle').innerHTML=esc(fn)+"'s order is <span class='grad'>complete!</span>";
+  document.getElementById('heroSub').textContent='IRS-compliant receipt sent to '+esc(ORDER.email)+'. Here\'s what happens next.';
+
+  // Portal deep linking with email
+  var portalBase='https://beta.joinfreely.com/beim-patient-portal';
+  if(ORDER.email){var portalUrl=portalBase+'?email='+encodeURIComponent(ORDER.email);document.getElementById('portalLink').href=portalUrl;document.getElementById('portalAction').href=portalUrl;document.getElementById('portalBtnMain').href=portalUrl}
+
+  renderOrderCard();
+  renderWhatHappensNext();
+  setupReferral();
+  launchConfetti();
+  triggerFulfillment();
+  syncReceiptToPortal();
+});
+
+/* ── ORDER CARD ── */
+function renderOrderCard(){
+  var t=ORDER.totals||{};var c=document.getElementById('orderCard');
+  var h='<div class="oc-title">Order Summary — Beim Health LLC, Clinical Division</div>';
+  h+='<div class="oc-row"><span class="oc-key">Order #</span><span class="oc-val cy">'+esc(ORDER.orderNum)+'</span></div>';
+  h+='<div class="oc-row"><span class="oc-key">Patient</span><span class="oc-val sm">'+esc(ORDER.email)+'</span></div>';
+  h+='<div class="oc-row"><span class="oc-key">Items</span><span class="oc-val">'+(ORDER.products||[]).length+'</span></div>';
+  if(ORDER.stripeId)h+='<div class="oc-row"><span class="oc-key">Transaction</span><span class="oc-val sm" style="font-size:10px">'+esc(ORDER.stripeId)+'</span></div>';
+  h+='<hr class="oc-divider"/>';
+  if((t.hsaCov||t.hsa||0)>0)h+='<div class="oc-row"><span class="oc-key">'+(ORDER.acctType||'HSA')+' Charged</span><span class="oc-val gn">$'+(t.hsaCov||t.hsa||0).toFixed(2)+'</span></div>';
+  if((t.oop||0)>0)h+='<div class="oc-row"><span class="oc-key">Card Charged</span><span class="oc-val gd">$'+t.oop.toFixed(2)+'</span></div>';
+  if((t.discount||0)>0)h+='<div class="oc-row"><span class="oc-key">Promo</span><span class="oc-val gn">−$'+t.discount.toFixed(2)+'</span></div>';
+  if(ORDER.coupon)h+='<div class="oc-row"><span class="oc-key">Code</span><span class="oc-val gn">'+esc(ORDER.coupon)+'</span></div>';
+  h+='<hr class="oc-divider"/>';
+  h+='<div class="oc-row final"><span class="oc-key">Total Charged</span><span class="oc-val">$'+(t.subtotal||t.sub||0).toFixed(2)+'</span></div>';
+  c.innerHTML=h;
+}
+
+/* ── WHAT HAPPENS NEXT ── */
+function renderWhatHappensNext(){
+  var container=document.getElementById('whnContainer');
+  var products=ORDER.products||[];
+  var lmnProducts=products.filter(function(p){return p.lmn&&!p.order});
+  var orderProducts=products.filter(function(p){return p.order});
+  var digitalProducts=products.filter(function(p){return p.delivery_type==='url'||p.delivery_type==='qr'||p.delivery_type==='portal_access'});
+  var physicalProducts=products.filter(function(p){return!p.lmn&&!p.order&&p.delivery_type!=='url'&&p.delivery_type!=='qr'&&p.delivery_type!=='portal_access'});
+  var html='';
+
+  // Physician Orders
+  if(orderProducts.length){
+    var pills=orderProducts.map(function(p){return'<span class="whn-pill">'+emoji(p.cat)+' '+esc(p.name)+'</span>'}).join('');
+    html+='<div class="whn-card order"><div class="whn-header"><div class="whn-icon order">🩺</div><div class="whn-title">Physician Order Required</div><span class="whn-badge action">Action Needed</span></div><div class="whn-pills">'+pills+'</div><div class="whn-body">These products need physician authorization. Complete your health intake in the <strong>Beim Patient Portal</strong> (powered by Freely Health, HIPAA-secured). A provider reviews your case and authorizes within ~4 hours.</div><div class="whn-progress"><div class="whn-step done"></div><div class="whn-step active"></div><div class="whn-step"></div><div class="whn-step"></div></div><div class="whn-step-labels"><span>Order placed</span><span>Health intake</span><span>Provider review</span><span>Authorized</span></div><a class="whn-cta primary" href="https://beta.joinfreely.com/beim-patient-portal?email='+encodeURIComponent(ORDER.email)+'">🩺 Complete Health Intake →</a><div class="whn-note">Clinical documents synced to your HIPAA-secured portal at Freely Health.</div></div>';
+  }
+
+  // LMN Products
+  if(lmnProducts.length){
+    var pills=lmnProducts.map(function(p){return'<span class="whn-pill">'+emoji(p.cat)+' '+esc(p.name)+'</span>'}).join('');
+    var lmnPath=ORDER.lmnPath||'beim';
+    if(lmnPath==='beim'){
+      html+='<div class="whn-card lmn"><div class="whn-header"><div class="whn-icon lmn">📋</div><div class="whn-title">Letter of Medical Necessity</div><span class="whn-badge pending">⏳ In Progress</span></div><div class="whn-pills">'+pills+'</div><div class="whn-body">A Beim network physician is preparing your Letter of Medical Necessity. <strong>Expected: signed within ~4 hours.</strong> We\'ll email <strong>'+esc(ORDER.email)+'</strong> when it\'s ready. Products ship once signed. Clinical documents archived in your LMN Vault.</div><div class="whn-progress"><div class="whn-step done"></div><div class="whn-step done"></div><div class="whn-step active"></div><div class="whn-step"></div></div><div class="whn-step-labels"><span>Intake received</span><span>Assigned</span><span>Under review</span><span>Signed</span></div><a class="whn-cta amber" href="https://beta.joinfreely.com/beim-patient-portal?email='+encodeURIComponent(ORDER.email)+'">📋 Track LMN Status in Portal</a></div>';
+    } else if(lmnPath==='own'){
+      html+='<div class="whn-card lmn"><div class="whn-header"><div class="whn-icon lmn">📄</div><div class="whn-title">LMN — Send to Your Doctor</div><span class="whn-badge action">Download Ready</span></div><div class="whn-pills">'+pills+'</div><div class="whn-body">Your pre-filled Letter of Medical Necessity is ready with ICD-10 codes, clinical justification, and provider signature block. <strong>Download it, send to your doctor for signature, then submit to your HSA administrator.</strong> Upload signed copies to your portal for safekeeping.</div><button class="whn-cta green" onclick="generateLmnTemplate()">📄 Download Letter of Medical Necessity</button></div>';
+    } else {
+      html+='<div class="whn-card ready"><div class="whn-header"><div class="whn-icon ready">✅</div><div class="whn-title">LMN — Already on File</div><span class="whn-badge done">✓ Confirmed</span></div><div class="whn-pills">'+pills+'</div><div class="whn-body">You confirmed you have a Letter of Medical Necessity. Make sure it\'s on file with your HSA administrator. Upload a copy to your portal for safekeeping.</div><a class="whn-cta green" href="https://beta.joinfreely.com/beim-patient-portal?email='+encodeURIComponent(ORDER.email)+'">Upload to Portal</a></div>';
+    }
+  }
+
+  // Digital Products (URL, QR, Portal Access)
+  if(digitalProducts.length){
+    var dpHtml='';
+    digitalProducts.forEach(function(p){
+      if(p.delivery_type==='url'&&p.delivery_url){
+        dpHtml+='<div style="margin-bottom:10px"><a class="whn-cta cyan" href="'+esc(p.delivery_url)+'" target="_blank">🚀 Access: '+esc(p.name)+'</a></div>';
+      } else if(p.delivery_type==='qr'){
+        dpHtml+='<div class="qr-container"><div class="qr-box" id="qr_'+esc(p.product_id||p.name.replace(/\s/g,'_'))+'"></div><div class="qr-info"><div class="qr-title">'+esc(p.name)+'</div><div class="qr-sub">Scan to access your digital product</div></div></div>';
+      } else {
+        dpHtml+='<div style="margin-bottom:10px"><span class="whn-pill">'+emoji(p.cat)+' '+esc(p.name)+' — available in portal</span></div>';
+      }
+    });
+    html+='<div class="whn-card digital"><div class="whn-header"><div class="whn-icon digital">🚀</div><div class="whn-title">Digital Products — Ready Now</div><span class="whn-badge digital">✓ Instant Access</span></div>'+dpHtml+'</div>';
+  }
+
+  // Physical Products (Ready to Ship)
+  if(physicalProducts.length){
+    var pills=physicalProducts.map(function(p){return'<span class="whn-pill">'+emoji(p.cat)+' '+esc(p.name)+'</span>'}).join('');
+    html+='<div class="whn-card ready"><div class="whn-header"><div class="whn-icon ready">✅</div><div class="whn-title">Ready to Ship</div><span class="whn-badge done">✓ No Action Needed</span></div><div class="whn-pills">'+pills+'</div><div class="whn-body">These products are <strong>HSA/FSA eligible with no additional paperwork</strong>. Shipping confirmation sent to <strong>'+esc(ORDER.email)+'</strong>. Your IRS-compliant receipt is available below.</div><button class="whn-cta green" onclick="downloadReceipt()">📄 Download HSA Superbill</button></div>';
+  }
+
+  if(!html)html='<div class="whn-card ready"><div class="whn-header"><div class="whn-icon ready">✅</div><div class="whn-title">All Set!</div></div><div class="whn-body">Your order is confirmed. Check your email for shipping updates.</div></div>';
+  container.innerHTML=html;
+
+  // Generate QR codes for digital products
+  digitalProducts.forEach(function(p){
+    if(p.delivery_type==='qr'&&p.delivery_url){
+      var containerId='qr_'+(p.product_id||p.name.replace(/\s/g,'_'));
+      var el=document.getElementById(containerId);
+      if(el)generateQR(el,p.delivery_url);
+    }
+  });
+}
+
+/* ── QR CODE GENERATOR (simple canvas-based) ── */
+function generateQR(container,url){
+  // Load qrcode.js from CDN
+  if(typeof QRCode==='undefined'){
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload=function(){doQR(container,url)};
+    document.head.appendChild(s);
+  } else {doQR(container,url)}
+}
+function doQR(container,url){
+  try{new QRCode(container,{text:url,width:80,height:80,colorDark:'#111',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}catch(e){container.textContent='QR'}
+}
+
+/* ── REFERRAL ── */
+function setupReferral(){
+  var email=ORDER.email||'';
+  var code='BEIM-'+(email?email.split('@')[0].toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6):ORDER.orderNum.slice(-6));
+  document.getElementById('refCode').textContent=code;
+  var refUrl='https://go.beim.ai/start?ref='+code;
+  document.getElementById('refTweet').href='https://twitter.com/intent/tweet?text='+encodeURIComponent('Just used my HSA to get clinically graded health products from @BeimHealth. Use code '+code+' for $20 off!')+'&url='+encodeURIComponent(refUrl);
+  window._refCode=code;window._refUrl=refUrl;
+}
+function copyRef(){navigator.clipboard.writeText(window._refCode||'').catch(function(){});var btn=event.target;btn.textContent='✓ Copied!';setTimeout(function(){btn.textContent='Copy'},2000)}
+function shareRef(type){
+  var code=window._refCode||'',url=window._refUrl||'';
+  if(type==='sms')window.open('sms:?body='+encodeURIComponent('I just used my HSA to get health products from Beim Health — clinically graded, HSA/FSA eligible. Use code '+code+' for $20 off: '+url));
+  else if(type==='link'){navigator.clipboard.writeText(url).catch(function(){});var btn=event.target;btn.textContent='✓ Copied!';setTimeout(function(){btn.textContent='🔗 Link'},2000)}
+}
+
+/* ── TRIGGER FULFILLMENT (Zoho + Worker) ── */
+function triggerFulfillment(){
+  var lid=sGet('beim_lead_id')||null;
+  if(!ORDER.email&&!lid)return;
+  // Fire fulfillment webhook to Worker → Zoho Sales Order + Knack Patient Record
+  try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    email:ORDER.email,first_name:sGet('beim_first_name')||'',last_name:sGet('beim_last_name')||'',
+    lead_id:lid,source:'confirmation',page:'confirmation',
+    order_number:ORDER.orderNum,payment_status:'completed',
+    acct_type:ORDER.acctType||'HSA',balance:ORDER.balance||0,
+    products_selected:(ORDER.products||[]).map(function(p){return p.name}).join(', '),
+    products_count:(ORDER.products||[]).length,
+    lmn_path:ORDER.lmnPath||'none',
+    order_total:(ORDER.totals||{}).subtotal||(ORDER.totals||{}).sub||0,
+    hsa_charged:(ORDER.totals||{}).hsaCov||(ORDER.totals||{}).hsa||0,
+    oop_charged:(ORDER.totals||{}).oop||0,
+    fulfillment_status:'pending',
+    navigator:sGet('beim_nav')||'brooks'
+  })}).catch(function(){})}catch(e){}
+}
+
+/* ── SYNC RECEIPT TO PORTAL ── */
+function syncReceiptToPortal(){
+  var lid=sGet('beim_lead_id')||null;
+  if(!ORDER.email&&!lid)return;
+  // Base64 encode a summary for portal sync
+  var receiptData={orderNum:ORDER.orderNum,email:ORDER.email,products:(ORDER.products||[]).map(function(p){return{name:p.name,price:p.price,cat:p.cat,hsa:p.hsa,lmn:p.lmn}}),totals:ORDER.totals,acctType:ORDER.acctType,ts:ORDER.ts||new Date().toISOString()};
+  try{fetch(W+'/api/portal-sync',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:lid,email:ORDER.email,order_number:ORDER.orderNum,receipt_data:receiptData,lmn_path:ORDER.lmnPath||'none'})}).catch(function(){})}catch(e){}
+}
+
+/* ── HSA RECEIPT (Superbill Format) ── */
+function downloadReceipt(){
+  var t=ORDER.totals||{};
+  var date=new Date(ORDER.ts||Date.now()).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  var fn=sGet('beim_first_name')||'',ln=sGet('beim_last_name')||'';
+  var dob=sGet('beim_dob')||'';
+  var state=sGet('beim_checkout_state')||'';
+  var lines=(ORDER.products||[]).map(function(p){return'<tr><td style="padding:10px 12px;border-bottom:1px solid #f3f4f6">'+esc(p.name)+'</td><td style="padding:10px 12px;border-bottom:1px solid #f3f4f6">'+esc(p.cat||'')+'</td><td style="padding:10px 12px;border-bottom:1px solid #f3f4f6;text-align:right">$'+(p.price||0).toFixed(2)+'</td><td style="padding:10px 12px;border-bottom:1px solid #f3f4f6;text-align:center;color:#16a34a;font-weight:600">'+(p.hsa?'✓ Eligible':'—')+'</td><td style="padding:10px 12px;border-bottom:1px solid #f3f4f6;font-size:11px;color:#888">'+(p.lmn?'LMN on file':p.order?'Physician order':'Direct eligible')+'</td></tr>'}).join('');
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>HSA/FSA Superbill — Beim Health</title><style>body{font-family:-apple-system,Arial,sans-serif;max-width:740px;margin:0 auto;padding:40px;color:#111;font-size:13px;line-height:1.6}@media print{button{display:none}body{padding:20px}}</style></head><body>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px"><div><div style="font-size:22px;font-weight:800;color:#7c6af0;margin-bottom:4px">Beim Health LLC</div><div style="font-size:11px;color:#888">Clinical Division · Austin, TX</div><div style="font-size:11px;color:#888">beim.ai · support@beim.ai</div><div style="font-size:10px;color:#aaa;margin-top:4px">NPI: Pending · Tax ID: Pending</div></div><div style="text-align:right"><div style="font-size:18px;font-weight:700;color:#111">HSA/FSA Superbill</div><div style="font-size:12px;color:#888;margin-top:4px">'+date+'</div><div style="font-size:12px;color:#888">Order #'+esc(ORDER.orderNum)+'</div></div></div>';
+  html+='<div style="display:flex;gap:16px;margin-bottom:24px"><div style="flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:6px">Patient</div><div style="font-weight:600">'+esc((fn+' '+ln).trim()||ORDER.email)+'</div><div style="font-size:12px;color:#64748b">'+esc(ORDER.email)+'</div>'+(dob?'<div style="font-size:11px;color:#94a3b8;margin-top:2px">DOB: '+esc(dob)+'</div>':'')+(state?'<div style="font-size:11px;color:#94a3b8">State: '+esc(state)+'</div>':'')+'</div><div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#16a34a;margin-bottom:6px">Account Type</div><div style="font-weight:600;color:#166534">'+(ORDER.acctType||'HSA')+'</div><div style="font-size:12px;color:#16a34a">Tax-free qualified medical expenses per IRC §213(d)</div></div></div>';
+  html+='<table style="width:100%;border-collapse:collapse;margin:16px 0"><thead><tr><th style="background:#f8fafc;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #e2e8f0">Product / Service</th><th style="background:#f8fafc;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #e2e8f0">Category</th><th style="background:#f8fafc;padding:10px 12px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #e2e8f0">Amount</th><th style="background:#f8fafc;padding:10px 12px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #e2e8f0">HSA/FSA</th><th style="background:#f8fafc;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #e2e8f0">Authorization</th></tr></thead><tbody>'+lines+'</tbody></table>';
+  html+='<div style="display:flex;gap:16px;margin:24px 0"><div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#16a34a;margin-bottom:4px">'+(ORDER.acctType||'HSA')+' Applied</div><div style="font-size:24px;font-weight:700;color:#166534">$'+(t.hsaCov||t.hsa||0).toFixed(2)+'</div></div>'+((t.oop||0)>0?'<div style="flex:1;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#d97706;margin-bottom:4px">Out of Pocket</div><div style="font-size:24px;font-weight:700;color:#92400e">$'+t.oop.toFixed(2)+'</div></div>':'')+'<div style="flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;text-align:center"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#64748b;margin-bottom:4px">Total</div><div style="font-size:24px;font-weight:700">$'+(t.subtotal||t.sub||0).toFixed(2)+'</div></div></div>';
+  html+='<div style="margin-top:32px;padding:16px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px"><div style="font-weight:700;color:#1e40af;margin-bottom:6px">📋 IRS Compliance Notice</div><div style="font-size:12px;color:#1e3a5f;line-height:1.6">These expenses qualify as deductible medical expenses under <strong>IRC §213(d)</strong> and <strong>IRS Publication 502</strong>. Products were clinically reviewed and graded by Beim Health LLC, Clinical Division. Retain this superbill for tax records. <a href="https://www.irs.gov/publications/p502" style="color:#2563eb">IRS Pub 502 →</a></div></div>';
+  html+='<div style="margin-top:20px;padding:12px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px"><div style="font-size:11px;color:#5b21b6;line-height:1.6"><strong>Beim Health LLC, Clinical Division</strong> · Austin, TX · beim.ai · support@beim.ai<br>Clinical documents archived in HIPAA-secured portal at Freely Health (beta.joinfreely.com)</div></div>';
+  html+='<div style="margin-top:24px;text-align:center"><button onclick="window.print()" style="padding:10px 24px;background:#7c6af0;color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">🖨️ Print / Save as PDF</button></div></body></html>';
+  window.open(URL.createObjectURL(new Blob([html],{type:'text/html'})),'_blank');
+}
+
+/* ── LMN TEMPLATE ── */
+function generateLmnTemplate(){
+  var lmnProds=(ORDER.products||[]).filter(function(p){return p.lmn});
+  var fn=sGet('beim_first_name')||'[Patient]',ln=sGet('beim_last_name')||'';
+  var dob=sGet('beim_dob')||'[DOB]';
+  var date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  var rows=lmnProds.map(function(p){return'<tr><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6">'+esc(p.name)+'</td><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6">'+esc(p.cat||'')+'</td><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6">'+esc(p.conds||'')+'</td><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6;text-align:right">$'+(p.price||0).toFixed(2)+'</td></tr>'}).join('');
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Letter of Medical Necessity — Beim Health</title><style>body{font-family:-apple-system,Arial,sans-serif;max-width:700px;margin:40px auto;color:#111;font-size:13px;line-height:1.7}@media print{button{display:none}}</style></head><body>';
+  html+='<div style="color:#7c6af0;font-weight:800;font-size:16px">Beim Health LLC, Clinical Division</div>';
+  html+='<div style="font-size:11px;color:#888;margin-bottom:4px">Austin, TX · beim.ai · support@beim.ai</div>';
+  html+='<h1 style="font-size:20px;margin-top:16px">Letter of Medical Necessity</h1>';
+  html+='<p style="color:#666">Date: '+date+'</p>';
+  html+='<p><strong>Patient:</strong> '+esc(fn+' '+ln)+'<br><strong>DOB:</strong> '+esc(dob)+'</p>';
+  html+='<hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0"/>';
+  html+='<p>Dear Physician,</p>';
+  html+='<p>The following products are medically necessary for the above-named patient. These expenses qualify under <strong>IRC §213(d)</strong> and <strong>IRS Publication 502</strong> as amounts paid for the diagnosis, cure, mitigation, treatment, or prevention of disease.</p>';
+  html+='<table style="width:100%;border-collapse:collapse;margin:16px 0"><thead><tr><th style="background:#f3f4f6;padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb">Product</th><th style="background:#f3f4f6;padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb">Category</th><th style="background:#f3f4f6;padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb">Medical Indication</th><th style="background:#f3f4f6;padding:8px 10px;text-align:right;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  html+='<div style="margin:20px 0;padding:14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px"><div style="font-weight:700;color:#166534;margin-bottom:4px">Clinical Justification</div><div style="font-size:12px;color:#15803d;line-height:1.6">The listed products directly treat, mitigate, or prevent the conditions noted for this patient. Each product has been clinically reviewed by Beim Health LLC using peer-reviewed evidence, physician confidence scoring, and USPSTF guideline alignment. These products are not available over-the-counter without clinical determination and are necessary for the patient\'s ongoing treatment plan.</div></div>';
+  html+='<div style="margin-top:40px"><p><strong>Physician Signature:</strong></p><span style="border-bottom:1px solid #111;width:300px;margin:24px 0 4px;display:inline-block"></span><p style="font-size:11px;color:#888">Printed Name: ______________________________</p><p style="font-size:11px;color:#888">NPI #: ______________________________</p><p style="font-size:11px;color:#888">Date Signed: ______________________________</p></div>';
+  html+='<div style="margin-top:32px;padding:12px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;color:#5b21b6">Prepared by Beim Health LLC, Clinical Division · Austin, TX · This document should be reviewed, edited as needed, and signed by a licensed physician.</div>';
+  html+='<div style="text-align:center;margin-top:24px"><button onclick="window.print()" style="padding:10px 24px;background:#7c6af0;color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">🖨️ Print / Save as PDF</button></div></body></html>';
+  window.open(URL.createObjectURL(new Blob([html],{type:'text/html'})),'_blank');
+}
+
+/* ── CONFETTI ── */
+function launchConfetti(){
+  var colors=['#6ee0f5','#7c6af0','#3dd9b6','#6aa3f3','#f59e0b','#f0f0ff'];
+  for(var i=0;i<60;i++){
+    var el=document.createElement('div');el.className='confetti';
+    el.style.left=Math.random()*100+'vw';
+    el.style.width=(4+Math.random()*6)+'px';el.style.height=(4+Math.random()*6)+'px';
+    el.style.background=colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDuration=(2+Math.random()*3)+'s';
+    el.style.animationDelay=(Math.random()*2)+'s';
+    el.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(el);setTimeout(function(){el.remove()},6000);
+  }
+}
+</script>
+</body>
+</html>
