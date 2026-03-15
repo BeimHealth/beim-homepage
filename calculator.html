@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HSA/FSA Calculator — Beim Health</title>
+<meta name="description" content="Enter your HSA or FSA balance and discover what your benefits can actually buy — tax-free products, LMNs handled, clinical grading included."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#060610;--sf:rgba(14,14,28,.88);--card:rgba(16,16,32,.65);--border:rgba(255,255,255,.07);--border-h:rgba(255,255,255,.14);--cy:#6ee0f5;--pu:#7c6af0;--bl:#6aa3f3;--gn:#3dd9b6;--gd:#f59e0b;--tx:#f0f0ff;--mu:#8a8da8;--dm:#5a5d78;--radius:20px;--radius-s:14px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+
+/* ── AMBIENT ── */
+.bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 20% 15%,rgba(124,106,240,.06),transparent 70%),radial-gradient(ellipse 500px 400px at 80% 70%,rgba(110,224,245,.04),transparent 70%),radial-gradient(ellipse 350px 300px at 55% 50%,rgba(61,217,182,.02),transparent 70%);animation:meshDrift 35s ease-in-out infinite alternate}
+@keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(25px,-15px) scale(1.02)}}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 15%,transparent 100%);pointer-events:none;z-index:0}
+.noise{position:fixed;inset:0;z-index:0;opacity:.016;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
+
+/* ── PAGE LAYOUT ── */
+.page{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:48px 32px 80px}
+
+/* ── TOP BAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;animation:fu .5s ease both}
+.logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px;text-decoration:none}
+.step-indicator{display:flex;align-items:center;gap:6px}
+.step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
+.step-dot.done{background:var(--gn)}
+.step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
+
+/* ── NAV CHIP ── */
+.nav-chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:100px;padding:5px 16px 5px 5px;text-decoration:none;transition:border-color .2s;margin-bottom:28px;animation:fu .5s .06s ease both}
+.nav-chip:hover{border-color:var(--border-h)}
+.nc-av{width:30px;height:30px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0}
+.nc-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.nc-dot{position:absolute;bottom:0;right:-1px;width:7px;height:7px;border-radius:50%;background:var(--gn);border:1.5px solid rgba(6,6,16,.9)}
+.nc-txt{font-size:12px;color:var(--mu)}.nc-txt strong{color:var(--tx)}
+
+/* ── HERO ── */
+.hero{margin-bottom:36px}
+.hero h1{font-size:clamp(30px,4.5vw,46px);font-weight:800;line-height:1.06;letter-spacing:-2px;color:#fff;margin-bottom:12px;animation:fu .5s .1s ease both}
+.grad{background:linear-gradient(135deg,var(--cy),var(--bl),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:rgba(240,240,255,.55);line-height:1.7;max-width:520px;animation:fu .5s .14s ease both}
+
+/* ── MAIN GRID (calc left, chat right) ── */
+.main-grid{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;animation:fu .5s .2s ease both}
+
+/* ── CALCULATOR CARD ── */
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 26px;backdrop-filter:blur(24px);position:relative;overflow:hidden}
+.calc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(110,224,245,.12),rgba(124,106,240,.12),transparent);opacity:0;transition:opacity .4s}
+.calc-card:focus-within::before{opacity:1}
+
+.field-label{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:10px;text-align:left}
+.field-label .auto-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--gn);background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.18);padding:2px 8px;border-radius:100px;margin-left:8px;vertical-align:middle}
+
+/* Balance input */
+.balance-wrap{display:flex;align-items:center;background:rgba(8,8,18,.6);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-s);overflow:hidden;transition:all .3s var(--ease);margin-bottom:8px}
+.balance-wrap:focus-within{border-color:rgba(110,224,245,.4);box-shadow:0 0 0 3px rgba(110,224,245,.08)}
+.balance-wrap.has-value{border-color:rgba(61,217,182,.2);background:rgba(61,217,182,.02)}
+.bal-prefix{padding:18px 8px 18px 20px;font-family:'DM Mono',monospace;font-size:28px;color:rgba(110,224,245,.45);pointer-events:none;flex-shrink:0}
+.bal-input{flex:1;background:transparent;border:none;outline:none;font-family:'DM Mono',monospace;font-size:28px;color:#fff;padding:18px 20px 18px 4px;width:100%}
+.bal-input::placeholder{color:var(--dm)}
+
+/* Products unlocked counter */
+.unlock-counter{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding:10px 14px;border-radius:var(--radius-s);background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.1);opacity:0;transform:translateY(8px);transition:all .4s var(--ease)}
+.unlock-counter.visible{opacity:1;transform:translateY(0)}
+.uc-icon{font-size:14px}
+.uc-text{font-size:13px;font-weight:600;color:rgba(240,240,255,.7)}
+.uc-num{font-family:'DM Mono',monospace;font-weight:700;color:var(--gn)}
+
+/* Account type */
+.acct-row{display:flex;gap:8px;margin-bottom:20px}
+.acct-btn{flex:1;padding:12px 8px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--mu);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s var(--ease);text-align:center}
+.acct-btn:hover{border-color:rgba(255,255,255,.2);color:var(--tx)}
+.acct-btn.active{border-color:rgba(110,224,245,.3);background:rgba(110,224,245,.06);color:var(--cy)}
+.acct-btn.auto{border-color:rgba(61,217,182,.25);background:rgba(61,217,182,.05);color:var(--gn)}
+
+/* FSA deadline */
+.deadline-section{display:none;margin-bottom:20px;animation:fu .3s ease both}
+.deadline-section.show{display:block}
+.dl-row{display:flex;gap:8px}
+.dl-btn{flex:1;padding:10px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--mu);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
+.dl-btn:hover{border-color:rgba(255,255,255,.2);color:var(--tx)}
+.dl-btn.active{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06);color:var(--gd)}
+.dl-alert{display:none;align-items:center;gap:8px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.15);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:rgba(240,240,255,.6);line-height:1.5;text-align:left}
+.dl-alert.show{display:flex}
+.dl-alert strong{color:var(--gd)}
+
+/* Finch CTA */
+.finch-cta{display:none;margin-bottom:20px;animation:fu .3s ease both}
+.finch-cta.show{display:block}
+.finch-card{display:flex;align-items:center;gap:12px;background:rgba(61,217,182,.03);border:1px solid rgba(61,217,182,.12);border-radius:var(--radius-s);padding:12px 16px;cursor:pointer;transition:all .25s var(--ease)}
+.finch-card:hover{border-color:rgba(61,217,182,.25);background:rgba(61,217,182,.05);transform:translateY(-1px)}
+.finch-ico{font-size:16px;flex-shrink:0}
+.finch-txt{flex:1}
+.finch-t{font-size:12px;font-weight:700;color:var(--tx)}
+.finch-s{font-size:11px;color:var(--dm)}
+.finch-arr{color:var(--dm);transition:transform .2s}
+.finch-card:hover .finch-arr{transform:translateX(3px);color:var(--gn)}
+
+/* Benefits banner */
+.benefits-banner{display:none;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:var(--radius-s);padding:14px 16px;margin-bottom:20px;text-align:left;position:relative;animation:fu .35s ease both}
+.benefits-banner.show{display:block}
+.bb-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bb-title{font-size:13px;font-weight:700;color:var(--gn)}
+.bb-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.bb-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px}
+.bb-tag.hsa{background:rgba(110,224,245,.08);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
+.bb-tag.fsa{background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.15);color:var(--pu)}
+.bb-tag.emp{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu)}
+.bb-note{font-size:11px;color:var(--dm);line-height:1.5}
+.bb-note strong{color:rgba(240,240,255,.6)}
+.bb-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--dm);font-size:14px;cursor:pointer;padding:4px}
+
+/* Divider */
+.calc-divider{border:none;border-top:1px solid rgba(255,255,255,.06);margin:4px 0 20px}
+
+/* CTA */
+.cta-btn{width:100%;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;padding:18px;border-radius:var(--radius-s);cursor:pointer;transition:all .25s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
+.cta-btn:hover{box-shadow:0 12px 48px rgba(124,106,240,.3);transform:translateY(-2px)}
+
+/* ── CHAT PANEL ── */
+.chat-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;backdrop-filter:blur(24px);display:flex;flex-direction:column;height:580px;position:sticky;top:24px}
+.chat-panel.ev{border-color:rgba(110,224,245,.12)}
+.chat-panel.br{border-color:rgba(124,106,240,.12)}
+
+.ch-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.ch-av{width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;position:relative}
+.ch-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.ch-dot{position:absolute;bottom:0;right:-1px;width:8px;height:8px;border-radius:50%;background:var(--gn);border:2px solid rgba(16,16,32,.9)}
+.ch-name{font-size:14px;font-weight:700;color:#fff}
+.ch-status{font-size:11px;color:var(--gn);font-weight:600}
+
+/* Messages area — FIXED HEIGHT, no layout shift */
+.ch-messages{flex:1;overflow-y:auto;padding:16px 16px 8px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.ch-messages::-webkit-scrollbar{width:4px}
+.ch-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:4px}
+
+.msg{display:flex;gap:8px;animation:msgIn .35s var(--ease) both}
+.msg.user{flex-direction:row-reverse}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.msg-av{width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;margin-top:2px}
+.msg-av img{width:100%;height:100%;object-fit:cover}
+.msg-av.you{background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--mu)}
+
+.msg-bubble{font-size:13px;line-height:1.65;padding:10px 14px;border-radius:14px;max-width:88%}
+.msg-bubble.nav{color:rgba(240,240,255,.8);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.chat-panel.ev .msg-bubble.nav{background:rgba(110,224,245,.05);border-color:rgba(110,224,245,.1)}
+.chat-panel.br .msg-bubble.nav{background:rgba(124,106,240,.05);border-color:rgba(124,106,240,.1)}
+.msg-bubble.usr{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(240,240,255,.7)}
+
+/* Typing indicator */
+.typing{display:flex;gap:4px;padding:10px 14px;border-radius:14px;align-items:center}
+.chat-panel.ev .typing{background:rgba(110,224,245,.05);border:1px solid rgba(110,224,245,.1)}
+.chat-panel.br .typing{background:rgba(124,106,240,.05);border:1px solid rgba(124,106,240,.1)}
+.typing span{width:5px;height:5px;border-radius:50%;background:rgba(240,240,255,.3);animation:dot 1.4s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
+
+/* Quick prompts */
+.ch-prompts{display:flex;gap:5px;padding:8px 16px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid rgba(255,255,255,.04)}
+.qp-btn{font-size:11px;font-weight:600;padding:6px 12px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.qp-btn:hover{border-color:rgba(255,255,255,.2);color:var(--tx)}
+
+/* Chat input */
+.ch-input-row{display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.ch-input{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:14px 16px}
+.ch-input::placeholder{color:var(--mu)}
+.ch-send{background:none;border:none;padding:14px 16px;cursor:pointer;font-size:16px;color:var(--dm);transition:color .2s}
+.ch-send:hover{color:var(--cy)}
+
+/* ── TRUST ── */
+.trust-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:28px;animation:fu .5s .3s ease both}
+.trust-item{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(240,240,255,.42)}
+.trust-item::before{content:'✓';color:var(--gn);font-weight:700;font-size:9px}
+
+/* ── ANIMATIONS ── */
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.shake{animation:shake .35s ease}
+
+/* ── RESPONSIVE ── */
+@media(max-width:800px){
+  .main-grid{grid-template-columns:1fr;gap:20px}
+  .chat-panel{height:420px;position:static;order:2}
+  .calc-card{order:1}
+  .page{padding:36px 18px 60px}
+  .bal-prefix{font-size:22px;padding:14px 6px 14px 16px}
+  .bal-input{font-size:22px;padding:14px}
+  .acct-row,.dl-row{flex-wrap:wrap}
+  .acct-btn,.dl-btn{min-width:calc(50% - 4px)}
+}
+@media(max-width:480px){
+  .hero h1{font-size:26px;letter-spacing:-1.2px}
+  .hero-sub{font-size:14px}
+  .calc-card{padding:22px 18px}
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div><div class="bg-grid"></div><div class="noise"></div>
+
+<div class="page">
+  <!-- ── TOP BAR ── -->
+  <div class="topbar">
+    <a href="https://www.beim.ai" class="logo">Beim Health</a>
+    <div class="step-indicator">
+      <div class="step-dot done" title="Navigator"></div>
+      <div class="step-dot active" title="Calculator"></div>
+      <div class="step-dot" title="Insurance"></div>
+      <div class="step-dot" title="Goals"></div>
+      <div class="step-dot" title="Products"></div>
+      <div class="step-dot" title="Checkout"></div>
+    </div>
+  </div>
+
+  <!-- ── NAV CHIP ── -->
+  <a class="nav-chip" href="start.html" id="navChip">
+    <div class="nc-av" id="ncAv"></div>
+    <span class="nc-txt"><strong id="ncName"></strong> is guiding <span id="ncUser">you</span></span>
+  </a>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <h1 id="headline">What can your<br><span class="grad">balance unlock?</span></h1>
+    <p class="hero-sub">Enter your HSA or FSA balance and we'll show everything you can buy — tax-free, with LMNs and physician orders handled.</p>
+  </div>
+
+  <!-- ── MAIN GRID ── -->
+  <div class="main-grid">
+    <!-- LEFT: Calculator -->
+    <div class="calc-card">
+      <!-- Benefits banner -->
+      <div class="benefits-banner" id="benefitsBanner">
+        <button class="bb-close" onclick="this.parentElement.classList.remove('show')">×</button>
+        <div class="bb-header"><span>🏥</span><span class="bb-title" id="bbTitle">Benefits found</span></div>
+        <div class="bb-tags" id="bbTags"></div>
+        <div class="bb-note" id="bbNote"></div>
+      </div>
+
+      <!-- Finch CTA -->
+      <div class="finch-cta" id="finchCta">
+        <div class="finch-card" onclick="launchFinch()">
+          <span class="finch-ico">🔗</span>
+          <div class="finch-txt">
+            <div class="finch-t" id="finchTitle">Connect your employer's benefits</div>
+            <div class="finch-s">Link payroll to auto-detect HSA/FSA</div>
+          </div>
+          <span class="finch-arr">→</span>
+        </div>
+      </div>
+
+      <!-- Balance -->
+      <span class="field-label" id="balLabel">Your available balance</span>
+      <div class="balance-wrap" id="balWrap">
+        <span class="bal-prefix">$</span>
+        <input class="bal-input" type="number" id="balInput" placeholder="0.00" min="0" step="0.01" autocomplete="off"/>
+      </div>
+
+      <!-- Unlock counter -->
+      <div class="unlock-counter" id="unlockCounter">
+        <span class="uc-icon">🔓</span>
+        <span class="uc-text">Up to <span class="uc-num" id="unlockNum">0</span> products unlocked at this balance</span>
+      </div>
+
+      <!-- Account type -->
+      <span class="field-label" id="acctLabel">Account type</span>
+      <div class="acct-row">
+        <button class="acct-btn active" id="btnHSA" onclick="setAcct('HSA',this)">💳 HSA</button>
+        <button class="acct-btn" id="btnFSA" onclick="setAcct('FSA',this)">🏥 FSA</button>
+        <button class="acct-btn" id="btnBoth" onclick="setAcct('HSA+FSA',this)">💰 Both</button>
+      </div>
+
+      <!-- FSA deadline -->
+      <div class="deadline-section" id="deadlineSection">
+        <span class="field-label">FSA plan year end?</span>
+        <div class="dl-row">
+          <button class="dl-btn" onclick="setDeadline('dec',this)">Dec 31</button>
+          <button class="dl-btn" onclick="setDeadline('mar',this)">Mar 15</button>
+          <button class="dl-btn" onclick="setDeadline('other',this)">Other</button>
+          <button class="dl-btn" onclick="setDeadline('unsure',this)">Not sure</button>
+        </div>
+        <div class="dl-alert" id="dlAlert"><span>⏰</span><span id="dlMsg"></span></div>
+      </div>
+
+      <hr class="calc-divider"/>
+      <button class="cta-btn" onclick="proceed()">Check My Insurance →</button>
+    </div>
+
+    <!-- RIGHT: Chat -->
+    <div class="chat-panel" id="chatPanel">
+      <div class="ch-header">
+        <div class="ch-av" id="chAvatar"></div>
+        <div>
+          <div class="ch-name" id="chName">Care Navigator</div>
+          <div class="ch-status">Online now</div>
+        </div>
+      </div>
+      <div class="ch-messages" id="chatMsgs"></div>
+      <div class="ch-prompts" id="chatPrompts">
+        <button class="qp-btn" onclick="askQuick(this)">What can my HSA buy?</button>
+        <button class="qp-btn" onclick="askQuick(this)">Do I need an LMN?</button>
+        <button class="qp-btn" onclick="askQuick(this)">HSA vs FSA?</button>
+        <button class="qp-btn" onclick="askQuick(this)">Will my funds expire?</button>
+      </div>
+      <div class="ch-input-row">
+        <input class="ch-input" id="chatInput" type="text" placeholder="Ask about your benefits…" autocomplete="off"/>
+        <button class="ch-send" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-row">
+    <span class="trust-item">No account required</span>
+    <span class="trust-item">1,000+ products</span>
+    <span class="trust-item">IRS-compliant</span>
+    <span class="trust-item">HIPAA secure</span>
+  </div>
+</div>
+
+<script>
+var W='https://beim-health-analyzer.steven-03f.workers.dev';
+var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
+var DL_LABELS={dec:'Dec 31',mar:'Mar 15',other:'Other',unsure:'Not sure'};
+
+var nav,firstName='',lastName='',employer='',email='',acct='HSA',deadline=null,benefits=null,finchUrl=null;
+var chatHistory=[],chatLog=[],lastBal=0,finchConnected=false;
+var reacted={bal:false,acct:false,summary:false};
+
+function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+window.addEventListener('DOMContentLoaded',function(){
+  var p=new URLSearchParams(location.search);
+  nav=p.get('nav')||sGet('beim_nav')||'brooks';
+  if(nav==='skip')nav='brooks';
+  firstName=p.get('first_name')?decodeURIComponent(p.get('first_name')):(sGet('beim_first_name')||'');
+  lastName=p.get('last_name')?decodeURIComponent(p.get('last_name')):(sGet('beim_last_name')||'');
+  employer=p.get('employer')?decodeURIComponent(p.get('employer')):(sGet('beim_employer')||'');
+  email=p.get('email')?decodeURIComponent(p.get('email')):(sGet('beim_email')||'');
+  finchUrl=sGet('beim_finch_url');
+
+  // Pre-fill balance from URL
+  var bal=parseFloat(p.get('balance'));
+  if(bal>0){document.getElementById('balInput').value=bal.toFixed(2);lastBal=bal;updateUnlock(bal);document.getElementById('balWrap').classList.add('has-value')}
+
+  // Pre-fill acct type
+  var ac=p.get('acct');
+  if(ac){document.querySelectorAll('.acct-btn').forEach(function(b){b.classList.remove('active')});
+    if(ac==='FSA'){document.getElementById('btnFSA').classList.add('active');acct='FSA'}
+    else if(ac==='HSA+FSA'||ac==='Both'){document.getElementById('btnBoth').classList.add('active');acct='HSA+FSA'}
+    else{document.getElementById('btnHSA').classList.add('active');acct='HSA'}
+    updateDeadline()}
+
+  // Personalize headline
+  if(firstName)document.getElementById('headline').innerHTML=esc(firstName)+', what can your<br><span class="grad">balance unlock?</span>';
+
+  // Finch
+  if(p.get('finch')==='1')finchConnected=true;
+  if(employer&&finchUrl&&!finchConnected)showFinchCta();
+
+  // Init navigator UI
+  initNavigator();
+
+  // Balance listeners — no page jerk, just counter update
+  var balEl=document.getElementById('balInput');
+  balEl.addEventListener('input',function(){
+    var v=parseFloat(this.value);
+    if(v>0){updateUnlock(v);document.getElementById('balWrap').classList.add('has-value')}
+    else{document.getElementById('unlockCounter').classList.remove('visible');document.getElementById('balWrap').classList.remove('has-value')}
+  });
+  balEl.addEventListener('change',onBalanceSet);
+  balEl.addEventListener('blur',onBalanceSet);
+
+  // Enter key on balance
+  balEl.addEventListener('keydown',function(e){if(e.key==='Enter')proceed()});
+
+  // Chat enter key
+  document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendChat()}});
+});
+
+function initNavigator(){
+  var img=AVATARS[nav]||AVATARS.brooks;
+  var name=nav==='everly'?'Everly':'Brooks';
+  var cls=nav==='everly'?'ev':'br';
+
+  // Nav chip
+  document.getElementById('ncAv').innerHTML='<img src="'+img+'"/><span class="nc-dot"></span>';
+  document.getElementById('ncName').textContent=name;
+  document.getElementById('ncUser').textContent=firstName||'you';
+
+  // Chat panel
+  var panel=document.getElementById('chatPanel');
+  panel.classList.add(cls);
+  document.getElementById('chAvatar').innerHTML='<img src="'+img+'"/><span class="ch-dot"></span>';
+  document.getElementById('chName').textContent=name+' — Care Navigator';
+
+  // Greeting (no page shift — chat has fixed height)
+  var greeting;
+  if(benefits&&employer){
+    greeting=(firstName||'Hey')+', great news — I already pulled your benefits from <strong>'+esc(employer)+'</strong>. Enter your balance below and I\'ll show you what it unlocks.';
+  } else if(employer){
+    greeting='Hey'+(firstName?' '+firstName:'')+'! I\'m '+name+', your Care Navigator. <strong>'+esc(employer)+'</strong> hasn\'t connected benefits yet — no worries. Just enter your balance and pick your account type. I\'ll unlock your matches.';
+  } else {
+    greeting='Hey'+(firstName?' '+firstName:'')+'! I\'m '+name+'. Enter your HSA or FSA balance and I\'ll show you exactly what it can buy — most people have no idea how many products are available.';
+  }
+  addNavMsg(greeting);
+
+  // Follow-up after 3s — stays in the chat, no page movement
+  setTimeout(function(){
+    addNavMsg('Quick tip — if you\'re not sure of your balance, check your HSA provider app or your employer\'s benefits portal. Even a rough estimate works.');
+  },3500);
+}
+
+// ── Unlock counter ──
+function updateUnlock(val){
+  var count=0;
+  if(val>=50)count=Math.min(Math.floor(val/8)+12,1000);
+  var el=document.getElementById('unlockCounter');
+  document.getElementById('unlockNum').textContent=count>0?(count>=1000?'1,000+':count+'+ '):'0';
+  if(count>0)el.classList.add('visible');else el.classList.remove('visible');
+}
+
+// ── Balance set (reactive nav message) ──
+function onBalanceSet(){
+  var v=parseFloat(document.getElementById('balInput').value);
+  if(!v||v<=0||v===lastBal||reacted.bal)return;
+  lastBal=v;reacted.bal=true;
+  var vs='$'+v.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
+  var msg;
+  if(v<500)msg=vs+' — there\'s still a solid range of products in that budget. Supplements, at-home lab tests, recovery tools.';
+  else if(v<2000)msg='<strong>'+vs+'</strong> — that\'s a strong balance. Wellness devices, supplement packs, wearables, and more.';
+  else msg='<strong>'+vs+'</strong> — you\'ve got real buying power. Recovery tech, sleep systems, biomarker panels, the works.';
+  addNavMsg(msg);
+  if(acct&&!reacted.summary)setTimeout(doSummary,2000);
+}
+
+// ── Account type ──
+function setAcct(type,btn){
+  acct=type;
+  document.querySelectorAll('.acct-btn').forEach(function(b){b.classList.remove('active','auto')});
+  btn.classList.add('active');
+  updateDeadline();
+  if(!reacted.acct){
+    reacted.acct=true;
+    var msg=type==='FSA'?'FSA — <strong>heads up, those funds can expire</strong> at year-end. Let\'s make sure you use every dollar.':type==='HSA+FSA'?'Both HSA and FSA — smart. I\'ll optimize which account covers what.':'HSA — your funds roll over forever, so no pressure. But no reason to leave money sitting.';
+    addNavMsg(msg);
+    if(reacted.bal&&!reacted.summary)setTimeout(doSummary,1500);
+  }
+}
+
+function doSummary(){
+  if(reacted.summary)return;reacted.summary=true;
+  var v=parseFloat(document.getElementById('balInput').value)||0;
+  var vs='$'+v.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
+  addNavMsg('Got it: <strong>'+vs+' '+acct+'</strong>'+(employer?' at <strong>'+esc(employer)+'</strong>':'')+'. Hit <strong>Check My Insurance</strong> and we\'ll see what your plan covers before matching products.');
+}
+
+// ── Deadline ──
+function updateDeadline(){
+  var s=document.getElementById('deadlineSection');
+  if(acct==='FSA'||acct==='HSA+FSA')s.classList.add('show');
+  else{s.classList.remove('show');deadline=null;document.querySelectorAll('.dl-btn').forEach(function(b){b.classList.remove('active')});document.getElementById('dlAlert').classList.remove('show')}
+}
+function setDeadline(d,btn){
+  deadline=d;document.querySelectorAll('.dl-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');
+  var alert=document.getElementById('dlAlert'),msg=document.getElementById('dlMsg'),now=new Date(),dd=null,label='';
+  if(d==='dec'){dd=new Date(now.getFullYear(),11,31);if(dd<now)dd=new Date(now.getFullYear()+1,11,31);label='December 31'}
+  else if(d==='mar'){dd=new Date(now.getFullYear(),2,15);if(dd<now)dd=new Date(now.getFullYear()+1,2,15);label='March 15'}
+  if(dd){var days=Math.ceil((dd-now)/864e5);msg.innerHTML=days<=90?'<strong>'+days+' days until FSA expires ('+label+').</strong>':'FSA expires <strong>'+label+'</strong> — '+days+' days.';alert.classList.add('show')}
+  else if(d==='unsure'){msg.innerHTML='Most FSA plans expire <strong>Dec 31</strong>.';alert.classList.add('show')}
+  else alert.classList.remove('show');
+}
+
+// ── Finch ──
+function showFinchCta(){
+  if(employer)document.getElementById('finchTitle').textContent=esc(employer)+' — connect benefits';
+  document.getElementById('finchCta').classList.add('show');
+}
+function launchFinch(){
+  if(finchUrl)window.open(finchUrl,'_blank','width=500,height=700');
+  else fetch(W+'/api/finch/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({employer_name:employer,email:email})}).then(function(r){return r.json()}).then(function(d){if(d.success&&d.connect_url)window.open(d.connect_url,'_blank','width=500,height=700')}).catch(function(){});
+}
+window.addEventListener('message',function(ev){
+  if(!ev.data||ev.data.type!=='beim_finch_result')return;
+  if(ev.data.success&&ev.data.benefits){
+    benefits=ev.data.benefits;finchConnected=true;
+    try{sessionStorage.setItem('beim_benefits',JSON.stringify(benefits))}catch(e){}
+    document.getElementById('finchCta').classList.remove('show');
+    showBenefitsBanner(benefits);
+    addNavMsg((firstName||'Hey')+', benefits connected at <strong>'+esc(employer)+'</strong>! Account type is set — enter your balance and we\'re ready.');
+  } else addNavMsg('Connection didn\'t go through — no worries. Just pick your account type and enter your balance.');
+});
+
+function showBenefitsBanner(data){
+  var tags=document.getElementById('bbTags'),title=document.getElementById('bbTitle'),note=document.getElementById('bbNote');
+  tags.innerHTML='';
+  if(data.company&&data.company.legal_name){employer=data.company.legal_name;title.textContent='Benefits found at '+employer;tags.innerHTML+='<span class="bb-tag emp">🏢 '+esc(employer)+'</span>'}
+  else if(employer)title.textContent='Benefits found at '+employer;
+  var hasHSA=data.has_hsa||false,hasFSA=data.has_fsa||false;
+  if(hasHSA)tags.innerHTML+='<span class="bb-tag hsa">💳 HSA</span>';
+  if(hasFSA)tags.innerHTML+='<span class="bb-tag fsa">🏥 FSA</span>';
+  if(hasHSA&&hasFSA){autoAcct('HSA+FSA');note.innerHTML='Both HSA and FSA. <strong>Enter your combined balance</strong>.'}
+  else if(hasHSA){autoAcct('HSA');note.innerHTML='HSA enrolled. <strong>Enter your balance</strong> to start.'}
+  else if(hasFSA){autoAcct('FSA');note.innerHTML='FSA enrolled — <strong>funds can expire!</strong>'}
+  else note.innerHTML='<strong>Select account type and enter balance</strong>.';
+  document.getElementById('benefitsBanner').classList.add('show');
+  document.getElementById('acctLabel').innerHTML='Account type <span class="auto-badge">✓ auto-detected</span>';
+}
+function autoAcct(type){
+  acct=type;document.querySelectorAll('.acct-btn').forEach(function(b){b.classList.remove('active','auto')});
+  document.getElementById(type==='HSA'?'btnHSA':type==='FSA'?'btnFSA':'btnBoth').classList.add('active','auto');
+  updateDeadline();
+}
+
+// ── CHAT (fixed height panel — no page jerk) ──
+function addNavMsg(text){
+  chatHistory.push({role:'nav',text:text});
+  chatLog.push({t:Date.now(),r:'nav',m:text.replace(/<[^>]+>/g,'')});
+  var img=AVATARS[nav]||AVATARS.brooks;
+  var container=document.getElementById('chatMsgs');
+  var div=document.createElement('div');
+  div.className='msg';
+  div.innerHTML='<div class="msg-av"><img src="'+img+'"/></div><div class="msg-bubble nav">'+text+'</div>';
+  container.appendChild(div);
+  scrollChat();
+}
+function addUserMsg(text){
+  chatHistory.push({role:'user',text:text});
+  chatLog.push({t:Date.now(),r:'user',m:text});
+  var container=document.getElementById('chatMsgs');
+  var div=document.createElement('div');
+  div.className='msg user';
+  div.innerHTML='<div class="msg-av you">You</div><div class="msg-bubble usr">'+esc(text)+'</div>';
+  container.appendChild(div);
+  scrollChat();
+}
+function showTyping(){
+  var img=AVATARS[nav]||AVATARS.brooks;
+  var container=document.getElementById('chatMsgs');
+  var div=document.createElement('div');
+  div.className='msg';div.id='typingIndicator';
+  div.innerHTML='<div class="msg-av"><img src="'+img+'"/></div><div class="typing"><span></span><span></span><span></span></div>';
+  container.appendChild(div);
+  scrollChat();
+}
+function removeTyping(){var el=document.getElementById('typingIndicator');if(el)el.remove()}
+function scrollChat(){var c=document.getElementById('chatMsgs');setTimeout(function(){c.scrollTop=c.scrollHeight},50)}
+
+function askQuick(btn){
+  sendMessage(btn.textContent);
+  document.getElementById('chatPrompts').style.display='none';
+}
+function sendChat(){
+  var input=document.getElementById('chatInput');
+  var text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  sendMessage(text);
+}
+function sendMessage(text){
+  addUserMsg(text);showTyping();
+  var ctx={page:'calculator',balance:document.getElementById('balInput').value,acctType:acct,deadline:deadline};
+  if(employer)ctx.employer=employer;if(benefits)ctx.finchBenefits=benefits;if(firstName)ctx.firstName=firstName;
+  fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-8),navigator:nav,context:ctx})})
+  .then(function(r){return r.json()}).then(function(d){removeTyping();addNavMsg(d.reply||'Enter your balance above and I\'ll start matching products to your budget.')})
+  .catch(function(){removeTyping();addNavMsg('Enter your balance above and I\'ll start matching products to your budget.')});
+}
+
+// ── PROCEED ──
+function proceed(){
+  var v=parseFloat(document.getElementById('balInput').value);
+  if(!v||v<=0){
+    var wrap=document.getElementById('balWrap');
+    wrap.style.borderColor='rgba(239,68,68,.5)';wrap.classList.add('shake');
+    setTimeout(function(){wrap.style.borderColor='';wrap.classList.remove('shake')},900);
+    document.getElementById('balInput').focus();
+    addNavMsg('I need your balance to find your matches — check your HSA app or your employer\'s benefits portal.');
+    return;
+  }
+
+  // Push to Zoho
+  pushToZoho(v);
+
+  // Build URL params
+  var params=new URLSearchParams();
+  params.set('balance',v.toFixed(2));
+  params.set('acct',acct);
+  params.set('nav',nav);
+  if(deadline)params.set('deadline',deadline);
+  if(employer)params.set('employer',encodeURIComponent(employer));
+  if(firstName)params.set('first_name',encodeURIComponent(firstName));
+  if(lastName)params.set('last_name',encodeURIComponent(lastName));
+  if(email)params.set('email',encodeURIComponent(email));
+  if(benefits){try{sessionStorage.setItem('beim_benefits',JSON.stringify(benefits))}catch(e){}params.set('finch','1')}
+  try{sessionStorage.setItem('beim_conv_log',JSON.stringify(chatLog))}catch(e){}
+
+  // Navigate to insurance page
+  location.href='insurance.html?'+params.toString();
+}
+
+function pushToZoho(bal){
+  var transcript=chatLog.map(function(e){var d=new Date(e.t);return'['+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})+'] '+(e.r==='user'?'User':'Navigator')+': '+e.m}).join('\n');
+  var leadId=sGet('beim_lead_id')||null;
+  if(!email&&!leadId)return;
+  var payload={
+    first_name:firstName,
+    last_name:lastName,
+    employer:employer,
+    navigator:nav,
+    source:'calculator_page',
+    page:'calculator',
+    acct_type:acct,
+    balance:bal,
+    chat_transcript:transcript,
+    fsa_deadline:deadline?DL_LABELS[deadline]||null:null,
+    finch_connected:finchConnected
+  };
+  if(email)payload.email=email;
+  if(leadId)payload.lead_id=leadId;
+  try{
+    fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){return r.json()})
+    .then(function(d){if(d.lead_id)try{sessionStorage.setItem('beim_lead_id',d.lead_id)}catch(e){}})
+    .catch(function(){});
+  }catch(e){}
+}
+</script>
+</body>
+</html>
