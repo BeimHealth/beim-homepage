@@ -306,7 +306,6 @@
       .nav-showcase{grid-template-columns:1fr 1fr}
     }
     @media(max-width:768px){
-      .steps-grid{grid-template-columns:1fr}
       nav{padding:0 20px}
       .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);flex-direction:column;padding:20px;border-bottom:1px solid var(--border);gap:4px}
       .nav-links.open{display:flex}
@@ -318,7 +317,7 @@
       .stats-strip{padding:0 24px;flex-wrap:wrap}
       .stat-item{flex:1 1 50%;border-right:none;border-bottom:1px solid var(--border)}
       .testi-grid{grid-template-columns:1fr}
-      .cel-grid{grid-template-columns:1fr}
+      .cel-grid{grid-template-columns:1fr 1fr}
       .nav-showcase{grid-template-columns:1fr}
       .hsa-bar{flex-direction:column}
       .hsa-bar .hsa-prefix{display:none}
@@ -329,11 +328,15 @@
       .section-divider{margin:0 24px}
       .lmn-timeline{flex-wrap:wrap;gap:8px}
       .lmn-step-line{display:none}
-      .step-card{padding:24px 20px}
-      .step-desc{font-size:13px;line-height:1.5}
-      .steps-grid{margin-top:32px}
-      .cel-grid{grid-template-columns:1fr 1fr}
       body{padding-bottom:72px}
+      /* Steps: compact horizontal layout on mobile */
+      .steps-grid{grid-template-columns:1fr 1fr;gap:1px;margin-top:32px}
+      .step-card{padding:20px 16px}
+      .step-num{font-size:10px;margin-bottom:12px}
+      .step-icon-wrap{width:40px;height:40px;margin-bottom:10px;font-size:18px}
+      .step-title{font-size:14px;margin-bottom:6px}
+      .step-desc{font-size:11px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+      .step-badge{font-size:9px;padding:2px 8px;margin-top:8px}
     }
 
 
@@ -363,6 +366,7 @@
     .step-card{background:var(--bg-card);padding:36px 28px;opacity:0;transform:translateX(60px);transition:background 0.3s,opacity 0.6s ease,transform 0.6s ease}
     .step-card.slide-in{opacity:1;transform:translateX(0)}
     .step-card:hover{background:var(--bg-elev)}
+    .step-card-inner{display:block}
     .step-card:nth-child(1){transition-delay:0s}.step-card:nth-child(2){transition-delay:0.08s}.step-card:nth-child(3){transition-delay:0.16s}.step-card:nth-child(4){transition-delay:0.24s}.step-card:nth-child(5){transition-delay:0.32s}.step-card:nth-child(6){transition-delay:0.4s}
     .step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--purple);letter-spacing:1px;margin-bottom:20px;display:block}
     .step-icon-wrap{width:52px;height:52px;border-radius:14px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
