@@ -356,38 +356,40 @@
     .fr-visual-panel.active{display:block}
 
     /* ── HOW IT WORKS — 3-Phase Journey ── */
-    .journey{position:relative;max-width:620px;margin:56px auto 0;padding:0 24px 0 56px}
-    .journey-line{position:absolute;left:36px;top:0;bottom:60px;width:2px;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));opacity:0.18}
-    .journey-progress{position:absolute;left:36px;top:0;width:2px;height:0;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));transition:height 0.1s linear;z-index:1}
-    .j-step{position:relative;display:flex;align-items:flex-start;gap:20px;padding:0 0 56px;opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
-    .j-step.in-view{opacity:1;transform:translateY(0)}
+    .journey{position:relative;max-width:720px;margin:56px auto 0;padding:0 24px}
+    .j-step{display:flex;align-items:center;gap:40px;padding:0 0 64px;opacity:0;transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+    .j-step:nth-child(odd){flex-direction:row;transform:translateX(-60px)}
+    .j-step:nth-child(even){flex-direction:row-reverse;transform:translateX(60px)}
+    .j-step:nth-child(even) .j-content{text-align:right}
+    .j-step:nth-child(even) .j-subs{justify-content:flex-end}
+    .j-step.in-view{opacity:1;transform:translateX(0)}
     .j-step:last-child{padding-bottom:0}
-    .j-node{position:absolute;left:-44px;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;z-index:2;border:2px solid;transition:transform 0.3s,box-shadow 0.3s}
-    .j-node.active{transform:scale(1.1);box-shadow:0 0 20px rgba(100,84,240,0.25)}
-    .j-node svg{width:18px;height:18px}
-    .j-content{padding-top:2px}
+    .j-node{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid;transition:transform 0.3s,box-shadow 0.3s}
+    .j-node.active{transform:scale(1.08);box-shadow:0 0 24px rgba(100,84,240,0.25)}
+    .j-node svg{width:28px;height:28px}
+    .j-content{flex:1;min-width:0}
     .j-phase-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;display:block}
-    .j-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.25;letter-spacing:-0.3px}
-    .j-desc{font-size:13px;color:var(--muted);line-height:1.65;max-width:460px}
+    .j-phase-label.p1{color:var(--cyan)}.j-phase-label.p2{color:var(--purple)}.j-phase-label.p3{color:var(--green)}
+    .j-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.25;letter-spacing:-0.3px}
+    .j-desc{font-size:13px;color:var(--muted);line-height:1.65}
     .j-subs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
     .j-sub{font-size:10px;font-weight:600;padding:4px 12px;border-radius:100px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--dim)}
-    .j-node.c1{background:rgba(110,224,245,0.10);border-color:rgba(110,224,245,0.25)}
-    .j-node.c1 svg{color:var(--cyan)}
-    .j-node.c2{background:rgba(100,84,240,0.12);border-color:rgba(100,84,240,0.30)}
-    .j-node.c2 svg{color:var(--purple)}
-    .j-node.c3{background:rgba(61,217,182,0.10);border-color:rgba(61,217,182,0.25)}
-    .j-node.c3 svg{color:var(--green)}
-    .j-phase-label.p1{color:var(--cyan)}.j-phase-label.p2{color:var(--purple)}.j-phase-label.p3{color:var(--green)}
+    .j-node.c1{background:rgba(110,224,245,0.10);border-color:rgba(110,224,245,0.25)}.j-node.c1 svg{color:var(--cyan)}
+    .j-node.c2{background:rgba(100,84,240,0.12);border-color:rgba(100,84,240,0.30)}.j-node.c2 svg{color:var(--purple)}
+    .j-node.c3{background:rgba(61,217,182,0.10);border-color:rgba(61,217,182,0.25)}.j-node.c3 svg{color:var(--green)}
     .j-cta{text-align:center;margin-top:48px;position:relative;z-index:2}
     .j-cta a{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 32px;border-radius:var(--radius);text-decoration:none;transition:box-shadow 0.25s,transform 0.2s}
     .j-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(100,84,240,0.45)}
     @media(max-width:768px){
-      .journey{max-width:100%;padding:0 0 0 48px}
-      .journey-line{left:28px}
-      .journey-progress{left:28px}
-      .j-node{left:-36px;width:34px;height:34px}
-      .j-node svg{width:15px;height:15px}
-      .j-title{font-size:16px}
+      .journey{max-width:100%;padding:0 20px}
+      .j-step,.j-step:nth-child(odd),.j-step:nth-child(even){flex-direction:row;transform:translateY(30px)}
+      .j-step:nth-child(even) .j-content{text-align:left}
+      .j-step:nth-child(even) .j-subs{justify-content:flex-start}
+      .j-step.in-view{transform:translateY(0)}
+      .j-step{gap:20px;padding:0 0 48px}
+      .j-node{width:52px;height:52px;border-radius:14px}
+      .j-node svg{width:22px;height:22px}
+      .j-title{font-size:17px}
       .j-desc{font-size:12px}
     }
 
@@ -526,7 +528,7 @@
     <div class="fr-text slide-l">
       <span class="fr-badge">🧭 AI Care Navigation</span>
       <h2 class="fr-title">AI Care Navigators that find your perfect products.</h2>
-      <p class="fr-desc">Everly and Brooks are your AI-powered guides. They ask about your health goals, analyze your benefits, and match you with clinically vetted products you never knew existed. They handle Letters of Medical Necessity, monitor your HSA/FSA balance for new products, and let you scan any product — even ones not in our system — to discuss eligibility and evidence. Available 24/7 on any device.</p>
+      <p class="fr-desc">Everly and Brooks find eligible products in seconds and handle 100% of the LMN paperwork. They analyze your benefits, match clinically vetted products, and monitor your balance for new opportunities — 24/7.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('nav-panels','matching',this)">AI-Powered Matching</span>
         <span class="fr-pill" onclick="switchPanel('nav-panels','goals',this)">Goal-Based Questions</span>
@@ -586,7 +588,7 @@
     <div class="fr-text slide-r">
       <span class="fr-badge">🤝 Community Pool</span>
       <h2 class="fr-title">Community Pool — group buying that actually saves you money.</h2>
-      <p class="fr-desc">Join other buyers on the same product and unlock a lower price together. More people join, everyone saves. HSA/FSA eligible, auto-refund if the pool doesn't fill. No other HSA platform offers group buying — this is unique to Beim.</p>
+      <p class="fr-desc">Join other buyers on the same product and unlock a lower price together. HSA/FSA eligible, auto-refund if the pool doesn't fill. No other HSA platform offers group buying.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('pool-panels','active',this)">Active Pools</span>
         <span class="fr-pill" onclick="switchPanel('pool-panels','how',this)">How It Works</span>
@@ -642,7 +644,7 @@
     <div class="fr-text slide-l">
       <span class="fr-badge">🔬 Clinical Evidence Grading</span>
       <h2 class="fr-title">Every product graded by clinical evidence — not ad copy.</h2>
-      <p class="fr-desc">Our Clinical Evidence Level (CEL) rubric grades every product A through D based on randomized controlled trials, physician confidence scores, and peer-reviewed data. Grade A means multi-RCT, 90–100% physician confidence. You see the science behind every recommendation.</p>
+      <p class="fr-desc">Every product graded A through D based on randomized controlled trials and physician confidence scores. Grade A means multi-RCT, 90–100% confidence. You see the science — not marketing.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('cel-panels','cards',this)">Graded Products</span>
         <span class="fr-pill" onclick="switchPanel('cel-panels','rubric',this)">The CEL Rubric</span>
@@ -693,7 +695,7 @@
     <div class="fr-text slide-r">
       <span class="fr-badge">📋 LMN &amp; Physician Orders</span>
       <h2 class="fr-title">Letters of Medical Necessity and physician orders in hours, not weeks.</h2>
-      <p class="fr-desc">The #1 reason people can't access the products they need? Paperwork that takes weeks of back-and-forth. With Beim, choose your pathway at checkout — use our network physician ($35, signed in ~4 hours), get a template for your own doctor, or upload one you already have. Products unlock instantly.</p>
+      <p class="fr-desc">Choose your pathway at checkout: Beim network physician ($35, signed in ~4 hours), a template for your own doctor, or upload one you already have. The #1 barrier — paperwork — is gone.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('lmn-panels','beim',this)">Beim Network Physician</span>
         <span class="fr-pill" onclick="switchPanel('lmn-panels','own',this)">Use Your Own Doctor</span>
@@ -758,7 +760,7 @@
     <div class="fr-text slide-l">
       <span class="fr-badge">💳 HSA/OOP Split Pay</span>
       <h2 class="fr-title">HSA/OOP split pay — your HSA covers what it can, debit covers the rest.</h2>
-      <p class="fr-desc">Split any purchase between your HSA/FSA card and a debit or credit card in one smooth transaction. No math, no separate checkouts, no confusion. We verify insurance first, then HSA, then debit — so you always pay the least possible out of pocket.</p>
+      <p class="fr-desc">Split any purchase between HSA/FSA and debit in one checkout. We verify insurance first, then HSA, then debit — so you always pay the least possible out of pocket.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('split-panels','split',this)">Split Pay View</span>
         <span class="fr-pill" onclick="switchPanel('split-panels','waterfall',this)">Payment Waterfall</span>
@@ -813,7 +815,7 @@
     <div class="fr-text slide-r">
       <span class="fr-badge">🧠 Product Intelligence</span>
       <h2 class="fr-title">Once you pick products, our AI makes sure they're right for you.</h2>
-      <p class="fr-desc">Before you checkout, your Care Navigator gives you a full clinical breakdown of every product — physician confidence, HSA math, LMN status, and an honest recommendation. Keep it, drop it, or ask more. This is the product intelligence layer that no other HSA platform offers.</p>
+      <p class="fr-desc">Your Navigator gives a clinical breakdown of every product — confidence, HSA math, and an honest recommendation. Keep it, drop it, or ask more.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('intel-panels','breakdown',this)">Clinical Breakdown</span>
         <span class="fr-pill" onclick="switchPanel('intel-panels','decide',this)">Keep / Drop / Ask</span>
@@ -873,7 +875,7 @@
     <div class="fr-text slide-l">
       <span class="fr-badge">🛡️ Insurance &amp; Benefits Checker</span>
       <h2 class="fr-title">We pull your full benefits picture — so you never buy what insurance already covers.</h2>
-      <p class="fr-desc">Before you spend a dollar, Beim connects to your employer's benefits system through Finch and verifies your insurance eligibility through Stedi. We pull your exact HSA and FSA balances, check what your insurance covers at $0, and build a complete picture — so your Care Navigator can tell you precisely what to pay with insurance, what to pay with HSA, and what's truly out of pocket.</p>
+      <p class="fr-desc">Beim pulls your exact HSA/FSA balances via Finch and verifies insurance eligibility via Stedi. Your Navigator tells you precisely what to pay with insurance, HSA, and out of pocket.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('ins-panels','benefits',this)">Benefits Pull</span>
         <span class="fr-pill" onclick="switchPanel('ins-panels','eligibility',this)">Insurance Eligibility</span>
@@ -928,8 +930,6 @@
   <section class="how-bg" id="how">
     <div class="slide-up"><span class="section-tag">The Journey</span><h2 class="section-title">Three phases from balance<br>to <span class="grad">products unlocked.</span></h2><p class="section-sub">No spreadsheets. No expired benefits. No guesswork.</p></div>
     <div class="journey" id="journeyPath">
-      <div class="journey-line"></div>
-      <div class="journey-progress" id="journeyProgress"></div>
 
       <div class="j-step">
         <div class="j-node c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
@@ -1155,4 +1155,7 @@
       const v=document.getElementById('hsaIn').value;
       window.location.href=v?`https://go.beim.ai/start?balance=${encodeURIComponent(v)}&acct=HSA`:'https://go.beim.ai/start';
     }
-    document.getElementById('hsaIn').addEventListener('keydown',e=>{if(e.key==='Enter')goNav()
+    document.getElementById('hsaIn').addEventListener('keydown',e=>{if(e.key==='Enter')goNav()});
+  </script>
+</body>
+</html>
