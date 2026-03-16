@@ -297,7 +297,7 @@
     .urgency-bar a{color:var(--cyan);text-decoration:none;font-weight:600}
 
     /* ── RESPONSIVE ── */
-    @media(max-width:1100px){.steps-grid{grid-template-columns:1fr 1fr}
+    @media(max-width:1100px){
       .hero-widget{display:none}
       .testi-grid{grid-template-columns:1fr 1fr}
       .footer-top{grid-template-columns:1fr 1fr;gap:32px}
@@ -306,6 +306,7 @@
       .nav-showcase{grid-template-columns:1fr 1fr}
     }
     @media(max-width:768px){
+      .steps-grid{grid-template-columns:1fr}
       nav{padding:0 20px}
       .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);flex-direction:column;padding:20px;border-bottom:1px solid var(--border);gap:4px}
       .nav-links.open{display:flex}
@@ -317,7 +318,7 @@
       .stats-strip{padding:0 24px;flex-wrap:wrap}
       .stat-item{flex:1 1 50%;border-right:none;border-bottom:1px solid var(--border)}
       .testi-grid{grid-template-columns:1fr}
-      .cel-grid{grid-template-columns:1fr 1fr}
+      .cel-grid{grid-template-columns:1fr}
       .nav-showcase{grid-template-columns:1fr}
       .hsa-bar{flex-direction:column}
       .hsa-bar .hsa-prefix{display:none}
@@ -328,15 +329,8 @@
       .section-divider{margin:0 24px}
       .lmn-timeline{flex-wrap:wrap;gap:8px}
       .lmn-step-line{display:none}
+      .cel-grid{grid-template-columns:1fr 1fr}
       body{padding-bottom:72px}
-      /* Steps: compact horizontal layout on mobile */
-      .steps-grid{grid-template-columns:1fr 1fr;gap:1px;margin-top:32px}
-      .step-card{padding:20px 16px}
-      .step-num{font-size:10px;margin-bottom:12px}
-      .step-icon-wrap{width:40px;height:40px;margin-bottom:10px;font-size:18px}
-      .step-title{font-size:14px;margin-bottom:6px}
-      .step-desc{font-size:11px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-      .step-badge{font-size:9px;padding:2px 8px;margin-top:8px}
     }
 
 
@@ -362,24 +356,41 @@
     .fr-visual-panel.active{display:block}
 
     /* ── HOW IT WORKS ── */
-    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:56px}
-    .step-card{background:var(--bg-card);padding:36px 28px;opacity:0;transform:translateX(60px);transition:background 0.3s,opacity 0.6s ease,transform 0.6s ease}
-    .step-card.slide-in{opacity:1;transform:translateX(0)}
-    .step-card:hover{background:var(--bg-elev)}
-    .step-card-inner{display:block}
-    .step-card:nth-child(1){transition-delay:0s}.step-card:nth-child(2){transition-delay:0.08s}.step-card:nth-child(3){transition-delay:0.16s}.step-card:nth-child(4){transition-delay:0.24s}.step-card:nth-child(5){transition-delay:0.32s}.step-card:nth-child(6){transition-delay:0.4s}
-    .step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--purple);letter-spacing:1px;margin-bottom:20px;display:block}
-    .step-icon-wrap{width:52px;height:52px;border-radius:14px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
-    .step-icon-wrap.c1{background:rgba(110,224,245,0.10);border:1px solid rgba(110,224,245,0.2)}
-    .step-icon-wrap.c2{background:rgba(100,84,240,0.12);border:1px solid rgba(100,84,240,0.25)}
-    .step-icon-wrap.c3{background:rgba(61,217,182,0.10);border:1px solid rgba(61,217,182,0.2)}
-    .step-icon-wrap.c4{background:rgba(106,163,243,0.10);border:1px solid rgba(106,163,243,0.2)}
-    .step-icon-wrap.c5{background:rgba(100,84,240,0.12);border:1px solid rgba(100,84,240,0.25)}
-    .step-icon-wrap.c6{background:rgba(110,224,245,0.10);border:1px solid rgba(110,224,245,0.2)}
-    .step-icon-img{width:100%;height:100%;object-fit:cover;border-radius:14px}
-    .step-title{font-size:17px;font-weight:700;margin-bottom:10px;line-height:1.3;color:#fff}
-    .step-desc{font-size:14px;color:var(--muted);line-height:1.7}
-    .step-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--cyan);background:var(--cyan-dim);border:1px solid var(--border-c);padding:3px 10px;border-radius:100px;margin-top:12px}
+    /* ── JOURNEY PATHWAY ── */
+    .journey{position:relative;max-width:640px;margin:48px auto 0;padding:0 24px}
+    .journey-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));opacity:0.25;transform:translateX(-50%)}
+    .journey-progress{position:absolute;left:50%;top:0;width:2px;height:0;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));transform:translateX(-50%);transition:height 0.1s linear;z-index:1}
+    .j-step{position:relative;display:flex;align-items:flex-start;gap:20px;padding:0 0 48px;opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .j-step.in-view{opacity:1;transform:translateY(0)}
+    .j-step:last-child{padding-bottom:0}
+    .j-step:nth-child(odd){flex-direction:row}
+    .j-step:nth-child(even){flex-direction:row-reverse;text-align:right}
+    .j-node{position:absolute;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;border:2px solid;transition:transform 0.3s,box-shadow 0.3s}
+    .j-node.active{transform:translateX(-50%) scale(1.15);box-shadow:0 0 24px rgba(100,84,240,0.3)}
+    .j-node img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .j-content{width:calc(50% - 44px);padding-top:4px}
+    .j-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--purple);letter-spacing:1px;margin-bottom:4px;display:block}
+    .j-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3}
+    .j-desc{font-size:13px;color:var(--muted);line-height:1.6}
+    .j-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;margin-top:8px}
+    /* Node colors */
+    .j-node.c1{background:rgba(110,224,245,0.12);border-color:rgba(110,224,245,0.3)}
+    .j-node.c2{background:rgba(100,84,240,0.14);border-color:rgba(100,84,240,0.35)}
+    .j-node.c3{background:rgba(61,217,182,0.12);border-color:rgba(61,217,182,0.3)}
+    .j-node.c4{background:rgba(106,163,243,0.12);border-color:rgba(106,163,243,0.3)}
+    .j-cta{text-align:center;margin-top:40px;position:relative;z-index:2}
+    .j-cta a{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 32px;border-radius:var(--radius);text-decoration:none;transition:box-shadow 0.25s,transform 0.2s}
+    .j-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(100,84,240,0.45)}
+    @media(max-width:768px){
+      .journey{max-width:100%;padding:0 0 0 0}
+      .journey-line{left:24px}
+      .journey-progress{left:24px}
+      .j-step,.j-step:nth-child(odd),.j-step:nth-child(even){flex-direction:row;text-align:left;padding-left:56px;padding-right:16px}
+      .j-node{left:24px;width:36px;height:36px;font-size:16px}
+      .j-content{width:100%;padding-top:0}
+      .j-title{font-size:15px}
+      .j-desc{font-size:12px}
+    }
 
   </style>
 </head>
@@ -399,10 +410,7 @@
     </ul>
   </nav>
 
-  <!-- ── URGENCY BAR ── -->
-  <div class="urgency-bar">
-    <strong>FSA deadline approaching</strong> — Most FSA funds expire Dec 31. <a href="https://go.beim.ai/start">Don't lose your benefits →</a>
-  </div>
+  <div class="urgency-bar"><strong>FSA deadline approaching</strong> — Most FSA funds expire Dec 31. <a href="https://go.beim.ai/start">Don't lose your benefits →</a></div>
 
   <!-- ══ HERO ══ -->
   <section class="hero" id="home">
@@ -920,13 +928,67 @@
 <!-- ── HOW IT WORKS ── -->
   <section class="how-bg" id="how">
     <div class="slide-up"><span class="section-tag">The Journey</span><h2 class="section-title">From balance to products<br>in six steps.</h2><p class="section-sub">No spreadsheets. No expired benefits. No guesswork. Your Care Navigator unlocks the entire journey.</p></div>
-    <div class="steps-grid slide-up" id="stepsGrid">
-      <div class="step-card"><span class="step-num">01 —</span><div class="step-icon-wrap c1"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Care Navigator" class="step-icon-img"/></div><div class="step-title">Meet Your Care Navigator</div><p class="step-desc">Choose Everly or Brooks as your personal guide. They walk you through the entire process — from entering your balance to finding products, handling LMNs, and checkout.</p><span class="step-badge">✨ Guided from start to finish</span></div>
-      <div class="step-card"><span class="step-num">02 —</span><div class="step-icon-wrap c2">💳</div><div class="step-title">Enter Your HSA / FSA Balance</div><p class="step-desc">Tell us your HSA or FSA balance — and remember, FSA funds can expire at year-end. We unlock products competitors can't, through Letters of Medical Necessity and physician orders that open the door to 1,000+ eligible items.</p><span class="step-badge">⏳ Don't let funds expire</span></div>
-      <div class="step-card"><span class="step-num">03 —</span><div class="step-icon-wrap c3">📋</div><div class="step-title">Benefits Summary Review</div><p class="step-desc">Before spending a dime, your navigator generates a clear summary of your benefits — so you know what insurance covers, what your HSA can buy, and what you'd pay out of pocket. No surprises.</p><span class="step-badge">🔍 Zero overpayment</span></div>
-      <div class="step-card"><span class="step-num">04 —</span><div class="step-icon-wrap c4">🎯</div><div class="step-title">Set Health Goals &amp; AI Precision Matching</div><p class="step-desc">Set your personal health goals and our AI narrows down the full catalog to the products that matter most to you. Every recommendation is graded A–D on the Beim Clinical Evidence Level rubric — you see the science, not just marketing.</p><span class="step-badge">🧠 Clinically graded results</span></div>
-      <div class="step-card"><span class="step-num">05 —</span><div class="step-icon-wrap c5">🤝</div><div class="step-title">Flexible Checkout Options</div><p class="step-desc">Split any purchase between your HSA/FSA and a debit card, or join a Community Pool — group up with other buyers on the same product and unlock a lower price together.</p><span class="step-badge">💰 Split pay + group discounts</span></div>
-      <div class="step-card"><span class="step-num">06 —</span><div class="step-icon-wrap c6">🔬</div><div class="step-title">Precision Portal</div><p class="step-desc">For deeper personalization, connect your biometrics, lab results, and doctor documents in our HIPAA-compliant portal. The AI uses your real health data for truly precise product matching.</p><span class="step-badge">🏥 Biometrics + Labs + Docs</span></div>
+    <div class="journey" id="journeyPath">
+      <div class="journey-line"></div>
+      <div class="journey-progress" id="journeyProgress"></div>
+
+      <div class="j-step">
+        <div class="j-node c1"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Navigator"/></div>
+        <div class="j-content">
+          <span class="j-num">01</span>
+          <div class="j-title">Meet Your Care Navigator</div>
+          <p class="j-desc">Choose Everly or Brooks. They guide you from balance to checkout — finding products, handling LMNs, and answering every question.</p>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c2">💳</div>
+        <div class="j-content">
+          <span class="j-num">02</span>
+          <div class="j-title">Enter Your HSA/FSA Balance</div>
+          <p class="j-desc">Tell us your balance. FSA funds can expire Dec 31 — we unlock 1,000+ products others can't through LMNs and physician orders.</p>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c3">📋</div>
+        <div class="j-content">
+          <span class="j-num">03</span>
+          <div class="j-title">Benefits Check</div>
+          <p class="j-desc">We verify what insurance covers at $0, check your HSA eligibility, and build your complete benefits picture — before you spend a dime.</p>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c4">🎯</div>
+        <div class="j-content">
+          <span class="j-num">04</span>
+          <div class="j-title">AI Matches Your Goals</div>
+          <p class="j-desc">Set your health priorities. Our AI matches you to clinically graded products (A–D on the CEL rubric) — real science, not marketing.</p>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c2">🧠</div>
+        <div class="j-content">
+          <span class="j-num">05</span>
+          <div class="j-title">Product Intelligence Review</div>
+          <p class="j-desc">Your Navigator gives a clinical breakdown of every pick — confidence, HSA math, and an honest recommendation. Keep, drop, or ask more.</p>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c1">🤝</div>
+        <div class="j-content">
+          <span class="j-num">06</span>
+          <div class="j-title">Checkout &amp; Unlock</div>
+          <p class="j-desc">Split HSA + debit in one transaction. Join a Community Pool for group pricing. LMN signed in ~4 hours. Products unlocked.</p>
+        </div>
+      </div>
+
+      <div class="j-cta">
+        <a href="https://go.beim.ai/start">Start Your Journey →</a>
+      </div>
     </div>
   </section>
 
@@ -1076,9 +1138,31 @@
 
     /* ── CTA navigation ── */
 
-    const stepCards=document.querySelectorAll('.step-card');
-    const stepsGrid=document.getElementById('stepsGrid');
-    if(stepsGrid){const sObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;stepCards.forEach((c,i)=>setTimeout(()=>c.classList.add('slide-in'),i*120));sObs.unobserve(e.target)})},{threshold:0.08});sObs.observe(stepsGrid);}
+    /* ── Journey pathway scroll animation ── */
+    const jSteps=document.querySelectorAll('.j-step');
+    const jLine=document.getElementById('journeyProgress');
+    const jPath=document.getElementById('journeyPath');
+    if(jPath){
+      const jObs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('in-view');
+            const node=e.target.querySelector('.j-node');
+            if(node)setTimeout(()=>node.classList.add('active'),200);
+          }
+        });
+      },{threshold:0.3,rootMargin:'0px 0px -60px 0px'});
+      jSteps.forEach(s=>jObs.observe(s));
+      window.addEventListener('scroll',function(){
+        if(!jPath)return;
+        const rect=jPath.getBoundingClientRect();
+        const pathTop=rect.top+window.scrollY;
+        const pathH=rect.height;
+        const scrolled=window.scrollY+window.innerHeight*0.6;
+        const progress=Math.min(1,Math.max(0,(scrolled-pathTop)/pathH));
+        if(jLine)jLine.style.height=(progress*100)+'%';
+      },{passive:true});
+    }
 
 
     function switchPanel(containerId,panelName,el){
@@ -1099,12 +1183,6 @@
     document.getElementById('hsaIn').addEventListener('keydown',e=>{if(e.key==='Enter')goNav()});
   </script>
 
-  <!-- ── STICKY MOBILE CTA ── -->
-  <div class="sticky-cta">
-    <div class="sticky-cta-inner">
-      <div class="sticky-cta-text"><strong>Unlock your products</strong>1,000+ HSA/FSA eligible items</div>
-      <a href="https://go.beim.ai/start" class="sticky-cta-btn">Start Free →</a>
-    </div>
-  </div>
+  <div class="sticky-cta"><div class="sticky-cta-inner"><div class="sticky-cta-text"><strong>Unlock your products</strong>1,000+ HSA/FSA eligible items</div><a href="https://go.beim.ai/start" class="sticky-cta-btn">Start Free →</a></div></div>
 </body>
 </html>
