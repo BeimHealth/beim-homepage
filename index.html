@@ -103,7 +103,6 @@
     .feature-row .fr-text{flex:1;min-width:0}
     .feature-row .fr-visual{flex:1;min-width:0;position:relative}
     .fr-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);background:var(--cyan-dim);border:1px solid var(--border-c);padding:5px 14px;border-radius:100px;margin-bottom:20px}
-    .fr-badge svg{width:14px;height:14px;flex-shrink:0}
     .fr-title{font-size:clamp(26px,2.8vw,38px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;color:#fff}
     .fr-desc{font-size:15px;color:rgba(240,240,255,0.60);line-height:1.75;margin-bottom:24px;max-width:480px}
     .fr-pills{display:flex;flex-wrap:wrap;gap:8px}
@@ -332,9 +331,6 @@
       .lmn-step-line{display:none}
       .cel-grid{grid-template-columns:1fr 1fr}
       body{padding-bottom:72px}
-      .journey-phases{flex-direction:column;gap:36px}
-      .journey-phases::before{display:none}
-      .j-phase{padding:0}
     }
 
 
@@ -359,62 +355,41 @@
     .fr-visual-panel{display:none;animation:fadeUp 0.4s ease both}
     .fr-visual-panel.active{display:block}
 
-    /* ── HOW IT WORKS ── */
-    /* ── JOURNEY PATHWAY ── */
-    .journey{position:relative;max-width:640px;margin:48px auto 0;padding:0 24px}
-    .journey-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));opacity:0.25;transform:translateX(-50%)}
-    .journey-progress{position:absolute;left:50%;top:0;width:2px;height:0;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));transform:translateX(-50%);transition:height 0.1s linear;z-index:1}
-    .j-step{position:relative;display:flex;align-items:flex-start;gap:20px;padding:0 0 48px;opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+    /* ── HOW IT WORKS — 3-Phase Journey ── */
+    .journey{position:relative;max-width:620px;margin:56px auto 0;padding:0 24px 0 56px}
+    .journey-line{position:absolute;left:36px;top:0;bottom:60px;width:2px;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));opacity:0.18}
+    .journey-progress{position:absolute;left:36px;top:0;width:2px;height:0;background:linear-gradient(to bottom,var(--purple),var(--cyan),var(--green));transition:height 0.1s linear;z-index:1}
+    .j-step{position:relative;display:flex;align-items:flex-start;gap:20px;padding:0 0 56px;opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
     .j-step.in-view{opacity:1;transform:translateY(0)}
     .j-step:last-child{padding-bottom:0}
-    .j-step:nth-child(odd){flex-direction:row}
-    .j-step:nth-child(even){flex-direction:row-reverse;text-align:right}
-    .j-node{position:absolute;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;border:2px solid;transition:transform 0.3s,box-shadow 0.3s}
-    .j-node.active{transform:translateX(-50%) scale(1.15);box-shadow:0 0 24px rgba(100,84,240,0.3)}
-    .j-node img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-    .j-content{width:calc(50% - 44px);padding-top:4px}
-    .j-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--purple);letter-spacing:1px;margin-bottom:4px;display:block}
-    .j-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3}
-    .j-desc{font-size:13px;color:var(--muted);line-height:1.6}
-    .j-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;margin-top:8px}
-    /* Node colors */
-    .j-node.c1{background:rgba(110,224,245,0.12);border-color:rgba(110,224,245,0.3)}
-    .j-node.c2{background:rgba(100,84,240,0.14);border-color:rgba(100,84,240,0.35)}
-    .j-node.c3{background:rgba(61,217,182,0.12);border-color:rgba(61,217,182,0.3)}
-    .j-node.c4{background:rgba(106,163,243,0.12);border-color:rgba(106,163,243,0.3)}
-    .j-cta{text-align:center;margin-top:40px;position:relative;z-index:2}
+    .j-node{position:absolute;left:-44px;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;z-index:2;border:2px solid;transition:transform 0.3s,box-shadow 0.3s}
+    .j-node.active{transform:scale(1.1);box-shadow:0 0 20px rgba(100,84,240,0.25)}
+    .j-node svg{width:18px;height:18px}
+    .j-content{padding-top:2px}
+    .j-phase-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;display:block}
+    .j-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.25;letter-spacing:-0.3px}
+    .j-desc{font-size:13px;color:var(--muted);line-height:1.65;max-width:460px}
+    .j-subs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+    .j-sub{font-size:10px;font-weight:600;padding:4px 12px;border-radius:100px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--dim)}
+    .j-node.c1{background:rgba(110,224,245,0.10);border-color:rgba(110,224,245,0.25)}
+    .j-node.c1 svg{color:var(--cyan)}
+    .j-node.c2{background:rgba(100,84,240,0.12);border-color:rgba(100,84,240,0.30)}
+    .j-node.c2 svg{color:var(--purple)}
+    .j-node.c3{background:rgba(61,217,182,0.10);border-color:rgba(61,217,182,0.25)}
+    .j-node.c3 svg{color:var(--green)}
+    .j-phase-label.p1{color:var(--cyan)}.j-phase-label.p2{color:var(--purple)}.j-phase-label.p3{color:var(--green)}
+    .j-cta{text-align:center;margin-top:48px;position:relative;z-index:2}
     .j-cta a{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 32px;border-radius:var(--radius);text-decoration:none;transition:box-shadow 0.25s,transform 0.2s}
     .j-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(100,84,240,0.45)}
     @media(max-width:768px){
-      .journey{max-width:100%;padding:0 0 0 0}
-      .journey-line{left:24px}
-      .journey-progress{left:24px}
-      .j-step,.j-step:nth-child(odd),.j-step:nth-child(even){flex-direction:row;text-align:left;padding-left:56px;padding-right:16px}
-      .j-node{left:24px;width:36px;height:36px;font-size:16px}
-      .j-content{width:100%;padding-top:0}
-      .j-title{font-size:15px}
+      .journey{max-width:100%;padding:0 0 0 48px}
+      .journey-line{left:28px}
+      .journey-progress{left:28px}
+      .j-node{left:-36px;width:34px;height:34px}
+      .j-node svg{width:15px;height:15px}
+      .j-title{font-size:16px}
       .j-desc{font-size:12px}
     }
-
-
-    /* ── JOURNEY (3 phases) ── */
-    .journey-phases{display:flex;gap:0;margin-top:48px;position:relative}
-    .journey-phases::before{content:'';position:absolute;top:48px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--green));opacity:0.2}
-    .j-phase{flex:1;position:relative;padding:0 20px;text-align:center}
-    .j-phase-icon{width:72px;height:72px;border-radius:20px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
-    .j-phase-icon svg{width:32px;height:32px}
-    .j-phase-icon.sync{background:rgba(110,224,245,0.10);border:2px solid rgba(110,224,245,0.25)}
-    .j-phase-icon.sync svg{color:var(--cyan)}
-    .j-phase-icon.match{background:rgba(100,84,240,0.12);border:2px solid rgba(100,84,240,0.30)}
-    .j-phase-icon.match svg{color:var(--purple)}
-    .j-phase-icon.unlock{background:rgba(61,217,182,0.10);border:2px solid rgba(61,217,182,0.25)}
-    .j-phase-icon.unlock svg{color:var(--green)}
-    .j-phase-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
-    .j-phase-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px}
-    .j-phase-desc{font-size:13px;color:var(--muted);line-height:1.65;max-width:280px;margin:0 auto}
-    .j-phase-steps{display:flex;flex-direction:column;gap:6px;margin-top:14px}
-    .j-phase-step{font-size:11px;color:rgba(240,240,255,0.5);display:flex;align-items:center;gap:6px;justify-content:center}
-    .j-phase-step svg{width:12px;height:12px;flex-shrink:0;opacity:0.5}
 
   </style>
 </head>
@@ -442,7 +417,7 @@
     <div class="hero-content">
       <span class="hero-badge">Your Products, Unlocked</span>
       <h1>We unlock products<br>your <span class="grad">HSA/FSA can buy.</span></h1>
-      <p class="hero-sub">Your Care Navigator matches you to clinically graded products, handles Letters of Medical Necessity, and gives you <strong style="color:var(--text)">more choices with better precision</strong> — all tax-free.</p>
+      <p class="hero-sub">Thousands of health products are waiting — but nobody made them accessible. Your Care Navigator matches you to clinically graded products, handles Letters of Medical Necessity and physician orders, and gives you more choices with better quality and precision decision-making.</p>
       <div class="hero-actions">
         <a href="https://go.beim.ai/start" class="btn-primary">Unlock My Products →</a>
         <a href="https://go.beim.ai/start" class="btn-secondary">Browse Marketplace</a>
@@ -468,7 +443,7 @@
             <div class="hw-prod-info"><div class="hw-prod-name">ProLon 5-Day Fasting Kit</div><div class="hw-prod-price">$190 · HSA Eligible</div></div>
             <div class="hw-prod-grade">A</div>
           </div>
-          <div class="hw-prod-tags"><span class="hw-tag hsa">HSA/FSA</span><span class="hw-tag lmn">LMN</span><span class="hw-tag pool">Pool</span></div>
+          <div class="hw-prod-tags"><span class="hw-tag hsa">✓ HSA/FSA</span><span class="hw-tag lmn">📋 LMN</span><span class="hw-tag pool">🤝 Pool</span></div>
           <div class="hw-prod-conf"><span style="font-size:9px;color:var(--dim);margin-right:4px">Dr. Confidence</span><div class="hw-conf-bar"><div class="hw-conf-fill" style="width:92%;background:var(--green)"></div></div><span class="hw-conf-val" style="color:var(--green)">92%</span></div>
           <div class="hw-prod-split"><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA: $190</span></div><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">OOP: $0</span></div></div>
         </div>
@@ -479,7 +454,7 @@
             <div class="hw-prod-info"><div class="hw-prod-name">Oura Ring 4</div><div class="hw-prod-price">$349 · With LMN</div></div>
             <div class="hw-prod-grade">A</div>
           </div>
-          <div class="hw-prod-tags"><span class="hw-tag hsa">HSA/FSA</span><span class="hw-tag lmn">LMN</span></div>
+          <div class="hw-prod-tags"><span class="hw-tag hsa">✓ HSA/FSA</span><span class="hw-tag lmn">📋 LMN</span></div>
           <div class="hw-prod-conf"><span style="font-size:9px;color:var(--dim);margin-right:4px">Dr. Confidence</span><div class="hw-conf-bar"><div class="hw-conf-fill" style="width:88%;background:var(--cyan)"></div></div><span class="hw-conf-val" style="color:var(--cyan)">88%</span></div>
           <div class="hw-prod-split"><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA: $349</span></div><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">OOP: $0</span></div></div>
         </div>
@@ -490,7 +465,7 @@
             <div class="hw-prod-info"><div class="hw-prod-name">Nutrafol Men's 3-Month</div><div class="hw-prod-price">$209 · With LMN</div></div>
             <div class="hw-prod-grade">A</div>
           </div>
-          <div class="hw-prod-tags"><span class="hw-tag hsa">HSA/FSA</span><span class="hw-tag lmn">LMN</span><span class="hw-tag pool">Pool</span></div>
+          <div class="hw-prod-tags"><span class="hw-tag hsa">✓ HSA/FSA</span><span class="hw-tag lmn">📋 LMN</span><span class="hw-tag pool">🤝 Pool</span></div>
           <div class="hw-prod-conf"><span style="font-size:9px;color:var(--dim);margin-right:4px">Dr. Confidence</span><div class="hw-conf-bar"><div class="hw-conf-fill" style="width:85%;background:var(--cyan)"></div></div><span class="hw-conf-val" style="color:var(--cyan)">85%</span></div>
           <div class="hw-prod-split"><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--green)"></span><span style="color:var(--green)">HSA: $209</span></div><div class="hw-split-item"><span class="hw-split-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">OOP: $0</span></div></div>
         </div>
@@ -543,15 +518,15 @@
     <div class="slide-up" style="text-align:center;max-width:640px;margin:0 auto">
       <span class="section-tag">Platform Features</span>
       <h2 class="section-title">Everything you need to unlock<br><span class="grad">smarter health purchases.</span></h2>
-      <p class="section-sub" style="max-width:560px;margin:0 auto">AI navigators, clinical grading, group buying, instant LMNs, split payment, and product intelligence — working together.</p>
+      <p class="section-sub" style="max-width:560px;margin:0 auto">Six powerful tools working together — from AI-powered product discovery to instant Letters of Medical Necessity, clinical grading, split payment, group buying, and intelligent product review.</p>
     </div>
   </section>
 
   <div class="feature-row">
     <div class="fr-text slide-l">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> AI Care Navigation</span>
-      <h2 class="fr-title">Your Personal Care Concierge</h2>
-      <p class="fr-desc"><strong>Everly and Brooks find eligible products in seconds and handle 100% of the LMN paperwork.</strong> They analyze your benefits, match clinically vetted products, and monitor your balance for new opportunities — 24/7.</p>
+      <span class="fr-badge">🧭 AI Care Navigation</span>
+      <h2 class="fr-title">AI Care Navigators that find your perfect products.</h2>
+      <p class="fr-desc">Everly and Brooks are your AI-powered guides. They ask about your health goals, analyze your benefits, and match you with clinically vetted products you never knew existed. They handle Letters of Medical Necessity, monitor your HSA/FSA balance for new products, and let you scan any product — even ones not in our system — to discuss eligibility and evidence. Available 24/7 on any device.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('nav-panels','matching',this)">AI-Powered Matching</span>
         <span class="fr-pill" onclick="switchPanel('nav-panels','goals',this)">Goal-Based Questions</span>
@@ -609,9 +584,9 @@
   <!-- ── F2: COMMUNITY POOL (unique feature) ── -->
   <div class="feature-row alt">
     <div class="fr-text slide-r">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg> Community Pool</span>
-      <h2 class="fr-title">Group Buying That Actually Saves You Money</h2>
-      <p class="fr-desc"><strong>Join other buyers on the same product and unlock a lower price together.</strong> HSA/FSA eligible, auto-refund if the pool doesn't fill. No other HSA platform offers this.</p>
+      <span class="fr-badge">🤝 Community Pool</span>
+      <h2 class="fr-title">Community Pool — group buying that actually saves you money.</h2>
+      <p class="fr-desc">Join other buyers on the same product and unlock a lower price together. More people join, everyone saves. HSA/FSA eligible, auto-refund if the pool doesn't fill. No other HSA platform offers group buying — this is unique to Beim.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('pool-panels','active',this)">Active Pools</span>
         <span class="fr-pill" onclick="switchPanel('pool-panels','how',this)">How It Works</span>
@@ -665,9 +640,9 @@
   <!-- ── F3: CLINICAL EVIDENCE GRADING ── -->
   <div class="feature-row">
     <div class="fr-text slide-l">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Clinical Evidence Grading</span>
-      <h2 class="fr-title">Clinically Vetted, Not Ad-Driven</h2>
-      <p class="fr-desc"><strong>Every product graded A through D on RCTs and physician confidence.</strong> Grade A = multi-RCT, 90–100% confidence. You see the science — not marketing.</p>
+      <span class="fr-badge">🔬 Clinical Evidence Grading</span>
+      <h2 class="fr-title">Every product graded by clinical evidence — not ad copy.</h2>
+      <p class="fr-desc">Our Clinical Evidence Level (CEL) rubric grades every product A through D based on randomized controlled trials, physician confidence scores, and peer-reviewed data. Grade A means multi-RCT, 90–100% physician confidence. You see the science behind every recommendation.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('cel-panels','cards',this)">Graded Products</span>
         <span class="fr-pill" onclick="switchPanel('cel-panels','rubric',this)">The CEL Rubric</span>
@@ -716,9 +691,9 @@
   <!-- ── F4: INSTANT LMN & PHYSICIAN ORDERS ── -->
   <div class="feature-row alt">
     <div class="fr-text slide-r">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> LMN &amp; Physician Orders</span>
-      <h2 class="fr-title">LMNs in Hours, Not Weeks</h2>
-      <p class="fr-desc"><strong>Choose your pathway at checkout: Beim physician ($35, signed in ~4 hours), a template for your doctor, or upload one you have.</strong> The #1 barrier — paperwork — is gone.</p>
+      <span class="fr-badge">📋 LMN &amp; Physician Orders</span>
+      <h2 class="fr-title">Letters of Medical Necessity and physician orders in hours, not weeks.</h2>
+      <p class="fr-desc">The #1 reason people can't access the products they need? Paperwork that takes weeks of back-and-forth. With Beim, choose your pathway at checkout — use our network physician ($35, signed in ~4 hours), get a template for your own doctor, or upload one you already have. Products unlock instantly.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('lmn-panels','beim',this)">Beim Network Physician</span>
         <span class="fr-pill" onclick="switchPanel('lmn-panels','own',this)">Use Your Own Doctor</span>
@@ -781,9 +756,9 @@
   <!-- ── F5: SPLIT PAY ── -->
   <div class="feature-row">
     <div class="fr-text slide-l">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> HSA/OOP Split Pay</span>
-      <h2 class="fr-title">HSA/OOP Split Pay — You Always Pay the Least</h2>
-      <p class="fr-desc"><strong>Split any purchase between HSA/FSA and debit in one checkout.</strong> We verify insurance first, then HSA, then debit — so you always pay the least possible out of pocket.</p>
+      <span class="fr-badge">💳 HSA/OOP Split Pay</span>
+      <h2 class="fr-title">HSA/OOP split pay — your HSA covers what it can, debit covers the rest.</h2>
+      <p class="fr-desc">Split any purchase between your HSA/FSA card and a debit or credit card in one smooth transaction. No math, no separate checkouts, no confusion. We verify insurance first, then HSA, then debit — so you always pay the least possible out of pocket.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('split-panels','split',this)">Split Pay View</span>
         <span class="fr-pill" onclick="switchPanel('split-panels','waterfall',this)">Payment Waterfall</span>
@@ -836,9 +811,9 @@
   <!-- ── F6: PRODUCT INTELLIGENCE ── -->
   <div class="feature-row alt">
     <div class="fr-text slide-r">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2z"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Product Intelligence</span>
-      <h2 class="fr-title">AI Reviews Every Pick Before Checkout</h2>
-      <p class="fr-desc"><strong>Your Navigator gives a clinical breakdown of every product — confidence, HSA math, and an honest recommendation.</strong> Keep it, drop it, or ask more. No other platform does this.</p>
+      <span class="fr-badge">🧠 Product Intelligence</span>
+      <h2 class="fr-title">Once you pick products, our AI makes sure they're right for you.</h2>
+      <p class="fr-desc">Before you checkout, your Care Navigator gives you a full clinical breakdown of every product — physician confidence, HSA math, LMN status, and an honest recommendation. Keep it, drop it, or ask more. This is the product intelligence layer that no other HSA platform offers.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('intel-panels','breakdown',this)">Clinical Breakdown</span>
         <span class="fr-pill" onclick="switchPanel('intel-panels','decide',this)">Keep / Drop / Ask</span>
@@ -896,9 +871,9 @@
   <!-- ── F7: INSURANCE & BENEFITS CHECKER ── -->
   <div class="feature-row">
     <div class="fr-text slide-l">
-      <span class="fr-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Insurance &amp; Benefits Checker</span>
-      <h2 class="fr-title">Your Full Benefits Picture — Before You Spend a Dollar</h2>
-      <p class="fr-desc"><strong>Beim pulls your exact HSA/FSA balances via Finch and verifies insurance eligibility via Stedi.</strong> Your Navigator tells you precisely what to pay with insurance, HSA, and out of pocket.</p>
+      <span class="fr-badge">🛡️ Insurance &amp; Benefits Checker</span>
+      <h2 class="fr-title">We pull your full benefits picture — so you never buy what insurance already covers.</h2>
+      <p class="fr-desc">Before you spend a dollar, Beim connects to your employer's benefits system through Finch and verifies your insurance eligibility through Stedi. We pull your exact HSA and FSA balances, check what your insurance covers at $0, and build a complete picture — so your Care Navigator can tell you precisely what to pay with insurance, what to pay with HSA, and what's truly out of pocket.</p>
       <div class="fr-pills">
         <span class="fr-pill active" onclick="switchPanel('ins-panels','benefits',this)">Benefits Pull</span>
         <span class="fr-pill" onclick="switchPanel('ins-panels','eligibility',this)">Insurance Eligibility</span>
@@ -949,37 +924,47 @@
     </div>
   </div>
 
-<!-- ── HOW IT WORKS — 3 Phases ── -->
+<!-- ── HOW IT WORKS ── -->
   <section class="how-bg" id="how">
-    <div class="slide-up" style="text-align:center;max-width:640px;margin:0 auto">
-      <span class="section-tag">The Journey</span>
-      <h2 class="section-title">Three steps from balance<br>to <span class="grad">products unlocked.</span></h2>
-      <p class="section-sub" style="margin:0 auto">No spreadsheets. No expired benefits. No guesswork.</p>
+    <div class="slide-up"><span class="section-tag">The Journey</span><h2 class="section-title">Three phases from balance<br>to <span class="grad">products unlocked.</span></h2><p class="section-sub">No spreadsheets. No expired benefits. No guesswork.</p></div>
+    <div class="journey" id="journeyPath">
+      <div class="journey-line"></div>
+      <div class="journey-progress" id="journeyProgress"></div>
+
+      <div class="j-step">
+        <div class="j-node c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
+        <div class="j-content">
+          <span class="j-phase-label p1">Phase 01 — Sync</span>
+          <div class="j-title">Connect Your Benefits &amp; Balance</div>
+          <p class="j-desc">Meet Everly or Brooks — your AI Care Navigator. Enter your HSA/FSA balance, and we pull your full benefits picture through Finch and verify insurance through Stedi before you spend a dime.</p>
+          <div class="j-subs"><span class="j-sub">Navigator selection</span><span class="j-sub">Balance entry</span><span class="j-sub">Insurance verification</span></div>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="j-content">
+          <span class="j-phase-label p2">Phase 02 — Match</span>
+          <div class="j-title">AI Matches Products to Your Goals</div>
+          <p class="j-desc">Set your health priorities. Your Navigator matches you to CEL-graded products (A–D) and gives a clinical breakdown of every pick — confidence scores, HSA math, and an honest recommendation.</p>
+          <div class="j-subs"><span class="j-sub">Goal-based matching</span><span class="j-sub">CEL grading A–D</span><span class="j-sub">Keep / drop / ask</span></div>
+        </div>
+      </div>
+
+      <div class="j-step">
+        <div class="j-node c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="j-content">
+          <span class="j-phase-label p3">Phase 03 — Unlock</span>
+          <div class="j-title">LMN, Checkout &amp; Ship</div>
+          <p class="j-desc">LMN signed by a network physician in ~4 hours ($35, HSA eligible). Split HSA + debit in one transaction. Join a Community Pool for group pricing. Products unlocked and shipped.</p>
+          <div class="j-subs"><span class="j-sub">LMN in ~4 hours</span><span class="j-sub">Split pay</span><span class="j-sub">Community Pool</span></div>
+        </div>
+      </div>
+
+      <div class="j-cta">
+        <a href="https://go.beim.ai/start">Start Your Journey →</a>
+      </div>
     </div>
-    <div class="journey-phases slide-up">
-      <div class="j-phase">
-        <div class="j-phase-icon sync"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
-        <div class="j-phase-num">Phase 01</div>
-        <div class="j-phase-title">Sync</div>
-        <div class="j-phase-desc">Connect your benefits and balance. We pull HSA/FSA through Finch and verify insurance through Stedi — before you spend a dime.</div>
-        <div class="j-phase-steps"><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Meet your Care Navigator</div><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Enter HSA/FSA balance</div><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Insurance &amp; benefits verified</div></div>
-      </div>
-      <div class="j-phase">
-        <div class="j-phase-icon match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-        <div class="j-phase-num">Phase 02</div>
-        <div class="j-phase-title">Match</div>
-        <div class="j-phase-desc">Set your health goals. Everly or Brooks matches you to CEL-graded products and gives a clinical breakdown of every pick.</div>
-        <div class="j-phase-steps"><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> AI matches products to goals</div><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> CEL grades A–D with confidence</div><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Keep, drop, or ask more</div></div>
-      </div>
-      <div class="j-phase">
-        <div class="j-phase-icon unlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-        <div class="j-phase-num">Phase 03</div>
-        <div class="j-phase-title">Unlock</div>
-        <div class="j-phase-desc">LMN signed in ~4 hours. Split HSA + debit in one transaction. Join a Community Pool for group pricing. Products ship.</div>
-        <div class="j-phase-steps"><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> LMN signed by physician</div><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Split pay + Community Pool</div><div class="j-phase-step"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Products unlocked &amp; shipped</div></div>
-      </div>
-    </div>
-    <div class="j-cta slide-up"><a href="https://go.beim.ai/start">Start Your Journey →</a></div>
   </section>
 
   <!-- ══ TESTIMONIALS ══ -->
@@ -1128,7 +1113,31 @@
 
     /* ── CTA navigation ── */
 
-
+    /* ── Journey pathway scroll animation ── */
+    const jSteps=document.querySelectorAll('.j-step');
+    const jLine=document.getElementById('journeyProgress');
+    const jPath=document.getElementById('journeyPath');
+    if(jPath){
+      const jObs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('in-view');
+            const node=e.target.querySelector('.j-node');
+            if(node)setTimeout(()=>node.classList.add('active'),200);
+          }
+        });
+      },{threshold:0.3,rootMargin:'0px 0px -60px 0px'});
+      jSteps.forEach(s=>jObs.observe(s));
+      window.addEventListener('scroll',function(){
+        if(!jPath)return;
+        const rect=jPath.getBoundingClientRect();
+        const pathTop=rect.top+window.scrollY;
+        const pathH=rect.height;
+        const scrolled=window.scrollY+window.innerHeight*0.6;
+        const progress=Math.min(1,Math.max(0,(scrolled-pathTop)/pathH));
+        if(jLine)jLine.style.height=(progress*100)+'%';
+      },{passive:true});
+    }
 
 
     function switchPanel(containerId,panelName,el){
