@@ -48,7 +48,7 @@
 
     /* ── PAGE HEADER ── */
     .page-header{position:relative;z-index:1;padding:40px 48px 0;margin-top:64px}
-    .page-header.with-banner{margin-top:0}
+    .page-header.has-banner{margin-top:0}
     .page-header-top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
     .page-title{font-size:clamp(28px,3vw,42px);font-weight:800;letter-spacing:-1.5px;color:#fff}
     .page-title .grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -74,6 +74,17 @@
     .filter-count{font-size:12px;color:var(--dim);font-weight:500;margin-left:auto;flex-shrink:0}
     .filter-reset{font-size:11px;font-weight:600;color:var(--dim);background:none;border:1px solid rgba(255,255,255,0.08);padding:6px 12px;border-radius:100px;cursor:pointer;transition:all 0.2s}
     .filter-reset:hover{color:var(--muted);border-color:rgba(255,255,255,0.15)}
+
+    /* ── SEARCH BAR ── */
+    .search-bar{position:relative;z-index:1;padding:0 48px;margin-top:-4px}
+    .search-wrap{position:relative;max-width:100%}
+    .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--dim);pointer-events:none}
+    .search-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:12px 40px 12px 44px;border-radius:12px;outline:none;transition:border-color 0.2s,background 0.2s}
+    .search-input::placeholder{color:var(--dim)}
+    .search-input:focus{border-color:var(--border-c);background:rgba(255,255,255,0.05)}
+    .search-clear{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);font-size:16px;cursor:pointer;padding:4px;display:none;transition:color 0.2s}
+    .search-clear.visible{display:block}
+    .search-clear:hover{color:var(--muted)}
 
     /* ── PRODUCT GRID ── */
     .marketplace-body{position:relative;z-index:1;padding:28px 48px 120px;min-height:60vh}
@@ -189,6 +200,7 @@
       .filter-sort{margin-left:0;width:100%}
       .filter-count{display:none}
       .marketplace-body{padding:20px 20px 120px}
+      .search-bar{padding:0 20px}
       .product-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
       .mp-card-img{height:100px}
       .mp-name{font-size:12px}
@@ -284,6 +296,15 @@
     <button class="filter-reset" id="filterReset" onclick="resetFilters()" style="display:none">Reset</button>
   </div>
 
+  <!-- ══ SEARCH BAR ══ -->
+  <div class="search-bar">
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" id="searchInput" type="text" placeholder="Search products, brands, conditions, keywords…" autocomplete="off"/>
+      <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
+    </div>
+  </div>
+
   <!-- ══ PRODUCT GRID ══ -->
   <div class="marketplace-body">
     <div class="product-grid loading" id="productGrid">
@@ -364,12 +385,17 @@ window.addEventListener('DOMContentLoaded',function(){
   sessionEmail=p.get('email')?decodeURIComponent(p.get('email')):'';
   hasSession=!!(sessionNav||sessionBal>0||sessionFirst);
 
-  // If user came from funnel with a navigator, hide the CTA banner
-  if(hasSession){
+  // Determine if banner should show
+  var bannerClosed=false;
+  try{bannerClosed=sessionStorage.getItem('beim_mp_banner_closed')==='1'}catch(e){}
+  var showBanner=!hasSession&&!bannerClosed;
+
+  if(!showBanner){
     document.getElementById('navBanner').classList.add('hidden');
-    document.getElementById('pageHeader').classList.add('with-banner');
-  }else{
-    document.getElementById('pageHeader').classList.add('with-banner');
+  }
+  // If banner is visible, header doesn't need its own margin-top (banner provides spacing)
+  if(showBanner){
+    document.getElementById('pageHeader').classList.add('has-banner');
   }
 
   // Restore cart from sessionStorage
@@ -494,6 +520,7 @@ function resetFilters(){
   document.querySelectorAll('.filter-pill').forEach(function(p){
     p.classList.toggle('active',p.dataset.grade==='all'||p.dataset.hsa==='all');
   });
+  clearSearch();
   applyFilters();
 }
 
@@ -502,6 +529,7 @@ function applyFilters(){
   var sort=document.getElementById('filterSort').value;
 
   var filtered=allProducts.filter(function(p){
+    if(!matchesSearch(p))return false;
     if(cat!=='all'&&(p.category||'').trim()!==cat)return false;
     if(activeGrade!=='all'&&(p.grade||'').trim()!==activeGrade)return false;
     if(activeHsa==='yes'&&p.hsa_fsa_eligible!=='Yes')return false;
@@ -522,7 +550,7 @@ function applyFilters(){
   renderGrid(filtered);
 
   // Show/hide reset
-  var hasFilter=cat!=='all'||activeGrade!=='all'||activeHsa!=='all'||sort!=='confidence';
+  var hasFilter=cat!=='all'||activeGrade!=='all'||activeHsa!=='all'||sort!=='confidence'||searchTerm;
   document.getElementById('filterReset').style.display=hasFilter?'inline-block':'none';
   document.getElementById('filterCount').textContent=filtered.length+' of '+allProducts.length+' products';
 }
@@ -789,12 +817,44 @@ function pushToZoho(){
 /* ── BANNER ── */
 function closeBanner(){
   document.getElementById('navBanner').classList.add('hidden');
+  document.getElementById('pageHeader').classList.remove('has-banner');
   try{sessionStorage.setItem('beim_mp_banner_closed','1')}catch(e){}
 }
-if(sessionStorage.getItem('beim_mp_banner_closed')==='1'){
-  document.addEventListener('DOMContentLoaded',function(){
-    document.getElementById('navBanner').classList.add('hidden');
+
+/* ── SEARCH ── */
+var searchTerm='';
+var searchTimer=null;
+document.addEventListener('DOMContentLoaded',function(){
+  var input=document.getElementById('searchInput');
+  if(!input)return;
+  input.addEventListener('input',function(){
+    clearTimeout(searchTimer);
+    searchTimer=setTimeout(function(){
+      searchTerm=input.value.trim().toLowerCase();
+      document.getElementById('searchClear').classList.toggle('visible',searchTerm.length>0);
+      applyFilters();
+    },200);
   });
+  input.addEventListener('keydown',function(e){if(e.key==='Escape'){clearSearch()}});
+});
+
+function clearSearch(){
+  searchTerm='';
+  var input=document.getElementById('searchInput');
+  if(input)input.value='';
+  document.getElementById('searchClear').classList.remove('visible');
+  applyFilters();
+}
+
+function matchesSearch(p){
+  if(!searchTerm)return true;
+  var fields=[
+    p.product_name,p.brand,p.category,p.d2c_headline,
+    p.conditions,p.keywords,p.goal_tags,p.ai_description
+  ];
+  var haystack=fields.join(' ').toLowerCase();
+  var terms=searchTerm.split(/\s+/);
+  return terms.every(function(t){return haystack.indexOf(t)>-1});
 }
 
 /* ── UTILITY ── */
