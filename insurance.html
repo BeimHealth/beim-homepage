@@ -13,56 +13,42 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
-
-/* ── AMBIENT ── */
 .bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 20% 15%,rgba(124,106,240,.06),transparent 70%),radial-gradient(ellipse 500px 400px at 80% 70%,rgba(110,224,245,.04),transparent 70%),radial-gradient(ellipse 350px 300px at 55% 50%,rgba(61,217,182,.02),transparent 70%);animation:meshDrift 35s ease-in-out infinite alternate}
 @keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(25px,-15px) scale(1.02)}}
 .bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 15%,transparent 100%);pointer-events:none;z-index:0}
 .noise{position:fixed;inset:0;z-index:0;opacity:.016;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
-
 .page{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:48px 32px 80px}
-
-/* ── TOP BAR ── */
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;animation:fu .5s ease both}
 .logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px;text-decoration:none}
 .step-indicator{display:flex;align-items:center;gap:6px}
 .step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
 .step-dot.done{background:var(--gn)}
 .step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
-
-/* ── NAV CHIP ── */
 .nav-chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:100px;padding:5px 16px 5px 5px;text-decoration:none;transition:border-color .2s;margin-bottom:28px;animation:fu .5s .06s ease both}
 .nav-chip:hover{border-color:var(--border-h)}
 .nc-av{width:30px;height:30px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0}
 .nc-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .nc-dot{position:absolute;bottom:0;right:-1px;width:7px;height:7px;border-radius:50%;background:var(--gn);border:1.5px solid rgba(6,6,16,.9)}
 .nc-txt{font-size:12px;color:var(--mu)}.nc-txt strong{color:var(--tx)}
-
-/* ── HERO ── */
 .hero{margin-bottom:32px}
 .hero h1{font-size:clamp(28px,4.2vw,42px);font-weight:800;line-height:1.06;letter-spacing:-2px;color:#fff;margin-bottom:12px;animation:fu .5s .1s ease both}
 .grad{background:linear-gradient(135deg,var(--cy),var(--bl),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:15px;color:rgba(240,240,255,.55);line-height:1.7;max-width:520px;animation:fu .5s .14s ease both}
-
-/* ── MAIN GRID ── */
 .main-grid{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;animation:fu .5s .2s ease both}
 
-/* ── INSURANCE CARD ── */
+/* Insurance card */
 .ins-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0;backdrop-filter:blur(24px);position:relative;overflow:hidden}
 .ins-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(124,106,240,.12),rgba(110,224,245,.12),transparent)}
-
-/* Tabs */
 .tabs{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.06)}
 .tab{flex:1;padding:14px 10px;border:none;background:transparent;color:var(--dm);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:6px;position:relative}
 .tab:hover{color:var(--mu);background:rgba(255,255,255,.02)}
 .tab.active{color:var(--tx)}
 .tab.active::after{content:'';position:absolute;bottom:-1px;left:16px;right:16px;height:2px;background:linear-gradient(90deg,var(--cy),var(--pu));border-radius:2px}
-
 .tab-body{padding:24px 26px}
 .tab-panel{display:none}.tab-panel.active{display:block;animation:fu .3s ease both}
 
-/* Field styles */
+/* Fields */
 .fl{display:block;font-size:11px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;text-align:left}
 .fi{width:100%;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;padding:13px 14px;outline:none;transition:all .3s var(--ease);margin-bottom:14px}
 .fi::placeholder{color:var(--dm)}
@@ -82,22 +68,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .dz-sub strong{color:var(--cy)}
 .dz-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(124,106,240,.1);border:1px solid rgba(124,106,240,.25);color:var(--pu);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:10px;cursor:pointer}
 .dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-
-/* File info */
 .file-info{display:none;align-items:center;gap:10px;padding:12px 14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:12px;margin-bottom:16px}
 .file-info.show{display:flex}
 .fi-name{font-size:13px;font-weight:700;color:#fff}
 .fi-size{font-size:11px;color:var(--gn)}
 .fi-remove{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--mu);font-size:11px;padding:4px 10px;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:auto}
-
-/* Scanning */
 .scanning{display:none;text-align:center;padding:20px 0}
 .scanning.show{display:block}
 .scan-spinner{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.06);border-top-color:var(--pu);animation:spin .9s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .scan-text{font-size:13px;color:var(--mu)}
 
-/* Results preview */
+/* Results */
 .results-preview{display:none;animation:fu .4s ease both}
 .results-preview.show{display:block}
 .rp-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
@@ -119,11 +101,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .rp-cell{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:10px}
 .rp-cell-label{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--dm);margin-bottom:3px}
 .rp-cell-value{font-size:13px;font-weight:700;color:#fff}
-.rp-cell-value.green{color:var(--gn)}
-.rp-cell-value.cyan{color:var(--cy)}
+.rp-cell-value.green{color:var(--gn)}.rp-cell-value.cyan{color:var(--cy)}
 
-/* Plan cards (marketplace) */
-.plan-search-section{margin-bottom:16px}
+/* Plan cards */
 .plan-list{max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding-right:4px}
 .plan-list::-webkit-scrollbar{width:4px}
 .plan-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:4px}
@@ -140,8 +120,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .pc-metal.platinum{background:rgba(110,224,245,.06);color:var(--cy);border:1px solid rgba(110,224,245,.15)}
 .pc-meta{display:flex;gap:14px;font-size:11px;color:var(--mu);flex-wrap:wrap}
 .pc-meta strong{color:var(--tx)}
-
-/* Spending inputs (after plan selection) */
 .spending-section{display:none;margin-top:16px;padding:16px;background:rgba(110,224,245,.03);border:1px solid rgba(110,224,245,.1);border-radius:var(--radius-s);animation:fu .35s ease both}
 .spending-section.show{display:block}
 .spending-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
@@ -157,7 +135,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .cta-skip{width:100%;padding:12px;background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--mu);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
 .cta-skip:hover{border-color:rgba(255,255,255,.2);color:var(--tx)}
 
-/* ── CHAT PANEL ── */
+/* Inline continue button (appears after results in any tab) */
+.inline-continue{display:none;margin-top:16px;animation:fu .4s ease both}
+.inline-continue.show{display:block}
+.inline-continue .cta-primary{font-size:14px;padding:14px}
+
+/* Chat panel */
 .chat-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;backdrop-filter:blur(24px);display:flex;flex-direction:column;height:620px;position:sticky;top:24px}
 .chat-panel.ev{border-color:rgba(110,224,245,.12)}
 .chat-panel.br{border-color:rgba(124,106,240,.12)}
@@ -197,68 +180,39 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ch-send{background:none;border:none;padding:14px 16px;cursor:pointer;font-size:16px;color:var(--dm);transition:color .2s}
 .ch-send:hover{color:var(--cy)}
 
-/* ── TRUST ── */
 .trust-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:28px}
 .trust-item{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(240,240,255,.42)}
 .trust-item::before{content:'✓';color:var(--gn);font-weight:700;font-size:9px}
 
 @keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:800px){
-  .main-grid{grid-template-columns:1fr;gap:20px}
-  .chat-panel{height:400px;position:static;order:2}
-  .ins-card{order:1}
-  .page{padding:36px 18px 60px}
-  .frow,.rp-grid{grid-template-columns:1fr}
-  .tabs{flex-wrap:wrap}
-  .tab{min-width:calc(50% - 0px)}
-}
-@media(max-width:480px){
-  .hero h1{font-size:24px;letter-spacing:-1.2px}
-  .hero-sub{font-size:14px}
-  .tab-body{padding:20px 18px}
-  .cta-section{padding:0 18px 20px}
-}
+@media(max-width:800px){.main-grid{grid-template-columns:1fr;gap:20px}.chat-panel{height:400px;position:static;order:2}.ins-card{order:1}.page{padding:36px 18px 60px}.frow,.rp-grid{grid-template-columns:1fr}.tabs{flex-wrap:wrap}.tab{min-width:calc(50% - 0px)}}
+@media(max-width:480px){.hero h1{font-size:24px;letter-spacing:-1.2px}.hero-sub{font-size:14px}.tab-body{padding:20px 18px}.cta-section{padding:0 18px 20px}}
 </style>
 </head>
 <body>
 <div class="bg-mesh"></div><div class="bg-grid"></div><div class="noise"></div>
-
 <div class="page">
   <div class="topbar">
-    <a href="https://www.beim.ai" class="logo">Beim Health</a>
-    <div class="step-indicator">
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-    </div>
+    <a href="https://go.beim.ai" class="logo">Beim Health</a>
+    <div class="step-indicator"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
   </div>
-
   <a class="nav-chip" href="calculator.html" id="navChip">
     <div class="nc-av" id="ncAv"></div>
     <span class="nc-txt"><strong id="ncName"></strong> is guiding <span id="ncUser">you</span></span>
   </a>
-
   <div class="hero">
     <h1 id="headline">Your insurance might<br><span class="grad">already cover this.</span></h1>
     <p class="hero-sub">Let's check what your plan covers before spending your HSA. Insurance pays first, HSA second, cash last.</p>
   </div>
-
   <div class="main-grid">
-    <!-- LEFT: Insurance form -->
     <div class="ins-card">
       <div class="tabs">
-        <button class="tab active" onclick="switchTab('photo',this)" id="tabPhoto">📸 Photo / Upload</button>
-        <button class="tab" onclick="switchTab('card',this)" id="tabCard">💳 Card Info</button>
-        <button class="tab" onclick="switchTab('marketplace',this)" id="tabMarket">🏥 Marketplace</button>
+        <button class="tab active" onclick="switchTab('photo',this)">📸 Photo / Upload</button>
+        <button class="tab" onclick="switchTab('card',this)">💳 Card Info</button>
+        <button class="tab" onclick="switchTab('marketplace',this)">🏥 Marketplace</button>
       </div>
-
       <div class="tab-body">
-        <!-- ══ TAB: Photo Upload ══ -->
+        <!-- PHOTO TAB -->
         <div class="tab-panel active" id="panelPhoto">
           <div class="dropzone" id="dropzone">
             <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.webp"/>
@@ -272,34 +226,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
             <div style="flex:1"><div class="fi-name" id="fileName"></div><div class="fi-size" id="fileSize"></div></div>
             <button class="fi-remove" onclick="removeFile()">Remove</button>
           </div>
-          <div class="scanning" id="photoScan">
-            <div class="scan-spinner"></div>
-            <div class="scan-text" id="photoScanText">Scanning…</div>
-          </div>
+          <div class="scanning" id="photoScan"><div class="scan-spinner"></div><div class="scan-text" id="photoScanText">Scanning…</div></div>
           <div class="results-preview" id="photoResults"></div>
+          <div class="inline-continue" id="photoContinue"><button class="cta-primary" onclick="goNext()">Continue with Benefits →</button></div>
         </div>
-
-        <!-- ══ TAB: Card Info ══ -->
+        <!-- CARD TAB -->
         <div class="tab-panel" id="panelCard">
           <div style="font-size:12px;color:var(--mu);line-height:1.6;padding:12px 14px;background:rgba(124,106,240,.04);border:1px solid rgba(124,106,240,.12);border-radius:12px;margin-bottom:16px;text-align:left">
-            <strong style="color:var(--tx)">Enter your card details</strong> — we'll save this to your profile. Real-time verification coming soon.
+            <strong style="color:var(--tx)">Enter your card details</strong> — we'll save this to your profile and use it for product matching.
           </div>
           <span class="fl">Insurance Carrier</span>
           <select class="sel" id="carrier">
-            <option value="">Select…</option>
-            <option value="BCBS">Blue Cross Blue Shield</option>
-            <option value="UHC">United Healthcare</option>
-            <option value="AETNA">Aetna</option>
-            <option value="CIGNA">Cigna</option>
-            <option value="KAISER">Kaiser Permanente</option>
-            <option value="HUMANA">Humana</option>
-            <option value="ANTHEM">Anthem</option>
-            <option value="CENTENE">Centene / Ambetter</option>
-            <option value="MOLINA">Molina</option>
-            <option value="TRICARE">TRICARE</option>
-            <option value="MEDICARE">Medicare</option>
-            <option value="MEDICAID">Medicaid</option>
-            <option value="OTHER">Other</option>
+            <option value="">Select…</option><option value="BCBS">Blue Cross Blue Shield</option><option value="UHC">United Healthcare</option><option value="AETNA">Aetna</option><option value="CIGNA">Cigna</option><option value="KAISER">Kaiser Permanente</option><option value="HUMANA">Humana</option><option value="ANTHEM">Anthem</option><option value="CENTENE">Centene / Ambetter</option><option value="MOLINA">Molina</option><option value="TRICARE">TRICARE</option><option value="MEDICARE">Medicare</option><option value="MEDICAID">Medicaid</option><option value="OTHER">Other</option>
           </select>
           <span class="fl">Member ID</span>
           <input class="fi mono" id="memberId" type="text" placeholder="e.g. XYZ123456789" autocomplete="off"/>
@@ -309,15 +247,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
           </div>
           <span class="fl">Date of Birth</span>
           <input class="fi mono" id="cardDob" type="date" style="color-scheme:dark"/>
+          <div class="inline-continue" id="cardContinue">
+            <button class="cta-primary" onclick="saveCardAndContinue()">Save Card & Continue →</button>
+          </div>
         </div>
-
-        <!-- ══ TAB: Marketplace / ICHRA ══ -->
+        <!-- MARKETPLACE TAB -->
         <div class="tab-panel" id="panelMarket">
           <div style="font-size:12px;color:var(--mu);line-height:1.6;padding:12px 14px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.12);border-radius:12px;margin-bottom:16px;text-align:left">
             <strong style="color:var(--tx)">ICHRA or Marketplace plan?</strong> Enter your zip code and we'll find it.
           </div>
-
-          <!-- Step 1: Search -->
           <div id="mktStep1">
             <div class="frow" style="margin-bottom:8px">
               <div><span class="fl">Zip Code</span><input class="fi mono" id="mktZip" type="text" placeholder="e.g. 78701" maxlength="5" autocomplete="postal-code"/></div>
@@ -325,8 +263,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
             </div>
             <button class="cta-primary" onclick="searchPlans()" id="searchBtn" style="margin-bottom:0">Search Plans →</button>
           </div>
-
-          <!-- Step 2: Plan list (hidden until search) -->
           <div id="mktStep2" style="display:none">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
               <span class="fl" style="margin:0" id="planCountLabel">Plans found</span>
@@ -334,8 +270,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
             </div>
             <div class="plan-list" id="planList"></div>
           </div>
-
-          <!-- Step 3: Spending (hidden until plan selected) -->
           <div class="spending-section" id="spendingSection">
             <div class="spending-title">How much have you spent this year?</div>
             <div class="spending-sub">Check your insurance app. <strong>If unsure, leave blank</strong> — we'll still show what's covered.</div>
@@ -345,31 +279,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
             </div>
             <button class="cta-primary" onclick="finalizePlan()" style="font-size:14px;padding:14px">Save Plan & See Results →</button>
           </div>
-
-          <!-- Step 4: Results -->
-          <div class="scanning" id="mktScan">
-            <div class="scan-spinner"></div>
-            <div class="scan-text" id="mktScanText">Searching plans…</div>
-          </div>
+          <div class="scanning" id="mktScan"><div class="scan-spinner"></div><div class="scan-text" id="mktScanText">Searching plans…</div></div>
           <div class="results-preview" id="mktResults"></div>
+          <div class="inline-continue" id="mktContinue"><button class="cta-primary" onclick="goNext()">Continue with Benefits →</button></div>
         </div>
       </div>
-
-      <!-- CTAs -->
       <div class="cta-section">
         <div class="cta-stack">
           <button class="cta-primary" id="mainCta" onclick="handleMainCta()">Scan My Insurance →</button>
-          <button class="cta-skip" id="skipCta" onclick="skipInsurance()">Skip — I'll just use my HSA →</button>
+          <button class="cta-skip" onclick="skipInsurance()">Skip — I'll just use my HSA →</button>
         </div>
       </div>
     </div>
-
-    <!-- RIGHT: Chat -->
+    <!-- CHAT -->
     <div class="chat-panel" id="chatPanel">
-      <div class="ch-header">
-        <div class="ch-av" id="chAvatar"></div>
-        <div><div class="ch-name" id="chName">Care Navigator</div><div class="ch-status">Online now</div></div>
-      </div>
+      <div class="ch-header"><div class="ch-av" id="chAvatar"></div><div><div class="ch-name" id="chName">Care Navigator</div><div class="ch-status">Online now</div></div></div>
       <div class="ch-messages" id="chatMsgs"></div>
       <div class="ch-prompts" id="chatPrompts">
         <button class="qp-btn" onclick="askQuick(this)">What does insurance cover?</button>
@@ -377,19 +301,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
         <button class="qp-btn" onclick="askQuick(this)">What's a deductible?</button>
         <button class="qp-btn" onclick="askQuick(this)">Can I skip this?</button>
       </div>
-      <div class="ch-input-row">
-        <input class="ch-input" id="chatInput" type="text" placeholder="Ask about your insurance…" autocomplete="off"/>
-        <button class="ch-send" onclick="sendChat()">➤</button>
-      </div>
+      <div class="ch-input-row"><input class="ch-input" id="chatInput" type="text" placeholder="Ask about your insurance…" autocomplete="off"/><button class="ch-send" onclick="sendChat()">➤</button></div>
     </div>
   </div>
-
-  <div class="trust-row">
-    <span class="trust-item">HIPAA encrypted</span>
-    <span class="trust-item">256-bit SSL</span>
-    <span class="trust-item">Data never stored</span>
-    <span class="trust-item">Physician-backed</span>
-  </div>
+  <div class="trust-row"><span class="trust-item">HIPAA encrypted</span><span class="trust-item">256-bit SSL</span><span class="trust-item">Data never stored</span><span class="trust-item">Physician-backed</span></div>
 </div>
 
 <script>
@@ -411,28 +326,20 @@ window.addEventListener('DOMContentLoaded',function(){
   lastName=p.get('last_name')?decodeURIComponent(p.get('last_name')):(sGet('beim_last_name')||'');
   employer=p.get('employer')?decodeURIComponent(p.get('employer')):(sGet('beim_employer')||'');
   email=p.get('email')?decodeURIComponent(p.get('email')):(sGet('beim_email')||'');
-  bal=parseFloat(p.get('balance'))||0;
-  acct=p.get('acct')||'HSA';
-
-  // Pre-fill card fields
+  bal=parseFloat(p.get('balance'))||0;acct=p.get('acct')||'HSA';
   if(firstName)document.getElementById('cardFirstName').value=firstName;
   if(lastName)document.getElementById('cardLastName').value=lastName;
   if(firstName)document.getElementById('headline').innerHTML=esc(firstName)+', your insurance might<br><span class="grad">already cover this.</span>';
-
   initNavigator();
-
-  // File upload handlers
   var fileInput=document.getElementById('fileInput'),dz=document.getElementById('dropzone');
   fileInput.addEventListener('change',function(e){if(e.target.files.length)handleFile(e.target.files[0])});
   dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('dragging')});
   dz.addEventListener('dragleave',function(){dz.classList.remove('dragging')});
   dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('dragging');if(e.dataTransfer.files.length)handleFile(e.dataTransfer.files[0])});
-
-  // Chat enter
   document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendChat()}});
-
-  // Carrier change
   document.getElementById('carrier').addEventListener('change',function(){if(this.value)addNavMsg('Got it — <strong>'+(CARRIERS[this.value]||this.value)+'</strong>. Fill in the rest of your card details.')});
+  // Show card tab inline continue when carrier is selected
+  showCardContinue();
 });
 
 function initNavigator(){
@@ -443,13 +350,12 @@ function initNavigator(){
   document.getElementById('chatPanel').classList.add(cls);
   document.getElementById('chAvatar').innerHTML='<img src="'+img+'"/><span class="ch-dot"></span>';
   document.getElementById('chName').textContent=name+' — Care Navigator';
-
   var balStr=bal>0?'<strong>$'+bal.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0})+' '+acct+'</strong>':'your '+acct;
   addNavMsg('Hey'+(firstName?' '+firstName:'')+' — before we spend '+balStr+', let\'s see what your insurance already covers. If insurance pays for something, you keep those tax-free dollars.'+(employer?' <strong>'+esc(employer)+'</strong> likely has a solid plan.':''));
   setTimeout(function(){addNavMsg('The fastest way is to <strong>snap a photo of your card</strong> — I\'ll read it automatically. Or enter details manually, or find your Marketplace plan.')},3500);
 }
 
-// ── TABS ──
+/* ── TABS ── */
 function switchTab(tab,btn){
   curTab=tab;
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');
@@ -459,15 +365,29 @@ function switchTab(tab,btn){
 }
 
 function updateMainCta(){
-  var btn=document.getElementById('mainCta'),skip=document.getElementById('skipCta');
-  if(hasResult){btn.textContent='Continue with Benefits →';btn.onclick=goNext;skip.style.display='none';return}
-  if(curTab==='photo'){btn.textContent=uploadBase64?'Scan Document →':'Scan My Insurance →';btn.onclick=uploadBase64?extractDocument:handleMainCta;btn.style.display='';skip.style.display=''}
-  else if(curTab==='card'){btn.textContent='Save Card & Continue →';btn.onclick=saveCard;btn.style.display='';skip.style.display=''}
-  else{btn.style.display='none';skip.style.display=''}
+  var btn=document.getElementById('mainCta');
+  // Hide main CTA if results are showing (inline continue handles it)
+  if(hasResult){btn.style.display='none';return}
+  btn.style.display='';
+  if(curTab==='photo'){btn.textContent=uploadBase64?'Scan Document →':'Scan My Insurance →';btn.onclick=uploadBase64?extractDocument:function(){addNavMsg('Upload a photo of your insurance card first — or switch tabs.')}}
+  else if(curTab==='card'){btn.textContent='Save Card & Continue →';btn.onclick=saveCardAndContinue}
+  else{btn.textContent='Search Plans →';btn.onclick=function(){document.getElementById('mktZip').focus()};btn.style.display='none'}
 }
-function handleMainCta(){if(curTab==='photo'&&uploadBase64)extractDocument();else if(curTab==='photo')addNavMsg('Upload a photo of your insurance card first — or switch tabs.')}
 
-// ── PHOTO UPLOAD ──
+function showCardContinue(){
+  // Show inline continue on card tab when enough fields are filled
+  var el=document.getElementById('cardContinue');
+  el.classList.add('show'); // Always show — button validates on click
+}
+
+/* ── MAIN CTA HANDLER ── */
+function handleMainCta(){
+  if(curTab==='photo'&&uploadBase64)extractDocument();
+  else if(curTab==='photo')addNavMsg('Upload a photo of your insurance card first — or switch tabs.');
+  else if(curTab==='card')saveCardAndContinue();
+}
+
+/* ── PHOTO UPLOAD ── */
 function handleFile(file){
   if(file.size>10*1024*1024){addNavMsg('Too large — max 10MB.');return}
   var ext=file.name.split('.').pop().toLowerCase();
@@ -491,20 +411,19 @@ function handleFile(file){
 function extractDocument(){
   if(!uploadBase64)return;
   var scan=document.getElementById('photoScan'),scanText=document.getElementById('photoScanText'),btn=document.getElementById('mainCta');
-  btn.disabled=true;scan.classList.add('show');document.getElementById('photoResults').classList.remove('show');
+  btn.disabled=true;scan.classList.add('show');document.getElementById('photoResults').classList.remove('show');document.getElementById('photoContinue').classList.remove('show');
   addNavMsg('Scanning now… looking for carrier, deductibles, copays, and coverage details.');
   scanText.textContent='Reading document…';
   setTimeout(function(){scanText.textContent='Extracting plan details…'},1200);
   setTimeout(function(){scanText.textContent='Analyzing coverage…'},2800);
-
   fetch(W+'/api/extract-benefits',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'extract_benefits',file_base64:uploadBase64,file_type:uploadType,file_name:document.getElementById('fileName').textContent})})
   .then(function(r){return r.json()}).then(function(data){
     scan.classList.remove('show');btn.disabled=false;
     document.getElementById('fileSize').textContent='Scanned ✓';
     if(data.success){
-      if(!data.status)data.status='active';
-      data.source='document_extraction';
+      if(!data.status)data.status='active';data.source='document_extraction';
       renderResults(data,'photoResults');
+      document.getElementById('photoContinue').classList.add('show');
       try{sessionStorage.setItem('beim_insurance',JSON.stringify(data))}catch(e){}
       hasResult=true;updateMainCta();
       addNavMsg('Found it! <strong>'+(data.carrier||'Your plan')+'</strong> is '+(data.status==='active'?'<strong>active</strong>':'showing unclear status')+'. '+(data.confidence==='high'?'High confidence on the extraction.':'Some fields may need confirmation.')+' Hit <strong>Continue with Benefits</strong> to proceed.');
@@ -518,16 +437,16 @@ function removeFile(){
   hasResult=false;uploadBase64=null;uploadType=null;
   document.getElementById('fileInfo').classList.remove('show');
   document.getElementById('photoResults').classList.remove('show');
+  document.getElementById('photoContinue').classList.remove('show');
   document.getElementById('photoScan').classList.remove('show');
   document.getElementById('dropzone').style.display='';
   document.getElementById('fileInput').value='';
-  document.getElementById('skipCta').style.display='';
   updateMainCta();
   try{sessionStorage.removeItem('beim_insurance')}catch(e){}
 }
 
-// ── CARD INFO ──
-function saveCard(){
+/* ── CARD INFO ── */
+function saveCardAndContinue(){
   var carrier=document.getElementById('carrier').value,memId=document.getElementById('memberId').value.trim();
   var fN=document.getElementById('cardFirstName').value.trim(),lN=document.getElementById('cardLastName').value.trim();
   var dob=document.getElementById('cardDob').value;
@@ -535,10 +454,12 @@ function saveCard(){
   var data={carrier:CARRIERS[carrier]||carrier,carrierCode:carrier,memberId:memId,firstName:fN,lastName:lN,dob:dob,status:'saved',source:'card_entry'};
   try{sessionStorage.setItem('beim_insurance',JSON.stringify(data));sessionStorage.setItem('beim_dob',dob)}catch(e){}
   hasResult=true;updateMainCta();
-  addNavMsg('Saved your <strong>'+(CARRIERS[carrier]||carrier)+'</strong> info. I\'ll use your carrier and plan type to guide product recommendations. <strong>Hit Continue</strong> when ready.');
+  addNavMsg('Saved your <strong>'+(CARRIERS[carrier]||carrier)+'</strong> info. I\'ll use your carrier and plan type to guide product recommendations.');
+  // Go directly to next page
+  setTimeout(function(){goNext()},1500);
 }
 
-// ── MARKETPLACE / ICHRA ──
+/* ── MARKETPLACE ── */
 function searchPlans(){
   var zip=document.getElementById('mktZip').value.trim(),age=parseInt(document.getElementById('mktAge').value)||30;
   if(!zip||zip.length!==5){addNavMsg('I need a 5-digit zip code.');return}
@@ -557,12 +478,9 @@ function searchPlans(){
     scan.classList.remove('show');document.getElementById('searchBtn').disabled=false;
     if(!pd||!pd.success||!pd.plans||!pd.plans.length){addNavMsg('No marketplace plans found. Try a different zip or use another tab.');return}
     addNavMsg('Found <strong>'+pd.plans.length+' plans</strong>. Pick yours below.');
-
-    // Show step 2, hide step 1
     document.getElementById('mktStep1').style.display='none';
     document.getElementById('mktStep2').style.display='block';
     document.getElementById('planCountLabel').textContent=pd.plans.length+' plans found';
-
     var list=document.getElementById('planList');list.innerHTML='';
     pd.plans.forEach(function(plan){
       var div=document.createElement('div');div.className='plan-card';
@@ -579,16 +497,17 @@ function resetSearch(){
   document.getElementById('mktStep2').style.display='none';
   document.getElementById('spendingSection').classList.remove('show');
   document.getElementById('mktResults').classList.remove('show');
-  selectedPlan=null;
+  document.getElementById('mktContinue').classList.remove('show');
+  selectedPlan=null;hasResult=false;updateMainCta();
 }
 
 function selectPlan(plan,el){
   document.querySelectorAll('.plan-card').forEach(function(c){c.classList.remove('selected')});
   el.classList.add('selected');selectedPlan=plan;
-  // Show spending section inline
   document.getElementById('spendingSection').classList.add('show');
   document.getElementById('mktResults').classList.remove('show');
-  addNavMsg('Good pick — <strong>'+esc(plan.name)+'</strong>. '+(plan.metal?plan.metal+' tier. ':'')+(plan.hsa_eligible?'<strong>HSA eligible.</strong> ':'')+'Deductible: <strong>$'+(plan.deductible!=null?plan.deductible.toLocaleString():'?')+'</strong>. Do you know how much you\'ve spent this year? If not, leave it blank and hit <strong>Save Plan</strong>.');
+  document.getElementById('mktContinue').classList.remove('show');
+  addNavMsg('Good pick — <strong>'+esc(plan.name)+'</strong>. '+(plan.metal?plan.metal+' tier. ':'')+(plan.hsa_eligible?'<strong>HSA eligible.</strong> ':'')+'Deductible: <strong>$'+(plan.deductible!=null?plan.deductible.toLocaleString():'?')+'</strong>. Do you know how much you\'ve spent? If not, leave blank and hit <strong>Save Plan</strong>.');
 }
 
 function finalizePlan(){
@@ -603,25 +522,23 @@ function finalizePlan(){
   var data={carrier:p.issuer||'Marketplace',plan:p.name,planType:p.type||'',metal:p.metal,status:'active',deductible:dedTotal,deductibleSpent:dedSpent,deductibleRemaining:dedRemaining,deductibleMet:dedMet,oopMax:oopTotal,oopSpent:oopSpent,oopRemaining:oopRemaining,oopMet:oopTotal>0&&oopSpent>=oopTotal,premium:p.premium,hsa_eligible:p.hsa_eligible,quality:p.quality,source:'cms_marketplace'};
 
   renderResults(data,'mktResults');
+  document.getElementById('spendingSection').classList.remove('show');
+  document.getElementById('mktContinue').classList.add('show');
   try{sessionStorage.setItem('beim_insurance',JSON.stringify(data))}catch(e){}
   hasResult=true;updateMainCta();
-
-  // Hide spending section since results are showing
-  document.getElementById('spendingSection').classList.remove('show');
 
   var msg;
   if(dedMet)msg='<strong>Your deductible is met!</strong> Insurance is actively covering costs — your '+acct+' goes even further.';
   else if(dedSpent>0)msg='You\'ve spent <strong>$'+dedSpent.toLocaleString()+'</strong> toward your <strong>$'+dedTotal.toLocaleString()+'</strong> deductible — <strong>$'+dedRemaining.toLocaleString()+' to go</strong>. I\'ll factor this into product recommendations.';
   else msg='Your deductible is <strong>$'+dedTotal.toLocaleString()+'</strong>. I\'ll find products where insurance helps, and your '+acct+' covers the rest.';
-  addNavMsg(msg+' <strong>Hit Continue</strong> when ready.');
+  addNavMsg(msg+' Hit <strong>Continue with Benefits</strong> below.');
 }
 
-// ── RENDER RESULTS ──
+/* ── RENDER RESULTS ── */
 function renderResults(data,containerId){
   var c=document.getElementById(containerId);
   var cr=data.carrier||'Insurance',pl=data.plan||data.planType||'';
   var h='<div class="rp-header"><div class="rp-check">✓</div><div><div class="rp-title">'+esc(cr)+'</div><div class="rp-sub">'+(pl?esc(pl)+' · ':'')+((data.status==='active'||data.status==='saved')?'Active':'Check status')+'</div></div></div>';
-
   if(data.deductible!=null){
     var dt=data.deductible,dr=data.deductibleRemaining!=null?data.deductibleRemaining:dt,ds=Math.max(0,dt-dr),dp=dt>0?Math.min(100,ds/dt*100):0,dm=dr===0;
     h+='<div class="rp-section"><div class="rp-label-row"><span class="rp-label">Deductible</span>'+(dm?'<span class="rp-met-badge">✓ Met</span>':'<span class="rp-value"><span class="accent">$'+ds.toLocaleString()+'</span> of $'+dt.toLocaleString()+'</span>')+'</div><div class="rp-bar"><div class="rp-fill ded'+(dm?' met':'')+'" style="width:'+(dm?100:dp)+'%"></div></div></div>';
@@ -630,7 +547,6 @@ function renderResults(data,containerId){
     var ot=data.oopMax,or_=data.oopRemaining!=null?data.oopRemaining:ot,os=Math.max(0,ot-or_),op=ot>0?Math.min(100,os/ot*100):0;
     h+='<div class="rp-section"><div class="rp-label-row"><span class="rp-label">Out-of-Pocket Max</span><span class="rp-value">$'+ot.toLocaleString()+'</span></div><div class="rp-bar"><div class="rp-fill oop" style="width:'+op+'%"></div></div></div>';
   }
-
   h+='<div class="rp-grid">';
   if(data.copay)h+='<div class="rp-cell"><div class="rp-cell-label">PCP Copay</div><div class="rp-cell-value cyan">$'+data.copay+'</div></div>';
   if(data.coinsurance!=null)h+='<div class="rp-cell"><div class="rp-cell-label">Coinsurance</div><div class="rp-cell-value">'+data.coinsurance+'%</div></div>';
@@ -642,7 +558,7 @@ function renderResults(data,containerId){
   c.innerHTML=h;c.classList.add('show');
 }
 
-// ── CHAT (fixed height — no page jerk) ──
+/* ── CHAT ── */
 function addNavMsg(t){
   chatHistory.push({role:'nav',text:t});chatLog.push({t:Date.now(),r:'nav',m:t.replace(/<[^>]+>/g,'')});
   var img=AVATARS[nav]||AVATARS.brooks,c=document.getElementById('chatMsgs');
@@ -671,10 +587,10 @@ function sendMessage(text){
   var ctx={page:'insurance',balance:bal,acctType:acct};if(firstName)ctx.firstName=firstName;if(employer)ctx.employer=employer;
   fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-8),navigator:nav,context:ctx})})
   .then(function(r){return r.json()}).then(function(d){removeTyping();addNavMsg(d.reply||'Try uploading your insurance card or entering your details.')})
-  .catch(function(){removeTyping();addNavMsg('Hit a snag — try again or use the form below.')});
+  .catch(function(){removeTyping();addNavMsg('Hit a snag — try again or use the form.')});
 }
 
-// ── NAVIGATION ──
+/* ── NAVIGATION ── */
 function goNext(){
   var insData=null;try{var raw=sessionStorage.getItem('beim_insurance');if(raw)insData=JSON.parse(raw)}catch(e){}
   var method='Skipped';
@@ -696,7 +612,7 @@ function buildParams(){
   return p;
 }
 
-// ── ZOHO ──
+/* ── ZOHO ── */
 function pushToZoho(method,insData){
   var lid=sGet('beim_lead_id')||null;
   if(!email&&!lid)return;
@@ -722,7 +638,6 @@ function pushToZoho(method,insData){
     .then(function(r){return r.json()}).then(function(d){
       if(d.lead_id){
         try{sessionStorage.setItem('beim_lead_id',d.lead_id)}catch(e){}
-        // Attach insurance card document if available
         if(uploadBase64&&d.lead_id){
           try{fetch(W+'/api/beim-lead-attachment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:d.lead_id,file_base64:uploadBase64,file_name:document.getElementById('fileName').textContent||'insurance_card',file_type:uploadType||'image/jpeg'})}).catch(function(){})}catch(e){}
         }
