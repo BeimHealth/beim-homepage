@@ -15,32 +15,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 600px 500px at 30% 20%,rgba(124,106,240,.05),transparent 70%),radial-gradient(ellipse 400px 350px at 70% 70%,rgba(110,224,245,.03),transparent 70%)}
 .noise{position:fixed;inset:0;z-index:0;opacity:.012;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
 
-/* ── NAV ── */
 .top-nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 32px;height:56px;background:rgba(6,6,16,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
 .nav-right{display:flex;gap:10px;margin-left:auto;align-items:center}
 .nav-secure{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gn);font-weight:600}
 .nav-back{font-size:12px;font-weight:600;color:var(--mu);padding:6px 12px;border-radius:8px;border:1px solid var(--border);text-decoration:none;transition:all .2s}
 .nav-back:hover{border-color:var(--border-h);color:var(--tx)}
-
-/* ── HEADER ── */
-.page-header{position:relative;z-index:1;padding:80px 32px 28px;text-align:center}
 .step-indicator{display:flex;align-items:center;gap:6px}
 .step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s}
 .step-dot.done{background:var(--gn)}
 .step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
+
+.page-header{position:relative;z-index:1;padding:80px 32px 28px;text-align:center}
 .page-header h1{font-size:clamp(26px,3.8vw,38px);font-weight:800;letter-spacing:-1.5px;color:#fff;line-height:1.06;margin-bottom:8px;animation:fu .4s .06s ease both}
 .grad{background:linear-gradient(135deg,var(--cy),var(--bl),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .page-header p{font-size:14px;color:rgba(240,240,255,.5);max-width:400px;margin:0 auto;line-height:1.6;animation:fu .4s .1s ease both}
 
-/* ── MAIN GRID ── */
 .main-grid{position:relative;z-index:1;max-width:1020px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;animation:fu .4s .14s ease both}
 
-/* ── SECTION LABELS ── */
 .sec-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dm);display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .sec-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
 
-/* ── ORDER CARD ── */
 .order-card{background:var(--sf);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:18px}
 .order-item{display:flex;align-items:flex-start;gap:10px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.04);position:relative;transition:background .2s}
 .order-item:last-child{border-bottom:none}
@@ -61,7 +56,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .oi-oop-line{font-size:9px;color:var(--gd);margin-top:1px}
 .oi-remove{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:var(--dm);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .oi-remove:hover{background:rgba(239,68,68,.1);color:var(--rd);border-color:rgba(239,68,68,.2)}
-/* Order totals */
 .order-totals{padding:14px 18px;border-top:1px solid var(--border);background:rgba(255,255,255,.015)}
 .total-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
 .total-row:last-child{margin-bottom:0}
@@ -72,7 +66,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .total-row.final{font-size:13px;font-weight:700}
 .total-row.final .total-key{color:var(--tx)}
 
-/* ── LMN SECTION ── */
 .lmn-section{margin-bottom:18px;display:none}
 .lmn-section.show{display:block}
 .lmn-notice{display:flex;align-items:flex-start;gap:10px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.12);border-radius:var(--radius-s);padding:12px 14px;margin-bottom:12px}
@@ -98,40 +91,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .own-doc-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.15);color:var(--gn);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;border-radius:9px;cursor:pointer;transition:all .2s}
 .own-doc-btn:hover{background:rgba(61,217,182,.1)}
 
-/* ── PAYMENT CARD ── */
 .pay-card{background:var(--sf);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:18px}
 .pay-section{padding:18px;border-bottom:1px solid rgba(255,255,255,.05)}
 .pay-section:last-child{border-bottom:none}
 .pay-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .pay-icon{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
-.pay-icon.hsa{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.15)}
 .pay-icon.card{background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.15)}
 .pay-title{font-size:13px;font-weight:700;color:#fff}
 .pay-sub{font-size:11px;color:var(--mu);margin-top:1px}
 .pay-amount{margin-left:auto;font-family:'DM Mono',monospace;font-size:14px;font-weight:700}
 .pay-amount.green{color:var(--gn)}.pay-amount.gold{color:var(--gd)}
-
-/* Split bar */
 .split-display{display:flex;gap:12px;align-items:center;margin-bottom:14px;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px}
 .split-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
 .split-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .split-dot.hsa{background:var(--gn)}.split-dot.oop{background:var(--gd)}
 .split-val{font-family:'DM Mono',monospace}
-
-/* Stripe card element */
 #card-element{background:rgba(8,8,18,.7);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px;transition:border-color .25s}
 #card-element.StripeElement--focus{border-color:rgba(124,106,240,.4);box-shadow:0 0 0 3px rgba(124,106,240,.06)}
 #card-element.StripeElement--invalid{border-color:rgba(239,68,68,.4)}
 #card-errors{font-size:11px;color:var(--rd);margin-top:6px;min-height:16px}
-
-/* HSA covers all notice */
 .hsa-covered-notice{display:none;align-items:center;gap:8px;background:rgba(61,217,182,.05);border:1px solid rgba(61,217,182,.15);border-radius:11px;padding:12px 14px;margin-bottom:16px}
 .hsa-covered-notice.show{display:flex}
 .hsa-covered-notice span:first-child{font-size:16px}
 .hsa-notice-text{font-size:12px;color:rgba(240,240,255,.7);line-height:1.5}
 .hsa-notice-text strong{color:var(--gn)}
 
-/* ── FORM FIELDS ── */
 .form-group{display:flex;flex-direction:column;gap:8px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .form-field{display:flex;flex-direction:column;gap:4px}
@@ -146,11 +130,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .portal-note{font-size:11px;color:var(--mu);line-height:1.6;padding:12px 14px;background:rgba(124,106,240,.04);border:1px solid rgba(124,106,240,.1);border-radius:11px;margin-bottom:16px;text-align:left}
 .portal-note strong{color:var(--tx)}
 
-/* ── SIDEBAR ── */
 .sidebar{display:flex;flex-direction:column;gap:16px}
 .summary-card{background:var(--sf);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:sticky;top:76px}
 .summary-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:14px}
-/* Visual split bar */
 .vis-bar{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px}
 .vis-bar-track{height:6px;display:flex;overflow:hidden}
 .vis-hsa{background:linear-gradient(90deg,var(--gn),#7ed4b5);transition:width .8s}
@@ -166,21 +148,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .vis-row.total{font-weight:700;color:#fff;font-size:12px}
 .vis-row.total .vis-label{color:#fff}
 
-/* Coupon */
 .coupon-row{display:flex;gap:6px;margin-bottom:12px}
 .coupon-input{flex:1;padding:9px 10px;font-size:12px;text-transform:uppercase}
 .coupon-btn{padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--mu);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;border-radius:10px;cursor:pointer;white-space:nowrap;transition:all .2s}
 .coupon-btn:hover{border-color:var(--border-h);color:var(--tx)}
 #couponMsg{font-size:10px;margin-top:4px;display:none}
 
-/* Place order button */
 .place-order-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;border-radius:var(--radius-s);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .25s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
 .place-order-btn:hover{box-shadow:0 12px 48px rgba(124,106,240,.35);transform:translateY(-2px)}
 .place-order-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .security-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px;flex-wrap:wrap}
 .sec-item{display:flex;align-items:center;gap:3px;font-size:9px;color:var(--dm)}
 
-/* Trust card */
 .trust-card{background:var(--sf);border:1px solid var(--border);border-radius:var(--radius-s);padding:14px}
 .trust-card-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--dm);margin-bottom:10px;text-align:center}
 .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
@@ -188,26 +167,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .trust-icon{font-size:14px;display:block;margin-bottom:2px}
 .trust-name{font-size:8px;font-weight:600;color:var(--dm);line-height:1.3}
 
-/* ── SUCCESS OVERLAY ── */
-.success-overlay{display:none;position:fixed;inset:0;z-index:990;background:rgba(6,6,16,.98);backdrop-filter:blur(24px);align-items:center;justify-content:center;text-align:center;padding:24px}
-.success-overlay.show{display:flex}
-.suc-inner{max-width:440px;animation:scaleIn .5s cubic-bezier(.34,1.56,.64,1) both}
-.suc-ring{width:72px;height:72px;border-radius:50%;background:rgba(61,217,182,.1);border:2px solid rgba(61,217,182,.35);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 20px;animation:ringPulse 2s ease infinite}
-@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(61,217,182,.3)}50%{box-shadow:0 0 0 14px rgba(61,217,182,0)}}
-.suc-title{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px;margin-bottom:8px}
-.suc-sub{font-size:13px;color:var(--mu);line-height:1.7;margin-bottom:24px}
-.suc-details{background:var(--sf);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;text-align:left}
-.suc-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
-.suc-row:last-child{margin-bottom:0}
-.suc-key{color:var(--mu)}.suc-val{font-family:'DM Mono',monospace;font-weight:600}
-.suc-actions{display:flex;flex-direction:column;gap:8px}
-.suc-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:all .2s}
-.suc-btn.primary{background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff}
-.suc-btn.primary:hover{box-shadow:0 8px 32px rgba(124,106,240,.3)}
-.suc-btn.secondary{background:rgba(255,255,255,.04);color:var(--mu);border:1px solid var(--border)}
+/* Abandoned checkout gentle nudge banner */
+.exit-nudge{display:none;position:fixed;bottom:0;left:0;right:0;z-index:800;padding:14px 24px;background:rgba(10,10,20,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(110,224,245,.15);text-align:center;animation:slideUp .4s var(--ease)}
+.exit-nudge.show{display:block}
+.exit-nudge-text{font-size:13px;color:rgba(240,240,255,.7);margin-bottom:8px}
+.exit-nudge-text strong{color:var(--cy)}
+.exit-nudge-dismiss{background:none;border:none;color:var(--dm);font-size:11px;cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:860px){.main-grid{grid-template-columns:1fr}.sidebar{order:-1}}
 @media(max-width:640px){.top-nav{padding:0 18px}.page-header{padding:72px 18px 24px}.main-grid{padding:0 16px 60px}.form-row{grid-template-columns:1fr}.summary-card{position:static}}
@@ -216,15 +184,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 <body>
 <div class="bg-mesh"></div><div class="noise"></div>
 <nav class="top-nav">
-  <a href="https://www.beim.ai/" class="logo">Beim Health</a>
+  <a href="https://go.beim.ai/" class="logo">Beim Health</a>
   <div class="nav-right">
     <div class="step-indicator">
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div>
     </div>
     <span class="nav-secure">🔒 Secure Checkout</span>
     <a href="intelligence.html" class="nav-back" id="backLink">← Back</a>
@@ -236,13 +199,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 </div>
 <div class="main-grid">
 <div class="checkout-left">
-  <!-- ORDER -->
   <div class="sec-label">Your Plan</div>
-  <div class="order-card">
-    <div id="orderItems"></div>
-    <div class="order-totals" id="orderTotals"></div>
-  </div>
-  <!-- LMN -->
+  <div class="order-card"><div id="orderItems"></div><div class="order-totals" id="orderTotals"></div></div>
+
   <div class="lmn-section" id="lmnSection">
     <div class="lmn-notice">
       <span class="lmn-notice-icon">🩺</span>
@@ -253,47 +212,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
       </div>
     </div>
     <div class="lmn-options">
-      <div class="lmn-opt active" onclick="setLmnPath('beim',this)">
-        <div class="lmn-radio"></div>
-        <div class="lmn-text"><strong>Beim network physician — $35 <span class="lmn-hsa-tag">HSA/FSA eligible</span></strong>Signed in ~4 hours. Short health intake after checkout.</div>
-      </div>
-      <div class="lmn-opt" onclick="setLmnPath('own',this)">
-        <div class="lmn-radio"></div>
-        <div class="lmn-text"><strong>Use my own doctor — auto-generated letter</strong>Pre-filled LMN with ICD-10 codes. Your doctor reviews and signs.</div>
-      </div>
-      <div class="lmn-opt" onclick="setLmnPath('have',this)">
-        <div class="lmn-radio"></div>
-        <div class="lmn-text"><strong>I already have an LMN</strong>No charge — ensure your HSA admin has it on file.</div>
-      </div>
+      <div class="lmn-opt active" onclick="setLmnPath('beim',this)"><div class="lmn-radio"></div><div class="lmn-text"><strong>Beim network physician — $35 <span class="lmn-hsa-tag">HSA/FSA eligible</span></strong>Signed in ~4 hours. Short health intake after checkout.</div></div>
+      <div class="lmn-opt" onclick="setLmnPath('own',this)"><div class="lmn-radio"></div><div class="lmn-text"><strong>Use my own doctor — auto-generated letter</strong>Pre-filled LMN with ICD-10 codes. Your doctor reviews and signs.</div></div>
+      <div class="lmn-opt" onclick="setLmnPath('have',this)"><div class="lmn-radio"></div><div class="lmn-text"><strong>I already have an LMN</strong>No charge — ensure your HSA admin has it on file.</div></div>
     </div>
     <div class="own-doc-panel" id="ownDocPanel">
       <div class="own-doc-text">We'll generate a <strong>pre-filled Letter of Medical Necessity</strong> with your product details, ICD-10 codes, and clinical justification. Your doctor reviews, edits, and signs.</div>
       <button class="own-doc-btn" onclick="generateLmnTemplate()">📄 Download LMN Template</button>
     </div>
   </div>
-  <!-- PAYMENT -->
+
   <div class="sec-label">Payment</div>
-  <div class="pay-card">
-    <div class="pay-section">
-      <div class="pay-header">
-        <div class="pay-icon card">💳</div>
-        <div><div class="pay-title">Pay with Card</div><div class="pay-sub" id="paySub">HSA, FSA, debit, or credit</div></div>
-        <div class="pay-amount green" id="payTotal">$0</div>
-      </div>
-      <div class="split-display" id="splitDisplay">
-        <div class="split-item"><span class="split-dot hsa"></span><span style="color:var(--gn)">HSA:</span> <span class="split-val" style="color:var(--gn)" id="splitHsa">$0</span></div>
-        <div class="split-item"><span class="split-dot oop"></span><span style="color:var(--gd)">OOP:</span> <span class="split-val" style="color:var(--gd)" id="splitOop">$0</span></div>
-      </div>
-      <div id="card-element"></div>
-      <div id="card-errors"></div>
-      <div class="field-hint" style="margin-top:8px">Use your HSA/FSA card for the eligible portion. Stripe handles processing securely.</div>
+  <div class="pay-card"><div class="pay-section">
+    <div class="pay-header"><div class="pay-icon card">💳</div><div><div class="pay-title">Pay with Card</div><div class="pay-sub" id="paySub">HSA, FSA, debit, or credit</div></div><div class="pay-amount green" id="payTotal">$0</div></div>
+    <div class="split-display" id="splitDisplay">
+      <div class="split-item"><span class="split-dot hsa"></span><span style="color:var(--gn)">HSA:</span> <span class="split-val" style="color:var(--gn)" id="splitHsa">$0</span></div>
+      <div class="split-item"><span class="split-dot oop"></span><span style="color:var(--gd)">OOP:</span> <span class="split-val" style="color:var(--gd)" id="splitOop">$0</span></div>
     </div>
-  </div>
-  <div class="hsa-covered-notice" id="hsaCoveredNotice">
-    <span>✅</span>
-    <div class="hsa-notice-text"><strong>Your HSA covers everything!</strong> No out-of-pocket charges.</div>
-  </div>
-  <!-- YOUR INFO -->
+    <div id="card-element"></div>
+    <div id="card-errors"></div>
+    <div class="field-hint" style="margin-top:8px">Use your HSA/FSA card for the eligible portion. Stripe handles processing securely.</div>
+  </div></div>
+  <div class="hsa-covered-notice" id="hsaCoveredNotice"><span>✅</span><div class="hsa-notice-text"><strong>Your HSA covers everything!</strong> No out-of-pocket charges.</div></div>
+
   <div class="sec-label">Your Information</div>
   <div class="pay-card"><div class="pay-section"><div class="form-group">
     <div class="form-row">
@@ -306,7 +247,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
   </div></div></div>
   <div class="portal-note"><strong>📋 After checkout:</strong> If any products need an LMN, you'll complete a short health intake in the Beim portal. Medical data stays HIPAA-compliant and separate from payment.</div>
 </div>
-<!-- SIDEBAR -->
+
 <div class="sidebar">
   <div class="summary-card">
     <div class="summary-title">🛡️ Order Summary</div>
@@ -339,22 +280,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 </div>
 </div>
 
-<!-- SUCCESS -->
-<div class="success-overlay" id="successOverlay">
-  <div class="suc-inner">
-    <div class="suc-ring">✓</div>
-    <div class="suc-title" id="sucTitle">Order Complete!</div>
-    <div class="suc-sub" id="sucSub">Your products are on their way.</div>
-    <div class="suc-details" id="sucDetails"></div>
-    <div class="suc-actions" id="sucActions">
-      <a href="https://beta.joinfreely.com/beim-patient-portal" class="suc-btn primary">📋 Complete Health Intake →</a>
-      <a href="start.html" class="suc-btn secondary">← Start New Session</a>
-    </div>
-  </div>
+<!-- Gentle exit nudge -->
+<div class="exit-nudge" id="exitNudge">
+  <div class="exit-nudge-text"><strong>No pressure.</strong> Your products are saved — come back anytime. Your navigator is a text away if you have questions.</div>
+  <button class="exit-nudge-dismiss" onclick="document.getElementById('exitNudge').classList.remove('show')">Dismiss</button>
 </div>
 
 <script>
 var W='https://beim-health-analyzer.steven-03f.workers.dev';
+var W_SMS='https://beim-webhooks.steven-03f.workers.dev';
 var STRIPE_PK='pk_live_51PO5XXHRZWTSVNTMNBdQtms2w5aOz6js156wKR9NxDOZyYdDcHzPEJHikJT99stGCewpzHSmdOJsTYJKPWg54pUw00hDV5uZPa';
 var stripe=Stripe(STRIPE_PK);
 var elements=stripe.elements({appearance:{theme:'night',variables:{colorPrimary:'#7c6af0',colorBackground:'#060610',colorText:'#f0f0ff',colorDanger:'#ef4444',fontFamily:'DM Sans,sans-serif',borderRadius:'10px'}}});
@@ -365,8 +299,10 @@ cardElement.on('change',function(e){document.getElementById('card-errors').textC
 var STATE={bal:0,acct:'HSA',products:[],lmnPath:'beim',totals:{subtotal:0,hsaCov:0,oop:0,lmnFee:0,discount:0}};
 var appliedCoupon=null;
 var COUPONS={BEIM100:{pct:100},BEIM50:{pct:50},BEIM25:{pct:25},TEST:{pct:100},FREECHECK:{pct:100},SXSW:{pct:100},LAUNCH99:{pct:99}};
+var abandonedCheckoutFired=false;
 
 function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
 function emoji(c){var l=(c||'').toLowerCase();if(l.includes('sleep'))return'😴';if(l.includes('weight'))return'⚖️';if(l.includes('hair')||l.includes('skin'))return'✨';if(l.includes('lab'))return'🔬';if(l.includes('supplement'))return'💊';return'🏥'}
 
@@ -377,18 +313,55 @@ window.addEventListener('DOMContentLoaded',function(){
   try{STATE.products=JSON.parse(sGet('beim_checkout_products')||'[]')}catch(e){STATE.products=[]}
   if(!STATE.products.length){try{STATE.products=JSON.parse(sGet('beim_selected_products')||'[]')}catch(e){}}
   if(!STATE.products.length){location.href='products.html';return}
-  // Pre-fill
+
+  // Pre-fill from session + URL params
   var fn=p.get('first_name');if(fn){fn=decodeURIComponent(fn);document.getElementById('fnInput').value=fn;document.getElementById('pageTitle').innerHTML='Authorize '+esc(fn)+'\'s <span class="grad">order</span>'}
   try{var em=sGet('beim_email');if(em)document.getElementById('emailInput').value=em}catch(e){}
   try{var ln=sGet('beim_last_name');if(ln)document.getElementById('lnInput').value=ln}catch(e){}
   try{var ph=sGet('beim_phone');if(ph)document.getElementById('phoneInput').value=ph}catch(e){}
-  // Phone formatting
+
+  // Phone auto-format
   document.getElementById('phoneInput').addEventListener('input',function(){
-    var v=this.value.replace(/\D/g,''),f='';
+    var v=this.value.replace(/\D/g,'').substring(0,10),f='';
     if(v.length>0)f='('+v.substring(0,3);if(v.length>=3)f+=') '+v.substring(3,6);if(v.length>=6)f+='-'+v.substring(6,10);
     this.value=f;
   });
+
+  // Mark checkout started for abandoned checkout detection
+  sSet('beim_checkout_started',Date.now().toString());
+
   calculate();renderOrder();renderSidebar();renderPayment();
+
+  // Gentle exit nudge — show after 60 seconds if they haven't started typing in card
+  setTimeout(function(){
+    if(!document.querySelector('.StripeElement--focus')&&!abandonedCheckoutFired){
+      document.getElementById('exitNudge').classList.add('show');
+    }
+  },60000);
+});
+
+// Abandoned checkout SMS — fires when they leave without completing
+window.addEventListener('beforeunload',function(){
+  if(abandonedCheckoutFired)return;
+  var phone=sGet('beim_phone');
+  var email=document.getElementById('emailInput').value.trim();
+  var fn=document.getElementById('fnInput').value.trim();
+  if(!phone||!email)return;
+  // Use sendBeacon for reliable fire-and-forget
+  var nav=sGet('beim_nav')||'brooks';
+  var lid=sGet('beim_lead_id')||null;
+  var prodNames=STATE.products.slice(0,2).map(function(p){return p.name}).join(' and ');
+  if(STATE.products.length>2)prodNames+=' + '+(STATE.products.length-2)+' more';
+  // Save flag so we don't fire twice
+  sSet('beim_abandoned_checkout','true');
+  // Update Zoho with abandoned status
+  var payload=JSON.stringify({
+    email:email,first_name:fn,navigator:nav,source:'checkout_abandoned',page:'checkout',
+    acct_type:STATE.acct,balance:STATE.bal,payment_status:'abandoned',
+    products_selected:STATE.products.map(function(p){return p.name}).join(', '),
+    products_count:STATE.products.length,lead_id:lid
+  });
+  try{navigator.sendBeacon(W+'/api/beim-lead',new Blob([payload],{type:'application/json'}))}catch(e){}
 });
 
 function calculate(){
@@ -401,9 +374,7 @@ function calculate(){
     p._hsaCov=hsa;p._oop=price-hsa;hsaCov+=hsa;remaining-=hsa;
   });
   if(physFee>0&&remaining>0){var physHsa=Math.min(physFee,remaining);hsaCov+=physHsa;remaining-=physHsa}
-  subtotal+=physFee;
-  var oop=subtotal-hsaCov;
-  var discount=0;
+  subtotal+=physFee;var oop=subtotal-hsaCov;var discount=0;
   if(appliedCoupon){discount=subtotal*(appliedCoupon.pct/100);subtotal-=discount;oop=Math.max(0,subtotal-hsaCov);if(subtotal<=hsaCov){oop=0;hsaCov=subtotal}}
   STATE.totals={subtotal:subtotal,hsaCov:hsaCov,oop:oop,lmnFee:physFee,discount:discount};
 }
@@ -428,8 +399,7 @@ function renderOrder(){
     if(p.pool)tags+='<span class="oi-tag pool">🤝 Pool</span>';
     html+='<div class="order-item"><div class="oi-icon">'+emoji(p.cat)+'</div><div class="oi-body"><div class="oi-name">'+esc(p.name)+'</div><div class="oi-meta">'+esc(p.cat||p.brand||'')+'</div><div class="oi-tags">'+tags+'</div></div><div class="oi-right"><div class="oi-price">'+(p.insured?'<span style="color:var(--gn)">$0</span>':'$'+p._effective.toFixed(2))+'</div>'+(p._hsaCov>0?'<div class="oi-hsa-line">'+STATE.acct+': −$'+p._hsaCov.toFixed(2)+'</div>':'')+(p._oop>0?'<div class="oi-oop-line">OOP: $'+p._oop.toFixed(2)+'</div>':'')+'</div><button class="oi-remove" onclick="removeItem('+i+')">×</button></div>';
   });
-  document.getElementById('orderItems').innerHTML=html;
-  renderTotals();
+  document.getElementById('orderItems').innerHTML=html;renderTotals();
 }
 
 function renderTotals(){
@@ -476,7 +446,7 @@ function generateLmnTemplate(){
   var dob=sGet('beim_dob')||'[DOB]';
   var date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   var rows=prods.map(function(p){return'<tr><td>'+esc(p.name)+'</td><td>'+esc(p.cat||'')+'</td><td>'+esc(p.conds||'')+'</td><td>$'+(p.price||0).toFixed(2)+'</td></tr>'}).join('');
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Letter of Medical Necessity</title><style>body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;font-size:13px;line-height:1.7}h1{font-size:20px}table{width:100%;border-collapse:collapse;margin:16px 0}th{background:#f3f4f6;padding:8px;text-align:left;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb}td{padding:8px;border-bottom:1px solid #f3f4f6}.sig{border-bottom:1px solid #111;width:280px;margin:30px 0 4px;display:inline-block}@media print{button{display:none}}</style></head><body><div style="color:#7c6af0;font-weight:800;font-size:16px">Beim Health</div><h1>Letter of Medical Necessity</h1><p>Date: '+date+'</p><p><strong>Patient:</strong> '+esc(fn+' '+ln)+'<br><strong>DOB:</strong> '+esc(dob)+'</p><p>The following products are medically necessary under IRC §213(d) and IRS Publication 502 for the diagnosis, treatment, mitigation, or prevention of disease.</p><table><thead><tr><th>Product</th><th>Category</th><th>Conditions</th><th>Price</th></tr></thead><tbody>'+rows+'</tbody></table><p><strong>Medical Justification:</strong> The listed products directly treat, mitigate, or prevent the conditions noted. Each product has been clinically graded by Beim Health using peer-reviewed evidence and physician confidence scoring.</p><div style="margin-top:40px"><p><strong>Physician Signature:</strong></p><span class="sig"></span><p style="font-size:11px;color:#888">Printed Name / NPI / Date</p></div><p style="font-size:10px;color:#888;margin-top:30px">Auto-generated by Beim Health. This document should be reviewed, edited as needed, and signed by a licensed physician.</p><script>window.print()<\/script></body></html>';
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Letter of Medical Necessity</title><style>body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;font-size:13px;line-height:1.7}h1{font-size:20px}table{width:100%;border-collapse:collapse;margin:16px 0}th{background:#f3f4f6;padding:8px;text-align:left;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb}td{padding:8px;border-bottom:1px solid #f3f4f6}.sig{border-bottom:1px solid #111;width:280px;margin:30px 0 4px;display:inline-block}@media print{button{display:none}}</style></head><body><div style="color:#7c6af0;font-weight:800;font-size:16px">Beim Health</div><h1>Letter of Medical Necessity</h1><p>Date: '+date+'</p><p><strong>Patient:</strong> '+esc(fn+' '+ln)+'<br><strong>DOB:</strong> '+esc(dob)+'</p><p>The following products are medically necessary under IRC §213(d) and IRS Publication 502.</p><table><thead><tr><th>Product</th><th>Category</th><th>Conditions</th><th>Price</th></tr></thead><tbody>'+rows+'</tbody></table><p><strong>Medical Justification:</strong> The listed products directly treat, mitigate, or prevent the conditions noted.</p><div style="margin-top:40px"><p><strong>Physician Signature:</strong></p><span class="sig"></span><p style="font-size:11px;color:#888">Printed Name / NPI / Date</p></div><p style="font-size:10px;color:#888;margin-top:30px">Auto-generated by Beim Health.</p><script>window.print()<\/script></body></html>';
   window.open(URL.createObjectURL(new Blob([html],{type:'text/html'})),'_blank');
 }
 
@@ -491,13 +461,8 @@ function applyCoupon(){
   var msg=document.getElementById('couponMsg');
   if(!code){msg.style.display='none';return}
   var coupon=COUPONS[code];
-  if(coupon){
-    appliedCoupon={code:code,pct:coupon.pct};
-    msg.style.display='block';msg.style.color='var(--gn)';
-    msg.innerHTML='✓ <strong>'+code+'</strong> applied — '+coupon.pct+'% off';
-  } else {
-    appliedCoupon=null;msg.style.display='block';msg.style.color='var(--rd)';msg.textContent='Invalid code';
-  }
+  if(coupon){appliedCoupon={code:code,pct:coupon.pct};msg.style.display='block';msg.style.color='var(--gn)';msg.innerHTML='✓ <strong>'+code+'</strong> applied — '+coupon.pct+'% off'}
+  else{appliedCoupon=null;msg.style.display='block';msg.style.color='var(--rd)';msg.textContent='Invalid code'}
   calculate();renderTotals();renderSidebar();renderPayment();
 }
 
@@ -511,14 +476,24 @@ async function handleCheckout(){
   if(!fn){document.getElementById('fnInput').focus();document.getElementById('fnInput').style.borderColor='rgba(239,68,68,.4)';setTimeout(function(){document.getElementById('fnInput').style.borderColor=''},2000);return}
   if(!email||!email.includes('@')){document.getElementById('emailInput').focus();document.getElementById('emailInput').style.borderColor='rgba(239,68,68,.4)';setTimeout(function(){document.getElementById('emailInput').style.borderColor=''},2000);return}
   if(!state){document.getElementById('stateInput').focus();return}
-  try{sessionStorage.setItem('beim_checkout_state',state);sessionStorage.setItem('beim_email',email);if(phone)sessionStorage.setItem('beim_phone',phone)}catch(e){}
+
+  sSet('beim_checkout_state',state);sSet('beim_email',email);sSet('beim_first_name',fn);
+  if(ln)sSet('beim_last_name',ln);
+  if(phone)sSet('beim_phone',phone);
+
   btn.disabled=true;btn.innerHTML='<span style="display:inline-block;animation:spin .8s linear infinite">⟳</span> Processing…';
+  abandonedCheckoutFired=true; // Prevent abandoned checkout SMS
+
   var couponPct=appliedCoupon?appliedCoupon.pct:0;
   var isFree=couponPct>=100||STATE.totals.subtotal<=0;
   pushToZoho(email,fn,ln,state,phone,'pending');
-  if(isFree){setTimeout(function(){showSuccess(email,fn,null)},1200);return}
+
+  if(isFree){
+    saveOrderAndRedirect(email,fn,ln,state,phone,null);
+    return;
+  }
+
   try{
-    // Build product payload with Stripe Connect metadata
     var productPayload=STATE.products.map(function(p){return{
       name:p.name,price:p._effective||p.price,cat:p.cat||'',grade:p.grade||'',
       lmn:!!p.lmn,order:!!p.order,hsa:!!p.hsa,
@@ -532,56 +507,53 @@ async function handleCheckout(){
       lmnPath:STATE.lmnPath,lmnFee:STATE.totals.lmnFee||0
     })});
     var piData=await piRes.json();
-    if(piData.free){showSuccess(email,fn,null);return}
+    if(piData.free){saveOrderAndRedirect(email,fn,ln,state,phone,null);return}
     if(!piData.success||!piData.clientSecret){
-      btn.innerHTML='🛡️ Place Order';btn.disabled=false;
+      btn.innerHTML='🛡️ Place Order';btn.disabled=false;abandonedCheckoutFired=false;
       document.getElementById('card-errors').textContent=piData.message||'Payment setup failed';return}
+
     var result=await stripe.confirmCardPayment(piData.clientSecret,{
       payment_method:{card:cardElement,billing_details:{name:fn+' '+ln,email:email}}
     });
     if(result.error){
-      btn.innerHTML='🛡️ Place Order';btn.disabled=false;
+      btn.innerHTML='🛡️ Place Order';btn.disabled=false;abandonedCheckoutFired=false;
       document.getElementById('card-errors').textContent=result.error.message;
       pushToZoho(email,fn,ln,state,phone,'failed');return}
     if(result.paymentIntent&&result.paymentIntent.status==='succeeded'){
       pushToZoho(email,fn,ln,state,phone,'completed',null,result.paymentIntent.id);
-      showSuccess(email,fn,result.paymentIntent.id);
+      saveOrderAndRedirect(email,fn,ln,state,phone,result.paymentIntent.id);
     } else {
-      btn.innerHTML='🛡️ Place Order';btn.disabled=false;
-      document.getElementById('card-errors').textContent='Payment requires additional action';}
+      btn.innerHTML='🛡️ Place Order';btn.disabled=false;abandonedCheckoutFired=false;
+      document.getElementById('card-errors').textContent='Payment requires additional action';
+    }
   } catch(err){
-    btn.innerHTML='🛡️ Place Order';btn.disabled=false;
+    btn.innerHTML='🛡️ Place Order';btn.disabled=false;abandonedCheckoutFired=false;
     document.getElementById('card-errors').textContent='Error: '+err.message;
   }
 }
 
-function showSuccess(email,fn,stripeId){
+function saveOrderAndRedirect(email,fn,ln,state,phone,stripeId){
   var t=STATE.totals;
   var orderNum='BH-'+Date.now().toString(36).toUpperCase().slice(-8);
-  var ln=document.getElementById('lnInput').value||'';
-  var state=document.getElementById('stateInput').value||'';
-  var phone=document.getElementById('phoneInput').value||'';
+
+  // Save order to sessionStorage for confirmation page
+  sSet('beim_order',JSON.stringify({
+    orderNum:orderNum,email:email,firstName:fn,lastName:ln,
+    products:STATE.products,totals:t,
+    acctType:STATE.acct,balance:STATE.bal,
+    lmnPath:STATE.lmnPath,stripeId:stripeId,
+    coupon:appliedCoupon?appliedCoupon.code:null,
+    ts:new Date().toISOString()
+  }));
+
+  // Final Zoho push with order number
   pushToZoho(email,fn,ln,state,phone,'completed',orderNum,stripeId);
-  // Save order
-  try{sessionStorage.setItem('beim_order',JSON.stringify({orderNum:orderNum,email:email,products:STATE.products,totals:t,acctType:STATE.acct,balance:STATE.bal,lmnPath:STATE.lmnPath,stripeId:stripeId,coupon:appliedCoupon?appliedCoupon.code:null,ts:new Date().toISOString()}))}catch(e){}
-  // Build success screen
-  document.getElementById('sucTitle').textContent='Order Complete!';
-  document.getElementById('sucSub').textContent=(fn||'Your')+' products are being prepared.'+((STATE.products.some(function(p){return p.lmn}))?' Complete the health intake below so your physician can review.':'');
-  var details='<div class="suc-row"><span class="suc-key">Order</span><span class="suc-val">'+orderNum+'</span></div>';
-  details+='<div class="suc-row"><span class="suc-key">'+STATE.acct+' Charged</span><span class="suc-val" style="color:var(--gn)">$'+t.hsaCov.toFixed(2)+'</span></div>';
-  if(t.oop>0)details+='<div class="suc-row"><span class="suc-key">Out of Pocket</span><span class="suc-val" style="color:var(--gd)">$'+t.oop.toFixed(2)+'</span></div>';
-  details+='<div class="suc-row"><span class="suc-key">Products</span><span class="suc-val">'+STATE.products.length+'</span></div>';
-  if(STATE.lmnPath==='beim')details+='<div class="suc-row"><span class="suc-key">LMN Status</span><span class="suc-val" style="color:var(--gd)">Pending physician review</span></div>';
-  details+='<div class="suc-row"><span class="suc-key">Receipt</span><span class="suc-val">Sent to '+esc(email)+'</span></div>';
-  document.getElementById('sucDetails').innerHTML=details;
-  // Adjust CTA based on LMN path
-  var actions=document.getElementById('sucActions');
-  if(STATE.lmnPath==='own'){
-    actions.innerHTML='<button class="suc-btn primary" onclick="generateLmnTemplate()">📄 Download Your Prepared LMN</button><a href="start.html" class="suc-btn secondary">← Start New Session</a>';
-  } else if(STATE.lmnPath==='have'){
-    actions.innerHTML='<a href="https://www.beim.ai" class="suc-btn primary">🏠 Return to Beim Health</a><a href="start.html" class="suc-btn secondary">← Start New Session</a>';
-  }
-  document.getElementById('successOverlay').classList.add('show');
+
+  // Clear checkout started flag
+  try{sessionStorage.removeItem('beim_checkout_started');sessionStorage.removeItem('beim_abandoned_checkout')}catch(e){}
+
+  // Redirect to confirmation page
+  location.href='confirmation.html';
 }
 
 function pushToZoho(email,fn,ln,state,phone,status,orderNum,stripeId){
@@ -600,11 +572,11 @@ function pushToZoho(email,fn,ln,state,phone,status,orderNum,stripeId){
     products_selected:prodList,products_count:STATE.products.length,
     rescue_plan_value:t.subtotal+(t.discount||0)
   };
-  if(lid)payload.lead_id=lid;
+  if(lid)payload.lead_id=lid;if(phone)payload.phone=phone;
   if(orderNum)payload.order_number=orderNum;
   if(stripeId)payload.stripe_payment_id=stripeId;
   if(appliedCoupon){payload.coupon_code=appliedCoupon.code;payload.coupon_discount=t.discount||0}
-  try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)try{sessionStorage.setItem('beim_lead_id',d.lead_id)}catch(e){}}).catch(function(){})}catch(e){}
+  try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)sSet('beim_lead_id',d.lead_id)}).catch(function(){})}catch(e){}
 }
 </script>
 </body>
