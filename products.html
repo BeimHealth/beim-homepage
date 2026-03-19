@@ -18,7 +18,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 @keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(25px,-15px) scale(1.02)}}
 .noise{position:fixed;inset:0;z-index:0;opacity:.014;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
 
-/* ── FULL-SCREEN CHAT APP ── */
 .chat-app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:720px;margin:0 auto;width:100%}
 
 /* ── HEADER ── */
@@ -31,8 +30,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ch-info{flex:1;min-width:0}
 .ch-name{font-size:15px;font-weight:700;color:#fff}
 .ch-status{font-size:11px;color:var(--gn);font-weight:600}
-
-/* Triage step indicator */
 .step-indicator{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
 .step-dot.done{background:var(--gn)}
@@ -61,7 +58,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .typing-dots span:nth-child(3){animation-delay:.3s}
 @keyframes dotP{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
 
-/* ── PHASE HEADER (inside bubble) ── */
+/* ── INLINE PHONE CAPTURE ── */
+.phone-capture{margin-top:10px;padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.phone-capture .pc-label{font-size:12px;font-weight:700;color:var(--cy);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.phone-capture .pc-label span{font-size:14px}
+.phone-capture .pc-row{display:flex;gap:8px;align-items:center}
+.phone-capture .pc-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;outline:none;transition:border-color .2s}
+.phone-capture .pc-input:focus{border-color:rgba(110,224,245,.3)}
+.phone-capture .pc-input::placeholder{color:var(--dm)}
+.phone-capture .pc-input.err{border-color:var(--rd)}
+.phone-capture .pc-send{padding:12px 20px;border-radius:12px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.phone-capture .pc-send:hover{box-shadow:0 4px 20px rgba(124,106,240,.3)}
+.phone-capture .pc-send:disabled{opacity:.4;pointer-events:none}
+.phone-capture .pc-send.loading{pointer-events:none;opacity:.6}
+.phone-capture .pc-consent{display:flex;align-items:flex-start;gap:8px;margin-top:8px}
+.phone-capture .pc-consent input[type="checkbox"]{margin-top:3px;accent-color:var(--cy);width:14px;height:14px;flex-shrink:0}
+.phone-capture .pc-consent label{font-size:10px;color:var(--dm);line-height:1.5;cursor:pointer}
+.phone-capture .pc-err{font-size:11px;color:var(--rd);margin-top:6px;min-height:16px}
+.phone-capture .pc-skip{background:none;border:none;color:var(--dm);font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;margin-top:8px;text-decoration:underline;padding:0}
+.phone-capture .pc-skip:hover{color:var(--mu)}
+.phone-capture .pc-done{display:flex;align-items:center;gap:8px;color:var(--gn);font-size:13px;font-weight:600}
+.phone-capture .pc-done span{font-size:16px}
+
+/* ── PHASE HEADER ── */
 .phase-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);margin-bottom:8px}
 .phase-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .phase-icon.ins{background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.2)}
@@ -73,7 +92,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .phase-badge.green{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.18);color:var(--gn)}
 .phase-badge.cyan{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
 
-/* ── PRODUCT CARDS (inside bubble) ── */
+/* ── PRODUCT CARDS ── */
 .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .prod-card{background:rgba(8,8,18,.6);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s var(--ease);position:relative}
 .prod-card:hover{border-color:rgba(255,255,255,.16);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
@@ -84,14 +103,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .prod-img img{width:100%;height:100%;object-fit:contain;padding:6px}
 .prod-img .prod-emoji{font-size:28px;opacity:.35}
 .prod-body{padding:10px}
-/* Confidence bar */
 .conf-row{display:flex;align-items:center;gap:4px;margin-bottom:5px}
 .conf-bar{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden}
 .conf-fill{height:100%;border-radius:3px}
 .conf-fill.hi{background:var(--gn)}.conf-fill.md{background:var(--cy)}.conf-fill.lo{background:var(--gd)}
 .conf-pct{font-family:'DM Mono',monospace;font-size:9px;font-weight:700}
 .conf-pct.hi{color:var(--gn)}.conf-pct.md{color:var(--cy)}.conf-pct.lo{color:var(--gd)}
-/* Badges */
 .prod-badges{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
 .pb{font-size:7px;font-weight:700;padding:2px 5px;border-radius:4px;text-transform:uppercase;white-space:nowrap}
 .pb.ga{background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.25);color:var(--gn)}
@@ -114,13 +131,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .prod-strike{font-size:9px;color:var(--dm);text-decoration:line-through}
 .prod-lmn-note{font-size:8px;color:var(--pu);margin-top:3px;font-weight:600}
 
-/* Action button */
 .action-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:11px 22px;border-radius:100px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease)}
 .action-btn:hover{box-shadow:0 6px 28px rgba(124,106,240,.3);transform:translateY(-1px)}
 .action-btn:disabled{opacity:.3;pointer-events:none}
 .action-btn.locked{pointer-events:none;opacity:.35}
 .action-btn.secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
 .action-btn.secondary:hover{background:rgba(255,255,255,.1)}
+
+/* ── CHECK-IN BUTTONS ── */
+.checkin-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.checkin-btn{padding:9px 18px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--tx)}
+.checkin-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+.checkin-btn.primary{background:linear-gradient(135deg,var(--pu),var(--bl));border:none;color:#fff;font-weight:700}
+.checkin-btn.primary:hover{box-shadow:0 4px 16px rgba(124,106,240,.3)}
 
 /* ── INPUT BAR ── */
 .input-bar{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,6,16,.92);backdrop-filter:blur(20px);padding:4px 8px}
@@ -153,12 +176,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
     <div class="ch-avatar" id="headerAvatar"></div>
     <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status">Unlocking Session</div></div>
     <div class="step-indicator">
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
     </div>
   </div>
   <div class="messages" id="messages"></div>
@@ -180,40 +198,44 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 </div>
 
 <script>
+/* ═══════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════ */
 var CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vSkKfZAWrcH9YyJ8Ks5VTEJV950qVsjBjho6zo0GtAUvQAxjH-y5d3cvuUHkwTHXQ/pub?output=csv';
 var W='https://beim-health-analyzer.steven-03f.workers.dev';
+var W_SMS='https://beim-webhooks.steven-03f.workers.dev';
+var TWILIO_LIVE=true;
 var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
 
-/* Goal page IDs → catalog goal_tags mapping */
 var GOAL_MAP={
-  screenings:['Labs & Biomarkers','Immunity & Prevention'],
-  vaccines:['Immunity & Prevention'],
-  primary:['Labs & Biomarkers','General Wellness'],
-  chronic:['Weight Management','Heart & Cardiovascular','Hormones & Fertility'],
-  mental:['Sleep Quality','Energy & Focus','Brain Health'],
-  recovery:['Recovery & Performance','Fitness & Energy'],
-  supplements:['General Wellness','Gut & Digestion'],
-  wellness:['Skin & Anti-Aging','Hair & Hair Loss'],
-  devices:['Sleep Quality','Recovery & Performance','Labs & Biomarkers'],
-  energy:['Energy & Focus','Fitness & Energy','General Wellness']
+  screenings:['Labs & Biomarkers','Immunity & Prevention'],vaccines:['Immunity & Prevention'],
+  primary:['Labs & Biomarkers','General Wellness'],chronic:['Weight Management','Heart & Cardiovascular','Hormones & Fertility'],
+  mental:['Sleep Quality','Energy & Focus','Brain Health'],recovery:['Recovery & Performance','Fitness & Energy'],
+  supplements:['General Wellness','Gut & Digestion'],wellness:['Skin & Anti-Aging','Hair & Hair Loss'],
+  devices:['Sleep Quality','Recovery & Performance','Labs & Biomarkers'],energy:['Energy & Focus','Fitness & Energy','General Wellness']
 };
-
-/* Happiness boost categories */
 var HAPPINESS_CATS=['Sleep Quality','Energy & Focus','Brain Health','General Wellness'];
 var TAX_RATE=0.30;
 
-var nav,firstName='',lastName='',employer='',email='',bal=0,acct='HSA',userGoals=[],userSex='all',userAge=null,hasIns=false,ins=null;
+/* ═══════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════ */
+var nav,navName,firstName='',lastName='',employer='',email='',bal=0,acct='HSA',userGoals=[],userSex='all',userAge=null,hasIns=false,ins=null;
 var wbLife=5,wbEnergy=5,budgetPref='mix',expLevel='some';
 var allProducts=[],selectedProducts=[],chatHistory=[],chatLog=[];
-var PHASE=0; // 0=loading, 1=insurance, 2=hsa, 3=gaps, 4=done
+var PHASE=0,phoneCaptured=false,phoneNumber='';
 
 function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-/* ── INIT ── */
+/* ═══════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════ */
 window.addEventListener('DOMContentLoaded',function(){
   var p=new URLSearchParams(location.search);
   nav=p.get('nav')||sGet('beim_nav')||'brooks';if(nav==='skip')nav='brooks';
+  navName=nav==='everly'?'Everly':'Brooks';
   firstName=p.get('first_name')?decodeURIComponent(p.get('first_name')):(sGet('beim_first_name')||'');
   lastName=p.get('last_name')?decodeURIComponent(p.get('last_name')):(sGet('beim_last_name')||'');
   employer=p.get('employer')?decodeURIComponent(p.get('employer')):(sGet('beim_employer')||'');
@@ -228,16 +250,22 @@ window.addEventListener('DOMContentLoaded',function(){
   try{ins=JSON.parse(sGet('beim_insurance'))}catch(e){}
   try{var dob=sGet('beim_dob');if(dob)userAge=Math.floor((Date.now()-new Date(dob).getTime())/31557600000)}catch(e){}
 
-  var img=AVATARS[nav]||AVATARS.brooks,name=nav==='everly'?'Everly':'Brooks';
+  // Check if phone already captured
+  var existingPhone=sGet('beim_phone');
+  if(existingPhone){phoneCaptured=true;phoneNumber=existingPhone}
+
+  var img=AVATARS[nav]||AVATARS.brooks;
   document.getElementById('headerAvatar').innerHTML='<img src="'+img+'"/><span class="ch-avatar-dot"></span>';
-  document.getElementById('headerName').textContent=name;
+  document.getElementById('headerName').textContent=navName;
   document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendFreeText()}});
 
-  addNavBubble("Loading your product catalog…");
+  addNavBubble("Pulling up your profile and matching products…");
   loadCSV();
 });
 
-/* ── CSV LOADER ── */
+/* ═══════════════════════════════════════
+   CSV LOADER + PARSER
+   ═══════════════════════════════════════ */
 function loadCSV(){
   fetch(CSV_URL).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(function(csv){
     allProducts=parseCSV(csv);
@@ -273,13 +301,11 @@ function parseCSV(text){
 function csvLine(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(q){if(ch==='"'&&l[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else{if(ch==='"')q=true;else if(ch===','){r.push(c.trim());c=''}else c+=ch}}r.push(c.trim());return r}
 
 /* ═══════════════════════════════════════
-   SCORING ENGINE (4-Tier)
+   SCORING ENGINE
    ═══════════════════════════════════════ */
 function scoreAllProducts(){
   allProducts.forEach(function(p){
     var score=0,tags=[];
-
-    /* TIER 1: Insurance Match (USPSTF) — highest priority */
     var ut=(p.uspstf_screening_tags||'').split('|').filter(Boolean);
     var ur=(p.uspstf_age_sex_rules||'').split('|').filter(Boolean);
     p._insMatch=false;
@@ -291,49 +317,28 @@ function scoreAllProducts(){
         if(sexOk&&ageOk){p._insMatch=true;score+=50;tags.push('ins');break}
       }
     }
-
-    /* TIER 2: Goal Match + Budget */
     var gt=(p.goal_tags||'').split('|').map(function(t){return t.trim()}).filter(Boolean);
     p._goalMatch=false;p._goalRank=99;
     for(var gi=0;gi<userGoals.length;gi++){
       var mapped=GOAL_MAP[userGoals[gi]]||[];
       for(var mi=0;mi<mapped.length;mi++){
-        if(gt.indexOf(mapped[mi])>-1){
-          p._goalMatch=true;
-          p._goalRank=Math.min(p._goalRank,gi);
-          score+=[35,22,12][gi]||5;
-          tags.push('g'+(gi+1));
-          break;
-        }
+        if(gt.indexOf(mapped[mi])>-1){p._goalMatch=true;p._goalRank=Math.min(p._goalRank,gi);score+=[35,22,12][gi]||5;tags.push('g'+(gi+1));break}
       }
       if(p._goalMatch)break;
     }
-    // Budget fit bonus
     if(p._price<=bal&&!p._insMatch)score+=8;
-
-    /* TIER 3: Clinical Grade multiplier */
     var grade=(p.grade||'').trim();
     var baseGrade=grade==='A'?20:grade==='B'?12:grade==='C'?5:0;
     var gradeMultiplier=grade==='A'?1.5:grade==='B'?1.2:1.0;
     score+=Math.round(baseGrade*gradeMultiplier);
-    // Doctor confidence
     var dc=(p.doctor_confidence||'').trim();
     score+=dc==='Very High'?15:dc==='High'?10:dc==='Moderate'?5:0;
-
-    /* TIER 4: Happiness Multiplier */
     var happinessAvg=(wbLife+wbEnergy)/2;
-    if(happinessAvg<=5){
-      var isHappinessCat=gt.some(function(t){return HAPPINESS_CATS.indexOf(t)>-1});
-      if(isHappinessCat)score=Math.round(score*1.2);
-    }
-
-    // Gender filter
+    if(happinessAvg<=5){var isHappinessCat=gt.some(function(t){return HAPPINESS_CATS.indexOf(t)>-1});if(isHappinessCat)score=Math.round(score*1.2)}
     var genderApp=(p.gender_applicability||'a')[0].toLowerCase();
     if(genderApp!=='a'&&userSex!=='all'&&genderApp!==(userSex==='F'?'f':'m'))score=-999;
-
     p._score=score;p._tags=tags;
   });
-
   allProducts.sort(function(a,b){return b._score-a._score});
 }
 
@@ -348,21 +353,144 @@ function confScore(p){
 }
 
 /* ═══════════════════════════════════════
-   SESSION FLOW (3 Phases)
+   PERSONAL SHOPPER SESSION FLOW
    ═══════════════════════════════════════ */
 function startSession(){
-  // Remove loading message
   document.getElementById('messages').innerHTML='';
-  var name=nav==='everly'?'Everly':'Brooks';
-  var greeting=(firstName||'Hey')+", I've analyzed your benefits — here's how we deploy your dollars for maximum impact.";
-  if(bal>0)greeting+=' You have <strong>$'+bal.toLocaleString()+' '+acct+'</strong>.';
-  if(hasIns)greeting+=' Insurance is verified.';
+
+  // Phase 0: Greeting + profile recap
+  var greeting=(firstName?firstName:'Hey there')+", welcome to your unlocking session. I'm "+navName+" — think of me as your personal health benefits shopper.";
   addNavBubble(greeting);
 
   setTimeout(function(){
-    addNavBubble("I'm going to walk you through three phases:<br><strong>1. Insurance Unlocks</strong> — products covered at $0<br><strong>2. HSA Optimization</strong> — best use of your tax-free dollars<br><strong>3. Performance Gaps</strong> — high-value products that match your goals<br><br>Let's start with what's free.");
-    setTimeout(function(){runPhase1()},1500);
-  },2000);
+    var recap="Here's what I know about you:";
+    if(bal>0)recap+=' <strong>$'+bal.toLocaleString()+' '+acct+'</strong>.';
+    if(hasIns)recap+=' Insurance verified.';
+    if(userGoals.length){
+      var goalLabels=userGoals.map(function(g){
+        var m=GOAL_MAP[g];return m&&m[0]?m[0]:g;
+      });
+      recap+=' Top goals: <strong>'+goalLabels.join(', ')+'</strong>.';
+    }
+    if(wbEnergy<=5)recap+=' I noticed your energy score is '+wbEnergy+'/10 — I\'ll weight products for that.';
+    recap+=" I've matched <strong>"+allProducts.filter(function(p){return p._score>10}).length+" products</strong> from our catalog to your profile.";
+    addNavBubble(recap);
+
+    // Phone capture (if not already captured)
+    setTimeout(function(){
+      if(!phoneCaptured){
+        showPhoneCapture();
+      } else {
+        addNavBubble("I've got your number on file — I'll text you a summary when we're done. Let's get into it.");
+        setTimeout(function(){showSessionIntro()},1500);
+      }
+    },2000);
+  },2200);
+}
+
+/* ── INLINE PHONE CAPTURE ── */
+function showPhoneCapture(){
+  var html="Before we dive in — want me to text you this session? That way you've got your picks saved on your phone and can reach me anytime.";
+  html+='<div class="phone-capture" id="phoneCapture">';
+  html+='<div class="pc-label"><span>📱</span> Text me your session</div>';
+  html+='<div class="pc-row"><input class="pc-input" id="pcPhone" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend" onclick="submitPhone()">Text me</button></div>';
+  html+='<div class="pc-consent"><input type="checkbox" id="pcChk" checked/><label for="pcChk">I agree to receive texts from Beim Health. Msg & data rates may apply. Reply STOP anytime.</label></div>';
+  html+='<div class="pc-err" id="pcErr">&nbsp;</div>';
+  html+='<button class="pc-skip" onclick="skipPhone()">Skip for now — show me the products</button>';
+  html+='</div>';
+  addNavBubble(html);
+
+  // Auto-format phone as they type
+  setTimeout(function(){
+    var inp=document.getElementById('pcPhone');
+    if(inp){
+      inp.addEventListener('input',function(){
+        var v=this.value.replace(/\D/g,'').substring(0,10);
+        if(v.length>=7)this.value='('+v.substring(0,3)+') '+v.substring(3,6)+'-'+v.substring(6);
+        else if(v.length>=4)this.value='('+v.substring(0,3)+') '+v.substring(3);
+        else if(v.length>0)this.value='('+v;
+        else this.value='';
+      });
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submitPhone()}});
+      inp.focus();
+    }
+  },100);
+}
+
+function formatPhoneE164(raw){
+  var digits=raw.replace(/\D/g,'');
+  if(digits.length===11&&digits[0]==='1')digits=digits.substring(1);
+  if(digits.length!==10)return null;
+  return'+1'+digits;
+}
+
+function submitPhone(){
+  var raw=document.getElementById('pcPhone').value.trim();
+  var agreed=document.getElementById('pcChk').checked;
+  var phone=formatPhoneE164(raw);
+  var errEl=document.getElementById('pcErr');
+  var btn=document.getElementById('pcSend');
+
+  if(!phone){document.getElementById('pcPhone').classList.add('err');errEl.textContent='Enter a valid 10-digit US number';return}
+  if(!agreed){errEl.textContent='Please agree to receive texts';return}
+
+  errEl.textContent='\u00a0';
+  document.getElementById('pcPhone').classList.remove('err');
+  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending…';
+
+  phoneCaptured=true;phoneNumber=phone;
+  sSet('beim_phone',phone);
+
+  if(!TWILIO_LIVE){
+    // Save locally, skip Twilio
+    phoneSuccess();
+    return;
+  }
+
+  // Build plan URL with context
+  var params=new URLSearchParams();
+  params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
+  if(firstName)params.set('first_name',encodeURIComponent(firstName));
+  if(email)params.set('email',encodeURIComponent(email));
+  if(userGoals.length)params.set('goals',userGoals.join(','));
+  var planUrl='https://go.beim.ai/products?'+params.toString();
+  var lid=sGet('beim_lead_id')||null;
+
+  fetch(W_SMS+'/api/twilio/send-plan',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:allProducts.filter(function(p){return p._score>10}).length,plan_url:planUrl,lead_id:lid})
+  }).then(function(r){return r.json()}).then(function(d){
+    if(d.success){phoneSuccess()}
+    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text me';errEl.textContent='Couldn\'t send — '+(d.message||d.error||'try again')}
+  }).catch(function(){
+    // Network error — still save phone locally and proceed
+    phoneSuccess();
+  });
+}
+
+function phoneSuccess(){
+  var capture=document.getElementById('phoneCapture');
+  if(capture){
+    capture.innerHTML='<div class="pc-done"><span>✅</span> Got it — I\'ll text you a summary when we\'re done.</div>';
+  }
+  setTimeout(function(){showSessionIntro()},1500);
+}
+
+function skipPhone(){
+  var capture=document.getElementById('phoneCapture');
+  if(capture)capture.remove();
+  addUserBubble("Skip for now");
+  setTimeout(function(){
+    addNavBubble("No worries — I'll offer again at the end. Let's get into your products.");
+    setTimeout(function(){showSessionIntro()},1200);
+  },600);
+}
+
+/* ── SESSION INTRO → PHASES ── */
+function showSessionIntro(){
+  addNavBubble("I'm going to walk you through three rounds:<br><strong>1. Insurance Unlocks</strong> — products covered at $0<br><strong>2. HSA Optimization</strong> — best use of your tax-free dollars<br><strong>3. Performance Gaps</strong> — high-value picks beyond your goals<br><br>Tap any product to add it to your plan. Ready?");
+  // Auto-continue after a beat
+  setTimeout(function(){runPhase1()},3000);
 }
 
 /* ── PHASE 1: Insurance Unlocks ── */
@@ -370,95 +498,204 @@ function runPhase1(){
   PHASE=1;
   var insProducts=allProducts.filter(function(p){return p._insMatch&&p._score>0});
   if(!insProducts.length){
-    addNavBubble("No insurance-matched products found based on your profile. Let's move to your HSA.");
-    setTimeout(runPhase2,1500);return;
+    addNavBubble("No insurance-matched products found for your profile. Let's move to your HSA.");
+    setTimeout(function(){checkIn(2)},1500);return;
   }
   var show=insProducts.slice(0,6);
   var totalValue=0;show.forEach(function(p){totalValue+=p._price});
   var header='<div class="phase-hdr"><div class="phase-icon ins">🛡️</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 — use insurance, save your HSA</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
-  var intro='These products are <strong>covered by your insurance at $0</strong> based on USPSTF guidelines. That\'s <strong>$'+totalValue.toLocaleString()+' in value</strong> you\'re leaving on the table if you don\'t claim them.';
+  var intro='These are <strong>covered by your insurance at $0</strong> based on USPSTF guidelines. That\'s <strong>$'+totalValue.toLocaleString()+'</strong> in value sitting on the table.';
   var cards=buildProductCards(show);
-  var btn='<button class="action-btn" onclick="advancePhase(2)">Continue to HSA Optimization →</button>';
-
-  navTypeThen(header+intro+cards+btn,null,1800);
+  navTypeThen(header+intro+cards,null,1800,function(){
+    setTimeout(function(){checkIn(2)},2000);
+  });
 }
 
 /* ── PHASE 2: HSA Optimization ── */
 function runPhase2(){
   PHASE=2;
-  
-  
   var remaining=bal-getHsaAllocated();
   var hsaProducts=allProducts.filter(function(p){
     return!p._insMatch&&p._score>0&&p._goalMatch&&p.hsa_fsa_eligible==='Yes'&&p._price<=remaining+100;
   }).slice(0,8);
 
   if(!hsaProducts.length){
-    addNavBubble("No HSA-matched products fit your current budget. Let's check performance gaps.");
-    setTimeout(runPhase3,1500);return;
+    addNavBubble("No HSA-matched products fit your current budget. Let's look at performance gaps.");
+    setTimeout(function(){checkIn(3)},1500);return;
   }
 
   var header='<div class="phase-hdr"><div class="phase-icon hsa">💳</div><div><div class="phase-title">HSA Optimization</div><div class="phase-sub">Deploy tax-free dollars on your top goals</div></div><span class="phase-badge cyan">$'+Math.round(remaining)+' available</span></div>';
   var g1=userGoals[0]?GOAL_MAP[userGoals[0]]:'';
   var g1Label=g1&&g1[0]?g1[0]:'your goals';
-  var intro='These products match <strong>'+g1Label+'</strong> and fit your '+acct+' budget. Every dollar here saves you ~'+Math.round(TAX_RATE*100)+'% in taxes.'+(budgetPref==='premium'?' I\'m showing you fewer, higher-grade options.':budgetPref==='value'?' I\'m maximizing the number of products in your budget.':'');
+  var intro='These match <strong>'+g1Label+'</strong> and fit your '+acct+'. Every dollar here saves you ~'+Math.round(TAX_RATE*100)+'% in taxes.';
   var cards=buildProductCards(hsaProducts);
-  var btn='<button class="action-btn" onclick="advancePhase(3)">Continue to Performance Gaps →</button>';
-
-  navTypeThen(header+intro+cards+btn,null,1800);
+  navTypeThen(header+intro+cards,null,1800,function(){
+    setTimeout(function(){checkIn(3)},2000);
+  });
 }
 
 /* ── PHASE 3: Performance Gaps ── */
 function runPhase3(){
   PHASE=3;
-  
-  
-
   var alreadyShown=new Set();
   allProducts.forEach(function(p){if(p._insMatch||p._goalMatch)alreadyShown.add(p.product_name)});
   var gapProducts=allProducts.filter(function(p){return!alreadyShown.has(p.product_name)&&p._score>10}).slice(0,6);
 
-  if(!gapProducts.length){
-    finishSession();return;
-  }
+  if(!gapProducts.length){checkIn('finish');return}
 
   var header='<div class="phase-hdr"><div class="phase-icon perf">⚡</div><div><div class="phase-title">Performance Gaps</div><div class="phase-sub">High-value products beyond your stated goals</div></div></div>';
-  var intro='These didn\'t match your top 3 goals directly, but they scored high based on clinical grade and your well-being profile.'+(wbEnergy<=5?' Since your energy score was <strong>'+wbEnergy+'/10</strong>, I\'m weighting energy and sleep products higher.':'');
+  var intro='These didn\'t match your top 3 directly, but scored high on clinical grade and your profile.'+(wbEnergy<=5?' Since your energy is <strong>'+wbEnergy+'/10</strong>, I\'m weighting energy and sleep products higher.':'');
   var cards=buildProductCards(gapProducts);
-  var btn='<button class="action-btn" onclick="finishSession()">See My Full Summary →</button>';
-
-  navTypeThen(header+intro+cards+btn,null,1800);
+  navTypeThen(header+intro+cards,null,1800,function(){
+    setTimeout(function(){checkIn('finish')},2000);
+  });
 }
 
-function advancePhase(phase){
+/* ═══════════════════════════════════════
+   CHECK-IN (Personal Shopper Pause)
+   ═══════════════════════════════════════ */
+function checkIn(nextPhase){
+  var n=selectedProducts.length;
+  var msg,btnLabel,btnNext;
+
+  if(nextPhase===2){
+    msg=n>0
+      ? "That's "+n+" product"+(n>1?'s':'')+' so far. Everything look good? Any questions before we move to your HSA picks?'
+      : "Take a look and tap any products you want. When you're ready, we'll move to your HSA optimization.";
+    btnLabel='Show me HSA picks →';
+    btnNext='advanceToPhase(2)';
+  } else if(nextPhase===3){
+    msg=n>0
+      ? n+' product'+(n>1?'s':'')+' in your plan now. How are we doing? Want to adjust anything, or should I show you the performance gaps?'
+      : "No products selected yet — that's okay. Let me show you some high-value picks that might catch your eye.";
+    btnLabel='Show performance gaps →';
+    btnNext='advanceToPhase(3)';
+  } else {
+    msg=n>0
+      ? "That's a wrap on the catalog walk-through. You've got <strong>"+n+" product"+(n>1?'s':'')+"</strong> in your plan. Want to review anything, or are you ready for the intelligence deep-dive?"
+      : "That covers everything I've matched for you. Take a look through and select the products you want — I'm right here if you have questions.";
+    btnLabel='See my summary →';
+    btnNext='finishSession()';
+  }
+
+  var html=msg;
+  html+='<div class="checkin-btns">';
+  html+='<button class="checkin-btn primary" onclick="'+btnNext+'">'+btnLabel+'</button>';
+  html+='<button class="checkin-btn" onclick="askQuestion()">I have a question</button>';
+  html+='</div>';
+  addNavBubble(html);
+}
+
+function advanceToPhase(phase){
   lockBtns();addUserBubble('Continue');
   if(phase===2)runPhase2();else if(phase===3)runPhase3();
 }
 
-function finishSession(){
+function askQuestion(){
   lockBtns();
-  
-  PHASE=4;
+  addNavBubble("Go ahead — ask me about any product, a specific health goal, how LMNs work, or anything else. I'm all yours.");
+  document.getElementById('chatInput').focus();
+}
+
+/* ── FINISH SESSION ── */
+function finishSession(){
+  lockBtns();PHASE=4;
   var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0;
   selectedProducts.forEach(function(p){
     if(p._insMatch)insVal+=p._price;
     else{hsaVal+=p._price;taxSaved+=Math.round(p._price*TAX_RATE)}
   });
   var total=insVal+hsaVal;
-  var summary='<strong>Session complete.</strong> Here\'s your deployment summary:';
+
+  var summary='<strong>Session complete'+(firstName?', '+firstName:'')+'.</strong> Here\'s your deployment summary:';
   summary+='<div style="margin-top:10px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px">';
   summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Insurance unlocked</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+insVal.toLocaleString()+'</span></div>';
   summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">HSA deployed</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--cy)">$'+hsaVal.toLocaleString()+'</span></div>';
   summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Tax savings (~'+Math.round(TAX_RATE*100)+'%)</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+taxSaved.toLocaleString()+'</span></div>';
   summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:700"><span style="color:#fff">Total benefit value</span><span style="font-family:DM Mono,monospace;font-size:16px;color:var(--gn)">$'+(total+taxSaved).toLocaleString()+'</span></div>';
   summary+='</div>';
-  summary+=(n>0?'<div style="margin-top:10px">Hit <strong>Product Intelligence</strong> in the bar below for a clinical deep-dive on each product before checkout.</div>':'<div style="margin-top:10px">Select some products above, then hit Product Intelligence to continue.</div>');
+
+  if(n>0){
+    summary+='<div style="margin-top:10px">Hit <strong>Product Intelligence</strong> in the bar below for a clinical deep-dive on each product before checkout.</div>';
+  } else {
+    summary+='<div style="margin-top:10px">Scroll back up and tap products to add them to your plan, then hit Product Intelligence.</div>';
+  }
   summary+='<div style="margin-top:8px"><button class="action-btn secondary" onclick="goMarketplace()">Browse Full Marketplace →</button></div>';
 
-  navTypeThen(summary,null,2000);
+  navTypeThen(summary,null,2000,function(){
+    // Second phone capture attempt if they skipped
+    if(!phoneCaptured){
+      setTimeout(function(){
+        var reask="One more thing — want me to text you this summary? You'll have a direct line to me for follow-up questions too.";
+        reask+='<div class="phone-capture" id="phoneCapture2">';
+        reask+='<div class="pc-row"><input class="pc-input" id="pcPhone2" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend2" onclick="submitPhoneEnd()">Text my summary</button></div>';
+        reask+='<div class="pc-consent"><input type="checkbox" id="pcChk2" checked/><label for="pcChk2">I agree to receive texts. Reply STOP anytime.</label></div>';
+        reask+='<div class="pc-err" id="pcErr2">&nbsp;</div>';
+        reask+='</div>';
+        addNavBubble(reask);
+        setTimeout(function(){
+          var inp=document.getElementById('pcPhone2');
+          if(inp){
+            inp.addEventListener('input',function(){
+              var v=this.value.replace(/\D/g,'').substring(0,10);
+              if(v.length>=7)this.value='('+v.substring(0,3)+') '+v.substring(3,6)+'-'+v.substring(6);
+              else if(v.length>=4)this.value='('+v.substring(0,3)+') '+v.substring(3);
+              else if(v.length>0)this.value='('+v;
+              else this.value='';
+            });
+          }
+        },100);
+      },2000);
+    }
+  });
+
+  pushToZoho();
 }
 
-/* ── PRODUCT CARD BUILDER ── */
+function submitPhoneEnd(){
+  var raw=document.getElementById('pcPhone2').value.trim();
+  var agreed=document.getElementById('pcChk2').checked;
+  var phone=formatPhoneE164(raw);
+  var errEl=document.getElementById('pcErr2');
+  var btn=document.getElementById('pcSend2');
+
+  if(!phone){errEl.textContent='Enter a valid 10-digit US number';return}
+  if(!agreed){errEl.textContent='Please agree to receive texts';return}
+
+  errEl.textContent='\u00a0';
+  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending…';
+  phoneCaptured=true;phoneNumber=phone;
+  sSet('beim_phone',phone);
+
+  if(!TWILIO_LIVE){
+    var cap=document.getElementById('phoneCapture2');
+    if(cap)cap.innerHTML='<div class="pc-done"><span>✅</span> Saved — I\'ll text you a summary.</div>';
+    return;
+  }
+
+  var params=new URLSearchParams();
+  params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
+  if(firstName)params.set('first_name',encodeURIComponent(firstName));
+  if(email)params.set('email',encodeURIComponent(email));
+  var planUrl='https://go.beim.ai/products?'+params.toString();
+  var lid=sGet('beim_lead_id')||null;
+
+  fetch(W_SMS+'/api/twilio/send-plan',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:selectedProducts.length,plan_url:planUrl,lead_id:lid})
+  }).then(function(r){return r.json()}).then(function(d){
+    var cap=document.getElementById('phoneCapture2');
+    if(d.success){if(cap)cap.innerHTML='<div class="pc-done"><span>✅</span> Sent! Check your phone.</div>'}
+    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text my summary';errEl.textContent=d.message||d.error||'Try again'}
+  }).catch(function(){
+    var cap=document.getElementById('phoneCapture2');
+    if(cap)cap.innerHTML='<div class="pc-done"><span>✅</span> Saved — I\'ll text you.</div>';
+  });
+}
+
+/* ═══════════════════════════════════════
+   PRODUCT CARD BUILDER
+   ═══════════════════════════════════════ */
 function buildProductCards(products){
   if(!products.length)return'';
   var html='<div class="prod-grid">';
@@ -489,13 +726,14 @@ function buildProductCards(products){
   return html;
 }
 
-/* ── SELECTION ── */
+/* ═══════════════════════════════════════
+   SELECTION + TALLY
+   ═══════════════════════════════════════ */
 function toggleProduct(name,card){
   var p=allProducts.find(function(x){return x.product_name===name});if(!p)return;
   var idx=selectedProducts.findIndex(function(s){return s.product_name===name});
   if(idx>-1){selectedProducts.splice(idx,1);if(card)card.classList.remove('selected')}
   else{selectedProducts.push(p);if(card)card.classList.add('selected')}
-  // Sync all cards with same name
   document.querySelectorAll('.prod-card').forEach(function(el){
     var nm=el.querySelector('.prod-name');if(!nm)return;
     el.classList.toggle('selected',selectedProducts.some(function(s){return s.product_name===nm.textContent}));
@@ -519,7 +757,9 @@ function updateTally(){
 function getHsaAllocated(){var t=0;selectedProducts.forEach(function(p){if(!p._insMatch&&p.hsa_fsa_eligible==='Yes')t+=p._price});return t}
 function clearSelections(){selectedProducts=[];document.querySelectorAll('.prod-card.selected').forEach(function(c){c.classList.remove('selected')});updateTally()}
 
-/* ── CHAT ── */
+/* ═══════════════════════════════════════
+   CHAT BUBBLES
+   ═══════════════════════════════════════ */
 function addNavBubble(html){
   chatHistory.push({role:'nav',text:html});chatLog.push({t:Date.now(),r:'nav',m:html.replace(/<[^>]+>/g,'')});
   var img=AVATARS[nav]||AVATARS.brooks,cls=nav==='everly'?'ev':'br';
@@ -542,8 +782,9 @@ function showTyping(){
 function removeTyping(){var el=document.getElementById('typingMsg');if(el)el.remove()}
 function scrollToBottom(){var c=document.getElementById('messages');setTimeout(function(){c.scrollTop=c.scrollHeight},60)}
 function navTypeThen(html,extra,delay,cb){showTyping();setTimeout(function(){removeTyping();addNavBubble(html+(extra||''));if(cb)cb()},delay||1200)}
-function lockBtns(){document.querySelectorAll('.action-btn:not(.locked)').forEach(function(b){b.classList.add('locked');b.disabled=true})}
+function lockBtns(){document.querySelectorAll('.checkin-btn:not(.locked),.action-btn:not(.locked)').forEach(function(b){b.classList.add('locked');b.disabled=true;b.style.pointerEvents='none';b.style.opacity='.35'})}
 
+/* ── FREE TEXT CHAT ── */
 function sendFreeText(){
   var input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;input.value='';
   addUserBubble(text);showTyping();
@@ -553,7 +794,9 @@ function sendFreeText(){
   .catch(function(){removeTyping();addNavBubble('I hit a snag — try again.')});
 }
 
-/* ── NAVIGATION ── */
+/* ═══════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════ */
 function goToIntelligence(){
   if(!selectedProducts.length)return;
   var prods=selectedProducts.map(function(p){return{name:p.product_name||'',price:p._price||0,grade:(p.grade||'B').trim(),lmn:p.requires_medical_necessity==='Yes',order:(p.physician_order_required||'').toLowerCase()==='yes',hsa:p.hsa_fsa_eligible==='Yes',insured:p._insMatch||false,pool:(p.community_pool||'').toUpperCase()==='TRUE',brand:p.brand||'',cat:p.category||'',hl:p.d2c_headline||'',goals:p.goal_tags||'',conds:p.conditions||'',stripe_connect_id:p.stripe_connect_id||'',platform_fee_pct:p.platform_fee_pct||'',provider_name:p.provider_name||'',conf:p.doctor_confidence||''}});
@@ -583,12 +826,8 @@ function pushToZoho(){
   var totalValue=0;selectedProducts.forEach(function(p){totalValue+=p._price});
   var payload={first_name:firstName,last_name:lastName,employer:employer,navigator:nav,source:'unlocking_session',page:'products',acct_type:acct,balance:bal,chat_transcript:tx,products_selected:prods,products_count:selectedProducts.length,rescue_plan_value:totalValue};
   if(email)payload.email=email;if(lid)payload.lead_id=lid;
-  // Include stripe connect data for selected products
-  selectedProducts.forEach(function(p,i){
-    if(p.stripe_connect_id)payload['product_'+i+'_connect']=p.stripe_connect_id;
-    if(p.platform_fee_pct)payload['product_'+i+'_fee']=p.platform_fee_pct;
-  });
-  try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)try{sessionStorage.setItem('beim_lead_id',d.lead_id)}catch(e){}}).catch(function(){})}catch(e){}
+  if(phoneNumber)payload.phone=phoneNumber;
+  try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)sSet('beim_lead_id',d.lead_id)}).catch(function(){})}catch(e){}
 }
 </script>
 </body>
