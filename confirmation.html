@@ -19,8 +19,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .noise{position:fixed;inset:0;z-index:0;opacity:.014;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
 
 .chat-app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:720px;margin:0 auto;width:100%}
-
-/* ── HEADER ── */
 .chat-header{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;backdrop-filter:blur(20px);background:rgba(6,6,16,.88)}
 .ch-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0}
 .ch-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
@@ -31,7 +29,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .step-indicator{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .step-dot{width:28px;height:4px;border-radius:4px;background:var(--gn)}
 
-/* ── MESSAGES ── */
 .messages{flex:1;overflow-y:auto;padding:20px 24px 40px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
 .messages::-webkit-scrollbar{width:4px}
 .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:4px}
@@ -52,7 +49,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .typing-dots span:nth-child(3){animation-delay:.3s}
 @keyframes dotP{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
 
-/* ── CONFIRMATION CARD ── */
 .conf-card{margin-top:10px;padding:16px;background:rgba(61,217,182,.04);border:1px solid rgba(61,217,182,.15);border-radius:16px}
 .conf-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .conf-ring{width:42px;height:42px;border-radius:50%;background:rgba(61,217,182,.1);border:2px solid rgba(61,217,182,.3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;animation:ringPulse 2s ease infinite}
@@ -66,7 +62,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .conf-val{font-family:'DM Mono',monospace;font-weight:600}
 .conf-val.green{color:var(--gn)}.conf-val.gold{color:var(--gd)}.conf-val.cyan{color:var(--cy)}
 
-/* ── FULFILLMENT ITEMS ── */
 .ful-item{margin-top:8px;padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;display:flex;align-items:flex-start;gap:10px}
 .ful-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .ful-icon.ship{background:rgba(110,224,245,.08);border:1px solid rgba(110,224,245,.15)}
@@ -85,7 +80,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ful-action.portal{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
 .ful-action.portal:hover{background:rgba(110,224,245,.1)}
 
-/* ── CTA BUTTONS ── */
+/* Home base card */
+.home-base{margin-top:14px;padding:16px;background:rgba(124,106,240,.04);border:1px solid rgba(124,106,240,.12);border-radius:16px}
+.home-base-title{font-size:13px;font-weight:800;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.home-base-title span{font-size:16px}
+.hb-channels{display:flex;flex-direction:column;gap:8px}
+.hb-channel{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px}
+.hb-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.hb-icon.sms{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.15)}
+.hb-icon.portal{background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.15)}
+.hb-text{flex:1;font-size:11px;color:var(--mu);line-height:1.5}
+.hb-text strong{color:var(--tx);display:block;margin-bottom:1px;font-size:12px}
+
 .cta-group{display:flex;flex-direction:column;gap:8px;margin-top:14px}
 .cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:all .25s var(--ease);text-align:center}
 .cta-btn.primary{background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff}
@@ -93,7 +99,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .cta-btn.secondary{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu)}
 .cta-btn.secondary:hover{background:rgba(255,255,255,.08);color:var(--tx)}
 
-/* ── INPUT BAR ── */
 .input-bar{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,6,16,.92);backdrop-filter:blur(20px);padding:4px 8px}
 .input-field{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:14px 16px}
 .input-field::placeholder{color:var(--dm)}
@@ -108,10 +113,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 <div class="chat-app">
   <div class="chat-header">
     <div class="ch-avatar" id="headerAvatar"></div>
-    <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status" id="headerStatus">Order Confirmed</div></div>
-    <div class="step-indicator">
-      <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
-    </div>
+    <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status">Order Confirmed ✓</div></div>
+    <div class="step-indicator"><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
   </div>
   <div class="messages" id="messages"></div>
   <div class="input-bar">
@@ -123,6 +126,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 <script>
 var W='https://beim-health-analyzer.steven-03f.workers.dev';
 var W_SMS='https://beim-webhooks.steven-03f.workers.dev';
+var PORTAL_URL='https://beta.joinfreely.com/beim-patient-portal';
+var INTAKE_URL='https://beta.joinfreely.com/beim-ai-health-intake';
 var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
 
 var nav,navName,firstName='',email='',phone='',order=null,chatHistory=[];
@@ -144,7 +149,7 @@ window.addEventListener('DOMContentLoaded',function(){
   document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendFreeText()}});
 
   if(!order||!order.products||!order.products.length){
-    addNavBubble("I don't see an order on file. Head back to the <a href='products.html' style='color:var(--cy)'>products page</a> to get started.");
+    addNavBubble("I don't see an order on file. Head to your <a href='"+PORTAL_URL+"' style='color:var(--cy)'>portal</a> to check your account, or text me anytime.");
     return;
   }
   startConfirmation();
@@ -154,22 +159,24 @@ function startConfirmation(){
   var name=firstName||'there';
   var t=order.totals||{};
   var prodCount=order.products.length;
+  var prodNames=order.products.slice(0,3).map(function(p){return p.name}).join(', ');
+  if(prodCount>3)prodNames+=' + '+(prodCount-3)+' more';
 
-  // 1. Celebration message
-  addNavBubble("🎉 <strong>"+name+", your order is confirmed!</strong> Everything went through perfectly. Let me walk you through what happens next.");
+  // 1. Warm celebration
+  addNavBubble(name+", you're all set! Order <strong>#"+esc(order.orderNum||'')+"</strong> is confirmed. Let me walk you through what happens from here.");
 
   // 2. Order summary card
   setTimeout(function(){
-    var card='<div class="conf-card"><div class="conf-header"><div class="conf-ring">✓</div><div><div class="conf-title">Order #'+esc(order.orderNum||'')+'</div><div class="conf-sub">'+new Date(order.ts||Date.now()).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'</div></div></div><div class="conf-rows">';
-    card+='<div class="conf-row"><span class="conf-key">Products</span><span class="conf-val">'+prodCount+'</span></div>';
+    var card='<div class="conf-card"><div class="conf-header"><div class="conf-ring">✓</div><div><div class="conf-title">Order #'+esc(order.orderNum||'')+'</div><div class="conf-sub">'+new Date(order.ts||Date.now()).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})+'</div></div></div><div class="conf-rows">';
+    card+='<div class="conf-row"><span class="conf-key">Products</span><span class="conf-val">'+prodCount+' — '+esc(prodNames)+'</span></div>';
     if(t.hsaCov>0)card+='<div class="conf-row"><span class="conf-key">'+(order.acctType||'HSA')+' Charged</span><span class="conf-val green">$'+(t.hsaCov||0).toFixed(2)+'</span></div>';
     if(t.oop>0)card+='<div class="conf-row"><span class="conf-key">Out of Pocket</span><span class="conf-val gold">$'+(t.oop||0).toFixed(2)+'</span></div>';
-    if(order.coupon)card+='<div class="conf-row"><span class="conf-key">Promo</span><span class="conf-val cyan">'+esc(order.coupon)+'</span></div>';
+    if(t.oop<=0&&t.hsaCov>0)card+='<div class="conf-row"><span class="conf-key">Out of Pocket</span><span class="conf-val green">$0 — fully covered</span></div>';
+    if(order.coupon)card+='<div class="conf-row"><span class="conf-key">Promo</span><span class="conf-val cyan">'+esc(order.coupon)+' applied</span></div>';
     card+='<div class="conf-row"><span class="conf-key">Receipt</span><span class="conf-val">Sent to '+esc(email||'your email')+'</span></div>';
     card+='</div></div>';
     addNavBubble(card);
 
-    // 3. Fulfillment walkthrough
     setTimeout(function(){showFulfillmentSteps()},2000);
   },2200);
 }
@@ -187,106 +194,129 @@ function showFulfillmentSteps(){
     else physical.push(p);
   });
 
-  var hasMultipleTypes=(physical.length>0)+(digitalAccess.length>0)+(digitalDownload.length>0)+(hybrid.length>0)>1;
-  var intro="Here's what's happening with each of your products:";
+  var intro="Here's what's happening with each product:";
   var items='';
 
-  // Physical products
   physical.forEach(function(p){
-    items+='<div class="ful-item"><div class="ful-icon ship">📦</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Shipping</strong> — Your order has been placed with the provider. You\'ll receive tracking info via email within 1-3 business days.'+(p.provider_name?' Shipped by '+esc(p.provider_name)+'.':'')+'</div></div></div>';
+    items+='<div class="ful-item"><div class="ful-icon ship">📦</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Ships to you</strong> — Tracking info will hit your email within 1-3 business days.'+(p.provider_name?' Fulfilled by '+esc(p.provider_name)+'.':'')+'</div></div></div>';
   });
 
-  // Digital access
   digitalAccess.forEach(function(p){
     var url=p.fulfillment_url||'';
     var instr=p.fulfillment_instructions||'Check your email for activation details.';
-    items+='<div class="ful-item"><div class="ful-icon digital">🔗</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Digital Access</strong> — '+esc(instr)+'</div>'+(url?'<a href="'+esc(url)+'" target="_blank" class="ful-action access">🔗 Access Now →</a>':'')+'</div></div>';
+    items+='<div class="ful-item"><div class="ful-icon digital">🔗</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Ready now</strong> — '+esc(instr)+'</div>'+(url?'<a href="'+esc(url)+'" target="_blank" class="ful-action access">Open '+esc(p.name)+' →</a>':'')+'</div></div>';
   });
 
-  // Digital downloads
   digitalDownload.forEach(function(p){
     var url=p.fulfillment_url||'';
     var instr=p.fulfillment_instructions||'Your download is ready.';
-    items+='<div class="ful-item"><div class="ful-icon download">📄</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Download</strong> — '+esc(instr)+'</div>'+(url?'<a href="'+esc(url)+'" target="_blank" class="ful-action download">📥 Download Now →</a>':'')+'</div></div>';
+    items+='<div class="ful-item"><div class="ful-icon download">📄</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Download ready</strong> — '+esc(instr)+'</div>'+(url?'<a href="'+esc(url)+'" target="_blank" class="ful-action download">Download now →</a>':'')+'</div></div>';
   });
 
-  // Hybrid
   hybrid.forEach(function(p){
-    var instr=p.fulfillment_instructions||'Kit ships to you. Results delivered digitally.';
-    items+='<div class="ful-item"><div class="ful-icon ship">🧪</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Kit + Digital</strong> — '+esc(instr)+'</div></div></div>';
+    var instr=p.fulfillment_instructions||'Kit ships to you, results delivered digitally.';
+    items+='<div class="ful-item"><div class="ful-icon ship">🧪</div><div class="ful-body"><div class="ful-name">'+esc(p.name)+'</div><div class="ful-status"><strong>Kit + Digital Results</strong> — '+esc(instr)+'</div></div></div>';
   });
 
-  addNavBubble(intro+items);
+  if(items)addNavBubble(intro+items);
 
-  // 4. LMN status
+  // LMN section
   if(lmnProducts.length>0){
     setTimeout(function(){
       var lmnPath=order.lmnPath||'beim';
       var lmnMsg='';
       if(lmnPath==='beim'){
-        lmnMsg='<div class="ful-item"><div class="ful-icon lmn">🩺</div><div class="ful-body"><div class="ful-name">Letter of Medical Necessity</div><div class="ful-status"><strong>'+lmnProducts.length+' product'+(lmnProducts.length>1?'s':'')+' need an LMN.</strong> A Beim network physician will review and sign within ~4 hours. You\'ll need to complete a short health intake — takes about 90 seconds.</div><a href="https://go.beim.ai/portal" class="ful-action portal">📋 Complete Health Intake →</a></div></div>';
+        var lmnNames=lmnProducts.map(function(p){return p.name}).join(', ');
+        lmnMsg='<div class="ful-item"><div class="ful-icon lmn">🩺</div><div class="ful-body"><div class="ful-name">Health Intake Needed</div><div class="ful-status"><strong>'+lmnProducts.length+' product'+(lmnProducts.length>1?'s':'')+' need a physician sign-off</strong> ('+esc(lmnNames)+'). Quick health intake — takes about 90 seconds. A Beim physician reviews and signs within ~4 hours.</div><a href="'+INTAKE_URL+'" class="ful-action portal">Complete Health Intake (90 sec) →</a></div></div>';
       } else if(lmnPath==='own'){
-        lmnMsg='<div class="ful-item"><div class="ful-icon lmn">🩺</div><div class="ful-body"><div class="ful-name">Letter of Medical Necessity</div><div class="ful-status"><strong>Your pre-filled LMN is ready.</strong> Download it, have your doctor review and sign, then submit to your HSA administrator.</div><a href="#" onclick="generateLmnTemplate();return false" class="ful-action download">📄 Download LMN Template</a></div></div>';
+        lmnMsg='<div class="ful-item"><div class="ful-icon lmn">🩺</div><div class="ful-body"><div class="ful-name">LMN Template Ready</div><div class="ful-status"><strong>Your pre-filled letter is ready to download.</strong> Have your doctor review and sign, then submit to your HSA administrator.</div><a href="#" onclick="generateLmnTemplate();return false" class="ful-action download">Download LMN Template →</a></div></div>';
       } else {
-        lmnMsg='<div class="ful-item"><div class="ful-icon lmn">🩺</div><div class="ful-body"><div class="ful-name">Letter of Medical Necessity</div><div class="ful-status"><strong>You indicated you have an LMN.</strong> Make sure it\'s on file with your HSA administrator to ensure reimbursement.</div></div></div>';
+        lmnMsg='<div class="ful-item"><div class="ful-icon lmn">🩺</div><div class="ful-body"><div class="ful-name">LMN on File</div><div class="ful-status">Make sure your existing LMN is submitted to your HSA administrator for reimbursement.</div></div></div>';
       }
       addNavBubble(lmnMsg);
-      setTimeout(function(){showClosingMessage()},2000);
+      setTimeout(function(){showHomeBase()},2000);
     },2500);
   } else {
-    setTimeout(function(){showClosingMessage()},2500);
+    setTimeout(function(){showHomeBase()},2500);
   }
 }
 
-function showClosingMessage(){
+function showHomeBase(){
+  var name=firstName||'';
   var hasPhone=!!phone;
-  var msg="That's everything, "+(firstName||'friend')+". ";
+
+  // "Your home base" card — reinforcing portal + SMS as the ongoing relationship
+  var msg="That covers everything for this order"+(name?', '+name:'')+". Going forward, here's how to reach me:";
+  msg+='<div class="home-base"><div class="home-base-title"><span>🏠</span> Your Home Base</div><div class="hb-channels">';
 
   if(hasPhone){
-    msg+="I've texted you a confirmation too, so you've got everything on your phone. Remember — <strong>you can text me anytime</strong> with questions about your products, shipping, LMNs, or your HSA. I'm always here.";
-  } else {
-    msg+="Your receipt and any tracking info will come to <strong>"+esc(email||'your email')+"</strong>.";
+    msg+='<div class="hb-channel"><div class="hb-icon sms">💬</div><div class="hb-text"><strong>Text me anytime</strong>Questions about products, shipping, your HSA, or anything health-related — just text this number. I\'m always here.</div></div>';
   }
 
-  var ctas='<div class="cta-group">';
+  msg+='<div class="hb-channel"><div class="hb-icon portal">📋</div><div class="hb-text"><strong>Your Portal</strong>Track orders, view your products, manage LMNs, and download receipts — all in one place.</div></div>';
+  msg+='</div></div>';
+
   var hasLmn=order.products.some(function(p){return p.lmn});
+  var ctas='<div class="cta-group">';
   if(hasLmn&&(order.lmnPath||'beim')==='beim'){
-    ctas+='<a href="https://go.beim.ai/portal" class="cta-btn primary">📋 Complete Health Intake (90 sec) →</a>';
+    ctas+='<a href="'+INTAKE_URL+'" class="cta-btn primary">🩺 Complete Health Intake (90 sec) →</a>';
+    ctas+='<a href="'+PORTAL_URL+'" class="cta-btn secondary">📋 Go to Your Portal</a>';
+  } else {
+    ctas+='<a href="'+PORTAL_URL+'" class="cta-btn primary">📋 Go to Your Portal</a>';
   }
-  ctas+='<a href="https://go.beim.ai/marketplace" class="cta-btn secondary">🛒 Browse More Products</a>';
-  ctas+='<a href="https://go.beim.ai/start" class="cta-btn secondary">🔄 Start a New Session</a>';
   ctas+='</div>';
 
   addNavBubble(msg+ctas);
 
-  // Send confirmation SMS if phone captured
+  // Send contextual post-purchase SMS
   if(hasPhone){
-    sendConfirmationSMS();
+    sendPostPurchaseSMS();
   }
 }
 
-/* ── SMS CONFIRMATION ── */
-function sendConfirmationSMS(){
+/* ═══════════════════════════════════════
+   POST-PURCHASE SMS (contextual, not template)
+   ═══════════════════════════════════════ */
+function sendPostPurchaseSMS(){
   var t=order.totals||{};
-  var prodNames=order.products.map(function(p){return p.name}).slice(0,3).join(', ');
-  if(order.products.length>3)prodNames+=' + '+(order.products.length-3)+' more';
+  var prodNames=order.products.slice(0,2).map(function(p){return p.name}).join(' and ');
+  if(order.products.length>2)prodNames+=' + '+(order.products.length-2)+' more';
+  var hasLmn=order.products.some(function(p){return p.lmn});
 
-  // The Stripe webhook in beim-webhooks already sends an SMS on payment_intent.succeeded,
-  // but we send a softer navigator-style follow-up here
+  // Build a conversational, contextual message — not the rescue plan template
+  var smsBody=firstName?firstName+', ':'';
+  smsBody+='order #'+(order.orderNum||'')+' is confirmed! ';
+  smsBody+=prodNames+'. ';
+
+  if(t.hsaCov>0&&t.oop<=0){
+    smsBody+='Your '+( order.acctType||'HSA')+' covered everything — $0 out of pocket. ';
+  } else if(t.hsaCov>0){
+    smsBody+='$'+t.hsaCov.toFixed(0)+' from your '+(order.acctType||'HSA')+', $'+t.oop.toFixed(0)+' out of pocket. ';
+  }
+
+  if(hasLmn&&(order.lmnPath||'beim')==='beim'){
+    smsBody+='\n\nNext step: quick health intake so a physician can sign off on your LMN.\n'+INTAKE_URL;
+  } else {
+    smsBody+='\n\nTrack everything in your portal:\n'+PORTAL_URL;
+  }
+
+  smsBody+='\n\nText me anytime with questions.';
+
+  // Use the existing conversation (don't create a new one)
   var lid=sGet('beim_lead_id')||null;
-  var planUrl='https://go.beim.ai/portal';
-
   fetch(W_SMS+'/api/twilio/send-plan',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
       phone:phone,first_name:firstName,navigator:nav,
       product_count:order.products.length,
-      plan_url:planUrl,lead_id:lid
+      plan_url:PORTAL_URL,lead_id:lid,
+      // Pass custom message body — Worker will use this if provided
+      custom_message:smsBody
     })
   }).catch(function(){/* non-critical */});
 }
 
-/* ── LMN TEMPLATE (same as checkout) ── */
+/* ── LMN TEMPLATE ── */
 function generateLmnTemplate(){
   var prods=(order.products||[]).filter(function(p){return p.lmn});
   var fn=firstName||'[Name]',ln=sGet('beim_last_name')||'';
@@ -322,12 +352,12 @@ function sendFreeText(){
   c.appendChild(d);scrollToBottom();
   showTyping();
 
-  var prodList=(order.products||[]).map(function(p){return p.name+' ($'+p.price+', '+p.grade+')'}).join(', ');
+  var prodList=(order.products||[]).map(function(p){return p.name+' ($'+p.price+')'}).join(', ');
   fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
     message:text,history:chatHistory.slice(-6),navigator:nav,
     context:{page:'checkout',balance:order.balance||0,acctType:order.acctType||'HSA',firstName:firstName,selectedProducts:prodList}
-  })}).then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'Ask me anything about your order.')})
-  .catch(function(){removeTyping();addNavBubble('I hit a snag — try again.')});
+  })}).then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'Anything else I can help with?')})
+  .catch(function(){removeTyping();addNavBubble('I hit a snag — try again or just text me.')});
 }
 </script>
 </body>
