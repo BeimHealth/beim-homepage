@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms of Service — Beim Health</title>
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f0f1a;--bg-card:#1a1a2e;--bg-elev:#22223a;--border:rgba(255,255,255,0.07);--cyan:#6ee0f5;--purple:#6454f0;--blue:#6aa3f3;--cyan-dim:rgba(110,224,245,0.10);--purple-dim:rgba(100,84,240,0.12);--border-c:rgba(110,224,245,0.22);--border-p:rgba(100,84,240,0.30);--green:#3dd9b6;--green-dim:rgba(61,217,182,0.10);--gold:#f59e0b;--text:#f0f0ff;--muted:#8a8da8;--dim:#5a5d78;--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Atmosphere */
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(100,84,240,0.10),transparent 70%);top:-20%;left:-12%}
+.orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(110,224,245,0.06),transparent 70%);bottom:-8%;right:-8%}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 100%);pointer-events:none;z-index:0}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 40px;height:64px;background:rgba(15,15,26,0.90);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:8px;list-style:none;align-items:center;margin-left:auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:8px 14px;border-radius:8px;transition:color 0.2s,background 0.2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.nav-cta{background:linear-gradient(135deg,var(--purple),var(--blue))!important;color:#fff!important;font-weight:700!important;padding:10px 18px!important;border-radius:10px;font-size:14px!important;transition:box-shadow 0.2s,transform 0.15s!important}
+.nav-cta:hover{box-shadow:0 0 24px rgba(100,84,240,0.5)!important;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;z-index:1000}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px;transition:all 0.3s}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:20px 24px;z-index:899}
+.mobile-menu a{display:block;color:var(--muted);text-decoration:none;font-size:16px;font-weight:500;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.mobile-menu a:last-child{border:none}
+.mobile-menu a:hover{color:var(--text)}
+.mobile-menu .nav-cta-m{display:inline-flex;margin-top:12px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:700;padding:12px 24px;border-radius:10px;font-size:14px;text-decoration:none}
+
+/* Shared */
+.grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ═══════════════════ LEGAL PAGE HEADER ═══════════════════ */
+.legal-hero{position:relative;z-index:1;padding:140px 48px 48px;text-align:center}
+.legal-badge{display:inline-flex;align-items:center;gap:8px;background:var(--purple-dim);border:1px solid var(--border-p);color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:24px}
+.legal-hero h1{font-size:clamp(36px,4.5vw,56px);font-weight:800;line-height:1.08;letter-spacing:-2px;color:#fff;margin-bottom:12px}
+.legal-date{font-family:'DM Mono',monospace;font-size:13px;color:var(--dim);letter-spacing:0.5px}
+
+/* ═══════════════════ LEGAL CONTENT ═══════════════════ */
+.legal-wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 48px 96px}
+
+/* Intro callout */
+.legal-intro{background:rgba(26,26,46,0.6);border:1px solid rgba(110,224,245,0.12);border-left:3px solid var(--cyan);border-radius:0 16px 16px 0;padding:28px 32px;margin-bottom:56px}
+.legal-intro p{font-size:15px;color:rgba(240,240,255,0.65);line-height:1.75;margin-bottom:14px}
+.legal-intro p:last-child{margin-bottom:0}
+.legal-intro strong{color:var(--text);font-weight:600}
+
+/* Section headings */
+.legal-wrap h2{font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.3px;margin-top:56px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.legal-wrap h2 .s-num{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--cyan);background:var(--cyan-dim);border:1px solid rgba(110,224,245,0.15);padding:3px 10px;border-radius:6px;flex-shrink:0}
+
+/* Body text */
+.legal-wrap p{font-size:15px;color:rgba(240,240,255,0.60);line-height:1.8;margin-bottom:18px}
+.legal-wrap p strong{color:var(--cyan);font-weight:700}
+.legal-wrap p em{color:rgba(240,240,255,0.50);font-style:italic}
+
+/* Lists */
+.legal-wrap ul{list-style:none;margin:16px 0 20px 0;padding:0}
+.legal-wrap ul li{position:relative;padding-left:20px;margin-bottom:12px;font-size:14px;color:rgba(240,240,255,0.58);line-height:1.7}
+.legal-wrap ul li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--cyan);opacity:0.5}
+
+/* Highlight callout boxes */
+.legal-callout{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin:20px 0 24px}
+.legal-callout p{margin-bottom:12px}
+.legal-callout p:last-child{margin-bottom:0}
+.legal-callout p strong{color:var(--purple)}
+.legal-callout ul li::before{background:var(--purple)}
+
+/* Links */
+.legal-wrap a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(110,224,245,0.2);transition:border-color 0.2s}
+.legal-wrap a:hover{border-bottom-color:var(--cyan)}
+
+/* Contact card */
+.legal-contact{background:linear-gradient(135deg,rgba(100,84,240,0.12),rgba(110,224,245,0.08));border:1px solid rgba(100,84,240,0.20);border-radius:20px;padding:36px;text-align:center;margin-top:64px}
+.legal-contact-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:16px}
+.legal-contact p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:6px}
+.legal-contact a{color:var(--cyan);border-bottom:none;font-weight:600}
+.legal-contact a:hover{border-bottom:1px solid var(--cyan)}
+
+/* ═══════════════════ TABLE OF CONTENTS ═══════════════════ */
+.legal-toc{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin-bottom:48px}
+.legal-toc-title{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.legal-toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}
+.legal-toc a{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);text-decoration:none;padding:6px 0;border-bottom:none;transition:color 0.2s}
+.legal-toc a:hover{color:var(--cyan)}
+.legal-toc a .toc-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);min-width:20px}
+
+/* ═══════════════════ FOOTER ═══════════════════ */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:rgba(15,15,26,0.95)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 48px 48px}
+.footer-brand-logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:block;margin-bottom:14px}
+.footer-tagline{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:280px}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;text-decoration:none;transition:box-shadow 0.2s,transform 0.2s}
+.footer-cta-btn:hover{box-shadow:0 8px 24px rgba(100,84,240,0.4);transform:translateY(-1px)}
+.footer-socials{display:flex;gap:10px;margin-top:20px;align-items:center}
+.footer-social-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);transition:border-color 0.2s,background 0.2s,transform 0.2s;overflow:hidden}
+.footer-social-link:hover{border-color:var(--border-c);background:rgba(110,224,245,0.06);transform:translateY(-2px)}
+.footer-social-link img{width:20px;height:20px;object-fit:contain;border-radius:3px;opacity:0.7;transition:opacity 0.2s}
+.footer-social-link:hover img{opacity:1}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.footer-links-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links-list a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-links-list a:hover{color:var(--text)}
+.footer-contact-item{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.footer-contact-item a{color:var(--muted);text-decoration:none}
+.footer-contact-item a:hover{color:var(--cyan)}
+.footer-bottom{padding:20px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:var(--dim)}
+.footer-legal-links{display:flex;gap:20px}
+.footer-legal-links a{font-size:12px;color:var(--dim);text-decoration:none;transition:color 0.2s}
+.footer-legal-links a:hover{color:var(--muted)}
+
+/* ═══════════════════ RESPONSIVE ═══════════════════ */
+@media(max-width:1100px){
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .legal-hero{padding:120px 24px 36px}
+  .legal-wrap{padding:0 24px 60px}
+  .legal-toc-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;padding:40px 24px 32px;gap:32px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;padding:16px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div><div class="orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <a href="https://www.beim.ai/" class="nav-logo">Beim Health</a>
+  <ul class="nav-links">
+    <li><a href="https://www.beim.ai/#features">Features</a></li>
+    <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+    <li><a href="https://go.beim.ai/marketplace">Marketplace</a></li>
+    <li><a href="https://www.beim.ai/about">About</a></li>
+    <li><a href="https://go.beim.ai/start" class="nav-cta">Unlock My Products →</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').style.display=document.getElementById('mobileMenu').style.display==='block'?'none':'block'" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://www.beim.ai/#features">Features</a>
+  <a href="https://www.beim.ai/#how">How It Works</a>
+  <a href="https://go.beim.ai/marketplace">Marketplace</a>
+  <a href="https://www.beim.ai/about">About</a>
+  <a href="https://go.beim.ai/start" class="nav-cta-m">Unlock My Products →</a>
+</div>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<section class="legal-hero">
+  <span class="legal-badge">Legal</span>
+  <h1>Terms of <span class="grad">Service</span></h1>
+  <div class="legal-date">Effective Date: September 16, 2025</div>
+</section>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<div class="legal-wrap">
+
+  <div class="legal-intro">
+    <p>These Terms of Service ("Terms") govern your access to and use of the websites, applications, chatbots, AI assistants, membership programs, and related services operated by <strong>Beim Health, LLC</strong> ("Beim Health," "we," "our," or "us"). By accessing or using our services, you agree to be bound by these Terms. If you do not agree, you must not use our services.</p>
+    <p>By <strong>clicking "I Agree," checking the acceptance box, or otherwise using our services</strong>, you acknowledge that you have read, understood, and agreed to be bound by these Terms and all disclaimers contained within.</p>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="legal-toc">
+    <div class="legal-toc-title">Table of Contents</div>
+    <div class="legal-toc-grid">
+      <a href="#s1"><span class="toc-num">01</span> Nature of the Platform</a>
+      <a href="#s8"><span class="toc-num">08</span> Product &amp; Service Warranties</a>
+      <a href="#s2"><span class="toc-num">02</span> No Medical Advice</a>
+      <a href="#s9"><span class="toc-num">09</span> Indemnification</a>
+      <a href="#s3"><span class="toc-num">03</span> Not HIPAA-Compliant</a>
+      <a href="#s10"><span class="toc-num">10</span> Privacy &amp; Data Protection</a>
+      <a href="#s4"><span class="toc-num">04</span> Marketplace &amp; Provider Network</a>
+      <a href="#s11"><span class="toc-num">11</span> Governing Law &amp; Disputes</a>
+      <a href="#s5"><span class="toc-num">05</span> Membership Terms</a>
+      <a href="#s12"><span class="toc-num">12</span> Modifications to Terms</a>
+      <a href="#s6"><span class="toc-num">06</span> Limitation of Liability</a>
+      <a href="#s13"><span class="toc-num">13</span> Severability &amp; Entire Agreement</a>
+      <a href="#s7"><span class="toc-num">07</span> User Responsibilities</a>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <h2 id="s1"><span class="s-num">01</span> Nature of the Platform</h2>
+  <p>Beim Health operates as a <strong>membership-based platform</strong> that provides access to <strong>AI-powered assistants</strong> and a marketplace of curated products and services. Many of these products and services are <strong>clinician-vetted</strong> to help ensure safety and quality. Membership may be <strong>free or paid</strong>, and members may receive access to discounted prices on certain products or services. Beim Health is not a medical provider and does not itself deliver healthcare services.</p>
+
+  <!-- Section 2 -->
+  <h2 id="s2"><span class="s-num">02</span> No Medical Advice</h2>
+  <p>Our AI assistants and chatbots are for <strong>informational and educational purposes only</strong>. The content they provide does <strong>not constitute medical advice, diagnosis, or treatment</strong>. Always consult a licensed healthcare provider for medical advice and decisions.</p>
+
+  <!-- Section 3 -->
+  <h2 id="s3"><span class="s-num">03</span> Not HIPAA-Compliant</h2>
+  <p>Our chatbots and AI assistants are <strong>not HIPAA compliant</strong>. Do not share personal health information (PHI) or sensitive data through these tools. Any information you provide is submitted at your own risk.</p>
+
+  <!-- Section 4 -->
+  <h2 id="s4"><span class="s-num">04</span> Marketplace &amp; Provider Network</h2>
+  <p>Beim Health facilitates access to products and services but does not itself provide them. Some products and services may require a <strong>physician order</strong>. These orders may be included in the purchase, or provided separately by an independent licensed physician. Such medical services are offered through independent providers within the <strong>Freely Health Network</strong>, not by Beim Health. Beim Health does not supervise or control these providers, and their services remain their sole responsibility. Information about the ordering provider will be made available when required.</p>
+
+  <!-- Section 5 -->
+  <h2 id="s5"><span class="s-num">05</span> Membership Terms</h2>
+  <p>By joining Beim Health, you become part of a <strong>private membership community</strong>. Membership may include free or paid tiers, with benefits such as access to discounted pricing on select products and services.</p>
+
+  <div class="legal-callout">
+    <p><strong>Cancellation and Refunds:</strong></p>
+    <ul>
+      <li>You may cancel your membership at any time through your account settings or by contacting customer support.</li>
+      <li>For paid memberships, you may receive a pro-rated refund for unused time if you cancel within the first 30 days.</li>
+      <li>After 30 days, no refunds will be issued for membership fees, but you will retain access through the end of your current billing period.</li>
+      <li>Product purchases may be eligible for refund within 30 days if unopened and unused, subject to verification.</li>
+      <li>Services that have been rendered are non-refundable.</li>
+    </ul>
+  </div>
+
+  <p><strong>Modification of Benefits:</strong> Beim Health reserves the right to modify or discontinue membership benefits with <strong>30 days' advance notice</strong> to affected members. If modifications substantially reduce benefits for paid members, affected members may cancel and receive a pro-rated refund for the remaining term.</p>
+
+  <!-- Section 6 -->
+  <h2 id="s6"><span class="s-num">06</span> Limitation of Liability</h2>
+  <p><strong>Scope of Limitation:</strong> To the extent permitted by law, Beim Health's liability for damages arising from the use of our platform is limited as follows:</p>
+  <ul>
+    <li><strong>Platform and Technical Issues:</strong> We are not liable for temporary service interruptions, technical errors, or AI-generated information inaccuracies, provided we have exercised reasonable care in maintaining our systems.</li>
+    <li><strong>Third-Party Providers:</strong> We are not liable for the acts, omissions, negligence, or malpractice of independent healthcare providers within the Freely Health Network.</li>
+    <li><strong>User Decisions:</strong> We are not liable for health outcomes resulting from your personal decisions to use or not use products or services, provided we have accurately represented those products or services.</li>
+  </ul>
+
+  <div class="legal-callout">
+    <p><strong>Exceptions:</strong> This limitation does NOT apply to:</p>
+    <ul>
+      <li>Injuries or damages caused by our gross negligence, willful misconduct, or fraud</li>
+      <li>Violations of consumer protection laws</li>
+      <li>Misrepresentation of product safety, efficacy, or provider credentials</li>
+      <li>Breaches of data security obligations under applicable law</li>
+      <li>Any other claims where liability cannot be limited under applicable law</li>
+    </ul>
+  </div>
+
+  <p><strong>Damages Cap:</strong> Where liability applies, our total liability shall not exceed the greater of (a) $1,000 or (b) the amount you paid to Beim Health in the 12 months preceding the claim, except where such caps are prohibited by law or in cases of gross negligence or willful misconduct.</p>
+
+  <!-- Section 7 -->
+  <h2 id="s7"><span class="s-num">07</span> User Responsibilities</h2>
+  <p>By using our services, you agree that you are solely responsible for your health-related decisions. You will not rely on AI assistants or chatbots as substitutes for medical care. You will confirm with a licensed provider whether any product, service, or treatment is appropriate for you. You will comply with all applicable laws in connection with your use of products and services.</p>
+
+  <!-- Section 8 -->
+  <h2 id="s8"><span class="s-num">08</span> Product &amp; Service Warranties</h2>
+  <p><strong>Platform Services:</strong> Our platform, AI assistants, and informational content are provided <strong>"as is"</strong> without warranties regarding accuracy, completeness, or fitness for any particular purpose.</p>
+  <p><strong>Third-Party Products and Services:</strong> Products and services offered through our marketplace are subject to the warranties provided by their respective manufacturers, sellers, or service providers. Beim Health will facilitate communication with these third parties regarding warranty claims.</p>
+  <p><strong>Clinician Vetting:</strong> While we indicate that certain products and services are "clinician-vetted," this represents our good-faith effort to ensure quality and does not constitute a guarantee of safety, efficacy, or suitability for your individual needs.</p>
+  <p><strong>Defective Products:</strong> If you receive a defective product purchased through our platform, please contact us within 30 days. We will work with the seller to facilitate a replacement, repair, or refund as appropriate.</p>
+
+  <!-- Section 9 -->
+  <h2 id="s9"><span class="s-num">09</span> Indemnification</h2>
+  <p>You agree to indemnify and hold harmless Beim Health against claims arising from:</p>
+  <ul>
+    <li>Your violation of these Terms</li>
+    <li>Your violation of applicable laws or regulations</li>
+    <li>Your infringement of any third-party rights</li>
+    <li>Your intentional misuse of the platform</li>
+  </ul>
+
+  <div class="legal-callout">
+    <p><strong>Limitations:</strong> This indemnification does NOT apply to claims arising from:</p>
+    <ul>
+      <li>Beim Health's negligence, errors, or omissions</li>
+      <li>Defects in products or services we directly provided or misrepresented</li>
+      <li>Our breach of these Terms or applicable law</li>
+      <li>Security breaches or data mishandling on our part</li>
+    </ul>
+  </div>
+
+  <p>We will provide you with prompt notice of any claim subject to indemnification and will cooperate reasonably in the defense. You will have the right to participate in your defense with counsel of your choice at your expense.</p>
+
+  <!-- Section 10 -->
+  <h2 id="s10"><span class="s-num">10</span> Privacy &amp; Data Protection</h2>
+  <p><strong>Data Collection:</strong> We collect information you provide during registration, platform use, and purchases, including name, email, payment information, and any voluntarily shared health-related information.</p>
+
+  <p><strong>Data Use:</strong> Your data is used to:</p>
+  <ul>
+    <li>Provide and improve our services</li>
+    <li>Process transactions and communicate with you</li>
+    <li>Personalize your experience</li>
+    <li>Train and improve our AI systems (in aggregated, de-identified form only)</li>
+  </ul>
+
+  <p><strong>Data Sharing:</strong> We share your data only as follows:</p>
+  <ul>
+    <li>With healthcare providers you choose to consult through our platform (only information necessary for service delivery)</li>
+    <li>With payment processors and service providers under confidentiality agreements</li>
+    <li>When required by law or to protect rights and safety</li>
+    <li>In aggregated, de-identified form for research or analytics</li>
+  </ul>
+
+  <p><strong>Data Retention:</strong> We retain your personal data for as long as your account is active, plus 7 years thereafter to comply with legal obligations. Health-related information you voluntarily share through AI interactions is retained for 90 days unless you request earlier deletion.</p>
+
+  <p><strong>Data Security:</strong> We implement industry-standard security measures including encryption, access controls, and regular security audits. However, no system is completely secure, and we cannot guarantee absolute security.</p>
+
+  <div class="legal-callout">
+    <p><strong>Your Rights:</strong> You have the right to:</p>
+    <ul>
+      <li>Access your personal data</li>
+      <li>Request correction of inaccurate data</li>
+      <li>Request deletion of your data (subject to legal retention requirements)</li>
+      <li>Opt out of marketing communications</li>
+      <li>Export your data in a portable format</li>
+    </ul>
+    <p>To exercise these rights, contact us at <a href="mailto:support@beim.ai">support@beim.ai</a>.</p>
+  </div>
+
+  <!-- Section 11 -->
+  <h2 id="s11"><span class="s-num">11</span> Governing Law &amp; Dispute Resolution</h2>
+  <p><strong>Governing Law:</strong> These Terms are governed by the laws of the State of <strong>Texas</strong>, without regard to conflict-of-law principles.</p>
+  <p><strong>Informal Resolution:</strong> Before initiating any formal dispute resolution, you agree to contact us at <a href="mailto:support@beim.ai">support@beim.ai</a> to attempt to resolve the matter informally. We will respond within 30 days.</p>
+  <p><strong>Dispute Resolution Options:</strong> If informal resolution is unsuccessful, you may choose either:</p>
+
+  <p><strong>Option A — Arbitration:</strong></p>
+  <ul>
+    <li>Binding arbitration administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules</li>
+    <li>Arbitration may be conducted in-person in your county of residence, by telephone, or by written submission as you prefer</li>
+    <li>Each party bears their own costs, except Beim Health will pay all AAA filing and administrative fees for claims under $10,000</li>
+    <li>The arbitrator may award the same remedies available in court</li>
+    <li>Either party may bring a claim in small claims court instead of arbitration if the claim qualifies</li>
+  </ul>
+
+  <p><strong>Option B — Court:</strong></p>
+  <ul>
+    <li>For claims over $50,000, you may opt out of arbitration within 60 days of accepting these Terms by sending written notice to the address below</li>
+    <li>Such claims may be brought in state or federal court in Travis County, Texas, or in the courts of your jurisdiction if allowed by law</li>
+  </ul>
+
+  <p><strong>Class Action Waiver:</strong> You and Beim Health agree that disputes will be resolved on an individual basis only. You may not bring claims as a plaintiff or class member in any class, consolidated, or representative action. <em>This waiver does not apply if prohibited by the law of your jurisdiction.</em></p>
+
+  <!-- Section 12 -->
+  <h2 id="s12"><span class="s-num">12</span> Modifications to Terms</h2>
+  <p><strong>Notice of Changes:</strong> We may update these Terms periodically. When we make material changes, we will:</p>
+  <ul>
+    <li>Notify you by email at least 30 days before the changes take effect</li>
+    <li>Post a notice on our platform with a clear summary of changes</li>
+    <li>Update the "Effective Date" at the top of this document</li>
+  </ul>
+
+  <div class="legal-callout">
+    <p><strong>Your Options:</strong> If you do not agree to modified Terms:</p>
+    <ul>
+      <li>You may cancel your membership before the effective date without penalty</li>
+      <li>For paid memberships, you will receive a pro-rated refund for any unused time</li>
+      <li>Continued use after the effective date constitutes acceptance of the new Terms</li>
+    </ul>
+  </div>
+
+  <p><strong>Non-Material Changes:</strong> Minor updates (such as contact information, clarifications, or formatting changes) may be made without advance notice.</p>
+
+  <!-- Section 13 -->
+  <h2 id="s13"><span class="s-num">13</span> Severability &amp; Entire Agreement</h2>
+  <p>If any provision of these Terms is found to be unenforceable, the remaining provisions will continue in full effect. These Terms, together with our Privacy Policy, constitute the entire agreement between you and Beim Health regarding use of our services.</p>
+
+  <!-- Contact -->
+  <div class="legal-contact">
+    <div class="legal-contact-title">Contact Information</div>
+    <p>Beim Health, LLC</p>
+    <p>5900 Balcones Dr.</p>
+    <p>Austin, Texas 78731</p>
+    <p style="margin-top:12px"><a href="mailto:support@beim.ai">support@beim.ai</a></p>
+  </div>
+
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="https://www.beim.ai/" class="footer-brand-logo">Beim Health</a>
+      <p class="footer-tagline">We unlock products your HSA and FSA can buy — with AI-powered clinical grading, Letters of Medical Necessity, and a personal Care Navigator.</p>
+      <a href="https://go.beim.ai/start" class="footer-cta-btn">Unlock My Products →</a>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/profile.php?id=61578840364487" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a2e3c8654df8d0a3b_facebook-icon-logo-png-transparent.png" alt="Facebook"/></a>
+        <a href="https://www.youtube.com/@BeimHealth" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09aa6694417fa32be52_Youtube_logo.png" alt="YouTube"/></a>
+        <a href="https://www.tiktok.com/@beim_health" target="_blank" rel="noopener" class="footer-social-link" aria-label="TikTok"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09adce691913c58d4e1_15f9f8356f985754c1fbe4824c6e770d.jpg" alt="TikTok"/></a>
+        <a href="https://www.instagram.com/beim_health/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a26cffc65b9613863_instagram%20logo.jpg" alt="Instagram"/></a>
+        <a href="https://www.linkedin.com/company/beim-health/?viewAsMember=true" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09ac7dd69a0b52a5b00_LI-In-Bug.png" alt="LinkedIn"/></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/">Home</a></li>
+        <li><a href="https://www.beim.ai/about">About Us</a></li>
+        <li><a href="https://www.beim.ai/#features">Features</a></li>
+        <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+        <li><a href="https://www.beim.ai/terms-of-service">Terms of Service</a></li>
+        <li><a href="https://www.beim.ai/privacy-policy">Privacy Policy</a></li>
+        <li><a href="https://www.beim.ai/shipping-policy">Shipping Policy</a></li>
+        <li><a href="https://www.beim.ai/refund-return-policy">Refund &amp; Return Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Our Partners</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/for-brokers">For Brokers</a></li>
+        <li><a href="https://www.beim.ai/for-employers">For Employers</a></li>
+        <li><a href="https://www.beim.ai/for-clinics">For Clinics</a></li>
+        <li><a href="https://www.beim.ai/for-investors">Investor Inquiries</a></li>
+        <li><a href="mailto:partnerships@beim.ai">Partnership Inquiries</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><a href="mailto:support@beim.ai">support@beim.ai</a></div>
+      <div class="footer-contact-item">5900 Balcones Dr<br>Austin, TX 78731</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 All rights reserved. Beim Health, LLC.</span>
+    <div class="footer-legal-links">
+      <a href="https://www.beim.ai/privacy-policy">Privacy</a>
+      <a href="https://www.beim.ai/terms-of-service">Terms</a>
+      <a href="https://www.beim.ai/shipping-policy">Shipping</a>
+      <a href="https://www.beim.ai/refund-return-policy">Returns</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
