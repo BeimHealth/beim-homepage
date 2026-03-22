@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shipping Policy — Beim Health</title>
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f0f1a;--bg-card:#1a1a2e;--bg-elev:#22223a;--border:rgba(255,255,255,0.07);--cyan:#6ee0f5;--purple:#6454f0;--blue:#6aa3f3;--cyan-dim:rgba(110,224,245,0.10);--purple-dim:rgba(100,84,240,0.12);--border-c:rgba(110,224,245,0.22);--border-p:rgba(100,84,240,0.30);--green:#3dd9b6;--green-dim:rgba(61,217,182,0.10);--gold:#f59e0b;--text:#f0f0ff;--muted:#8a8da8;--dim:#5a5d78;--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(100,84,240,0.10),transparent 70%);top:-20%;left:-12%}
+.orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(110,224,245,0.06),transparent 70%);bottom:-8%;right:-8%}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 100%);pointer-events:none;z-index:0}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 40px;height:64px;background:rgba(15,15,26,0.90);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:8px;list-style:none;align-items:center;margin-left:auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:8px 14px;border-radius:8px;transition:color 0.2s,background 0.2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.nav-cta{background:linear-gradient(135deg,var(--purple),var(--blue))!important;color:#fff!important;font-weight:700!important;padding:10px 18px!important;border-radius:10px;font-size:14px!important;transition:box-shadow 0.2s,transform 0.15s!important}
+.nav-cta:hover{box-shadow:0 0 24px rgba(100,84,240,0.5)!important;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;z-index:1000}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px;transition:all 0.3s}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:20px 24px;z-index:899}
+.mobile-menu a{display:block;color:var(--muted);text-decoration:none;font-size:16px;font-weight:500;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.mobile-menu a:last-child{border:none}
+.mobile-menu a:hover{color:var(--text)}
+.mobile-menu .nav-cta-m{display:inline-flex;margin-top:12px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:700;padding:12px 24px;border-radius:10px;font-size:14px;text-decoration:none}
+
+.grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.legal-hero{position:relative;z-index:1;padding:140px 48px 48px;text-align:center}
+.legal-badge{display:inline-flex;align-items:center;gap:8px;background:var(--purple-dim);border:1px solid var(--border-p);color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:24px}
+.legal-hero h1{font-size:clamp(36px,4.5vw,56px);font-weight:800;line-height:1.08;letter-spacing:-2px;color:#fff;margin-bottom:12px}
+.legal-date{font-family:'DM Mono',monospace;font-size:13px;color:var(--dim);letter-spacing:0.5px}
+.legal-date+.legal-date{margin-top:4px}
+
+.legal-wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 48px 96px}
+.legal-intro{background:rgba(26,26,46,0.6);border:1px solid rgba(110,224,245,0.12);border-left:3px solid var(--cyan);border-radius:0 16px 16px 0;padding:28px 32px;margin-bottom:56px}
+.legal-intro p{font-size:15px;color:rgba(240,240,255,0.65);line-height:1.75;margin-bottom:14px}
+.legal-intro p:last-child{margin-bottom:0}
+.legal-intro strong{color:var(--text);font-weight:600}
+
+.legal-wrap h2{font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.3px;margin-top:56px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.legal-wrap h2 .s-num{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--cyan);background:var(--cyan-dim);border:1px solid rgba(110,224,245,0.15);padding:3px 10px;border-radius:6px;flex-shrink:0}
+
+.legal-wrap h3{font-size:17px;font-weight:700;color:rgba(240,240,255,0.85);margin-top:32px;margin-bottom:14px;padding-left:14px;border-left:2px solid rgba(100,84,240,0.3)}
+
+.legal-wrap p{font-size:15px;color:rgba(240,240,255,0.60);line-height:1.8;margin-bottom:18px}
+.legal-wrap p strong{color:var(--cyan);font-weight:700}
+.legal-wrap p em{color:rgba(240,240,255,0.50);font-style:italic}
+
+.legal-wrap ul{list-style:none;margin:16px 0 20px 0;padding:0}
+.legal-wrap ul li{position:relative;padding-left:20px;margin-bottom:12px;font-size:14px;color:rgba(240,240,255,0.58);line-height:1.7}
+.legal-wrap ul li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--cyan);opacity:0.5}
+.legal-wrap ul li strong{color:rgba(240,240,255,0.85);font-weight:600}
+
+.legal-callout{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin:20px 0 24px}
+.legal-callout p{margin-bottom:12px}
+.legal-callout p:last-child{margin-bottom:0}
+.legal-callout p strong{color:var(--purple)}
+.legal-callout ul li::before{background:var(--purple)}
+.legal-callout h3{margin-top:0;padding-left:0;border-left:none}
+
+/* Product type badges */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:0.3px;text-transform:uppercase;vertical-align:middle}
+.badge-inhouse{background:var(--purple-dim);border:1px solid var(--border-p);color:var(--purple)}
+.badge-direct{background:var(--cyan-dim);border:1px solid var(--border-c);color:var(--cyan)}
+.badge-digital{background:var(--green-dim);border:1px solid rgba(61,217,182,0.18);color:var(--green)}
+
+/* Info box (green) */
+.legal-info{background:rgba(61,217,182,0.06);border:1px solid rgba(61,217,182,0.20);border-left:3px solid var(--green);border-radius:0 16px 16px 0;padding:24px 28px;margin:24px 0}
+.legal-info p{font-size:15px;color:rgba(240,240,255,0.65);line-height:1.75;margin-bottom:10px}
+.legal-info p:last-child{margin-bottom:0}
+.legal-info p strong{color:var(--green);font-weight:700}
+
+/* Warning box (gold) */
+.legal-warning{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.20);border-left:3px solid var(--gold);border-radius:0 16px 16px 0;padding:24px 28px;margin:24px 0}
+.legal-warning p{font-size:15px;color:rgba(240,240,255,0.65);line-height:1.75;margin-bottom:10px}
+.legal-warning p:last-child{margin-bottom:0}
+.legal-warning p strong{color:var(--gold);font-weight:700}
+
+/* Tables */
+.legal-table{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.legal-table th{background:rgba(100,84,240,0.08);padding:14px 18px;text-align:left;font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid var(--border)}
+.legal-table td{padding:14px 18px;font-size:14px;color:rgba(240,240,255,0.58);line-height:1.6;border-bottom:1px solid rgba(255,255,255,0.04);background:var(--bg-card)}
+.legal-table tr:last-child td{border-bottom:none}
+.legal-table td strong{color:rgba(240,240,255,0.85);font-weight:600}
+
+.legal-wrap a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(110,224,245,0.2);transition:border-color 0.2s}
+.legal-wrap a:hover{border-bottom-color:var(--cyan)}
+
+/* TOC */
+.legal-toc{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin-bottom:48px}
+.legal-toc-title{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.legal-toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}
+.legal-toc a{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);text-decoration:none;padding:6px 0;border-bottom:none;transition:color 0.2s}
+.legal-toc a:hover{color:var(--cyan)}
+.legal-toc a .toc-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);min-width:20px}
+
+/* Contact card */
+.legal-contact{background:linear-gradient(135deg,rgba(100,84,240,0.12),rgba(110,224,245,0.08));border:1px solid rgba(100,84,240,0.20);border-radius:20px;padding:36px;text-align:center;margin-top:64px}
+.legal-contact-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:16px}
+.legal-contact p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:6px}
+.legal-contact a{color:var(--cyan);border-bottom:none;font-weight:600}
+.legal-contact a:hover{border-bottom:1px solid var(--cyan)}
+
+/* Footer */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:rgba(15,15,26,0.95)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 48px 48px}
+.footer-brand-logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:block;margin-bottom:14px}
+.footer-tagline{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:280px}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;text-decoration:none;transition:box-shadow 0.2s,transform 0.2s}
+.footer-cta-btn:hover{box-shadow:0 8px 24px rgba(100,84,240,0.4);transform:translateY(-1px)}
+.footer-socials{display:flex;gap:10px;margin-top:20px;align-items:center}
+.footer-social-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);transition:border-color 0.2s,background 0.2s,transform 0.2s;overflow:hidden}
+.footer-social-link:hover{border-color:var(--border-c);background:rgba(110,224,245,0.06);transform:translateY(-2px)}
+.footer-social-link img{width:20px;height:20px;object-fit:contain;border-radius:3px;opacity:0.7;transition:opacity 0.2s}
+.footer-social-link:hover img{opacity:1}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.footer-links-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links-list a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-links-list a:hover{color:var(--text)}
+.footer-links-list li::before{display:none}
+.footer-contact-item{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.footer-contact-item a{color:var(--muted);text-decoration:none;border-bottom:none}
+.footer-contact-item a:hover{color:var(--cyan)}
+.footer-bottom{padding:20px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:var(--dim)}
+.footer-legal-links{display:flex;gap:20px}
+.footer-legal-links a{font-size:12px;color:var(--dim);text-decoration:none;transition:color 0.2s;border-bottom:none}
+.footer-legal-links a:hover{color:var(--muted)}
+
+@media(max-width:1100px){.footer-top{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .legal-hero{padding:120px 24px 36px}
+  .legal-wrap{padding:0 24px 60px}
+  .legal-toc-grid{grid-template-columns:1fr}
+  .legal-table{font-size:13px}
+  .legal-table th,.legal-table td{padding:10px 12px}
+  .footer-top{grid-template-columns:1fr;padding:40px 24px 32px;gap:32px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;padding:16px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div><div class="orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <a href="https://www.beim.ai/" class="nav-logo">Beim Health</a>
+  <ul class="nav-links">
+    <li><a href="https://www.beim.ai/#features">Features</a></li>
+    <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+    <li><a href="https://go.beim.ai/marketplace">Marketplace</a></li>
+    <li><a href="https://www.beim.ai/about">About</a></li>
+    <li><a href="https://go.beim.ai/start" class="nav-cta">Unlock My Products →</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').style.display=document.getElementById('mobileMenu').style.display==='block'?'none':'block'" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://www.beim.ai/#features">Features</a>
+  <a href="https://www.beim.ai/#how">How It Works</a>
+  <a href="https://go.beim.ai/marketplace">Marketplace</a>
+  <a href="https://www.beim.ai/about">About</a>
+  <a href="https://go.beim.ai/start" class="nav-cta-m">Unlock My Products →</a>
+</div>
+
+<section class="legal-hero">
+  <span class="legal-badge">Legal</span>
+  <h1>Shipping <span class="grad">Policy</span></h1>
+  <div class="legal-date">Effective Date: September 16, 2025</div>
+  <div class="legal-date">Last Updated: September 16, 2025</div>
+</section>
+
+<div class="legal-wrap">
+
+  <div class="legal-intro">
+    <p>At Beim Health, we're committed to getting your products to you quickly and reliably. Our flexible shipping options are designed to meet your needs, whether you're ordering physical products, digital downloads, or a combination of both.</p>
+    <p>This Shipping Policy explains our shipping methods, delivery times, costs, and what to expect when you order from us.</p>
+  </div>
+
+  <div class="legal-toc">
+    <div class="legal-toc-title">Table of Contents</div>
+    <div class="legal-toc-grid">
+      <a href="#s1"><span class="toc-num">01</span> Product Types &amp; Fulfillment</a>
+      <a href="#s8"><span class="toc-num">08</span> Physician-Ordered Products</a>
+      <a href="#s2"><span class="toc-num">02</span> Shipping Methods &amp; Times</a>
+      <a href="#s9"><span class="toc-num">09</span> Returns &amp; Exchanges</a>
+      <a href="#s3"><span class="toc-num">03</span> Shipping Costs</a>
+      <a href="#s10"><span class="toc-num">10</span> Special Circumstances</a>
+      <a href="#s4"><span class="toc-num">04</span> Shipping Locations</a>
+      <a href="#s11"><span class="toc-num">11</span> Modifications &amp; Cancellations</a>
+      <a href="#s5"><span class="toc-num">05</span> Order Tracking</a>
+      <a href="#s12"><span class="toc-num">12</span> Shipping Insurance</a>
+      <a href="#s6"><span class="toc-num">06</span> Delivery Issues</a>
+      <a href="#s13"><span class="toc-num">13</span> Contact Us</a>
+      <a href="#s7"><span class="toc-num">07</span> Digital Product Delivery</a>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <h2 id="s1"><span class="s-num">01</span> Product Types &amp; Fulfillment</h2>
+  <p>We offer three types of products, each with different shipping methods:</p>
+
+  <div class="legal-callout">
+    <h3 style="margin-top:0;padding-left:0;border-left:none"><span class="badge badge-inhouse">In-House</span> Products Shipped by Beim Health</h3>
+    <p>These products are stored in our warehouse and shipped directly by our team. You'll receive tracking information as soon as your order ships, and we have full control over the shipping process.</p>
+    <p><strong>Examples:</strong> Curated wellness products, supplements, health kits maintained in our inventory</p>
+  </div>
+
+  <div class="legal-callout">
+    <h3 style="margin-top:0;padding-left:0;border-left:none"><span class="badge badge-direct">Direct Ship</span> Products Shipped by Manufacturers/Suppliers</h3>
+    <p>These products ship directly from our trusted partners and manufacturers to your door. This allows us to offer a wider selection without warehousing every item. Tracking information will be provided once the supplier ships your order.</p>
+    <p><strong>Examples:</strong> Specialized medical devices, bulk supplements, certain wellness products</p>
+    <p><strong>Note:</strong> Direct ship items may arrive separately from in-house inventory items, even if ordered together.</p>
+  </div>
+
+  <div class="legal-callout">
+    <h3 style="margin-top:0;padding-left:0;border-left:none"><span class="badge badge-digital">Digital</span> Digital Products and Instant Downloads</h3>
+    <p>Digital products are delivered instantly via email and available immediately in your account after purchase. No shipping required!</p>
+    <p><strong>Examples:</strong> E-books, guides, meal plans, educational courses, digital memberships</p>
+    <p><strong>Delivery:</strong> Immediate access upon payment confirmation</p>
+  </div>
+
+  <!-- 2 -->
+  <h2 id="s2"><span class="s-num">02</span> Shipping Methods &amp; Delivery Times</h2>
+
+  <h3>2.1 In-House Inventory Shipping Options</h3>
+  <p>For products shipped by Beim Health, we offer the following options:</p>
+
+  <table class="legal-table">
+    <thead><tr><th>Shipping Method</th><th>Delivery Time</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Standard Shipping</strong></td><td>5–7 business days</td><td>$5.99 (FREE on orders over $50)</td></tr>
+      <tr><td><strong>Expedited Shipping</strong></td><td>3–4 business days</td><td>$12.99</td></tr>
+      <tr><td><strong>Express Shipping</strong></td><td>2 business days</td><td>$19.99</td></tr>
+      <tr><td><strong>Overnight Shipping</strong></td><td>1 business day</td><td>$34.99</td></tr>
+    </tbody>
+  </table>
+
+  <div class="legal-info">
+    <p><strong>✓ Free Standard Shipping</strong></p>
+    <p>Enjoy FREE standard shipping on all orders over $50 from our in-house inventory!</p>
+  </div>
+
+  <h3>2.2 Direct Ship (Manufacturer) Delivery Times</h3>
+  <p>Products shipped directly from manufacturers typically arrive within:</p>
+  <ul>
+    <li><strong>Standard Delivery:</strong> 7–14 business days (varies by supplier)</li>
+    <li><strong>Expedited Options:</strong> May be available at checkout for select products</li>
+  </ul>
+  <p><strong>Important:</strong> Delivery times for direct ship items are estimates based on supplier performance. We'll keep you updated on your order status.</p>
+
+  <h3>2.3 Processing Time</h3>
+  <ul>
+    <li><strong>In-House Products:</strong> Orders placed before 2:00 PM CT ship the same business day. Orders after 2:00 PM CT ship the next business day.</li>
+    <li><strong>Direct Ship Products:</strong> Processing time varies by supplier (typically 1–3 business days before shipping)</li>
+    <li><strong>Digital Products:</strong> Instant delivery upon payment confirmation</li>
+  </ul>
+
+  <div class="legal-warning">
+    <p><strong>⚠️ Business Days</strong></p>
+    <p>Business days are Monday through Friday, excluding federal holidays. Orders placed on weekends or holidays will be processed on the next business day.</p>
+  </div>
+
+  <!-- 3 -->
+  <h2 id="s3"><span class="s-num">03</span> Shipping Costs</h2>
+
+  <h3>3.1 In-House Inventory</h3>
+  <p>Shipping costs are calculated based on:</p>
+  <ul>
+    <li>Shipping method selected</li>
+    <li>Destination address</li>
+    <li>Package weight and dimensions</li>
+    <li>Order total (for free shipping qualification)</li>
+  </ul>
+  <p>Exact shipping costs will be displayed at checkout before you complete your purchase.</p>
+
+  <h3>3.2 Direct Ship Products</h3>
+  <p>Shipping costs for direct ship items are determined by the manufacturer/supplier and will be clearly displayed on the product page and at checkout. Some direct ship items may qualify for free shipping.</p>
+
+  <h3>3.3 Digital Products</h3>
+  <p>Digital products have no shipping costs — they're delivered instantly via email!</p>
+
+  <h3>3.4 Mixed Orders</h3>
+  <p>If your order contains both in-house and direct ship items:</p>
+  <ul>
+    <li>Items will ship separately</li>
+    <li>You'll be charged shipping for each fulfillment method</li>
+    <li>Free shipping thresholds apply only to in-house items in that shipment</li>
+    <li>You'll receive separate tracking numbers for each shipment</li>
+  </ul>
+
+  <!-- 4 -->
+  <h2 id="s4"><span class="s-num">04</span> Shipping Locations</h2>
+
+  <h3>4.1 Domestic Shipping (United States)</h3>
+  <p>We ship to all 50 U.S. states, including:</p>
+  <ul>
+    <li>All continental U.S. addresses</li>
+    <li>Alaska and Hawaii (additional transit time and costs may apply)</li>
+    <li>P.O. Boxes (standard and expedited shipping only; no express or overnight)</li>
+    <li>APO/FPO/DPO military addresses (standard shipping only)</li>
+  </ul>
+
+  <h3>4.2 International Shipping</h3>
+  <p>At this time, we do not offer international shipping. We currently ship only within the United States and to U.S. military addresses.</p>
+  <p>If you're located outside the U.S. and interested in our products, please contact <a href="mailto:support@beim.ai">support@beim.ai</a> for updates on international availability.</p>
+
+  <h3>4.3 Restricted Locations</h3>
+  <p>Some products cannot be shipped to certain states due to regulatory restrictions. These restrictions will be clearly noted on the product page and at checkout.</p>
+
+  <!-- 5 -->
+  <h2 id="s5"><span class="s-num">05</span> Order Tracking</h2>
+
+  <h3>5.1 Tracking Information</h3>
+  <p>Once your order ships, you'll receive:</p>
+  <ul>
+    <li>Email confirmation with tracking number(s)</li>
+    <li>Carrier information (USPS, UPS, FedEx, or supplier's carrier)</li>
+    <li>Estimated delivery date</li>
+    <li>Direct link to track your package</li>
+  </ul>
+
+  <h3>5.2 Track Your Order</h3>
+  <p>You can track your order by:</p>
+  <ul>
+    <li>Clicking the tracking link in your shipping confirmation email</li>
+    <li>Logging into your Beim Health account and viewing order details</li>
+    <li>Visiting the carrier's website directly with your tracking number</li>
+    <li>Contacting customer support at <a href="mailto:support@beim.ai">support@beim.ai</a></li>
+  </ul>
+
+  <h3>5.3 Tracking Delays</h3>
+  <p>Please note:</p>
+  <ul>
+    <li>Tracking numbers may take 12–24 hours to become active in the carrier's system</li>
+    <li>Direct ship orders may have longer tracking activation times</li>
+    <li>During peak seasons, tracking updates may be delayed</li>
+  </ul>
+
+  <!-- 6 -->
+  <h2 id="s6"><span class="s-num">06</span> Delivery Issues</h2>
+
+  <h3>6.1 Delayed Shipments</h3>
+  <p>If your order hasn't arrived within the expected delivery window:</p>
+  <ul>
+    <li><strong>In-House Orders:</strong> Contact us immediately if your order is more than 2 business days late</li>
+    <li><strong>Direct Ship Orders:</strong> Allow an additional 3 business days beyond the estimated delivery date before contacting us</li>
+    <li>We'll investigate with the carrier and work to resolve the issue quickly</li>
+  </ul>
+
+  <h3>6.2 Lost or Stolen Packages</h3>
+  <p>If tracking shows your package was delivered but you didn't receive it:</p>
+  <ul>
+    <li>Check with neighbors, building management, or household members</li>
+    <li>Verify the delivery address in your order confirmation</li>
+    <li>Contact us within 7 days of the delivery date</li>
+    <li>We'll file a claim with the carrier and arrange a replacement or refund</li>
+  </ul>
+
+  <div class="legal-info">
+    <p><strong>Beim Health's Promise:</strong></p>
+    <p>If your package is confirmed lost or stolen, we'll send a replacement at no additional cost or issue a full refund — your choice. We want you to receive your products safely!</p>
+  </div>
+
+  <h3>6.3 Damaged Shipments</h3>
+  <p>If your package arrives damaged:</p>
+  <ul>
+    <li>Take photos of the damaged packaging and product</li>
+    <li>Keep all packaging materials</li>
+    <li>Contact us within 48 hours of delivery at <a href="mailto:support@beim.ai">support@beim.ai</a></li>
+    <li>Include your order number and photos</li>
+  </ul>
+  <p>We'll arrange for a replacement or refund immediately. No need to return damaged items unless requested.</p>
+
+  <h3>6.4 Wrong Item Shipped</h3>
+  <p>If you receive the wrong item:</p>
+  <ul>
+    <li>Contact us immediately at <a href="mailto:support@beim.ai">support@beim.ai</a></li>
+    <li>We'll send the correct item via expedited shipping at no charge</li>
+    <li>We'll provide a prepaid return label for the incorrect item (return is optional for low-value items)</li>
+  </ul>
+
+  <h3>6.5 Incorrect Address</h3>
+  <p>If you provided an incorrect shipping address:</p>
+  <ul>
+    <li><strong>Before Shipping:</strong> Contact us immediately to update the address (if the order hasn't shipped yet, we can update it for free)</li>
+    <li><strong>After Shipping:</strong> We may be able to redirect the package with the carrier (fees may apply)</li>
+    <li><strong>Undeliverable Packages:</strong> If the package is returned to us due to an incorrect address, we'll contact you to arrange reshipment (shipping fees will apply for second shipment)</li>
+  </ul>
+
+  <!-- 7 -->
+  <h2 id="s7"><span class="s-num">07</span> Digital Product Delivery</h2>
+
+  <h3>7.1 How Digital Delivery Works</h3>
+  <p>When you purchase a digital product:</p>
+  <ul>
+    <li>You'll receive an email with download links within minutes of purchase</li>
+    <li>Access is also available immediately in your Beim Health account under "My Digital Products"</li>
+    <li>Download links are valid for 30 days (unlimited downloads during this period)</li>
+    <li>Some products may be available for streaming rather than download</li>
+  </ul>
+
+  <h3>7.2 Didn't Receive Your Digital Product?</h3>
+  <p>If you don't receive your digital product email within 15 minutes:</p>
+  <ul>
+    <li>Check your spam/junk folder</li>
+    <li>Log into your account and check "My Digital Products"</li>
+    <li>Verify the email address on your account is correct</li>
+    <li>Contact us at <a href="mailto:support@beim.ai">support@beim.ai</a> and we'll resend immediately</li>
+  </ul>
+
+  <h3>7.3 Digital Product Access</h3>
+  <ul>
+    <li><strong>Lifetime Access:</strong> Many digital products remain in your account for unlimited future access</li>
+    <li><strong>Time-Limited Access:</strong> Some products (like courses) may have time-limited access periods noted on the product page</li>
+    <li><strong>Device Limits:</strong> Some products may have device or download limits for copyright protection</li>
+  </ul>
+
+  <!-- 8 -->
+  <h2 id="s8"><span class="s-num">08</span> Physician-Ordered Products</h2>
+  <p>Some products require a physician order through the Freely Health Network. For these products:</p>
+  <ul>
+    <li>Processing time includes time for physician review and order approval (typically 1–3 business days)</li>
+    <li>You'll be notified once the order is approved and ready to ship</li>
+    <li>Shipping times begin after physician approval</li>
+    <li>Expedited shipping may be available after approval</li>
+  </ul>
+
+  <div class="legal-warning">
+    <p><strong>⚠️ Prescription Delays</strong></p>
+    <p>If your order requires physician approval, please allow additional time for medical review. We'll update you throughout the process.</p>
+  </div>
+
+  <!-- 9 -->
+  <h2 id="s9"><span class="s-num">09</span> Returns &amp; Exchanges</h2>
+  <p>For detailed information about returning or exchanging shipped products, please see our <a href="https://www.beim.ai/refund-return-policy">Refund &amp; Return Policy</a>.</p>
+  <p><strong>Quick Summary:</strong></p>
+  <ul>
+    <li>In-house products: 30-day return window from delivery</li>
+    <li>Direct ship products: Return policies vary by manufacturer</li>
+    <li>Digital products: Generally non-refundable after download (unless defective)</li>
+  </ul>
+
+  <!-- 10 -->
+  <h2 id="s10"><span class="s-num">10</span> Special Circumstances</h2>
+
+  <h3>10.1 Weather and Natural Disasters</h3>
+  <p>During severe weather or natural disasters:</p>
+  <ul>
+    <li>Shipping carriers may experience delays</li>
+    <li>We'll proactively notify you of any expected delays</li>
+    <li>Delivery guarantees may be temporarily suspended by carriers</li>
+    <li>Your safety is the priority — packages will be delivered once conditions improve</li>
+  </ul>
+
+  <h3>10.2 Peak Seasons</h3>
+  <p>During holidays and peak shopping seasons:</p>
+  <ul>
+    <li>Order early to ensure timely delivery</li>
+    <li>Shipping times may be extended by 1–3 business days</li>
+    <li>Expedited shipping is recommended for time-sensitive gifts</li>
+    <li>We'll post seasonal shipping deadlines on our homepage</li>
+  </ul>
+
+  <h3>10.3 Temperature-Sensitive Products</h3>
+  <p>Some products require temperature-controlled shipping:</p>
+  <ul>
+    <li>These products will be clearly marked on the product page</li>
+    <li>We may delay shipment during extreme weather to protect product integrity</li>
+    <li>Expedited shipping is recommended for temperature-sensitive items</li>
+    <li>Insulated packaging and ice packs included at no extra charge</li>
+  </ul>
+
+  <h3>10.4 Subscription Orders</h3>
+  <p>For recurring subscription shipments:</p>
+  <ul>
+    <li>Ships automatically based on your subscription frequency</li>
+    <li>You'll receive a reminder email 3 days before each shipment</li>
+    <li>Free standard shipping included with most subscriptions</li>
+    <li>Pause or modify your subscription anytime before the next shipment</li>
+  </ul>
+
+  <!-- 11 -->
+  <h2 id="s11"><span class="s-num">11</span> Order Modifications &amp; Cancellations</h2>
+
+  <h3>11.1 Before Shipment</h3>
+  <p>If you need to modify or cancel your order:</p>
+  <ul>
+    <li><strong>In-House Orders:</strong> Contact us within 2 hours of placing your order (before 2:00 PM CT for same-day processing)</li>
+    <li><strong>Direct Ship Orders:</strong> Contact us within 24 hours; we'll work with the supplier</li>
+    <li><strong>Digital Orders:</strong> Cannot be cancelled once download links are sent</li>
+  </ul>
+
+  <h3>11.2 After Shipment</h3>
+  <p>Once an order has shipped:</p>
+  <ul>
+    <li>It cannot be cancelled in transit</li>
+    <li>You can refuse delivery and request a refund (return shipping may apply)</li>
+    <li>Standard return process applies once delivered</li>
+  </ul>
+
+  <!-- 12 -->
+  <h2 id="s12"><span class="s-num">12</span> Shipping Insurance</h2>
+  <p>All orders over $100 are automatically insured against loss or damage at no additional cost. For orders under $100, shipping insurance is optional and can be added at checkout for $1.99.</p>
+  <p><strong>Insurance Benefits:</strong></p>
+  <ul>
+    <li>Coverage for lost packages</li>
+    <li>Coverage for damaged items</li>
+    <li>Faster claims processing</li>
+    <li>Guaranteed replacement or refund</li>
+  </ul>
+
+  <!-- 13 -->
+  <h2 id="s13"><span class="s-num">13</span> Contact Us</h2>
+  <p>Have questions about shipping? We're here to help!</p>
+
+  <div class="legal-contact">
+    <div class="legal-contact-title">Shipping Questions &amp; Support</div>
+    <p>Beim Health, LLC</p>
+    <p>5900 Balcones Dr.</p>
+    <p>Austin, Texas 78731</p>
+    <p style="margin-top:12px"><a href="mailto:support@beim.ai">support@beim.ai</a></p>
+    <p style="margin-top:16px;font-size:13px;color:var(--dim)"><strong style="color:var(--text);display:block;margin-bottom:4px">Customer Support Hours</strong>Monday–Friday: 9:00 AM – 6:00 PM CT<br>Saturday: 10:00 AM – 4:00 PM CT<br>Sunday: Closed</p>
+    <p style="font-size:12px;color:var(--dim);margin-top:8px">Average response time: Under 4 hours during business hours</p>
+  </div>
+
+  <div class="legal-callout" style="margin-top:48px">
+    <p><strong>Our Shipping Commitment</strong></p>
+    <p>At Beim Health, we're committed to fast, reliable shipping and excellent customer service. If anything goes wrong with your shipment, we'll make it right. Your satisfaction is our priority, and we'll work tirelessly to ensure your products arrive safely and on time.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="https://www.beim.ai/" class="footer-brand-logo">Beim Health</a>
+      <p class="footer-tagline">We unlock products your HSA and FSA can buy — with AI-powered clinical grading, Letters of Medical Necessity, and a personal Care Navigator.</p>
+      <a href="https://go.beim.ai/start" class="footer-cta-btn">Unlock My Products →</a>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/profile.php?id=61578840364487" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a2e3c8654df8d0a3b_facebook-icon-logo-png-transparent.png" alt="Facebook"/></a>
+        <a href="https://www.youtube.com/@BeimHealth" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09aa6694417fa32be52_Youtube_logo.png" alt="YouTube"/></a>
+        <a href="https://www.tiktok.com/@beim_health" target="_blank" rel="noopener" class="footer-social-link" aria-label="TikTok"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09adce691913c58d4e1_15f9f8356f985754c1fbe4824c6e770d.jpg" alt="TikTok"/></a>
+        <a href="https://www.instagram.com/beim_health/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a26cffc65b9613863_instagram%20logo.jpg" alt="Instagram"/></a>
+        <a href="https://www.linkedin.com/company/beim-health/?viewAsMember=true" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09ac7dd69a0b52a5b00_LI-In-Bug.png" alt="LinkedIn"/></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/">Home</a></li>
+        <li><a href="https://www.beim.ai/about">About Us</a></li>
+        <li><a href="https://www.beim.ai/#features">Features</a></li>
+        <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+        <li><a href="https://www.beim.ai/terms-of-service">Terms of Service</a></li>
+        <li><a href="https://www.beim.ai/privacy-policy">Privacy Policy</a></li>
+        <li><a href="https://www.beim.ai/shipping-policy">Shipping Policy</a></li>
+        <li><a href="https://www.beim.ai/refund-return-policy">Refund &amp; Return Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Our Partners</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/for-brokers">For Brokers</a></li>
+        <li><a href="https://www.beim.ai/for-employers">For Employers</a></li>
+        <li><a href="https://www.beim.ai/for-clinics">For Clinics</a></li>
+        <li><a href="https://www.beim.ai/for-investors">Investor Inquiries</a></li>
+        <li><a href="mailto:partnerships@beim.ai">Partnership Inquiries</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><a href="mailto:support@beim.ai">support@beim.ai</a></div>
+      <div class="footer-contact-item">5900 Balcones Dr<br>Austin, TX 78731</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 All rights reserved. Beim Health, LLC.</span>
+    <div class="footer-legal-links">
+      <a href="https://www.beim.ai/privacy-policy">Privacy</a>
+      <a href="https://www.beim.ai/terms-of-service">Terms</a>
+      <a href="https://www.beim.ai/shipping-policy">Shipping</a>
+      <a href="https://www.beim.ai/refund-return-policy">Returns</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
