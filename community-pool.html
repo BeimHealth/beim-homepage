@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Community Pool — Beim Health</title>
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f0f1a;--bg-card:#1a1a2e;--bg-elev:#22223a;--border:rgba(255,255,255,0.07);--cyan:#6ee0f5;--purple:#6454f0;--blue:#6aa3f3;--cyan-dim:rgba(110,224,245,0.10);--purple-dim:rgba(100,84,240,0.12);--border-c:rgba(110,224,245,0.22);--border-p:rgba(100,84,240,0.30);--green:#3dd9b6;--green-dim:rgba(61,217,182,0.10);--gold:#f59e0b;--red:#ef4444;--text:#f0f0ff;--muted:#8a8da8;--dim:#5a5d78;--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── Atmosphere ── */
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(61,217,182,0.06),transparent 70%);top:-20%;left:-12%}
+.orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(110,224,245,0.04),transparent 70%);bottom:-8%;right:-8%}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 100%);pointer-events:none;z-index:0}
+
+/* ── Nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 40px;height:64px;background:rgba(15,15,26,0.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:8px;list-style:none;align-items:center;margin-left:auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:8px 14px;border-radius:8px;transition:color 0.2s,background 0.2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.nav-cta{background:linear-gradient(135deg,var(--purple),var(--blue))!important;color:#fff!important;font-weight:700!important;padding:10px 18px!important;border-radius:10px;font-size:14px!important;transition:box-shadow 0.2s,transform 0.15s!important}
+.nav-cta:hover{box-shadow:0 0 24px rgba(100,84,240,0.5)!important;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;z-index:1000}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:20px 24px;z-index:899}
+.mobile-menu a{display:block;color:var(--muted);text-decoration:none;font-size:16px;font-weight:500;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.mobile-menu a:last-child{border:none}
+.mobile-menu .nav-cta-m{display:inline-flex;margin-top:12px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:700;padding:12px 24px;border-radius:10px;font-size:14px;text-decoration:none}
+
+/* ── Sticky Balance Bar ── */
+.bal-bar{position:fixed;top:64px;left:0;right:0;z-index:800;background:rgba(15,15,26,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:48px;display:none;align-items:center;gap:16px;transition:transform 0.3s}
+.bal-bar.visible{display:flex}
+.bal-nav{display:flex;align-items:center;gap:8px}
+.bal-nav-av{width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1.5px solid var(--border-p)}.bal-nav-av img{width:100%;height:100%;object-fit:cover}
+.bal-nav-nm{font-size:12px;color:var(--muted);font-weight:500}
+.bal-divider{width:1px;height:24px;background:var(--border)}
+.bal-amount{display:flex;align-items:center;gap:6px}
+.bal-label{font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px}
+.bal-value{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:var(--green)}
+.bal-acct{font-size:10px;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid rgba(61,217,182,0.18);padding:2px 8px;border-radius:100px}
+.bal-spent{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim)}
+.bal-spent-val{font-family:'DM Mono',monospace;font-weight:600;color:var(--gold)}
+
+/* ── Page Shell ── */
+.page{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:132px 24px 40px}
+.page.has-bal{padding-top:176px}
+.grad{background:linear-gradient(135deg,var(--green),var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── Hero ── */
+.pool-hero{text-align:center;margin-bottom:40px;animation:fu 0.5s ease both}
+.pool-hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-2px;color:#fff;line-height:1.08;margin-bottom:12px}
+.pool-hero p{font-size:16px;color:rgba(240,240,255,0.55);line-height:1.7;max-width:560px;margin:0 auto}
+
+/* ── How It Works ── */
+.hiw{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;animation:fu 0.5s 0.08s ease both}
+.hiw-c{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px 16px;text-align:center;transition:border-color 0.3s}
+.hiw-c:hover{border-color:rgba(61,217,182,0.25)}
+.hiw-n{width:32px;height:32px;border-radius:50%;background:var(--green-dim);border:1.5px solid rgba(61,217,182,0.25);color:var(--green);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.hiw-t{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.hiw-s{font-size:12px;color:var(--dim);line-height:1.5}
+
+/* ── Stats Strip ── */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:32px;animation:fu 0.5s 0.12s ease both}
+.st{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+.st .stl{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.st .stv{font-family:'DM Mono',monospace;font-size:24px;font-weight:700;color:var(--green)}
+.st .sts{font-size:10px;color:var(--dim);margin-top:2px}
+
+/* ── Share Header ── */
+.share-hdr{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:32px;animation:fu 0.5s 0.1s ease both}
+.share-hdr-lbl{font-size:11px;color:var(--dim);font-weight:600}
+.sh{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;text-decoration:none;font-size:13px;color:var(--muted)}
+.sh:hover{border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.06);color:var(--text);transform:translateY(-1px)}
+.sh svg{width:14px;height:14px;fill:currentColor}
+
+/* ═══════════════════ POOL TILES ═══════════════════ */
+.tiles{display:flex;flex-direction:column;gap:16px;animation:fu 0.5s 0.2s ease both}
+
+.tile{background:var(--bg-card);border:1px solid rgba(61,217,182,0.12);border-radius:20px;overflow:hidden;transition:all 0.3s}
+.tile:hover{border-color:rgba(61,217,182,0.28);box-shadow:0 8px 40px rgba(61,217,182,0.06)}
+
+/* Tile top: product + savings + pool progress */
+.t-top{display:flex;gap:16px;padding:20px 24px;align-items:center}
+.t-img{width:72px;height:72px;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.t-img img{width:100%;height:100%;object-fit:contain;padding:6px}
+.t-img .t-emo{font-size:28px;opacity:0.4}
+.t-info{flex:1;min-width:0}
+.t-row1{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.t-grade{font-size:11px;font-weight:800;padding:2px 8px;border-radius:6px;flex-shrink:0}
+.t-grade.ga{background:rgba(61,217,182,0.1);color:var(--green);border:1px solid rgba(61,217,182,0.25)}
+.t-grade.gb{background:rgba(110,224,245,0.08);color:var(--cyan);border:1px solid rgba(110,224,245,0.2)}
+.t-grade.gc{background:rgba(245,158,11,0.08);color:var(--gold);border:1px solid rgba(245,158,11,0.2)}
+.t-cat{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px}
+.t-nm{font-size:clamp(16px,2.5vw,20px);font-weight:800;color:#fff;letter-spacing:-0.3px;line-height:1.2;margin-bottom:2px}
+.t-brand{font-size:12px;color:var(--dim)}
+.t-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.tb{font-size:9px;font-weight:700;padding:3px 8px;border-radius:100px;text-transform:uppercase}
+.tb.hsa{background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.18);color:var(--green)}
+.tb.lmn{background:var(--purple-dim);border:1px solid rgba(100,84,240,0.18);color:var(--purple)}
+.tb.pool{background:rgba(61,217,182,0.06);border:1px solid rgba(61,217,182,0.15);color:var(--green)}
+
+/* Price + Pool section */
+.t-mid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 24px 16px}
+.t-price{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px}
+.t-price-old{font-family:'DM Mono',monospace;font-size:12px;color:var(--dim);text-decoration:line-through}
+.t-price-new{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;color:var(--green);line-height:1}
+.t-price-save{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:11px;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid rgba(61,217,182,0.18);padding:3px 10px;border-radius:100px}
+.t-hsa-split{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05)}
+.t-hsa-row{display:flex;justify-content:space-between;font-size:11px;padding:2px 0}
+.t-hsa-k{color:var(--muted)}.t-hsa-v{font-family:'DM Mono',monospace;font-weight:600}
+.t-hsa-v.gn{color:var(--green)}.t-hsa-v.gd{color:var(--gold)}
+
+.t-pool{background:rgba(61,217,182,0.04);border:1px solid rgba(61,217,182,0.15);border-radius:14px;padding:16px;display:flex;flex-direction:column}
+.t-pool-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.t-pool-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--green)}
+.t-pool-timer{display:flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:var(--gold);background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15);padding:3px 10px;border-radius:100px}
+.t-pool-timer::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.t-pool-bar{height:10px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;margin-bottom:8px}
+.t-pool-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--green),#7ed4b5);transition:width 1.2s cubic-bezier(0.4,0,0.2,1)}
+.t-pool-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.t-pool-meta strong{color:var(--text)}
+.t-pool-refund{font-size:10px;color:var(--dim);margin-top:auto;padding-top:8px}
+
+/* Actions */
+.t-actions{display:flex;gap:8px;padding:0 24px 16px}
+.btn-pool{flex:1;padding:14px;background:linear-gradient(135deg,var(--green),#4ec8a0);color:#080812;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center}
+.btn-pool:hover{box-shadow:0 8px 28px rgba(61,217,182,0.3);transform:translateY(-1px)}
+.btn-expand{padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--muted);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.btn-expand:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+.btn-expand .arrow{transition:transform 0.3s;display:inline-block}
+.btn-expand.open .arrow{transform:rotate(180deg)}
+
+/* Share row */
+.t-share{display:flex;align-items:center;gap:6px;padding:0 24px 16px}
+.t-share-lbl{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;margin-right:4px}
+
+/* Trust badges */
+.t-trust{display:flex;gap:12px;padding:0 24px 16px;flex-wrap:wrap}
+.tt{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--dim)}
+.tt::before{content:'✓';color:var(--green);font-weight:700;font-size:9px}
+
+/* ── Expandable Clinical Detail ── */
+.t-detail{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);padding:0 24px}
+.t-detail.open{max-height:600px;padding:0 24px 20px}
+.t-detail-inner{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.conf{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px}
+.conf-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.conf-lbl{font-size:11px;color:var(--muted)}
+.conf-val{font-family:'DM Mono',monospace;font-size:20px;font-weight:500}
+.conf-bar{height:5px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden;margin-bottom:6px}
+.conf-fill{height:100%;border-radius:100px;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)}
+.conf-sub{font-size:11px;color:var(--dim);line-height:1.4}
+.conf-sub strong{font-weight:700}
+.stars{display:flex;align-items:center;gap:4px;margin-top:6px;font-size:11px}
+.stars .s{color:var(--gold)}.stars .rc{color:var(--dim);font-size:10px}
+.gex{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:8px;margin-top:8px}
+.gex-ico{font-size:13px;flex-shrink:0;margin-top:1px}
+.gex-bd{font-size:10px;color:rgba(240,240,255,0.45);line-height:1.5}.gex-bd strong{color:var(--text);display:block;margin-bottom:1px}
+
+.conds{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px}
+.conds-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--dim);margin-bottom:8px}
+.cond-pills{display:flex;flex-wrap:wrap;gap:4px}
+.cp{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px}
+.cp.pri{background:var(--purple-dim);border:1px solid rgba(100,84,240,0.18);color:rgba(240,240,255,0.85)}
+.cp.pri::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.cp.sec{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);color:var(--muted)}
+.cp.sec::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--dim);flex-shrink:0}
+
+.lmn-mini{background:rgba(100,84,240,0.04);border:1px solid rgba(100,84,240,0.12);border-radius:12px;padding:14px;grid-column:1/-1}
+.lmn-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--purple);margin-bottom:8px}
+.lmn-opt{display:flex;align-items:flex-start;gap:6px;margin-bottom:5px;font-size:11px;color:var(--muted);line-height:1.4}
+.lmn-opt:last-child{margin-bottom:0}
+.lmn-opt strong{color:var(--text)}
+.lmn-ico{font-size:12px;flex-shrink:0;margin-top:1px}
+
+/* ── Loading / Empty ── */
+.loading{text-align:center;padding:60px}
+.load-spin{width:32px;height:32px;border:3px solid rgba(255,255,255,0.06);border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-txt{font-size:12px;color:var(--muted)}
+.empty{text-align:center;padding:60px 20px}
+.empty-ico{font-size:48px;margin-bottom:12px}
+.empty-t{font-size:18px;font-weight:700;color:#fff;margin-bottom:6px}
+
+/* ── Bottom Trust ── */
+.trust-bottom{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:40px;padding-bottom:20px}
+.trust-bottom span{display:flex;align-items:center;gap:4px;font-size:11px;color:rgba(240,240,255,0.40)}
+.trust-bottom span::before{content:'✓';color:var(--green);font-weight:700;font-size:9px}
+
+/* ── Toast ── */
+.copied{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--green);color:#080812;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s;pointer-events:none}
+.copied.show{transform:translateX(-50%) translateY(0)}
+
+/* ── Footer ── */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:rgba(15,15,26,0.95)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 48px 48px}
+.footer-brand-logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:block;margin-bottom:14px}
+.footer-tagline{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:280px}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;text-decoration:none;transition:box-shadow 0.2s,transform 0.2s}
+.footer-cta-btn:hover{box-shadow:0 8px 24px rgba(100,84,240,0.4);transform:translateY(-1px)}
+.footer-socials{display:flex;gap:10px;margin-top:20px;align-items:center}
+.footer-social-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);transition:border-color 0.2s,background 0.2s,transform 0.2s;overflow:hidden}
+.footer-social-link:hover{border-color:var(--border-c);background:rgba(110,224,245,0.06);transform:translateY(-2px)}
+.footer-social-link img{width:20px;height:20px;object-fit:contain;border-radius:3px;opacity:0.7;transition:opacity 0.2s}
+.footer-social-link:hover img{opacity:1}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.footer-links-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links-list a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-links-list a:hover{color:var(--text)}
+.footer-contact-item{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.footer-contact-item a{color:var(--muted);text-decoration:none}
+.footer-contact-item a:hover{color:var(--cyan)}
+.footer-bottom{padding:20px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:var(--dim)}
+.footer-legal-links{display:flex;gap:20px}
+.footer-legal-links a{font-size:12px;color:var(--dim);text-decoration:none;transition:color 0.2s}
+.footer-legal-links a:hover{color:var(--muted)}
+
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Responsive ── */
+@media(max-width:1100px){.footer-top{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}
+  .bal-bar{padding:0 16px;gap:10px;height:44px}
+  .page{padding:120px 16px 40px}.page.has-bal{padding-top:158px}
+  .t-mid{grid-template-columns:1fr}
+  .t-detail-inner{grid-template-columns:1fr}
+  .t-detail.open{max-height:900px}
+  .hiw,.stats{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;padding:40px 24px 32px;gap:32px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;padding:16px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div><div class="orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="https://www.beim.ai/" class="nav-logo">Beim Health</a>
+  <ul class="nav-links">
+    <li><a href="https://www.beim.ai/#features">Features</a></li>
+    <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+    <li><a href="https://go.beim.ai/marketplace">Marketplace</a></li>
+    <li><a href="https://www.beim.ai/about">About</a></li>
+    <li><a href="https://go.beim.ai/start" class="nav-cta">Unlock My Products →</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').style.display=document.getElementById('mobileMenu').style.display==='block'?'none':'block'" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://www.beim.ai/#features">Features</a>
+  <a href="https://www.beim.ai/#how">How It Works</a>
+  <a href="https://go.beim.ai/marketplace">Marketplace</a>
+  <a href="https://www.beim.ai/about">About</a>
+  <a href="https://go.beim.ai/start" class="nav-cta-m">Unlock My Products →</a>
+</div>
+
+<!-- ══ STICKY BALANCE BAR ══ -->
+<div class="bal-bar" id="balBar">
+  <div class="bal-nav"><div class="bal-nav-av" id="balAv"></div><span class="bal-nav-nm" id="balNm">Brooks</span></div>
+  <div class="bal-divider"></div>
+  <div class="bal-amount"><span class="bal-label">Balance</span><span class="bal-value" id="balVal">$0</span><span class="bal-acct" id="balAcct">HSA</span></div>
+  <div class="bal-spent"><span>Pool cart:</span><span class="bal-spent-val" id="balSpent">$0</span></div>
+</div>
+
+<!-- ══ PAGE ══ -->
+<div class="page" id="pageWrap">
+  <div class="pool-hero">
+    <h1>🤝 Community <span class="grad">Pool</span></h1>
+    <p>Group buying, powered by your community. More people join, everyone saves. HSA/FSA eligible — tax-free savings on top of the group discount.</p>
+  </div>
+
+  <div class="share-hdr">
+    <span class="share-hdr-lbl">Share the savings:</span>
+    <a class="sh" title="Share via SMS" onclick="sharePageSMS()">💬</a>
+    <a class="sh" title="Share on X" onclick="sharePageX()"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a class="sh" title="Share on Facebook" onclick="sharePageFB()"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    <a class="sh" title="Copy link" onclick="copyPageLink()">🔗</a>
+  </div>
+
+  <div class="hiw">
+    <div class="hiw-c"><div class="hiw-n">1</div><div class="hiw-t">Join the Pool</div><div class="hiw-s">Commit to a product. No charge until the pool fills.</div></div>
+    <div class="hiw-c"><div class="hiw-n">2</div><div class="hiw-t">Pool Fills Up</div><div class="hiw-s">Share with friends. More people join, the price locks in.</div></div>
+    <div class="hiw-c"><div class="hiw-n">3</div><div class="hiw-t">Everyone Saves</div><div class="hiw-s">Pool fills → pay discounted price. Doesn't fill → auto-refund.</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="st"><div class="stl">Active Pools</div><div class="stv" id="stCount">—</div><div class="sts">Products available</div></div>
+    <div class="st"><div class="stl">Total Savings</div><div class="stv" id="stSaved">—</div><div class="sts">If all pools fill</div></div>
+    <div class="st"><div class="stl">Avg. Discount</div><div class="stv" id="stDisc">—</div><div class="sts">Per product</div></div>
+  </div>
+
+  <div class="tiles" id="tiles"><div class="loading"><div class="load-spin"></div><div class="load-txt">Loading pools…</div></div></div>
+
+  <div class="trust-bottom"><span>HSA/FSA eligible</span><span>Auto-refund guarantee</span><span>No charge until pool fills</span><span>HIPAA compliant</span></div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="https://www.beim.ai/" class="footer-brand-logo">Beim Health</a>
+      <p class="footer-tagline">We unlock products your HSA and FSA can buy — with AI-powered clinical grading, Letters of Medical Necessity, and a personal Care Navigator.</p>
+      <a href="https://go.beim.ai/start" class="footer-cta-btn">Unlock My Products →</a>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/profile.php?id=61578840364487" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a2e3c8654df8d0a3b_facebook-icon-logo-png-transparent.png" alt="Facebook"/></a>
+        <a href="https://www.youtube.com/@BeimHealth" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09aa6694417fa32be52_Youtube_logo.png" alt="YouTube"/></a>
+        <a href="https://www.tiktok.com/@beim_health" target="_blank" rel="noopener" class="footer-social-link" aria-label="TikTok"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09adce691913c58d4e1_15f9f8356f985754c1fbe4824c6e770d.jpg" alt="TikTok"/></a>
+        <a href="https://www.instagram.com/beim_health/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a26cffc65b9613863_instagram%20logo.jpg" alt="Instagram"/></a>
+        <a href="https://www.linkedin.com/company/beim-health/?viewAsMember=true" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09ac7dd69a0b52a5b00_LI-In-Bug.png" alt="LinkedIn"/></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/">Home</a></li>
+        <li><a href="https://www.beim.ai/about">About Us</a></li>
+        <li><a href="https://www.beim.ai/#features">Features</a></li>
+        <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+        <li><a href="https://www.beim.ai/terms-of-service">Terms of Service</a></li>
+        <li><a href="https://www.beim.ai/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Our Partners</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/for-brokers">For Brokers</a></li>
+        <li><a href="https://www.beim.ai/for-employers">For Employers</a></li>
+        <li><a href="https://www.beim.ai/for-clinics">For Clinics</a></li>
+        <li><a href="https://www.beim.ai/for-investors">Investor Inquiries</a></li>
+        <li><a href="mailto:partnerships@beim.ai">Partnership Inquiries</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><a href="mailto:support@beim.ai">support@beim.ai</a></div>
+      <div class="footer-contact-item">5900 Balcones Dr<br>Austin, TX 78731</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 All rights reserved. Beim Health, LLC.</span>
+    <div class="footer-legal-links">
+      <a href="https://www.beim.ai/privacy-policy">Privacy</a>
+      <a href="https://www.beim.ai/terms-of-service">Terms</a>
+      <a href="https://www.beim.ai/shipping-policy">Shipping</a>
+      <a href="https://www.beim.ai/refund-return-policy">Returns</a>
+    </div>
+  </div>
+</footer>
+
+<div class="copied" id="copiedToast">✓ Link copied!</div>
+
+<script>
+var CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSkKfZAWrcH9YyJ8Ks5VTEJV950qVsjBjho6zo0GtAUvQAxjH-y5d3cvuUHkwTHXQ/pub?output=csv';
+var AV={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
+var GM={A:{ico:'🏆',lbl:'Gold Standard',crit:'Multi-RCT',cr:'90–100%'},B:{ico:'✅',lbl:'Strong Evidence',crit:'RCT / Large Cohort',cr:'75–89%'},C:{ico:'🔬',lbl:'Emerging',crit:'Pilot / Mechanistic',cr:'50–74%'}};
+var nv,fn='',bal=0,act='HSA',poolCart=0;
+
+function sG(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function cc(v){return v>=90?'var(--green)':v>=75?'var(--cyan)':v>=50?'var(--gold)':'#f87171'}
+function dcP(s){return s==='Very High'?95:s==='High'?84:s==='Moderate'?68:s==='Low'?42:50}
+function stH(sc){if(!sc)return'';var s=parseFloat(sc);if(isNaN(s))return'';var r=Math.round(s),st='';for(var i=0;i<5;i++)st+=i<r?'★':'☆';return'<div class="stars"><span class="s">'+st+'</span><span class="rc">'+s.toFixed(1)+'</span></div>';}
+function catE(c){var l=(c||'').toLowerCase();if(l.indexOf('weight')>-1)return'⚖️';if(l.indexOf('monitor')>-1||l.indexOf('ring')>-1)return'⌚';if(l.indexOf('cancer')>-1||l.indexOf('screen')>-1)return'🔬';if(l.indexOf('fitness')>-1)return'🏋️';return'🏥';}
+
+window.addEventListener('DOMContentLoaded',function(){
+  var p=new URLSearchParams(location.search);
+  nv=p.get('nav')||sG('beim_nav')||'brooks';if(nv==='skip')nv='brooks';
+  fn=p.get('first_name')?decodeURIComponent(p.get('first_name')):(sG('beim_first_name')||'');
+  bal=parseFloat(p.get('balance'))||0;act=p.get('acct')||'HSA';
+
+  var img=AV[nv]||AV.brooks,nm=nv==='everly'?'Everly':'Brooks';
+
+  // Balance bar
+  if(bal>0){
+    document.getElementById('balBar').classList.add('visible');
+    document.getElementById('pageWrap').classList.add('has-bal');
+    document.getElementById('balAv').innerHTML='<img src="'+img+'"/>';
+    document.getElementById('balNm').textContent=nm;
+    document.getElementById('balVal').textContent='$'+bal.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
+    document.getElementById('balAcct').textContent=act;
+  }
+
+  fetch(CSV).then(function(r){return r.text()}).then(function(c){
+    var all=pCSV(c),pools=all.filter(function(p){return p._pool;});
+    pools.sort(function(a,b){return b._pp-a._pp;});
+    render(pools);
+  }).catch(function(e){
+    console.error(e);
+    document.getElementById('tiles').innerHTML='<div class="empty"><div class="empty-ico">⚠️</div><div class="empty-t">Couldn\'t load pools</div></div>';
+  });
+});
+
+function pCSV(t){var ls=t.split('\n');if(ls.length<2)return[];var h=cL(ls[0]),out=[];for(var i=1;i<ls.length;i++){if(!ls[i].trim())continue;var v=cL(ls[i]),r={};for(var j=0;j<h.length;j++)r[h[j]]=v[j]||'';var a=(r.product_active||'').replace(/['"]/g,'').trim().toUpperCase();if(a!=='TRUE'&&a!=='YES')continue;var ps=(r.price||'').replace(/[$,]/g,'').trim();var pr=parseFloat(ps);if(!pr||pr<=0)continue;r._p=pr;var cp=(r.community_pool||'').replace(/['"]/g,'').trim().toUpperCase();r._pool=cp==='TRUE'||cp==='YES';if(r._pool){r._pp=parseInt(r.pool_progress)||0;r._ps=parseInt(r.pool_spots_left)||0;var ppS=(r.pool_price||'').replace(/[$,]/g,'').trim();r._pr=parseFloat(ppS)||r._p*0.9;r._exp=parseInt(r.pool_expiration_days)||30;}r.hsa_fsa_eligible=(r.hsa_fsa_eligible||'').replace(/['"]/g,'').trim();r.requires_medical_necessity=(r.requires_medical_necessity||'').replace(/['"]/g,'').trim();out.push(r);}return out;}
+
+function cL(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(q){if(ch==='"'&&l[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else{if(ch==='"')q=true;else if(ch===','){r.push(c.trim());c=''}else c+=ch}}r.push(c.trim());return r;}
+
+function render(pools){
+  var el=document.getElementById('tiles');
+  if(!pools.length){el.innerHTML='<div class="empty"><div class="empty-ico">🤝</div><div class="empty-t">No active pools right now</div></div>';return;}
+  var ts=0,td=0;pools.forEach(function(p){ts+=(p._p-p._pr);td+=((p._p-p._pr)/p._p*100);});
+  document.getElementById('stCount').textContent=pools.length;
+  document.getElementById('stSaved').textContent='$'+Math.round(ts);
+  document.getElementById('stDisc').textContent=Math.round(td/pools.length)+'%';
+  var html='';
+  pools.forEach(function(p,idx){
+    var g=(p.grade||'B').trim(),gm=GM[g]||GM.B,dc=(p.doctor_confidence||'').trim(),dcV=dcP(dc),clr=cc(dcV);
+    var saved=p._p-p._pr,savePct=Math.round((saved/p._p)*100),eff=p._pr,hsa=bal>0?Math.min(eff,bal):0,oop=eff-hsa;
+    var conds=(p.conditions||'').split(',').filter(Boolean);
+    var imgUrl=(p.product_image_url||'').trim(),isBad=!imgUrl||imgUrl.indexOf('admin.shopify')>-1;
+    var imgH=isBad?'<span class="t-emo">'+catE(p.category)+'</span>':'<img src="'+esc(imgUrl)+'" alt="'+esc(p.product_name)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<span class=t-emo>'+catE(p.category)+'</span>\'"/>';
+    var needsLmn=p.requires_medical_necessity==='Yes';
+    var bd='';if(p.hsa_fsa_eligible==='Yes')bd+='<span class="tb hsa">✓ HSA/FSA</span>';if(needsLmn)bd+='<span class="tb lmn">📋 LMN</span>';bd+='<span class="tb pool">🤝 Pool</span>';
+    var condsH='';if(conds.length){condsH='<div class="cond-pills">';conds.slice(0,5).forEach(function(c,i){condsH+='<span class="cp '+(i<1?'pri':'sec')+'">'+esc(c.trim())+'</span>';});condsH+='</div>';}
+    var sn=esc(p.product_name||'').replace(/'/g,"\\'");
+    var urgency=p._exp<=7?'🔥 '+p._exp+'d left':p._exp<=14?'⏳ '+p._exp+'d left':p._exp+'d left';
+    var urgencyClass=p._exp<=7?' style="color:var(--red);border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.08)"':'';
+
+    html+='<div class="tile">';
+    // Top: image + info
+    html+='<div class="t-top"><div class="t-img">'+imgH+'</div><div class="t-info"><div class="t-row1"><span class="t-grade g'+g.toLowerCase()+'">CEL '+g+'</span><span class="t-cat">'+esc(p.category||'')+'</span></div><div class="t-nm">'+esc(p.product_name)+'</div><div class="t-brand">'+esc(p.brand||'')+'</div><div class="t-badges">'+bd+'</div></div></div>';
+    // Mid: price + pool
+    html+='<div class="t-mid"><div class="t-price"><div class="t-price-old">Retail $'+p._p.toFixed(2)+'</div><div class="t-price-new">$'+eff.toFixed(2)+'</div><div class="t-price-save">↓ $'+saved.toFixed(0)+' off ('+savePct+'%)</div>';
+    if(bal>0){html+='<div class="t-hsa-split"><div class="t-hsa-row"><span class="t-hsa-k">'+act+' covers</span><span class="t-hsa-v gn">-$'+hsa.toFixed(2)+'</span></div><div class="t-hsa-row"><span class="t-hsa-k">Out of pocket</span><span class="t-hsa-v '+(oop===0?'gn':'gd')+'">$'+oop.toFixed(2)+(oop===0?' ✓':'')+'</span></div></div>';}
+    html+='</div>';
+    html+='<div class="t-pool"><div class="t-pool-hdr"><span class="t-pool-title">🤝 Community Pool</span><span class="t-pool-timer"'+urgencyClass+'>'+urgency+'</span></div><div class="t-pool-bar"><div class="t-pool-fill" style="width:'+p._pp+'%"></div></div><div class="t-pool-meta"><span><strong>'+p._ps+'</strong> spots left</span><span><strong>'+p._pp+'%</strong> filled</span></div><div class="t-pool-refund">Auto-refund if pool doesn\'t fill</div></div></div>';
+    // Actions
+    html+='<div class="t-actions"><button class="btn-pool" onclick="joinPool(\''+sn+'\')">🤝 Join Pool — Save $'+saved.toFixed(0)+'</button><button class="btn-expand" id="exp'+idx+'" onclick="toggleDetail('+idx+')">Clinical Detail <span class="arrow">▼</span></button></div>';
+    // Share
+    html+='<div class="t-share"><span class="t-share-lbl">Share:</span><a class="sh" onclick="shareSMS(\''+sn+'\','+saved.toFixed(0)+')">💬</a><a class="sh" onclick="shareX(\''+sn+'\','+saved.toFixed(0)+')"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a class="sh" onclick="shareFB(\''+sn+'\')"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a class="sh" onclick="copyLink(\''+sn+'\')">🔗</a></div>';
+    // Trust
+    html+='<div class="t-trust"><span class="tt">HSA/FSA Eligible</span><span class="tt">30-Day Returns</span><span class="tt">IRS Receipt</span><span class="tt">Auto-Refund</span></div>';
+    // Expandable clinical detail
+    html+='<div class="t-detail" id="det'+idx+'"><div class="t-detail-inner">';
+    html+='<div class="conf"><div class="conf-top"><span class="conf-lbl">Physician Confidence</span><span class="conf-val" style="color:'+clr+'">'+dcV+'%</span></div><div class="conf-bar"><div class="conf-fill" style="width:'+dcV+'%;background:'+clr+'"></div></div><div class="conf-sub"><strong style="color:'+clr+'">'+(dc||'Moderate')+'</strong> confidence</div>'+stH(p.patient_review_score)+'<div class="gex"><span class="gex-ico">'+gm.ico+'</span><div class="gex-bd"><strong>'+gm.lbl+' · '+gm.crit+' · '+gm.cr+'</strong></div></div></div>';
+    html+='<div class="conds"><div class="conds-title">Matched Conditions</div>'+condsH+'</div>';
+    if(needsLmn){html+='<div class="lmn-mini"><div class="lmn-title">📋 LMN Pathway</div><div class="lmn-opt"><span class="lmn-ico">👨‍⚕️</span><div><strong>Beim physician — $35</strong> Signed ~4 hrs</div></div><div class="lmn-opt"><span class="lmn-ico">📄</span><div><strong>Your own doctor</strong> Pre-filled template</div></div><div class="lmn-opt"><span class="lmn-ico">✅</span><div><strong>Already have one?</strong> Upload at checkout</div></div></div>';}
+    html+='</div></div>';
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function toggleDetail(idx){
+  var det=document.getElementById('det'+idx);
+  var btn=document.getElementById('exp'+idx);
+  det.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function joinPool(n){
+  var bp=new URLSearchParams();
+  if(bal>0)bp.set('balance',bal.toFixed(2));if(act)bp.set('acct',act);if(nv)bp.set('nav',nv);
+  if(fn)bp.set('first_name',encodeURIComponent(fn));
+  var em=sG('beim_email');if(em)bp.set('email',encodeURIComponent(em));
+  bp.set('pool_join',encodeURIComponent(n));
+  location.href='https://go.beim.ai/products?'+bp.toString();
+}
+
+/* ── Share functions ── */
+var poolUrl='https://go.beim.ai/community-pool';
+function shareSMS(name,saved){window.open('sms:?&body='+encodeURIComponent('Check out '+name+' on Beim Health Community Pool — save $'+saved+' with group buying. HSA/FSA eligible! '+poolUrl));}
+function shareX(name,saved){window.open('https://x.com/intent/tweet?text='+encodeURIComponent('I joined the Community Pool for '+name+' on @BeimHealth — saving $'+saved+' with group buying. HSA/FSA eligible!')+'&url='+encodeURIComponent(poolUrl),'_blank');}
+function shareFB(name){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(poolUrl),'_blank');}
+function copyLink(name){var slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');navigator.clipboard.writeText(poolUrl+'?product='+slug).then(showCopied).catch(function(){prompt('Copy:',poolUrl);});}
+function sharePageSMS(){window.open('sms:?&body='+encodeURIComponent('Beim Health Community Pool — group buying for HSA/FSA eligible health products. More people join, everyone saves! '+poolUrl));}
+function sharePageX(){window.open('https://x.com/intent/tweet?text='+encodeURIComponent('Group buying for health products — HSA/FSA eligible, tax-free savings. @BeimHealth Community Pool')+'&url='+encodeURIComponent(poolUrl),'_blank');}
+function sharePageFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(poolUrl),'_blank');}
+function copyPageLink(){navigator.clipboard.writeText(poolUrl).then(showCopied).catch(function(){prompt('Copy:',poolUrl);});}
+function showCopied(){var t=document.getElementById('copiedToast');t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
+</script>
+</body>
+</html>
