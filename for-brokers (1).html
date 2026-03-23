@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Brokers — Beim Health</title>
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f0f1a;--bg-card:#1a1a2e;--bg-elev:#22223a;--border:rgba(255,255,255,0.07);--cyan:#6ee0f5;--purple:#6454f0;--blue:#6aa3f3;--cyan-dim:rgba(110,224,245,0.10);--purple-dim:rgba(100,84,240,0.12);--border-c:rgba(110,224,245,0.22);--border-p:rgba(100,84,240,0.30);--green:#3dd9b6;--green-dim:rgba(61,217,182,0.10);--gold:#f59e0b;--gold-dim:rgba(245,158,11,0.10);--text:#f0f0ff;--muted:#8a8da8;--dim:#5a5d78;--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(61,217,182,0.08),transparent 70%);top:-20%;left:-12%}
+.orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(110,224,245,0.06),transparent 70%);bottom:-8%;right:-8%}
+.orb-3{width:400px;height:400px;background:radial-gradient(circle,rgba(100,84,240,0.05),transparent 70%);top:40%;left:55%}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 100%);pointer-events:none;z-index:0}
+
+/* ── Nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 40px;height:64px;background:rgba(15,15,26,0.90);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:8px;list-style:none;align-items:center;margin-left:auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:8px 14px;border-radius:8px;transition:color 0.2s,background 0.2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.nav-cta{background:linear-gradient(135deg,var(--purple),var(--blue))!important;color:#fff!important;font-weight:700!important;padding:10px 18px!important;border-radius:10px;font-size:14px!important;transition:box-shadow 0.2s,transform 0.15s!important}
+.nav-cta:hover{box-shadow:0 0 24px rgba(100,84,240,0.5)!important;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;z-index:1000}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(15,15,26,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:20px 24px;z-index:899}
+.mobile-menu a{display:block;color:var(--muted);text-decoration:none;font-size:16px;font-weight:500;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.mobile-menu a:last-child{border:none}
+.mobile-menu a:hover{color:var(--text)}
+.mobile-menu .nav-cta-m{display:inline-flex;margin-top:12px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:700;padding:12px 24px;border-radius:10px;font-size:14px;text-decoration:none}
+
+/* ── Shared ── */
+.section-tag{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--blue) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.sec-title{font-size:clamp(34px,3.8vw,52px);font-weight:800;line-height:1.08;letter-spacing:-1.5px;color:#fff;margin-bottom:14px}
+.sec-sub{font-size:16px;color:rgba(240,240,255,0.55);line-height:1.75;max-width:540px}
+section{position:relative;z-index:1;padding:96px 48px}
+.dark-bg{background:rgba(26,26,46,0.35)}
+.inner{max-width:960px;margin:0 auto}
+
+/* ═══ HERO ═══ */
+.hero{position:relative;z-index:1;min-height:85vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 48px 80px;overflow:hidden}
+.hero-content{max-width:740px;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(61,217,182,0.25);color:var(--green);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:28px;animation:fu 0.6s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+.hero h1{font-size:clamp(42px,5.5vw,72px);font-weight:800;line-height:1.04;letter-spacing:-2.5px;margin-bottom:24px;animation:fu 0.6s .1s ease both;color:#fff}
+.hero-sub{font-size:18px;font-weight:400;line-height:1.75;color:rgba(240,240,255,0.60);max-width:580px;margin:0 auto 20px;animation:fu 0.6s .2s ease both}
+.hero-free{display:inline-flex;align-items:center;gap:8px;background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);color:var(--green);font-size:14px;font-weight:700;padding:10px 22px;border-radius:100px;margin-bottom:36px;animation:fu 0.6s .25s ease both}
+.hero-free::before{content:'✓';font-size:12px}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fu 0.6s .3s ease both}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:16px 32px;border-radius:var(--radius);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:box-shadow .25s,transform .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(100,84,240,0.45)}
+.btn-secondary{background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;padding:16px 32px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.12);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,background .2s,color .2s}
+.btn-secondary:hover{border-color:var(--border-c);background:var(--cyan-dim);color:var(--cyan)}
+
+/* ═══ PROBLEM ═══ */
+.prob-card{max-width:900px;margin:0 auto;background:linear-gradient(135deg,rgba(245,158,11,0.05),rgba(239,68,68,0.03));border:1px solid rgba(245,158,11,0.18);border-radius:24px;padding:48px;position:relative;overflow:hidden}
+.prob-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),rgba(239,68,68,0.6))}
+.prob-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.prob-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
+.ps{text-align:center}
+.ps-num{font-family:'DM Mono',monospace;font-size:36px;font-weight:500;line-height:1;letter-spacing:-1px;margin-bottom:6px;color:var(--gold)}
+.ps-text{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* ═══ VALUE PROPS ═══ */
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:48px}
+.val-card{background:var(--bg-card);padding:36px 28px;transition:background .3s}
+.val-card:hover{background:var(--bg-elev)}
+.val-icon{font-size:28px;margin-bottom:16px}
+.val-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:10px}
+.val-desc{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* ═══ BROKER REVENUE ═══ */
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.rev-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.rev-card:hover{border-color:var(--border-p);transform:translateY(-3px)}
+.rev-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.rev-card:nth-child(1)::before{background:linear-gradient(90deg,var(--green),var(--cyan))}.rev-card:nth-child(1):hover::before{opacity:1}
+.rev-card:nth-child(2)::before{background:linear-gradient(90deg,var(--purple),var(--blue))}.rev-card:nth-child(2):hover::before{opacity:1}
+.rev-card:nth-child(3)::before{background:linear-gradient(90deg,var(--gold),var(--green))}.rev-card:nth-child(3):hover::before{opacity:1}
+.rev-card:nth-child(4)::before{background:linear-gradient(90deg,var(--cyan),var(--purple))}.rev-card:nth-child(4):hover::before{opacity:1}
+.rev-icon{font-size:28px;margin-bottom:14px}
+.rev-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px}
+.rev-desc{font-size:14px;color:var(--muted);line-height:1.7}
+.rev-metric{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06)}
+.rev-metric.gn{color:var(--green)}.rev-metric.cy{color:var(--cyan)}.rev-metric.gd{color:var(--gold)}.rev-metric.pu{color:var(--purple)}
+.rev-metric-label{font-size:11px;color:var(--dim);margin-top:2px}
+
+/* ═══ HOW IT WORKS ═══ */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:48px}
+.step{background:var(--bg-card);padding:32px 24px;text-align:center;transition:background .3s;position:relative}
+.step:hover{background:var(--bg-elev)}
+.step-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--purple);letter-spacing:1px;margin-bottom:16px;display:block}
+.step-icon{font-size:28px;margin-bottom:14px;display:block}
+.step-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.step-arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--dim);z-index:2}
+.step:last-child .step-arrow{display:none}
+
+/* ═══ WHAT EMPLOYEES GET ═══ */
+.emp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.emp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:28px;display:flex;align-items:flex-start;gap:16px;transition:border-color .3s,transform .3s}
+.emp-card:hover{border-color:var(--border-p);transform:translateY(-3px)}
+.emp-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.emp-icon.c1{background:var(--cyan-dim);border:1px solid var(--border-c)}
+.emp-icon.c2{background:var(--purple-dim);border:1px solid var(--border-p)}
+.emp-icon.c3{background:var(--green-dim);border:1px solid rgba(61,217,182,0.2)}
+.emp-icon.c4{background:var(--gold-dim);border:1px solid rgba(245,158,11,0.2)}
+.emp-icon.c5{background:rgba(106,163,243,0.10);border:1px solid rgba(106,163,243,0.2)}
+.emp-icon.c6{background:var(--cyan-dim);border:1px solid var(--border-c)}
+.emp-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+.emp-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ═══ PRICING ═══ */
+.pricing-card{max-width:600px;margin:48px auto 0;background:linear-gradient(135deg,rgba(61,217,182,0.06),rgba(110,224,245,0.04));border:1px solid rgba(61,217,182,0.22);border-radius:24px;padding:48px;text-align:center;position:relative;overflow:hidden}
+.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--cyan))}
+.price-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-dim);border:1px solid rgba(61,217,182,0.25);color:var(--green);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.price-amount{font-family:'DM Mono',monospace;font-size:clamp(56px,7vw,80px);font-weight:500;color:var(--green);line-height:1;letter-spacing:-3px;margin-bottom:4px}
+.price-label{font-size:16px;color:var(--muted);margin-bottom:24px}
+.price-includes{list-style:none;display:flex;flex-direction:column;gap:12px;text-align:left;max-width:400px;margin:0 auto 28px}
+.price-includes li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(240,240,255,0.75);line-height:1.5}
+.price-includes li::before{content:'✓';color:var(--green);font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px}
+.price-note{font-size:13px;color:var(--dim);line-height:1.5;max-width:380px;margin:0 auto}
+
+/* ═══ PROOF ═══ */
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:48px}
+.proof-card{background:var(--bg-card);padding:32px 24px;text-align:center;transition:background .3s}
+.proof-card:hover{background:var(--bg-elev)}
+.proof-num{font-family:'DM Mono',monospace;font-size:32px;font-weight:500;line-height:1;margin-bottom:8px;letter-spacing:-1px}
+.proof-num.cy{background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.proof-num.gn{color:var(--green)}
+.proof-num.gd{color:var(--gold)}
+.proof-label{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.proof-sub{font-size:12px;color:var(--dim);line-height:1.4}
+
+/* ═══ FAQ ═══ */
+.faq-list{max-width:700px;margin:48px auto 0;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s}
+.faq-item:hover{border-color:rgba(255,255,255,0.12)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:12px;user-select:none}
+.faq-q-text{font-size:15px;font-weight:700;color:#fff;line-height:1.4}
+.faq-arrow{font-size:14px;color:var(--dim);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 22px 18px;font-size:14px;color:var(--muted);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* ═══ CTA + FORM ═══ */
+.cta-section{position:relative;z-index:1;padding:96px 48px;text-align:center;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(61,217,182,0.06),transparent 70%);pointer-events:none}
+.contact-card{max-width:520px;margin:40px auto 0;background:var(--bg-card);border:1px solid var(--border);border-radius:24px;padding:40px;text-align:left}
+.contact-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;text-align:center}
+.contact-sub{font-size:14px;color:var(--muted);margin-bottom:24px;text-align:center}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.f-col{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.f-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)}
+.f-input{background:rgba(8,8,18,0.8);border:1px solid rgba(255,255,255,0.10);border-radius:11px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;padding:13px 14px;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+.f-input::placeholder{color:var(--dim)}
+.f-input:focus{border-color:rgba(61,217,182,0.4);box-shadow:0 0 0 3px rgba(61,217,182,0.06)}
+.f-textarea{min-height:70px;resize:vertical}
+.f-submit{width:100%;padding:16px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;border:none;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:box-shadow .2s,transform .2s;margin-top:8px}
+.f-submit:hover{box-shadow:0 10px 40px rgba(100,84,240,0.35);transform:translateY(-1px)}
+.f-secure{font-size:11px;color:var(--dim);text-align:center;margin-top:12px}
+
+/* ═══ FOOTER ═══ */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:rgba(15,15,26,0.95)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 48px 48px}
+.footer-brand-logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:block;margin-bottom:14px}
+.footer-tagline{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:280px}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;text-decoration:none;transition:box-shadow .2s,transform .2s}
+.footer-cta-btn:hover{box-shadow:0 8px 24px rgba(100,84,240,0.4);transform:translateY(-1px)}
+.footer-socials{display:flex;gap:10px;margin-top:20px;align-items:center}
+.footer-social-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);transition:border-color .2s,background .2s,transform .2s;overflow:hidden}
+.footer-social-link:hover{border-color:var(--border-c);background:rgba(110,224,245,0.06);transform:translateY(-2px)}
+.footer-social-link img{width:20px;height:20px;object-fit:contain;border-radius:3px;opacity:.7;transition:opacity .2s}
+.footer-social-link:hover img{opacity:1}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.footer-links-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links-list a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-links-list a:hover{color:var(--text)}
+.footer-contact-item{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.footer-contact-item a{color:var(--muted);text-decoration:none}
+.footer-contact-item a:hover{color:var(--cyan)}
+.footer-bottom{padding:20px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:var(--dim)}
+.footer-legal-links{display:flex;gap:20px}
+.footer-legal-links a{font-size:12px;color:var(--dim);text-decoration:none;transition:color .2s}
+.footer-legal-links a:hover{color:var(--muted)}
+
+@media(max-width:1100px){.footer-top{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}
+  .hero{padding:120px 24px 60px;min-height:auto}
+  section,.cta-section{padding:60px 24px}
+  .prob-stats{grid-template-columns:1fr}
+  .val-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}.step-arrow{display:none}
+  .emp-grid{grid-template-columns:1fr}
+  .rev-grid{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr}
+  .f-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;padding:40px 24px 32px;gap:32px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;padding:16px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+<div class="bg-grid"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="https://www.beim.ai/" class="nav-logo">Beim Health</a>
+  <ul class="nav-links">
+    <li><a href="https://www.beim.ai/#features">Features</a></li>
+    <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+    <li><a href="https://go.beim.ai/marketplace">Marketplace</a></li>
+    <li><a href="https://www.beim.ai/about">About</a></li>
+    <li><a href="https://go.beim.ai/start" class="nav-cta">Unlock My Products →</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').style.display=document.getElementById('mobileMenu').style.display==='block'?'none':'block'" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://www.beim.ai/#features">Features</a>
+  <a href="https://www.beim.ai/#how">How It Works</a>
+  <a href="https://go.beim.ai/marketplace">Marketplace</a>
+  <a href="https://www.beim.ai/about">About</a>
+  <a href="https://go.beim.ai/start" class="nav-cta-m">Unlock My Products →</a>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge">For Benefits Brokers</span>
+    <h1>Your clients' employees<br>are <span class="grad">losing $400/year.</span><br>Fix it for free.</h1>
+    <p class="hero-sub">Beim Health is a free platform you can offer to every employer client. We help their employees unlock HSA/FSA-eligible products — with AI Care Navigators, clinical grading, and Letters of Medical Necessity handled automatically.</p>
+    <div class="hero-free">Free for brokers. Free for employers. Free for employees.</div>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Become a Broker Partner →</a>
+      <a href="#how" class="btn-secondary">See How It Works</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ THE PROBLEM ═══════════════ -->
+<section>
+  <div class="inner">
+    <div class="prob-card reveal">
+      <div class="prob-label">The Problem Your Clients Face</div>
+      <div style="font-size:20px;font-weight:700;color:#fff;line-height:1.5;max-width:660px;margin-bottom:20px">Employers fund HSA and FSA accounts. Employees don't spend them. $3.4 billion disappears every year — and your clients wonder why their benefits investment isn't driving satisfaction.</div>
+      <div style="font-size:15px;color:var(--muted);line-height:1.7;max-width:660px;margin-bottom:24px">The problem isn't employee apathy. It's friction. Employees don't know what's eligible, can't navigate Letters of Medical Necessity, and give up at checkout. That's where Beim comes in — and where you become the broker who solved it.</div>
+      <div class="prob-stats">
+        <div class="ps"><div class="ps-num">$3.4B</div><div class="ps-text">FSA dollars forfeited annually by American workers</div></div>
+        <div class="ps"><div class="ps-num">85%</div><div class="ps-text">of consumers abandon when a Letter of Medical Necessity is required</div></div>
+        <div class="ps"><div class="ps-num">~$400</div><div class="ps-text">average per employee lost every year in unused benefits</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHY BROKERS LOVE BEIM ═══════════════ -->
+<section class="dark-bg">
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">Why Brokers Partner With Us</span>
+      <h2 class="sec-title">You look like a hero.<br><span class="grad">It costs you nothing.</span></h2>
+      <p class="sec-sub">Beim is free to offer, free to onboard, and instantly increases the value of every benefits package you sell.</p>
+    </div>
+    <div class="val-grid reveal">
+      <div class="val-card"><div class="val-icon">🏆</div><div class="val-title">Differentiate Your Book</div><div class="val-desc">Every broker sells the same carriers. Beim is the add-on nobody else offers — a tangible tool employees actually use, making your benefits package stand out in RFP season.</div></div>
+      <div class="val-card"><div class="val-icon">📈</div><div class="val-title">Increase Retention</div><div class="val-desc">When employees use their benefits, employers renew. Beim drives real HSA/FSA utilization — which means your clients see ROI and stay with you longer.</div></div>
+      <div class="val-card"><div class="val-icon">💰</div><div class="val-title">Zero Cost to You</div><div class="val-desc">No fees, no minimums, no contracts. Beim is free for brokers, free for employers, and free for employees. We earn a margin on products purchased — you earn client loyalty.</div></div>
+      <div class="val-card"><div class="val-icon">⚡</div><div class="val-title">5-Minute Onboarding</div><div class="val-desc">Send your client a link. Their employees enter their HSA/FSA balance and start shopping. No IT integration, no HR setup, no API keys. It just works.</div></div>
+      <div class="val-card"><div class="val-icon">📋</div><div class="val-title">LMN Handled</div><div class="val-desc">The #1 reason employees don't use their HSA? The Letter of Medical Necessity. Beim automates it — $35, signed by a physician in ~4 hours. Employees stop leaving money on the table.</div></div>
+      <div class="val-card"><div class="val-icon">🔬</div><div class="val-title">Clinically Graded Products</div><div class="val-desc">Every product in our marketplace is graded A–D by the Beim Clinical Evidence Level rubric. Employers trust it. Employees trust it. And you can stand behind it.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ BROKER BUSINESS IMPACT ═══════════════ -->
+<section>
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">Your Business Impact</span>
+      <h2 class="sec-title">How Beim makes your<br><span class="grad">brokerage more valuable.</span></h2>
+      <p class="sec-sub">This isn't just a nice-to-have. It's a quantifiable competitive advantage for your book of business.</p>
+    </div>
+    <div class="rev-grid reveal">
+      <div class="rev-card">
+        <div class="rev-icon">🔒</div>
+        <div class="rev-title">Higher Client Retention</div>
+        <div class="rev-desc">Clients who see real employee engagement with their benefits don't shop for a new broker. Beim gives employers a measurable utilization story to point to at renewal.</div>
+        <div class="rev-metric gn">+23%</div>
+        <div class="rev-metric-label">avg. renewal lift when benefits utilization rises</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-icon">📊</div>
+        <div class="rev-title">Stronger RFP Position</div>
+        <div class="rev-desc">When you're up against another broker with the same carriers and the same rates, Beim is the differentiator. A free HSA/FSA optimization tool that no competitor is offering yet.</div>
+        <div class="rev-metric pu">Win rate</div>
+        <div class="rev-metric-label">Beim broker partners report stronger competitive positioning</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-icon">💬</div>
+        <div class="rev-title">Open Enrollment Engagement</div>
+        <div class="rev-desc">Employees who see Beim during OE are more likely to fund their HSA/FSA — because they can immediately see what it unlocks. That's higher enrollment in HDHP plans your clients prefer.</div>
+        <div class="rev-metric cy">3× more</div>
+        <div class="rev-metric-label">HSA/FSA product purchases when LMN friction is removed</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-icon">🤝</div>
+        <div class="rev-title">Referral-Ready Offering</div>
+        <div class="rev-desc">Beim is easy to explain: "A free tool that helps your employees spend their HSA/FSA on clinically graded products." Clients refer you to other employers. Your book grows organically.</div>
+        <div class="rev-metric gd">$0 CAC</div>
+        <div class="rev-metric-label">client acquisition cost for referral-driven growth</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="dark-bg" id="how">
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">How It Works</span>
+      <h2 class="sec-title">From your pitch to<br><span class="grad">employee checkout.</span></h2>
+      <p class="sec-sub">Four steps. No technical setup. No implementation calls.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><span class="step-num">01</span><span class="step-icon">🤝</span><div class="step-title">You Partner With Beim</div><div class="step-desc">Sign up as a broker partner (free). Get a co-branded link and materials you can share with any employer client.</div><span class="step-arrow">→</span></div>
+      <div class="step"><span class="step-num">02</span><span class="step-icon">📧</span><div class="step-title">Share With Clients</div><div class="step-desc">Include Beim in your next benefits review, open enrollment packet, or RFP. Position it as a free HSA/FSA optimization tool.</div><span class="step-arrow">→</span></div>
+      <div class="step"><span class="step-num">03</span><span class="step-icon">👩‍💻</span><div class="step-title">Employees Self-Serve</div><div class="step-desc">Employees visit beim.ai, enter their balance, meet their Care Navigator, and browse clinically graded HSA/FSA-eligible products.</div><span class="step-arrow">→</span></div>
+      <div class="step"><span class="step-num">04</span><span class="step-icon">🎉</span><div class="step-title">Benefits Get Used</div><div class="step-desc">Employees buy with their HSA/FSA. LMNs are handled. Benefits stop going to waste. Your client is happy. You retain the account.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHAT EMPLOYEES GET ═══════════════ -->
+<section>
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">What Your Clients' Employees Get</span>
+      <h2 class="sec-title">A personal Care Navigator<br><span class="grad">for every employee.</span></h2>
+      <p class="sec-sub">When employees visit Beim, they get a concierge experience — not a product catalog.</p>
+    </div>
+    <div class="emp-grid reveal">
+      <div class="emp-card"><div class="emp-icon c1">👩‍⚕️</div><div><div class="emp-title">AI Care Navigators</div><div class="emp-desc">Everly and Brooks guide employees through the entire process — from balance entry to checkout. Personalized, conversational, and always available.</div></div></div>
+      <div class="emp-card"><div class="emp-icon c2">🎯</div><div><div class="emp-title">Goal-Based Matching</div><div class="emp-desc">Employees set health goals (weight, sleep, hair, stress, etc.) and the AI matches them with clinically graded products ranked by relevance.</div></div></div>
+      <div class="emp-card"><div class="emp-icon c3">📋</div><div><div class="emp-title">Instant LMN Pathway</div><div class="emp-desc">Products that need a Letter of Medical Necessity? Beim handles it — $35 via network physician (~4 hrs), template for their doctor, or upload their own.</div></div></div>
+      <div class="emp-card"><div class="emp-icon c4">💳</div><div><div class="emp-title">HSA/OOP Split Checkout</div><div class="emp-desc">If a product exceeds their HSA balance, they can split the payment — HSA covers what it can, debit card covers the rest. One transaction.</div></div></div>
+      <div class="emp-card"><div class="emp-icon c5">🛡️</div><div><div class="emp-title">Insurance Verification</div><div class="emp-desc">Before touching HSA funds, we check what insurance already covers — so employees use insurance first, HSA second, and their wallet last.</div></div></div>
+      <div class="emp-card"><div class="emp-icon c6">🔬</div><div><div class="emp-title">Clinical Evidence Grading</div><div class="emp-desc">Every product is graded A–D using the Beim CEL rubric. Grade A = multi-RCT, 90–100% physician confidence. Real science, not marketing.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<section class="dark-bg" id="pricing">
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">Pricing</span>
+      <h2 class="sec-title">Free. Actually free.<br><span class="grad">No asterisks.</span></h2>
+    </div>
+    <div class="pricing-card reveal">
+      <div class="price-badge">Broker Partner Plan</div>
+      <div class="price-amount">$0</div>
+      <div class="price-label">per broker · per employer · per employee — forever</div>
+      <ul class="price-includes">
+        <li>Unlimited employer clients on your account</li>
+        <li>Co-branded landing page with your firm's name</li>
+        <li>Employee self-service — no HR admin required</li>
+        <li>Full access to our growing CEL-graded product catalog</li>
+        <li>AI Care Navigator for every employee</li>
+        <li>Automated Letters of Medical Necessity</li>
+        <li>HSA/FSA split checkout and insurance verification</li>
+        <li>Community Pool group buying discounts</li>
+        <li>HIPAA-compliant — no employee data shared with brokers</li>
+      </ul>
+      <div class="price-note">Beim earns a margin on products purchased through the platform. That's it. No fees to you, your clients, or their employees — ever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PROOF ═══════════════ -->
+<section>
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">By The Numbers</span>
+      <h2 class="sec-title">The results your clients<br><span class="grad">will actually see.</span></h2>
+    </div>
+    <div class="proof-grid reveal">
+      <div class="proof-card"><div class="proof-num cy">3×</div><div class="proof-label">More Purchases</div><div class="proof-sub">When LMN friction is removed</div></div>
+      <div class="proof-card"><div class="proof-num gn">Hundreds</div><div class="proof-label">Eligible Products</div><div class="proof-sub">Clinically graded A–D</div></div>
+      <div class="proof-card"><div class="proof-num gd">~4 hrs</div><div class="proof-label">LMN Turnaround</div><div class="proof-sub">vs. 3+ weeks traditionally</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="dark-bg">
+  <div class="inner">
+    <div class="reveal">
+      <span class="section-tag">Questions</span>
+      <h2 class="sec-title">Common broker <span class="grad">questions.</span></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-q-text">How is this actually free?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Beim earns a margin on products purchased through the platform — similar to how a marketplace works. We don't charge brokers, employers, or employees any fees. Your clients get a free benefit enhancement; we get customers who buy health products.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-q-text">Does the employer need to do anything to set this up?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Nothing. No IT integration, no API setup, no HR admin. Employees self-serve — they visit beim.ai, enter their HSA/FSA balance, and start shopping. The employer just needs to share the link (we provide email templates and open enrollment materials).</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-q-text">Is employee health data shared with the broker or employer?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Absolutely not. Beim is HIPAA-compliant. Employee health data, purchase history, and biometrics are never shared with brokers, employers, or any third party. Employees control their own data.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-q-text">What does "co-branded" mean?</span><span class="faq-arrow">▼</span></div><div class="faq-a">When you sign up as a broker partner, we create a landing page that includes your firm's name — so when employees visit, they see that this benefit was brought to them through your brokerage. It reinforces your value without any additional work.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-q-text">Can I use Beim during open enrollment?</span><span class="faq-arrow">▼</span></div><div class="faq-a">That's the ideal time. During OE, employees are already thinking about benefits. Include Beim in your enrollment materials as "a free HSA/FSA optimization tool" — it gives employees an immediate reason to fund their accounts and choose higher-deductible plans.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-q-text">How does Beim handle Letters of Medical Necessity?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Three pathways at checkout: (1) Use Beim's network physician — $35, signed in ~4 hours; (2) We generate a pre-filled template the employee takes to their own doctor; (3) Employee uploads an LMN they already have. The whole process is integrated into checkout.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA + CONTACT ═══════════════ -->
+<section class="cta-section" id="contact">
+  <span class="section-tag">Get Started</span>
+  <h2 class="sec-title" style="max-width:600px;margin:0 auto 16px">Add Beim to your<br><span class="grad">benefits toolkit — free.</span></h2>
+  <p class="sec-sub" style="max-width:440px;margin:0 auto 0">Fill out the form below and we'll set up your broker partner account within 24 hours. No contracts, no commitments.</p>
+
+  <div class="contact-card reveal">
+    <div class="contact-title">Broker Partner Signup</div>
+    <div class="contact-sub">We'll prepare your co-branded link, email templates, and open enrollment materials — delivered to your inbox within 24 hours.</div>
+    <div class="f-row">
+      <div class="f-col"><label class="f-label">First Name</label><input class="f-input" type="text" placeholder="Jamie" id="bkFirst"/></div>
+      <div class="f-col"><label class="f-label">Last Name</label><input class="f-input" type="text" placeholder="Williams" id="bkLast"/></div>
+    </div>
+    <div class="f-col"><label class="f-label">Work Email</label><input class="f-input" type="email" placeholder="jamie@brokerage.com" id="bkEmail"/></div>
+    <div class="f-col"><label class="f-label">Brokerage / Agency</label><input class="f-input" type="text" placeholder="e.g. Marsh McLennan, Independent" id="bkFirm"/></div>
+    <div class="f-row">
+      <div class="f-col"><label class="f-label">Approx. Employer Clients</label><input class="f-input" type="text" placeholder="e.g. 15, 50, 200+" id="bkClients"/></div>
+      <div class="f-col"><label class="f-label">Approx. Total Employees</label><input class="f-input" type="text" placeholder="e.g. 500, 5,000" id="bkEEs"/></div>
+    </div>
+    <div class="f-col"><label class="f-label">Anything else? (optional)</label><textarea class="f-input f-textarea" placeholder="Questions, timeline, specific client needs…" id="bkMsg"></textarea></div>
+    <button class="f-submit" onclick="submitBroker()">Become a Broker Partner →</button>
+    <div class="f-secure">🔒 No contracts · No fees · Cancel anytime</div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="https://www.beim.ai/" class="footer-brand-logo">Beim Health</a>
+      <p class="footer-tagline">We unlock products your HSA and FSA can buy — with AI-powered clinical grading, Letters of Medical Necessity, and a personal Care Navigator.</p>
+      <a href="https://go.beim.ai/start" class="footer-cta-btn">Unlock My Products →</a>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/profile.php?id=61578840364487" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a2e3c8654df8d0a3b_facebook-icon-logo-png-transparent.png" alt="Facebook"/></a>
+        <a href="https://www.youtube.com/@BeimHealth" target="_blank" rel="noopener" class="footer-social-link" aria-label="YouTube"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09aa6694417fa32be52_Youtube_logo.png" alt="YouTube"/></a>
+        <a href="https://www.tiktok.com/@beim_health" target="_blank" rel="noopener" class="footer-social-link" aria-label="TikTok"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09adce691913c58d4e1_15f9f8356f985754c1fbe4824c6e770d.jpg" alt="TikTok"/></a>
+        <a href="https://www.instagram.com/beim_health/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09a26cffc65b9613863_instagram%20logo.jpg" alt="Instagram"/></a>
+        <a href="https://www.linkedin.com/company/beim-health/?viewAsMember=true" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc09ac7dd69a0b52a5b00_LI-In-Bug.png" alt="LinkedIn"/></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/">Home</a></li>
+        <li><a href="https://www.beim.ai/about">About Us</a></li>
+        <li><a href="https://www.beim.ai/#features">Features</a></li>
+        <li><a href="https://www.beim.ai/#how">How It Works</a></li>
+        <li><a href="https://www.beim.ai/terms-of-service">Terms of Service</a></li>
+        <li><a href="https://www.beim.ai/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Our Partners</div>
+      <ul class="footer-links-list">
+        <li><a href="https://www.beim.ai/for-brokers">For Brokers</a></li>
+        <li><a href="https://www.beim.ai/for-employers">For Employers</a></li>
+        <li><a href="https://www.beim.ai/for-clinics">For Clinics</a></li>
+        <li><a href="https://www.beim.ai/for-investors">Investor Inquiries</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#b9c9d8cbcdd7dccbcad1d0c9caf9dbdcd0d497d8d0">Partnership Inquiries</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item"><a href="/cdn-cgi/l/email-protection#5e2d2b2e2e312c2a1e3c3b3733703f37"><span class="__cf_email__" data-cfemail="9ae9efeaeaf5e8eedaf8fff3f7b4fbf3">[email&#160;protected]</span></a></div>
+      <div class="footer-contact-item">5900 Balcones Dr<br>Austin, TX 78731</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 All rights reserved. Beim Health, LLC.</span>
+    <div class="footer-legal-links">
+      <a href="https://www.beim.ai/privacy-policy">Privacy</a>
+      <a href="https://www.beim.ai/terms-of-service">Terms</a>
+      <a href="https://www.beim.ai/shipping-policy">Shipping</a>
+      <a href="https://www.beim.ai/refund-return-policy">Returns</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id==='#')return;const t=document.querySelector(id);if(!t)return;e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-64,behavior:'smooth'})})});
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.08});
+reveals.forEach(el=>obs.observe(el));
+
+function submitBroker(){
+  const email=document.getElementById('bkEmail').value.trim();
+  const first=document.getElementById('bkFirst').value.trim();
+  const last=document.getElementById('bkLast').value.trim();
+  const firm=document.getElementById('bkFirm').value.trim();
+  const clients=document.getElementById('bkClients').value.trim();
+  const ees=document.getElementById('bkEEs').value.trim();
+  const msg=document.getElementById('bkMsg').value.trim();
+  if(!email||!email.includes('@')){document.getElementById('bkEmail').style.borderColor='rgba(239,68,68,0.5)';document.getElementById('bkEmail').focus();setTimeout(()=>{document.getElementById('bkEmail').style.borderColor=''},2000);return;}
+  const btn=document.querySelector('.f-submit');btn.disabled=true;btn.textContent='Sending…';
+  fetch('https://beim-webhooks.beim-health.workers.dev/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,source:'Beim Broker Page',fields:{First_Name:first,Last_Name:last,Firm:firm,Employer_Clients:clients,Total_Employees:ees,Message:msg,Lead_Type:'Broker',Funnel_Step:'broker_signup'}})}).catch(()=>{});
+  setTimeout(()=>{btn.textContent='\u2713 You\u0027re In';btn.style.background='linear-gradient(135deg,#3dd9b6,#6ee0f5)';const card=document.querySelector('.contact-card');const note=document.createElement('div');note.style.cssText='margin-top:20px;padding:20px;background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);border-radius:12px;text-align:center;font-size:14px;color:#3dd9b6;font-weight:600;line-height:1.6;animation:fu .4s ease both';note.innerHTML='Your broker toolkit is being prepared, '+(first||'partner')+'.<br>Check <strong>'+email+'</strong> within 24 hours for your co-branded link, email templates, and open enrollment materials.';card.appendChild(note);},800);
+}
+</script>
+</body>
+</html>
