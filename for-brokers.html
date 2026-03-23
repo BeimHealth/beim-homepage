@@ -519,9 +519,48 @@ function submitBroker(){
   const ees=document.getElementById('bkEEs').value.trim();
   const msg=document.getElementById('bkMsg').value.trim();
   if(!email||!email.includes('@')){document.getElementById('bkEmail').style.borderColor='rgba(239,68,68,0.5)';document.getElementById('bkEmail').focus();setTimeout(()=>{document.getElementById('bkEmail').style.borderColor=''},2000);return;}
-  const btn=document.querySelector('.f-submit');btn.disabled=true;btn.textContent='Sending…';
-  fetch('https://beim-webhooks.beim-health.workers.dev/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,source:'Beim Broker Page',fields:{First_Name:first,Last_Name:last,Firm:firm,Employer_Clients:clients,Total_Employees:ees,Message:msg,Lead_Type:'Broker',Funnel_Step:'broker_signup'}})}).catch(()=>{});
-  setTimeout(()=>{btn.textContent='\u2713 You\u0027re In';btn.style.background='linear-gradient(135deg,#3dd9b6,#6ee0f5)';const card=document.querySelector('.contact-card');const note=document.createElement('div');note.style.cssText='margin-top:20px;padding:20px;background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);border-radius:12px;text-align:center;font-size:14px;color:#3dd9b6;font-weight:600;line-height:1.6;animation:fu .4s ease both';note.innerHTML='Your broker toolkit is being prepared, '+(first||'partner')+'.<br>Check <strong>'+email+'</strong> within 24 hours for your co-branded link, email templates, and open enrollment materials.';card.appendChild(note);},800);
+  const btn=document.querySelector('.f-submit');btn.disabled=true;btn.textContent='Creating your partner account…';
+  fetch('https://beim-webhooks.beim-health.workers.dev/api/broker/register',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email,first_name:first,last_name:last,firm,employer_clients:clients,total_employees:ees,message:msg})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    btn.textContent='✓ You\'re In';btn.style.background='linear-gradient(135deg,#3dd9b6,#6ee0f5)';
+    const card=document.querySelector('.contact-card');
+    const note=document.createElement('div');
+    note.style.cssText='margin-top:20px;padding:24px;background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);border-radius:12px;text-align:center;font-size:14px;color:#3dd9b6;font-weight:600;line-height:1.8;animation:fu .4s ease both';
+    if(data.success&&data.cobranded_url){
+      note.innerHTML='Welcome aboard, '+(first||'partner')+'! Your broker toolkit is being prepared.'
+        +'<br>Check <strong>'+email+'</strong> within 24 hours for email templates and open enrollment materials.'
+        +'<br><br>'
+        +'<span style="font-size:11px;color:var(--dim);display:block;margin-bottom:8px">YOUR CO-BRANDED LINK — share with employer clients:</span>'
+        +'<span id="brokerUrl" style="display:block;font-family:DM Mono,monospace;font-size:13px;color:#6ee0f5;background:rgba(110,224,245,0.06);border:1px solid rgba(110,224,245,0.15);padding:12px 16px;border-radius:10px;word-break:break-all;cursor:pointer;transition:all 0.2s" onclick="copyBrokerUrl()">'+data.cobranded_url+'</span>'
+        +'<span style="font-size:10px;color:var(--dim);display:block;margin-top:6px">Click to copy · Employees who visit this link will see your firm name</span>';
+      window._brokerUrl=data.cobranded_url;
+    }else{
+      note.innerHTML='Your broker toolkit is being prepared, '+(first||'partner')+'.<br>Check <strong>'+email+'</strong> within 24 hours for your co-branded link, email templates, and open enrollment materials.';
+    }
+    card.appendChild(note);
+  })
+  .catch(()=>{
+    btn.textContent='✓ You\'re In';btn.style.background='linear-gradient(135deg,#3dd9b6,#6ee0f5)';
+    const card=document.querySelector('.contact-card');
+    const note=document.createElement('div');
+    note.style.cssText='margin-top:20px;padding:20px;background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);border-radius:12px;text-align:center;font-size:14px;color:#3dd9b6;font-weight:600;line-height:1.6;animation:fu .4s ease both';
+    note.innerHTML='Your broker toolkit is being prepared, '+(first||'partner')+'.<br>Check <strong>'+email+'</strong> within 24 hours for your co-branded link, email templates, and open enrollment materials.';
+    card.appendChild(note);
+  });
+}
+function copyBrokerUrl(){
+  if(!window._brokerUrl)return;
+  navigator.clipboard.writeText(window._brokerUrl).then(()=>{
+    const el=document.getElementById('brokerUrl');
+    const orig=el.textContent;
+    el.textContent='✓ Copied to clipboard!';el.style.color='#3dd9b6';el.style.borderColor='rgba(61,217,182,0.3)';
+    setTimeout(()=>{el.textContent=orig;el.style.color='#6ee0f5';el.style.borderColor='rgba(110,224,245,0.15)';},2000);
+  }).catch(()=>{prompt('Copy your link:',window._brokerUrl);});
 }
 </script>
 </body>
