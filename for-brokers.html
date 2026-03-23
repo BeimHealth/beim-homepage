@@ -520,7 +520,7 @@ function submitBroker(){
   const msg=document.getElementById('bkMsg').value.trim();
   if(!email||!email.includes('@')){document.getElementById('bkEmail').style.borderColor='rgba(239,68,68,0.5)';document.getElementById('bkEmail').focus();setTimeout(()=>{document.getElementById('bkEmail').style.borderColor=''},2000);return;}
   const btn=document.querySelector('.f-submit');btn.disabled=true;btn.textContent='Creating your partner account…';
-  fetch('https://beim-webhooks.beim-health.workers.dev/api/broker/register',{
+  fetch('https://beim-webhooks.steven-03f.workers.dev/api/broker/register',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({email,first_name:first,last_name:last,firm,employer_clients:clients,total_employees:ees,message:msg})
