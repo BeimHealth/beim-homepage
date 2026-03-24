@@ -366,7 +366,7 @@ async function selectNavigator(nav,cardEl){
   // Personalize the transition steps — updated copy
   document.querySelector('#step-lead .step-text').textContent='Got it, '+firstName+' \u2014 pulling together your profile\u2026';
   document.querySelector('#step-benefits .step-text').textContent=employer?'Looking into benefits with '+employer+'\u2026':'Checking available benefit options\u2026';
-  document.querySelector('#step-products .step-text').textContent=navigatorName+' is matching products to your goals and benefits\u2026';
+  document.querySelector('#step-products .step-text').textContent=navigatorName+' is finding products to match your benefits\u2026';
   document.querySelector('#step-ready .step-text').textContent='All set \u2014 '+navigatorName+' is ready when you are';
 
   document.querySelectorAll('.search-step').forEach(function(s){s.classList.remove('active','done')});
