@@ -40,7 +40,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .msg-avatar{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;margin-top:2px}
 .msg-avatar img{width:100%;height:100%;object-fit:cover}
 .msg-avatar.you{background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mu);font-weight:600}
-.bubble{font-size:14px;line-height:1.7;padding:12px 16px;border-radius:18px;max-width:85%;position:relative}
+.bubble{font-size:14px;line-height:1.7;padding:12px 16px;border-radius:18px;max-width:92%;position:relative}
 .bubble.nav{color:rgba(240,240,255,.85);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
 .bubble.nav.ev{background:rgba(110,224,245,.04);border-color:rgba(110,224,245,.1)}
 .bubble.nav.br{background:rgba(124,106,240,.04);border-color:rgba(124,106,240,.1)}
@@ -128,7 +128,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
   .messages{padding:16px 16px 100px}
   .chat-header{padding:12px 16px}
   .input-bar{padding:4px 4px}
-  .bubble{font-size:13px;padding:10px 14px;max-width:90%}
+  .bubble{font-size:13px;padding:10px 14px;max-width:95%}
 }
 </style>
 </head>
@@ -156,7 +156,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
   <div class="messages" id="messages"></div>
 
   <div class="input-bar">
-    <input class="input-field" id="chatInput" type="text" placeholder="Ask anything about your goals\u2026" autocomplete="off"/>
+    <input class="input-field" id="chatInput" type="text" placeholder="Ask anything about your goals…" autocomplete="off"/>
     <button class="send-btn" onclick="sendFreeText()">&#10148;</button>
   </div>
 </div>
@@ -188,10 +188,10 @@ var FALLBACKS={
   subs_tagged:'Got it. Now rank your 3 goals \u2014 #1 gets the heaviest weight when I score products for you. Use the arrows to reorder.',
   ranked:'Locked in. Quick question \u2014 what kind of products are you looking for? This helps me calibrate price vs quantity.',
   budget_set:'Got it. Have you used your HSA or FSA for wellness products before? Helps me know how much to explain as we go.',
-  experience_set:'Almost done \u2014 two quick questions about where you are in life right now. Not medical, just how you\'re feeling. This helps me match products to your actual situation, not just a checklist.<br><br><strong>On a scale of 1\u201310, how satisfied are you with your life overall?</strong><br><span style="font-size:11px;color:var(--dm)">Work, relationships, daily life \u2014 the big picture.</span>',
-  wb_life:'Noted. <strong>Last one \u2014 how\'s your energy and motivation on a typical day?</strong><br><span style="font-size:11px;color:var(--dm)">How you feel when you wake up, whether you sustain focus through the day.</span>',
-  wb_energy:'Got the full picture now. Let me put your profile together.',
-  summary:'I\'ve got everything I need. Your goals, preferences, and well-being baseline are all factored in. Hit <strong>Find My Products</strong> when you\'re ready \u2014 I\'ll match everything to your balance and clinical evidence.'
+  experience_set:'Almost done \u2014 I need a quick baseline on how you\u2019re feeling right now. This isn\u2019t a quiz \u2014 it\u2019s how I\u2019ll measure whether the products we pick are actually making a difference over time.<br><br><strong>On a scale of 1\u201310, how satisfied are you with your life overall?</strong><br><span style="font-size:11px;color:var(--dm)">Work, relationships, daily life \u2014 the big picture.</span>',
+  wb_life:'Got it \u2014 that\u2019s your starting point. <strong>Now, how\u2019s your energy and motivation on a typical day?</strong><br><span style="font-size:11px;color:var(--dm)">This helps me prioritize products that target energy, sleep, and focus.</span>',
+  wb_energy:'Baseline locked in. I\u2019ll check back on these numbers after you\u2019ve been using your products \u2014 that\u2019s how we\u2019ll know what\u2019s working.',
+  summary:'Your profile is set \u2014 goals, preferences, and your well-being baseline are all locked in. I\u2019ll use this to match products now and track your progress over time. Hit <strong>Find My Products</strong> when you\u2019re ready.'
 };
 
 var nav,navName='',firstName='',lastName='',employer='',email='',bal=0,acct='HSA',deadline='',hasIns=false;
