@@ -72,9 +72,36 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .phone-capture .pc-skip:hover{color:var(--mu)}
 .phone-capture .pc-done{display:flex;align-items:center;gap:8px;color:var(--gn);font-size:13px;font-weight:600}
 .phone-capture .pc-done span{font-size:16px}
+.age-capture{margin-top:10px;padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.age-capture .ac-label{font-size:12px;font-weight:700;color:var(--cy);margin-bottom:8px}
+.age-capture .ac-row{display:flex;gap:8px;align-items:center}
+.age-capture .ac-input{width:80px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:16px;color:#fff;outline:none;text-align:center;transition:border-color .2s}
+.age-capture .ac-input:focus{border-color:rgba(110,224,245,.3)}
+.age-capture .ac-input::placeholder{color:var(--dm)}
+.age-capture .ac-btn{padding:12px 20px;border-radius:12px;background:linear-gradient(135deg,var(--cy),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.age-capture .ac-btn:hover{box-shadow:0 4px 20px rgba(110,224,245,.3)}
+.age-capture .ac-skip{background:none;border:none;color:var(--dm);font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;margin-top:6px;text-decoration:underline;padding:0}
+.screening-check{margin-top:10px;padding:14px;border-radius:14px;background:rgba(61,217,182,.03);border:1px solid rgba(61,217,182,.12)}
+.screening-check .sc-title{font-size:12px;font-weight:700;color:var(--gn);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.screening-check .sc-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.screening-check .sc-item:last-child{border-bottom:none}
+.screening-check .sc-item input[type="checkbox"]{accent-color:var(--gn);width:16px;height:16px;flex-shrink:0}
+.screening-check .sc-item label{font-size:13px;color:rgba(240,240,255,.75);cursor:pointer;flex:1}
+.screening-check .sc-item .sc-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(61,217,182,.1);color:var(--gn);white-space:nowrap}
+.screening-check .sc-done{margin-top:10px;padding:10px 20px;border-radius:12px;background:linear-gradient(135deg,var(--gn),var(--cy));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;width:100%}
+.screening-check .sc-done:hover{box-shadow:0 4px 20px rgba(61,217,182,.3)}
+.procure-card{margin-top:10px;padding:14px;border-radius:14px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.15)}
+.procure-card .pr-title{font-size:12px;font-weight:700;color:var(--gd);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.procure-card .pr-text{font-size:13px;color:rgba(240,240,255,.7);line-height:1.6;margin-bottom:10px}
+.procure-card .pr-row{display:flex;gap:8px;align-items:center}
+.procure-card .pr-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:#fff;outline:none}
+.procure-card .pr-input::placeholder{color:var(--dm)}
+.procure-card .pr-budget{width:100px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:13px;color:#fff;outline:none;text-align:center}
+.procure-card .pr-btn{padding:10px 18px;border-radius:12px;background:linear-gradient(135deg,var(--gd),#e08a00);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 .phase-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);margin-bottom:8px}
 .phase-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .phase-icon.ins{background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.2)}
+.phase-icon.prev{background:rgba(61,217,182,.12);border:1px solid rgba(61,217,182,.25)}
 .phase-icon.hsa{background:rgba(110,224,245,.08);border:1px solid rgba(110,224,245,.18)}
 .phase-icon.perf{background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.18)}
 .phase-title{font-size:14px;font-weight:800;color:#fff}
@@ -82,6 +109,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .phase-badge{margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px}
 .phase-badge.green{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.18);color:var(--gn)}
 .phase-badge.cyan{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
+.order-fee-banner{margin-top:8px;padding:10px 14px;border-radius:12px;background:rgba(61,217,182,.06);border:1px solid rgba(61,217,182,.15);display:flex;align-items:center;gap:10px}
+.order-fee-banner .ofb-icon{font-size:18px;flex-shrink:0}
+.order-fee-banner .ofb-text{font-size:12px;color:rgba(240,240,255,.7);line-height:1.5}
+.order-fee-banner .ofb-text strong{color:var(--gn)}
 .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .prod-card{background:rgba(8,8,18,.6);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s var(--ease);position:relative}
 .prod-card:hover{border-color:rgba(255,255,255,.16);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
@@ -104,8 +135,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .pb.gb{background:rgba(106,163,243,.08);border:1px solid rgba(106,163,243,.2);color:var(--bl)}
 .pb.gc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu)}
 .pb.ins0{background:rgba(61,217,182,.14);border:1px solid rgba(61,217,182,.35);color:#fff;font-weight:800}
+.pb.prev0{background:rgba(61,217,182,.18);border:1px solid rgba(61,217,182,.4);color:#fff;font-weight:800}
 .pb.hsa{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.18);color:var(--cy)}
 .pb.lmn{background:var(--pu);color:#fff}
+.pb.order{background:rgba(61,217,182,.12);border:1px solid rgba(61,217,182,.3);color:var(--gn)}
 .pb.pool{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);color:var(--gd)}
 .pb.fit{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.2);color:var(--gn)}
 .pb.over{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);color:var(--gd)}
@@ -119,6 +152,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .prod-free{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--gn)}
 .prod-strike{font-size:9px;color:var(--dm);text-decoration:line-through}
 .prod-lmn-note{font-size:8px;color:var(--pu);margin-top:3px;font-weight:600}
+.prod-order-note{font-size:8px;color:var(--gn);margin-top:3px;font-weight:600}
 .action-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:11px 22px;border-radius:100px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease)}
 .action-btn:hover{box-shadow:0 6px 28px rgba(124,106,240,.3);transform:translateY(-1px)}
 .action-btn:disabled{opacity:.3;pointer-events:none}
@@ -130,6 +164,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .checkin-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
 .checkin-btn.primary{background:linear-gradient(135deg,var(--pu),var(--bl));border:none;color:#fff;font-weight:700}
 .checkin-btn.primary:hover{box-shadow:0 4px 16px rgba(124,106,240,.3)}
+.checkin-btn.green{background:linear-gradient(135deg,var(--gn),var(--cy));border:none;color:#fff;font-weight:700}
 .input-bar{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,6,16,.92);backdrop-filter:blur(20px);padding:4px 8px}
 .input-field{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:14px 16px}
 .input-field::placeholder{color:var(--dm)}
@@ -162,7 +197,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
   </div>
   <div class="messages" id="messages"></div>
   <div class="input-bar">
-    <input class="input-field" id="chatInput" type="text" placeholder="Ask about any product\u2026" autocomplete="off"/>
+    <input class="input-field" id="chatInput" type="text" placeholder="Ask about any product&#8230;" autocomplete="off"/>
     <button class="send-btn" onclick="sendFreeText()">&#10148;</button>
   </div>
 </div>
@@ -193,13 +228,28 @@ var GOAL_MAP={
 };
 var HAPPINESS_CATS=['Sleep Quality','Energy & Focus','Brain Health','General Wellness'];
 var TAX_RATE=0.30;
+var PHYSICIAN_ORDER_FEE=75;
+var LMN_FEE=35;
 
-/* ── FALLBACKS ── */
+/* ═══════════════════════════════════════════════
+   USPSTF PREVENTATIVE CODES — Insurance-First Logic
+   ICD-10 anchor codes make the claim $0 (NOT symptom codes)
+   ═══════════════════════════════════════════════ */
+var PREVENTATIVE_CODES=[
+  {category:"Cardiovascular",product_match:"Statin|Lipid Panel|Cholesterol|Heart Health Panel",uspstf_grade:"B",cpt_code:"80061",icd10_screening:"Z13.6",icd10_label:"Screening for cardiovascular disorders",rules:{age_min:40,age_max:75},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had a lipid panel or cholesterol screening in the past 12 months?"},
+  {category:"Colorectal",product_match:"Cologuard|FIT Test|Colon|Colorectal",uspstf_grade:"A",cpt_code:"81528",icd10_screening:"Z12.11",icd10_label:"Screening for malignant neoplasm of colon",rules:{age_min:45,age_max:75},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had a colonoscopy or at-home colon screening in the past 12 months?"},
+  {category:"Diabetes",product_match:"A1c|Glucose|Diabetes|Blood Sugar|Metabolic Panel",uspstf_grade:"B",cpt_code:"83036",icd10_screening:"Z13.1",icd10_label:"Screening for diabetes mellitus",rules:{age_min:35,age_max:70},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an A1c or glucose screening in the past 12 months?"},
+  {category:"Metabolic / Obesity",product_match:"Obesity|Weight Management|Peptide|GLP-1|Semaglutide|Tirzepatide",uspstf_grade:"B",cpt_code:"99401",icd10_screening:"Z68.30",icd10_label:"BMI 30.0+ obesity counseling",rules:{age_min:18,age_max:99},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had obesity or metabolic counseling with a physician in the past 12 months?"},
+  {category:"STI Screening",product_match:"STI|STD|Chlamydia|Gonorrhea|Syphilis|HIV Test|Sexual Health Panel",uspstf_grade:"A",cpt_code:"87491",icd10_screening:"Z11.3",icd10_label:"Screening for STIs",rules:{age_min:15,age_max:65},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an STI screening in the past 12 months?"},
+  {category:"Annual Physical",product_match:"Annual Physical|General Exam|Wellness Exam|Comprehensive Panel",uspstf_grade:"A",cpt_code:"99395",icd10_screening:"Z00.00",icd10_label:"General adult medical examination",rules:{age_min:18,age_max:99},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an annual physical or wellness exam in the past 12 months?"}
+];
+
 var FALLBACKS={
-  session_open:'I\u2019ve matched your profile against our full catalog. Let me walk you through three rounds \u2014 insurance unlocks, HSA optimization, and performance gaps. Tap any product to add it to your plan.',
-  phase_insurance:'These are covered by your insurance at $0 under USPSTF guidelines. Use insurance first, save your HSA for what insurance doesn\u2019t cover.',
+  session_open:'I\u2019ve matched your profile against our full catalog. Let me walk you through how to get the most out of your insurance, HSA, and budget. Tap any product to add it to your plan.',
+  phase_preventative:'These are covered by your insurance at $0 under USPSTF preventative care guidelines. You only pay the physician order fee, which is HSA/FSA eligible.',
+  phase_insurance:'These match your insurance profile at $0 under USPSTF guidelines. Use insurance first, save your HSA for what insurance doesn\u2019t cover.',
   checkin_1:'Take a look and tap any products you want. When you\u2019re ready, we\u2019ll move to your HSA picks.',
-  phase_hsa:'These match your top goals and fit your '+('HSA')+'. Every dollar here saves you ~30% in taxes.',
+  phase_hsa:'These match your top goals and fit your HSA. Every dollar here saves you ~30% in taxes.',
   checkin_2:'How are we doing? Want to adjust anything, or should I show you the performance gaps?',
   phase_gaps:'These didn\u2019t match your top 3 directly, but scored high on clinical grade and your profile.',
   summary:'Session complete. Your selections are locked in \u2014 hit Product Intelligence for the clinical deep-dive on each product before checkout.'
@@ -209,37 +259,38 @@ var nav,navName,firstName='',lastName='',employer='',email='',bal=0,acct='HSA',u
 var wbLife=5,wbEnergy=5,budgetPref='mix',expLevel='some',deadline='';
 var allProducts=[],selectedProducts=[],chatHistory=[],chatLog=[];
 var PHASE=0,phoneCaptured=false,phoneNumber='';
+var completedScreenings={};
+var preventativeMatches=[];
 
 function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-/* ══════════════════════════════════════════
-   AI REACTION ENGINE
-   Single swap point for Voiceflow migration.
-   ══════════════════════════════════════════ */
+/* ── AI REACTION ENGINE ── */
 function getAIReaction(productStep,extraUI,callback){
   showTyping();
   var topProducts=[];
-  if(productStep==='phase_insurance')topProducts=allProducts.filter(function(p){return p._insMatch&&p._score>0}).slice(0,4).map(function(p){return p.product_name});
-  else if(productStep==='phase_hsa')topProducts=allProducts.filter(function(p){return!p._insMatch&&p._score>0&&p._goalMatch}).slice(0,4).map(function(p){return p.product_name});
-  else if(productStep==='phase_gaps'){var shown=new Set();allProducts.forEach(function(p){if(p._insMatch||p._goalMatch)shown.add(p.product_name)});topProducts=allProducts.filter(function(p){return!shown.has(p.product_name)&&p._score>10}).slice(0,4).map(function(p){return p.product_name})}
+  if(productStep==='phase_preventative')topProducts=preventativeMatches.slice(0,4).map(function(p){return p.product_name});
+  else if(productStep==='phase_insurance')topProducts=allProducts.filter(function(p){return p._insMatch&&!p._prevMatch&&p._score>0}).slice(0,4).map(function(p){return p.product_name});
+  else if(productStep==='phase_hsa')topProducts=allProducts.filter(function(p){return!p._insMatch&&!p._prevMatch&&p._score>0&&p._goalMatch}).slice(0,4).map(function(p){return p.product_name});
+  else if(productStep==='phase_gaps'){var shown=new Set();allProducts.forEach(function(p){if(p._insMatch||p._prevMatch||p._goalMatch)shown.add(p.product_name)});topProducts=allProducts.filter(function(p){return!shown.has(p.product_name)&&p._score>10}).slice(0,4).map(function(p){return p.product_name})}
 
   var ctx={
     page:'products',productStep:productStep,
     firstName:firstName,employer:employer,
     balance:bal,acctType:acct,deadline:deadline,
-    goals:userGoals,
+    goals:userGoals,age:userAge,
     wellbeing:{life:wbLife,energy:wbEnergy},
     budgetPref:budgetPref,expLevel:expLevel,
     hasInsurance:hasIns,
     selectedCount:selectedProducts.length,
     selectedNames:selectedProducts.map(function(p){return p.product_name}).join(', '),
     matchedCount:allProducts.filter(function(p){return p._score>10}).length,
+    preventativeCount:preventativeMatches.length,
     topProductNames:topProducts.join(', '),
     hsaRemaining:Math.max(0,bal-getHsaAllocated()),
-    insValue:selectedProducts.filter(function(p){return p._insMatch}).reduce(function(s,p){return s+p._price},0),
-    hsaDeployed:selectedProducts.filter(function(p){return!p._insMatch}).reduce(function(s,p){return s+p._price},0)
+    insValue:selectedProducts.filter(function(p){return p._insMatch||p._prevMatch}).reduce(function(s,p){return s+p._price},0),
+    hsaDeployed:selectedProducts.filter(function(p){return!p._insMatch&&!p._prevMatch}).reduce(function(s,p){return s+p._price},0)
   };
 
   var controller=new AbortController();
@@ -283,17 +334,15 @@ window.addEventListener('DOMContentLoaded',function(){
   hasIns=p.get('benefits')==='verified';
   try{ins=JSON.parse(sGet('beim_insurance'))}catch(e){}
   try{var dob=sGet('beim_dob');if(dob)userAge=Math.floor((Date.now()-new Date(dob).getTime())/31557600000)}catch(e){}
+  if(!userAge&&p.get('age'))userAge=parseInt(p.get('age'))||null;
+  if(!userAge){var sa=sGet('beim_age');if(sa)userAge=parseInt(sa)||null}
   var existingPhone=sGet('beim_phone');
   if(existingPhone){phoneCaptured=true;phoneNumber=existingPhone}
-
-  // Update HSA fallback with actual acct type
   FALLBACKS.phase_hsa='These match your top goals and fit your '+acct+'. Every dollar here saves you ~30% in taxes.';
-
   var img=AVATARS[nav]||AVATARS.brooks;
   document.getElementById('headerAvatar').innerHTML='<img src="'+img+'"/><span class="ch-avatar-dot"></span>';
   document.getElementById('headerName').textContent=navName;
   document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendFreeText()}});
-
   addNavBubble("Pulling up your profile and matching products\u2026");
   loadCSV();
 });
@@ -332,19 +381,39 @@ function parseCSV(text){
 }
 function csvLine(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(q){if(ch==='"'&&l[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else{if(ch==='"')q=true;else if(ch===','){r.push(c.trim());c=''}else c+=ch}}r.push(c.trim());return r}
 
-/* ── SCORING ── */
+/* ── SCORING with PREVENTATIVE CODE MATCHING ── */
 function scoreAllProducts(){
+  preventativeMatches=[];
   allProducts.forEach(function(p){
     var score=0;
     var ut=(p.uspstf_screening_tags||'').split('|').filter(Boolean);
     var ur=(p.uspstf_age_sex_rules||'').split('|').filter(Boolean);
-    p._insMatch=false;
-    if(ut.length&&(userAge||ins)){
+    p._insMatch=false;p._prevMatch=false;p._prevCode=null;
+
+    // Layer 1: USPSTF Preventative Code Match
+    var prodName=(p.product_name||'').toLowerCase();
+    var prodCat=(p.category||'').toLowerCase();
+    for(var ci=0;ci<PREVENTATIVE_CODES.length;ci++){
+      var code=PREVENTATIVE_CODES[ci];
+      var patterns=code.product_match.split('|');
+      var matched=false;
+      for(var pi=0;pi<patterns.length;pi++){
+        if(prodName.indexOf(patterns[pi].toLowerCase())>-1||prodCat.indexOf(patterns[pi].toLowerCase())>-1){matched=true;break}
+      }
+      if(matched&&userAge){
+        if(userAge>=code.rules.age_min&&userAge<=code.rules.age_max&&!completedScreenings[code.category]){
+          p._prevMatch=true;p._prevCode=code;p._insMatch=true;score+=60;
+          preventativeMatches.push(p);break;
+        }
+      }
+    }
+    // Original USPSTF tag matching
+    if(!p._prevMatch&&ut.length&&(userAge||ins)){
       for(var i=0;i<ut.length;i++){
         var rule=ur[i]||'',parts=rule.split(':'),sex=parts[0]||'all',ageRange=(parts[1]||'0-99').split('-');
         var sexOk=sex==='all'||(sex==='female'&&userSex==='F')||(sex==='male'&&userSex==='M');
-        var ageOk=!userAge||(userAge>=+ageRange[0]&&userAge<=+ageRange[1]);
-        if(sexOk&&ageOk){p._insMatch=true;score+=50;break}
+        var ageOk2=!userAge||(userAge>=+ageRange[0]&&userAge<=+ageRange[1]);
+        if(sexOk&&ageOk2){p._insMatch=true;score+=50;break}
       }
     }
     var gt=(p.goal_tags||'').split('|').map(function(t){return t.trim()}).filter(Boolean);
@@ -358,13 +427,10 @@ function scoreAllProducts(){
     }
     if(p._price<=bal&&!p._insMatch)score+=8;
     var grade=(p.grade||'').trim();
-    var baseGrade=grade==='A'?20:grade==='B'?12:grade==='C'?5:0;
-    var gradeMultiplier=grade==='A'?1.5:grade==='B'?1.2:1.0;
-    score+=Math.round(baseGrade*gradeMultiplier);
+    score+=Math.round((grade==='A'?20:grade==='B'?12:grade==='C'?5:0)*(grade==='A'?1.5:grade==='B'?1.2:1.0));
     var dc=(p.doctor_confidence||'').trim();
     score+=dc==='Very High'?15:dc==='High'?10:dc==='Moderate'?5:0;
-    var happinessAvg=(wbLife+wbEnergy)/2;
-    if(happinessAvg<=5){var isHappinessCat=gt.some(function(t){return HAPPINESS_CATS.indexOf(t)>-1});if(isHappinessCat)score=Math.round(score*1.2)}
+    if((wbLife+wbEnergy)/2<=5){if(gt.some(function(t){return HAPPINESS_CATS.indexOf(t)>-1}))score=Math.round(score*1.2)}
     var genderApp=(p.gender_applicability||'a')[0].toLowerCase();
     if(genderApp!=='a'&&userSex!=='all'&&genderApp!==(userSex==='F'?'f':'m'))score=-999;
     p._score=score;
@@ -376,47 +442,85 @@ function confScore(p){
   s+=g==='A'?35:g==='B'?22:g==='C'?10:0;
   var dc=(p.doctor_confidence||'').trim();
   s+=dc==='Very High'?25:dc==='High'?18:dc==='Moderate'?10:5;
-  if(p._goalMatch)s+=20;if(p._insMatch)s+=15;
+  if(p._goalMatch)s+=20;if(p._insMatch||p._prevMatch)s+=15;
   if(p.hsa_fsa_eligible==='Yes')s+=5;
   return Math.min(99,Math.max(15,s));
 }
 
 /* ══════════════════════════════════════════
-   SESSION FLOW — AI-DRIVEN
+   SESSION FLOW — Insurance-First Waterfall
    ══════════════════════════════════════════ */
 function startSession(){
   document.getElementById('messages').innerHTML='';
-
-  // Phone capture check — if not captured, show it first with callback-to-session
-  // If already captured, go straight to AI session opener
+  if(!userAge){
+    showAgeCapture(function(){
+      scoreAllProducts();
+      afterAge();
+    });
+  } else { afterAge(); }
+}
+function afterAge(){
   if(!phoneCaptured){
     showPhoneCapture(function(){
-      // After phone is handled (captured or skipped), fire AI session opener
-      getAIReaction('session_open',null,function(){
-        setTimeout(function(){showSessionPhases()},2000);
-      });
+      afterPhone();
     });
-  } else {
-    getAIReaction('session_open',null,function(){
-      setTimeout(function(){showSessionPhases()},2000);
-    });
-  }
+  } else { afterPhone(); }
+}
+function afterPhone(){
+  if(preventativeMatches.length>0){
+    showScreeningCheck(function(){ launchSessionFlow(); });
+  } else { launchSessionFlow(); }
+}
+function launchSessionFlow(){
+  getAIReaction('session_open',null,function(){
+    setTimeout(function(){showSessionPhases()},2000);
+  });
 }
 
-/* ── PHONE CAPTURE (payoff of calculator soft tease) ── */
+/* ── AGE CAPTURE ── */
+function showAgeCapture(afterCallback){
+  var html="Before I match your products, quick question \u2014 how old are you? Some screenings are covered at <strong>$0 by insurance</strong> based on age, and I want to make sure you don\u2019t leave free care on the table.";
+  html+='<div class="age-capture" id="ageCapture">';
+  html+='<div class="ac-label">Your age</div>';
+  html+='<div class="ac-row"><input class="ac-input" id="acAge" type="number" placeholder="35" min="18" max="99" inputmode="numeric"/><button class="ac-btn" onclick="submitAge()">Continue</button></div>';
+  html+='<button class="ac-skip" onclick="skipAge()">Rather not say</button>';
+  html+='</div>';
+  addNavBubble(html);
+  window._ageAfterCallback=afterCallback;
+  setTimeout(function(){var inp=document.getElementById('acAge');if(inp)inp.focus()},100);
+}
+function submitAge(){
+  var inp=document.getElementById('acAge');
+  var age=parseInt(inp.value);
+  if(!age||age<18||age>99){inp.style.borderColor='var(--rd)';return}
+  userAge=age;sSet('beim_age',String(age));
+  var cap=document.getElementById('ageCapture');
+  if(cap)cap.innerHTML='<div style="color:var(--gn);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><span>\u2705</span> Got it, '+age+' years old.</div>';
+  addUserBubble(age.toString());
+  if(window._ageAfterCallback){setTimeout(window._ageAfterCallback,800);window._ageAfterCallback=null}
+}
+function skipAge(){
+  userAge=null;
+  var cap=document.getElementById('ageCapture');if(cap)cap.remove();
+  addUserBubble("Skip");
+  setTimeout(function(){
+    addNavBubble("No problem \u2014 I\u2019ll match you on goals and balance. You can always come back to unlock preventative screenings.");
+    if(window._ageAfterCallback){setTimeout(window._ageAfterCallback,800);window._ageAfterCallback=null}
+  },500);
+}
+
+/* ── PHONE CAPTURE (softened) ── */
 function showPhoneCapture(afterCallback){
-  // This is the payoff — the calculator page told them "once we match your products, I can text you directly"
-  var html="Remember I mentioned I\u2019d set up a direct line once we found your matches? Here\u2019s where we do that \u2014 drop your number and I\u2019ll text you this session so you\u2019ve got everything on your phone.";
+  var html="We\u2019ve covered a lot together already. I want to make sure you can reach me after this \u2014 whether you have questions about a product, need help figuring out insurance vs "+acct+", or want me to look into an LMN. Drop your number and I\u2019ll send everything to your phone so we can keep the conversation going.";
   html+='<div class="phone-capture" id="phoneCapture">';
-  html+='<div class="pc-label"><span>\uD83D\uDCF1</span> Take '+navName+' with you</div>';
-  html+='<div class="pc-row"><input class="pc-input" id="pcPhone" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend" onclick="submitPhone()">Text me</button></div>';
+  html+='<div class="pc-label"><span>\uD83D\uDCF1</span> Your direct line to '+navName+'</div>';
+  html+='<div class="pc-row"><input class="pc-input" id="pcPhone" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend" onclick="submitPhone()">Connect me</button></div>';
   html+='<div class="pc-consent"><input type="checkbox" id="pcChk" checked/><label for="pcChk">I agree to receive texts from Beim Health. Msg & data rates may apply. Reply STOP anytime.</label></div>';
   html+='<div class="pc-err" id="pcErr">&nbsp;</div>';
-  html+='<button class="pc-skip" onclick="skipPhone()">Skip for now</button>';
+  html+='<button class="pc-skip" onclick="skipPhone()">I\u2019ll stick to the browser for now</button>';
   html+='</div>';
   addNavBubble(html);
   window._phoneAfterCallback=afterCallback;
-
   setTimeout(function(){
     var inp=document.getElementById('pcPhone');
     if(inp){
@@ -432,83 +536,142 @@ function showPhoneCapture(afterCallback){
     }
   },100);
 }
-
 function formatPhoneE164(raw){
   var digits=raw.replace(/\D/g,'');
   if(digits.length===11&&digits[0]==='1')digits=digits.substring(1);
   if(digits.length!==10)return null;
   return'+1'+digits;
 }
-
 function submitPhone(){
   var raw=document.getElementById('pcPhone').value.trim();
   var agreed=document.getElementById('pcChk').checked;
   var phone=formatPhoneE164(raw);
   var errEl=document.getElementById('pcErr');
   var btn=document.getElementById('pcSend');
-
   if(!phone){document.getElementById('pcPhone').classList.add('err');errEl.textContent='Enter a valid 10-digit US number';return}
   if(!agreed){errEl.textContent='Please agree to receive texts';return}
-
   errEl.textContent='\u00a0';
   document.getElementById('pcPhone').classList.remove('err');
-  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending\u2026';
-
-  phoneCaptured=true;phoneNumber=phone;
-  sSet('beim_phone',phone);
-
+  btn.classList.add('loading');btn.disabled=true;btn.textContent='Connecting\u2026';
+  phoneCaptured=true;phoneNumber=phone;sSet('beim_phone',phone);
   if(!TWILIO_LIVE){phoneSuccess();return}
-
-  var params=new URLSearchParams();
-  params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
-  if(firstName)params.set('first_name',encodeURIComponent(firstName));
-  if(email)params.set('email',encodeURIComponent(email));
-  if(userGoals.length)params.set('goals',userGoals.join(','));
-  var planUrl='https://go.beim.ai/products?'+params.toString();
   var lid=sGet('beim_lead_id')||null;
-
   fetch(W_SMS+'/api/twilio/send-plan',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:allProducts.filter(function(p){return p._score>10}).length,plan_url:planUrl,lead_id:lid})
+    body:JSON.stringify({
+      phone:phone,first_name:firstName,navigator:nav,
+      product_count:allProducts.filter(function(p){return p._score>10}).length,
+      plan_url:'https://go.beim.ai/products',lead_id:lid,
+      sms_type:'navigator_intro',
+      balance:bal,acct_type:acct,goals:userGoals.join(', '),
+      age:userAge,has_insurance:hasIns,preventative_count:preventativeMatches.length
+    })
   }).then(function(r){return r.json()}).then(function(d){
     if(d.success){phoneSuccess()}
-    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text me';errEl.textContent='Couldn\u2019t send \u2014 '+(d.message||d.error||'try again')}
+    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Connect me';errEl.textContent='Couldn\u2019t send \u2014 '+(d.message||d.error||'try again')}
   }).catch(function(){phoneSuccess()});
 }
-
 function phoneSuccess(){
   var capture=document.getElementById('phoneCapture');
-  if(capture)capture.innerHTML='<div class="pc-done"><span>\u2705</span> Done \u2014 check your phone. I\u2019ll text you a full summary when we\u2019re finished here.</div>';
+  if(capture)capture.innerHTML='<div class="pc-done"><span>\u2705</span> Connected \u2014 check your phone. I just introduced myself over text so you\u2019ve got my direct line.</div>';
   if(window._phoneAfterCallback){setTimeout(window._phoneAfterCallback,1500);window._phoneAfterCallback=null}
 }
-
 function skipPhone(){
-  var capture=document.getElementById('phoneCapture');
-  if(capture)capture.remove();
-  addUserBubble("Skip for now");
+  var capture=document.getElementById('phoneCapture');if(capture)capture.remove();
+  addUserBubble("I\u2019ll stay in the browser");
   setTimeout(function(){
-    addNavBubble("No problem \u2014 I\u2019ll offer again at the end.");
+    addNavBubble("Totally fine \u2014 I\u2019ll check in again at the end in case you change your mind.");
     if(window._phoneAfterCallback){setTimeout(window._phoneAfterCallback,1200);window._phoneAfterCallback=null}
   },600);
 }
 
-/* ── SESSION PHASES INTRO ── */
+/* ── SCREENING HISTORY CHECK ── */
+function showScreeningCheck(afterCallback){
+  var matchedCodes=[],seen={};
+  for(var i=0;i<PREVENTATIVE_CODES.length;i++){
+    var code=PREVENTATIVE_CODES[i];
+    if(seen[code.category])continue;
+    if(userAge&&userAge>=code.rules.age_min&&userAge<=code.rules.age_max){
+      matchedCodes.push(code);seen[code.category]=true;
+    }
+  }
+  if(!matchedCodes.length){if(afterCallback)afterCallback();return}
+
+  var html="Based on your age, your insurance should cover several screenings at <strong>$0</strong> under federal preventative care guidelines. Quick check \u2014 have you already completed any of these in the past year? I don\u2019t want to recommend something you\u2019ve already done.";
+  html+='<div class="screening-check" id="screeningCheck">';
+  html+='<div class="sc-title"><span>\uD83D\uDEE1\uFE0F</span> Recent screenings (check any you\u2019ve had)</div>';
+  for(var j=0;j<matchedCodes.length;j++){
+    html+='<div class="sc-item"><input type="checkbox" id="sc_'+j+'" data-cat="'+matchedCodes[j].category+'"/>';
+    html+='<label for="sc_'+j+'">'+matchedCodes[j].screening_question+'</label>';
+    html+='<span class="sc-tag">USPSTF '+matchedCodes[j].uspstf_grade+'</span></div>';
+  }
+  html+='<button class="sc-done" onclick="submitScreenings()">Show me what\u2019s available \u2192</button>';
+  html+='</div>';
+  addNavBubble(html);
+  window._screeningAfterCallback=afterCallback;
+}
+function submitScreenings(){
+  var checks=document.querySelectorAll('#screeningCheck input[type="checkbox"]');
+  var completed=[];
+  checks.forEach(function(chk){if(chk.checked){var cat=chk.getAttribute('data-cat');completedScreenings[cat]=true;completed.push(cat)}});
+  scoreAllProducts();
+  var capEl=document.getElementById('screeningCheck');
+  if(completed.length>0){
+    if(capEl)capEl.innerHTML='<div style="color:var(--gn);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><span>\u2705</span> Noted \u2014 I won\u2019t recommend '+completed.length+' screening'+(completed.length>1?'s':'')+' you\u2019ve already had.</div>';
+    addUserBubble("Already had: "+completed.join(', '));
+  } else {
+    if(capEl)capEl.innerHTML='<div style="color:var(--gn);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><span>\u2705</span> No recent screenings \u2014 let\u2019s see what your insurance covers at $0.</div>';
+  }
+  if(window._screeningAfterCallback){setTimeout(window._screeningAfterCallback,1000);window._screeningAfterCallback=null}
+}
+
+/* ── SESSION PHASES ── */
 function showSessionPhases(){
-  addNavBubble("I\u2019m going to walk you through three rounds:<br><strong>1. Insurance Unlocks</strong> \u2014 products covered at $0<br><strong>2. HSA Optimization</strong> \u2014 best use of your tax-free dollars<br><strong>3. Performance Gaps</strong> \u2014 high-value picks beyond your goals<br><br>Tap any product to add it to your plan.");
-  setTimeout(function(){runPhase1()},2500);
+  var hasP=preventativeMatches.length>0;
+  var intro="I\u2019m going to walk you through your products using an insurance-first approach \u2014 we\u2019ll save you the most money this way:";
+  if(hasP){
+    intro+="<br><strong>1. Preventative Care ($0)</strong> \u2014 covered by insurance, physician order fee only";
+    intro+="<br><strong>2. Insurance Unlocks</strong> \u2014 additional products matched to coverage";
+    intro+="<br><strong>3. "+acct+" Optimization</strong> \u2014 best use of your tax-free dollars";
+    intro+="<br><strong>4. Performance Gaps</strong> \u2014 high-value picks beyond your goals";
+  } else {
+    intro+="<br><strong>1. Insurance Unlocks</strong> \u2014 products covered at $0";
+    intro+="<br><strong>2. "+acct+" Optimization</strong> \u2014 best use of your tax-free dollars";
+    intro+="<br><strong>3. Performance Gaps</strong> \u2014 high-value picks beyond your goals";
+  }
+  intro+="<br><br>Tap any product to add it to your plan.";
+  addNavBubble(intro);
+  setTimeout(function(){if(hasP)runPhasePreventative();else runPhase1()},2500);
+}
+
+/* ── PHASE 0: PREVENTATIVE ($0 + Physician Order) ── */
+function runPhasePreventative(){
+  PHASE=0;
+  var prevProducts=preventativeMatches.filter(function(p){return p._score>0});
+  if(!prevProducts.length){runPhase1();return}
+  var totalValue=0;prevProducts.forEach(function(p){totalValue+=p._price});
+  var header='<div class="phase-hdr"><div class="phase-icon prev">\uD83C\uDFE5</div><div><div class="phase-title">Preventative Care \u2014 $0 with Insurance</div><div class="phase-sub">USPSTF Grade A/B \u2014 covered under federal guidelines</div></div><span class="phase-badge green">$'+totalValue.toLocaleString()+' covered</span></div>';
+  var feeBanner='<div class="order-fee-banner"><div class="ofb-icon">\uD83D\uDCCB</div><div class="ofb-text">These products are <strong>$0</strong> through your insurance. A <strong>$'+PHYSICIAN_ORDER_FEE+' physician order fee</strong> applies (one fee covers all preventative items). The order fee is <strong>100% '+acct+' eligible</strong> and covers your physician signing the necessary orders and ICD-10 coding for your insurance claim.</div></div>';
+  var cards=buildProductCards(prevProducts,true);
+  getAIReaction('phase_preventative',header+feeBanner+cards,function(){
+    setTimeout(function(){
+      var btns='<div class="checkin-btns"><button class="checkin-btn green" onclick="advanceToPhase(1)">Show insurance unlocks \u2192</button><button class="checkin-btn" onclick="askQuestion()">I have a question</button></div>';
+      getAIReaction('checkin_1',btns);
+    },2000);
+  });
 }
 
 /* ── PHASE 1: Insurance Unlocks ── */
 function runPhase1(){
   PHASE=1;
-  var insProducts=allProducts.filter(function(p){return p._insMatch&&p._score>0});
+  var insProducts=allProducts.filter(function(p){return p._insMatch&&!p._prevMatch&&p._score>0});
   if(!insProducts.length){
-    addNavBubble("No insurance-matched products found for your profile. Let\u2019s move to your HSA.");
+    addNavBubble("No additional insurance-matched products for your profile. Let\u2019s move to your "+acct+".");
     setTimeout(function(){checkIn(2)},1500);return;
   }
   var show=insProducts.slice(0,6);
   var totalValue=0;show.forEach(function(p){totalValue+=p._price});
-  var header='<div class="phase-hdr"><div class="phase-icon ins">\uD83D\uDEE1\uFE0F</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 \u2014 use insurance, save your HSA</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
+  var header='<div class="phase-hdr"><div class="phase-icon ins">\uD83D\uDEE1\uFE0F</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 \u2014 use insurance, save your '+acct+'</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
   var cards=buildProductCards(show);
   getAIReaction('phase_insurance',header+cards,function(){
     setTimeout(function(){checkIn(2)},2000);
@@ -520,15 +683,13 @@ function runPhase2(){
   PHASE=2;
   var remaining=bal-getHsaAllocated();
   var hsaProducts=allProducts.filter(function(p){
-    return!p._insMatch&&p._score>0&&p._goalMatch&&p.hsa_fsa_eligible==='Yes'&&p._price<=remaining+100;
+    return!p._insMatch&&!p._prevMatch&&p._score>0&&p._goalMatch&&p.hsa_fsa_eligible==='Yes'&&p._price<=remaining+100;
   }).slice(0,8);
-
   if(!hsaProducts.length){
-    addNavBubble("No HSA-matched products fit your current budget. Let\u2019s look at performance gaps.");
+    addNavBubble("No "+acct+"-matched products fit your current budget. Let\u2019s look at performance gaps.");
     setTimeout(function(){checkIn(3)},1500);return;
   }
-
-  var header='<div class="phase-hdr"><div class="phase-icon hsa">\uD83D\uDCB3</div><div><div class="phase-title">HSA Optimization</div><div class="phase-sub">Deploy tax-free dollars on your top goals</div></div><span class="phase-badge cyan">$'+Math.round(remaining)+' available</span></div>';
+  var header='<div class="phase-hdr"><div class="phase-icon hsa">\uD83D\uDCB3</div><div><div class="phase-title">'+acct+' Optimization</div><div class="phase-sub">Deploy tax-free dollars on your top goals</div></div><span class="phase-badge cyan">$'+Math.round(remaining)+' available</span></div>';
   var cards=buildProductCards(hsaProducts);
   getAIReaction('phase_hsa',header+cards,function(){
     setTimeout(function(){checkIn(3)},2000);
@@ -539,11 +700,9 @@ function runPhase2(){
 function runPhase3(){
   PHASE=3;
   var alreadyShown=new Set();
-  allProducts.forEach(function(p){if(p._insMatch||p._goalMatch)alreadyShown.add(p.product_name)});
+  allProducts.forEach(function(p){if(p._insMatch||p._prevMatch||p._goalMatch)alreadyShown.add(p.product_name)});
   var gapProducts=allProducts.filter(function(p){return!alreadyShown.has(p.product_name)&&p._score>10}).slice(0,6);
-
   if(!gapProducts.length){checkIn('finish');return}
-
   var header='<div class="phase-hdr"><div class="phase-icon perf">\u26A1</div><div><div class="phase-title">Performance Gaps</div><div class="phase-sub">High-value products beyond your stated goals</div></div></div>';
   var cards=buildProductCards(gapProducts);
   getAIReaction('phase_gaps',header+cards,function(){
@@ -551,58 +710,52 @@ function runPhase3(){
   });
 }
 
-/* ── CHECK-INS (AI-driven) ── */
+/* ── CHECK-INS ── */
 function checkIn(nextPhase){
-  var n=selectedProducts.length;
   var step=nextPhase===2?'checkin_1':nextPhase===3?'checkin_2':'summary';
-
   if(step==='summary'){finishSession();return}
-
-  var btnLabel=nextPhase===2?'Show me HSA picks \u2192':'Show performance gaps \u2192';
+  var btnLabel=nextPhase===2?'Show me '+acct+' picks \u2192':'Show performance gaps \u2192';
   var btnNext=nextPhase===2?'advanceToPhase(2)':'advanceToPhase(3)';
   var btns='<div class="checkin-btns"><button class="checkin-btn primary" onclick="'+btnNext+'">'+btnLabel+'</button><button class="checkin-btn" onclick="askQuestion()">I have a question</button></div>';
-
   getAIReaction(step,btns);
 }
-
 function advanceToPhase(phase){
   lockBtns();addUserBubble('Continue');
-  if(phase===2)runPhase2();else if(phase===3)runPhase3();
+  if(phase===1)runPhase1();else if(phase===2)runPhase2();else if(phase===3)runPhase3();
 }
-
 function askQuestion(){
   lockBtns();
-  addNavBubble("Go ahead \u2014 ask me about any product, a specific health goal, how LMNs work, or anything else.");
+  addNavBubble("Go ahead \u2014 ask me about any product, whether something should be on insurance vs "+acct+", how physician orders work, or anything else.");
   document.getElementById('chatInput').focus();
 }
 
-/* ── FINISH SESSION (AI-driven summary) ── */
+/* ── FINISH SESSION ── */
 function finishSession(){
   lockBtns();PHASE=4;
-  var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0;
+  var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0,hasPrev=false;
   selectedProducts.forEach(function(p){
-    if(p._insMatch)insVal+=p._price;
+    if(p._prevMatch){insVal+=p._price;hasPrev=true}
+    else if(p._insMatch){insVal+=p._price}
     else{hsaVal+=p._price;taxSaved+=Math.round(p._price*TAX_RATE)}
   });
+  var orderFeeTotal=hasPrev?PHYSICIAN_ORDER_FEE:0;
   var total=insVal+hsaVal;
-
-  // Structured summary card (always shown, not AI-generated)
   var card='<div style="margin-top:10px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px">';
   card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Insurance unlocked</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+insVal.toLocaleString()+'</span></div>';
-  card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">HSA deployed</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--cy)">$'+hsaVal.toLocaleString()+'</span></div>';
+  card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">'+acct+' deployed</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--cy)">$'+hsaVal.toLocaleString()+'</span></div>';
+  if(orderFeeTotal>0)card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Physician order fee ('+acct+' eligible)</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--mu)">$'+orderFeeTotal+'</span></div>';
   card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Tax savings (~'+Math.round(TAX_RATE*100)+'%)</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+taxSaved.toLocaleString()+'</span></div>';
   card+='<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:700"><span style="color:#fff">Total benefit value</span><span style="font-family:DM Mono,monospace;font-size:16px;color:var(--gn)">$'+(total+taxSaved).toLocaleString()+'</span></div>';
   card+='</div>';
-  card+='<div style="margin-top:8px"><button class="action-btn secondary" onclick="goMarketplace()">Browse Full Marketplace \u2192</button></div>';
+  card+='<div style="margin-top:10px"><button class="action-btn secondary" onclick="goMarketplace()">Browse Full Marketplace \u2192</button> <button class="action-btn secondary" onclick="showProcurement()" style="margin-left:4px">Looking for something else?</button></div>';
 
-  // AI generates the narrative, card appended after
   getAIReaction('summary',card,function(){
-    // Second phone capture attempt if they skipped
     if(!phoneCaptured){
       setTimeout(function(){
-        var reask="One more thing \u2014 want me to text you this summary? You\u2019ll have a direct line to me for follow-ups.";
+        var reask="One more thing \u2014 I\u2019d love to stay in touch so I can help you with LMNs, insurance questions, or finding new products as they come in. Want me to text you this summary?";
         reask+='<div class="phone-capture" id="phoneCapture2">';
-        reask+='<div class="pc-row"><input class="pc-input" id="pcPhone2" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend2" onclick="submitPhoneEnd()">Text my summary</button></div>';
+        reask+='<div class="pc-label"><span>\uD83D\uDCF1</span> Stay connected with '+navName+'</div>';
+        reask+='<div class="pc-row"><input class="pc-input" id="pcPhone2" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend2" onclick="submitPhoneEnd()">Send my summary</button></div>';
         reask+='<div class="pc-consent"><input type="checkbox" id="pcChk2" checked/><label for="pcChk2">I agree to receive texts. Reply STOP anytime.</label></div>';
         reask+='<div class="pc-err" id="pcErr2">&nbsp;</div>';
         reask+='</div>';
@@ -613,8 +766,7 @@ function finishSession(){
             var v=this.value.replace(/\D/g,'').substring(0,10);
             if(v.length>=7)this.value='('+v.substring(0,3)+') '+v.substring(3,6)+'-'+v.substring(6);
             else if(v.length>=4)this.value='('+v.substring(0,3)+') '+v.substring(3);
-            else if(v.length>0)this.value='('+v;
-            else this.value='';
+            else if(v.length>0)this.value='('+v;else this.value='';
           });
         },100);
       },2000);
@@ -622,7 +774,6 @@ function finishSession(){
     pushToZoho();
   });
 }
-
 function submitPhoneEnd(){
   var raw=document.getElementById('pcPhone2').value.trim();
   var agreed=document.getElementById('pcChk2').checked;
@@ -634,20 +785,57 @@ function submitPhoneEnd(){
   errEl.textContent='\u00a0';
   btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending\u2026';
   phoneCaptured=true;phoneNumber=phone;sSet('beim_phone',phone);
-  if(!TWILIO_LIVE){var cap=document.getElementById('phoneCapture2');if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Saved \u2014 I\u2019ll text you a summary.</div>';return}
-  var params=new URLSearchParams();params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
-  if(firstName)params.set('first_name',encodeURIComponent(firstName));if(email)params.set('email',encodeURIComponent(email));
-  var planUrl='https://go.beim.ai/products?'+params.toString();var lid=sGet('beim_lead_id')||null;
-  fetch(W_SMS+'/api/twilio/send-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:selectedProducts.length,plan_url:planUrl,lead_id:lid})})
-  .then(function(r){return r.json()}).then(function(d){
+  if(!TWILIO_LIVE){var cap=document.getElementById('phoneCapture2');if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Connected \u2014 you\u2019ll get a text from me shortly.</div>';return}
+  var lid=sGet('beim_lead_id')||null;
+  fetch(W_SMS+'/api/twilio/send-plan',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      phone:phone,first_name:firstName,navigator:nav,
+      product_count:selectedProducts.length,
+      plan_url:'https://go.beim.ai/products',lead_id:lid,
+      sms_type:'session_summary',balance:bal,acct_type:acct,
+      goals:userGoals.join(', '),
+      selected_products:selectedProducts.map(function(p){return p.product_name}).join(', '),
+      insurance_value:selectedProducts.filter(function(p){return p._insMatch||p._prevMatch}).reduce(function(s,p){return s+p._price},0),
+      hsa_deployed:selectedProducts.filter(function(p){return!p._insMatch&&!p._prevMatch}).reduce(function(s,p){return s+p._price},0)
+    })
+  }).then(function(r){return r.json()}).then(function(d){
     var cap=document.getElementById('phoneCapture2');
-    if(d.success){if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Sent! Check your phone.</div>'}
-    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text my summary';errEl.textContent=d.message||d.error||'Try again'}
-  }).catch(function(){var cap=document.getElementById('phoneCapture2');if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Saved \u2014 I\u2019ll text you.</div>'});
+    if(d.success){if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Sent! Check your phone \u2014 I\u2019m here whenever you need me.</div>'}
+    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Send my summary';errEl.textContent=d.message||d.error||'Try again'}
+  }).catch(function(){var cap=document.getElementById('phoneCapture2');if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Connected \u2014 I\u2019ll text you shortly.</div>'});
+}
+
+/* ── PROCUREMENT / CONCIERGE ── */
+function showProcurement(){
+  var html="Is there a specific product or screening you\u2019re looking for that wasn\u2019t in my recommendations? Tell me what you need and what you\u2019d expect to pay \u2014 I\u2019ll have my team track it down and get back to you.";
+  html+='<div class="procure-card" id="procureCard">';
+  html+='<div class="pr-title"><span>\uD83D\uDD0D</span> Product Request</div>';
+  html+='<div class="pr-text">Describe what you\u2019re looking for and your ideal price. I\u2019ll find it, verify HSA/FSA eligibility, and text you when it\u2019s ready.</div>';
+  html+='<div class="pr-row" style="margin-bottom:8px"><input class="pr-input" id="prProduct" placeholder="e.g. At-home A1c test, CPAP supplies, specific brand\u2026"/></div>';
+  html+='<div class="pr-row"><span style="color:var(--dm);font-size:12px;margin-right:4px">Budget:</span><input class="pr-budget" id="prBudget" type="text" placeholder="$50"/><button class="pr-btn" onclick="submitProcurement()">Send request</button></div>';
+  html+='</div>';
+  addNavBubble(html);
+}
+function submitProcurement(){
+  var product=document.getElementById('prProduct').value.trim();
+  var budget=document.getElementById('prBudget').value.trim();
+  if(!product){document.getElementById('prProduct').style.borderColor='var(--rd)';return}
+  var lid=sGet('beim_lead_id')||null;
+  addUserBubble("Looking for: "+product+(budget?' (budget: '+budget+')':''));
+  var note='PROCUREMENT REQUEST\nProduct: '+product+'\nBudget: '+(budget||'flexible')+'\nAge: '+(userAge||'unknown')+'\nGoals: '+userGoals.join(', ')+'\nBalance: $'+bal+' '+acct;
+  if(lid||email){
+    fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:lid,email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,page:'products',source:'procurement_request',chat_transcript:note})}).catch(function(){});
+  }
+  var card=document.getElementById('procureCard');
+  if(card)card.innerHTML='<div style="color:var(--gn);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><span>\u2705</span> Got it! I\u2019ll look into that and reach out '+(phoneCaptured?'via text':'when I find it')+'.</div>';
+  setTimeout(function(){
+    addNavBubble("I\u2019ve logged your request for <strong>"+esc(product)+"</strong>"+(budget?" around <strong>"+esc(budget)+"</strong>":"")+". My team will source it, verify "+acct+" eligibility"+(userAge?" and check if your insurance covers it at $0":"")+", and I\u2019ll get back to you.");
+  },800);
 }
 
 /* ── PRODUCT CARD BUILDER ── */
-function buildProductCards(products){
+function buildProductCards(products,isPreventative){
   if(!products.length)return'';
   var html='<div class="prod-grid">';
   products.forEach(function(p){
@@ -656,28 +844,38 @@ function buildProductCards(products){
     var badges='';
     var grade=(p.grade||'B').trim();
     badges+='<span class="pb g'+grade.toLowerCase()+'">'+grade+'</span>';
-    if(p._insMatch)badges+='<span class="pb ins0">\uD83D\uDEE1\uFE0F $0</span>';
+    if(p._prevMatch){
+      badges+='<span class="pb prev0">\uD83C\uDFE5 $0 Preventative</span>';
+      badges+='<span class="pb order">\uD83D\uDCCB Order $'+PHYSICIAN_ORDER_FEE+'</span>';
+    } else if(p._insMatch){
+      badges+='<span class="pb ins0">\uD83D\uDEE1\uFE0F $0</span>';
+    }
     if(p._goalMatch)badges+='<span class="pb goal">\uD83C\uDFAF Goal #'+(p._goalRank+1)+'</span>';
-    if(!p._insMatch&&p._price<=bal)badges+='<span class="pb fit">\u2713 Fits</span>';
-    else if(!p._insMatch&&p._price>bal&&p._price<=bal+100)badges+='<span class="pb over">+$'+Math.round(p._price-bal)+'</span>';
+    if(!p._insMatch&&!p._prevMatch&&p._price<=bal)badges+='<span class="pb fit">\u2713 Fits</span>';
+    else if(!p._insMatch&&!p._prevMatch&&p._price>bal&&p._price<=bal+100)badges+='<span class="pb over">+$'+Math.round(p._price-bal)+'</span>';
     var dc=(p.doctor_confidence||'').trim();
     if(dc==='Very High')badges+='<span class="pb drhi">\uD83E\uDE7A Top Pick</span>';
     var needsLmn=p.requires_medical_necessity==='Yes';
-    if(needsLmn)badges+='<span class="pb lmn">\uD83D\uDCCB LMN</span>';
-    else if(p.hsa_fsa_eligible==='Yes')badges+='<span class="pb hsa">'+acct+'</span>';
+    var needsOrder=(p.physician_order_required||'').toLowerCase()==='yes';
+    if(needsLmn&&!p._prevMatch)badges+='<span class="pb lmn">\uD83D\uDCCB LMN</span>';
+    else if(needsOrder&&!p._prevMatch)badges+='<span class="pb order">\uD83D\uDCCB Order</span>';
+    else if(p.hsa_fsa_eligible==='Yes'&&!p._prevMatch)badges+='<span class="pb hsa">'+acct+'</span>';
     if((p.community_pool||'').toUpperCase()==='TRUE')badges+='<span class="pb pool">\uD83E\uDD1D Pool</span>';
-    var priceHtml=p._insMatch?'<span class="prod-free">$0</span><span class="prod-strike">$'+p._price.toFixed(0)+'</span>':'<span class="prod-price">$'+p._price.toFixed(0)+'</span>';
+    var priceHtml=(p._prevMatch||p._insMatch)?'<span class="prod-free">$0</span><span class="prod-strike">$'+p._price.toFixed(0)+'</span>':'<span class="prod-price">$'+p._price.toFixed(0)+'</span>';
     var imgUrl=p.product_image_url||'';
     var imgHtml=imgUrl&&!imgUrl.includes('shopify.com/store')?'<img src="'+esc(imgUrl)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<span class=prod-emoji>\uD83C\uDFE5</span>\'"/>':'<span class="prod-emoji">\uD83C\uDFE5</span>';
     var safeName=esc(p.product_name||'').replace(/'/g,"\\'");
-    var lmnNote=needsLmn?'<div class="prod-lmn-note">Beim generates your LMN automatically</div>':'';
-    html+='<div class="prod-card'+(isSel?' selected':'')+'" onclick="toggleProduct(\''+safeName+'\',this)"><div class="prod-check">\u2713</div><div class="prod-img">'+imgHtml+'</div><div class="prod-body"><div class="conf-row"><div class="conf-bar"><div class="conf-fill '+cl+'" style="width:'+cs+'%"></div></div><span class="conf-pct '+cl+'">'+cs+'%</span></div><div class="prod-badges">'+badges+'</div><div class="prod-name">'+esc(p.product_name||'')+'</div><div class="prod-brand">'+esc(p.brand||'')+'</div><div class="prod-hl">'+esc(p.d2c_headline||'')+'</div><div class="prod-price-row">'+priceHtml+'</div>'+lmnNote+'</div></div>';
+    var noteLine='';
+    if(p._prevMatch)noteLine='<div class="prod-order-note">\uD83C\uDFE5 $0 with insurance \u2022 '+p._prevCode.icd10_screening+' \u2022 Physician order required</div>';
+    else if(needsLmn)noteLine='<div class="prod-lmn-note">Beim generates your LMN automatically \u2022 $'+LMN_FEE+'</div>';
+    else if(needsOrder)noteLine='<div class="prod-order-note">Physician order required \u2022 $'+PHYSICIAN_ORDER_FEE+' ('+acct+' eligible)</div>';
+    html+='<div class="prod-card'+(isSel?' selected':'')+'" onclick="toggleProduct(\''+safeName+'\',this)"><div class="prod-check">\u2713</div><div class="prod-img">'+imgHtml+'</div><div class="prod-body"><div class="conf-row"><div class="conf-bar"><div class="conf-fill '+cl+'" style="width:'+cs+'%"></div></div><span class="conf-pct '+cl+'">'+cs+'%</span></div><div class="prod-badges">'+badges+'</div><div class="prod-name">'+esc(p.product_name||'')+'</div><div class="prod-brand">'+esc(p.brand||'')+'</div><div class="prod-hl">'+esc(p.d2c_headline||'')+'</div><div class="prod-price-row">'+priceHtml+'</div>'+noteLine+'</div></div>';
   });
   html+='</div>';
   return html;
 }
 
-/* ── SELECTION + TALLY ── */
+/* ── TALLY + SELECTION ── */
 function toggleProduct(name,card){
   var p=allProducts.find(function(x){return x.product_name===name});if(!p)return;
   var idx=selectedProducts.findIndex(function(s){return s.product_name===name});
@@ -691,14 +889,14 @@ function toggleProduct(name,card){
 }
 function updateTally(){
   var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0;
-  selectedProducts.forEach(function(p){if(p._insMatch)insVal+=p._price;else{hsaVal+=p._price;taxSaved+=Math.round(p._price*TAX_RATE)}});
+  selectedProducts.forEach(function(p){if(p._insMatch||p._prevMatch)insVal+=p._price;else{hsaVal+=p._price;taxSaved+=Math.round(p._price*TAX_RATE)}});
   document.getElementById('tallyIns').textContent='$'+insVal.toLocaleString();
   document.getElementById('tallyHsa').textContent='$'+hsaVal.toLocaleString();
   document.getElementById('tallyCount').textContent=n;
   document.getElementById('tallyTotal').textContent='$'+(insVal+hsaVal+taxSaved).toLocaleString();
   document.getElementById('tallyBar').classList.toggle('visible',n>0);
 }
-function getHsaAllocated(){var t=0;selectedProducts.forEach(function(p){if(!p._insMatch&&p.hsa_fsa_eligible==='Yes')t+=p._price});return t}
+function getHsaAllocated(){var t=0;selectedProducts.forEach(function(p){if(!p._insMatch&&!p._prevMatch&&p.hsa_fsa_eligible==='Yes')t+=p._price});return t}
 function clearSelections(){selectedProducts=[];document.querySelectorAll('.prod-card.selected').forEach(function(c){c.classList.remove('selected')});updateTally()}
 
 /* ── CHAT ── */
@@ -728,7 +926,7 @@ function lockBtns(){document.querySelectorAll('.checkin-btn:not(.locked),.action
 function sendFreeText(){
   var input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;input.value='';
   addUserBubble(text);showTyping();
-  var ctx={page:'products',balance:bal,acctType:acct,goals:userGoals,firstName:firstName,gender:userSex,age:userAge,selectedProducts:selectedProducts.map(function(p){return p.product_name}).join(', '),wellbeing:{life:wbLife,energy:wbEnergy},budgetPref:budgetPref,hsaRemaining:Math.max(0,bal-getHsaAllocated())};
+  var ctx={page:'products',balance:bal,acctType:acct,goals:userGoals,firstName:firstName,gender:userSex,age:userAge,selectedProducts:selectedProducts.map(function(p){return p.product_name}).join(', '),wellbeing:{life:wbLife,energy:wbEnergy},budgetPref:budgetPref,hsaRemaining:Math.max(0,bal-getHsaAllocated()),preventativeCount:preventativeMatches.length};
   fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-8),navigator:nav,context:ctx})})
   .then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'Ask me about any product.')})
   .catch(function(){removeTyping();addNavBubble('I hit a snag \u2014 try again.')});
@@ -737,8 +935,10 @@ function sendFreeText(){
 /* ── NAVIGATION ── */
 function goToIntelligence(){
   if(!selectedProducts.length)return;
-  var prods=selectedProducts.map(function(p){return{name:p.product_name||'',price:p._price||0,grade:(p.grade||'B').trim(),lmn:p.requires_medical_necessity==='Yes',order:(p.physician_order_required||'').toLowerCase()==='yes',hsa:p.hsa_fsa_eligible==='Yes',insured:p._insMatch||false,pool:(p.community_pool||'').toUpperCase()==='TRUE',brand:p.brand||'',cat:p.category||'',hl:p.d2c_headline||'',goals:p.goal_tags||'',conds:p.conditions||'',stripe_connect_id:p.stripe_connect_id||'',platform_fee_pct:p.platform_fee_pct||'',provider_name:p.provider_name||'',conf:p.doctor_confidence||''}});
+  var hasPrev=selectedProducts.some(function(p){return p._prevMatch});
+  var prods=selectedProducts.map(function(p){return{name:p.product_name||'',price:p._price||0,grade:(p.grade||'B').trim(),lmn:p.requires_medical_necessity==='Yes',order:(p.physician_order_required||'').toLowerCase()==='yes'||p._prevMatch,hsa:p.hsa_fsa_eligible==='Yes',insured:p._insMatch||false,preventative:p._prevMatch||false,prevCode:p._prevCode?{icd10:p._prevCode.icd10_screening,cpt:p._prevCode.cpt_code,category:p._prevCode.category,grade:p._prevCode.uspstf_grade}:null,pool:(p.community_pool||'').toUpperCase()==='TRUE',brand:p.brand||'',cat:p.category||'',hl:p.d2c_headline||'',goals:p.goal_tags||'',conds:p.conditions||'',stripe_connect_id:p.stripe_connect_id||'',platform_fee_pct:p.platform_fee_pct||'',provider_name:p.provider_name||'',conf:p.doctor_confidence||''}});
   try{sessionStorage.setItem('beim_selected_products',JSON.stringify(prods))}catch(e){}
+  if(hasPrev)sSet('beim_physician_order_fee',String(PHYSICIAN_ORDER_FEE));
   pushToZoho();
   var ps=new URLSearchParams();ps.set('balance',bal.toFixed(2));ps.set('acct',acct);ps.set('nav',nav);ps.set('count',selectedProducts.length);
   if(firstName)ps.set('first_name',encodeURIComponent(firstName));
@@ -746,6 +946,8 @@ function goToIntelligence(){
   if(email)ps.set('email',encodeURIComponent(email));
   if(employer)ps.set('employer',encodeURIComponent(employer));
   if(userGoals.length)ps.set('goals',userGoals.join(','));
+  if(userAge)ps.set('age',userAge);
+  if(hasPrev)ps.set('has_preventative','true');
   location.href='intelligence.html?'+ps.toString();
 }
 function goMarketplace(){
@@ -757,10 +959,20 @@ function goMarketplace(){
 function pushToZoho(){
   var lid=sGet('beim_lead_id')||null;if(!email&&!lid)return;
   var tx=chatLog.map(function(e){var d=new Date(e.t);return'['+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})+'] '+(e.r==='user'?'User':'Navigator')+': '+e.m}).join('\n');
-  var prods=selectedProducts.map(function(p){return p.product_name+' ($'+p._price+')'}).join(', ');
+  var prods=selectedProducts.map(function(p){
+    var label=p.product_name+' ($'+p._price+')';
+    if(p._prevMatch)label+=' [PREVENTATIVE $0 - '+p._prevCode.icd10_screening+']';
+    else if(p._insMatch)label+=' [INSURANCE $0]';
+    return label;
+  }).join(', ');
   var totalValue=0;selectedProducts.forEach(function(p){totalValue+=p._price});
+  var hasPrev=selectedProducts.some(function(p){return p._prevMatch});
   var payload={first_name:firstName,last_name:lastName,employer:employer,navigator:nav,source:'unlocking_session',page:'products',acct_type:acct,balance:bal,chat_transcript:tx,products_selected:prods,products_count:selectedProducts.length,rescue_plan_value:totalValue};
   if(email)payload.email=email;if(lid)payload.lead_id=lid;if(phoneNumber)payload.phone=phoneNumber;
+  if(userAge)payload.age=userAge;
+  var screeningList=Object.keys(completedScreenings).join(', ');
+  if(screeningList)payload.screening_history=screeningList;
+  if(hasPrev)payload.order_type='Insurance_Preventative';
   try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)sSet('beim_lead_id',d.lead_id)}).catch(function(){})}catch(e){}
 }
 </script>
