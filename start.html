@@ -73,15 +73,12 @@ h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.06;letter-spac
 .optin-label{font-size:11px;color:rgba(240,240,255,.42);line-height:1.55;cursor:pointer}
 .optin-label a{color:var(--cyan);text-decoration:none;transition:color .2s}
 .optin-label a:hover{color:#fff}
-
-/* How it works mini-section */
 .how-it-works{max-width:500px;margin:0 auto 32px;animation:fu .5s .26s ease both}
 .hiw-title{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:14px}
 .hiw-steps{display:flex;gap:6px}
 .hiw-step{flex:1;padding:12px 10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:12px;text-align:center}
 .hiw-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:var(--cyan);margin-bottom:4px}
 .hiw-label{font-size:10px;font-weight:600;color:var(--muted);line-height:1.4}
-
 .choose-label{text-align:center;margin-bottom:24px;animation:fu .5s .28s ease both}
 .choose-label-text{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:10px}
 .choose-label-line{width:48px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
@@ -159,8 +156,6 @@ h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.06;letter-spac
 .bt-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:rgba(240,240,255,.55);padding:7px 15px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:all .3s}
 .bt-item:hover{border-color:rgba(255,255,255,.12);color:rgba(240,240,255,.7)}
 .bt-item-icon{font-size:12px;opacity:.7}
-
-/* Transition overlay */
 .transition-overlay{position:fixed;inset:0;z-index:100;background:rgba(6,6,16,.98);backdrop-filter:blur(32px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;opacity:0;pointer-events:none;transition:opacity .45s ease}
 .transition-overlay.active{opacity:1;pointer-events:all}
 .trans-avatar{width:92px;height:92px;border-radius:50%;overflow:hidden;margin-bottom:24px}
@@ -184,7 +179,6 @@ h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.06;letter-spac
 .step-text{font-size:13px;font-weight:600;color:var(--dim);transition:color .4s}
 .search-step.active .step-text{color:rgba(240,240,255,.65)}
 .search-step.done .step-text{color:rgba(61,217,182,.65)}
-
 @keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:700px){.page{padding:36px 18px 60px}.nav-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}h1{letter-spacing:-1.6px}.nav-card{padding:26px 20px 20px}.avatar-wrap{width:76px;height:76px}.avatar-ring{width:76px;height:76px}.input-row{flex-direction:column}.value-row{gap:6px}.vp{font-size:11px;padding:6px 12px}.social-proof{gap:20px}.sp-stat:not(:last-child){border-right:none}.bottom-trust{gap:6px}.bt-item{font-size:10px;padding:6px 12px}.capture-card{padding:22px 18px 18px;margin:28px auto 32px}.hero-sub{font-size:15px}.topbar{margin-bottom:40px}.trans-text{font-size:18px}.hiw-steps{flex-direction:column}.hiw-step{padding:10px 14px;text-align:left;display:flex;gap:10px;align-items:center}.hiw-num{margin-bottom:0}}
 @media(max-width:400px){h1{font-size:28px;letter-spacing:-1.2px}.hero-sub{font-size:14px}.nav-name{font-size:20px}}
@@ -246,7 +240,6 @@ h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.06;letter-spac
     <div class="field-error" id="optinError">&nbsp;</div>
   </div>
 
-  <!-- How it works mini-steps -->
   <div class="how-it-works">
     <div class="hiw-title">Here's what happens next</div>
     <div class="hiw-steps">
@@ -303,9 +296,9 @@ h1{font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.06;letter-spac
   <div class="trans-text" id="transText">Setting up your experience…</div>
   <div class="trans-sub" id="transSub">Personalizing products and recommendations</div>
   <div class="search-steps" id="searchSteps">
-    <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Saving your preferences</div></div>
-    <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Checking employer benefits</div></div>
-    <div class="search-step" id="step-products"><div class="step-icon">🔬</div><div class="step-text">Reviewing products for your profile</div></div>
+    <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Pulling together your profile…</div></div>
+    <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Looking into your benefits…</div></div>
+    <div class="search-step" id="step-products"><div class="step-icon">🔬</div><div class="step-text">Matching products to your goals…</div></div>
     <div class="search-step" id="step-ready"><div class="step-icon">✨</div><div class="step-text">Your session is ready</div></div>
   </div>
 </div>
@@ -323,7 +316,7 @@ document.getElementById('optinCheck').addEventListener('change',function(){showF
 document.getElementById('emailInput').addEventListener('blur',function(){if(this.value&&validateEmail(this.value)){this.classList.add('success');this.classList.remove('error')}else{this.classList.remove('success')}});
 
 function activateStep(id){var s=document.getElementById(id);if(!s)return;s.classList.add('active');s.querySelector('.step-icon').innerHTML='<div class="step-spinner"></div>'}
-function completeStep(id){var s=document.getElementById(id);if(!s)return;s.classList.remove('active');s.classList.add('done');s.querySelector('.step-icon').textContent='✓'}
+function completeStep(id){var s=document.getElementById(id);if(!s)return;s.classList.remove('active');s.classList.add('done');s.querySelector('.step-icon').textContent='\u2713'}
 
 async function selectNavigator(nav,cardEl){
   if(selected)return;
@@ -353,7 +346,6 @@ async function selectNavigator(nav,cardEl){
   var text=document.getElementById('transText');
   var sub=document.getElementById('transSub');
 
-  // Dynamic transition messaging
   if(nav==='everly'){
     wrap.innerHTML='<div class="trans-avatar ev"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly"/></div>';
     text.textContent=firstName+', Everly is getting everything ready for you\u2026';
@@ -363,11 +355,11 @@ async function selectNavigator(nav,cardEl){
   }
   sub.textContent='Reviewing your benefits, matching products, and setting up your direct line to '+navigatorName;
 
-  // Personalize the transition steps
-  document.querySelector('#step-lead .step-text').textContent='Got it, '+firstName+' \u2014 setting up your profile';
-  document.querySelector('#step-benefits .step-text').textContent=employer?'Checking if '+employer+' offers HSA or FSA benefits\u2026':'Reviewing benefit options for you\u2026';
-  document.querySelector('#step-products .step-text').textContent=navigatorName+' is reviewing products for your profile\u2026';
-  document.querySelector('#step-ready .step-text').textContent='You\'re all set \u2014 '+navigatorName+' is with you from here';
+  /* ── Updated transition step copy ── */
+  document.querySelector('#step-lead .step-text').textContent='Got it, '+firstName+' \u2014 pulling together your profile\u2026';
+  document.querySelector('#step-benefits .step-text').textContent=employer?'Looking into benefits with '+employer+'\u2026':'Checking available benefit options\u2026';
+  document.querySelector('#step-products .step-text').textContent=navigatorName+' is matching products to your goals and benefits\u2026';
+  document.querySelector('#step-ready .step-text').textContent='All set \u2014 '+navigatorName+' is ready when you are';
 
   document.querySelectorAll('.search-step').forEach(function(s){s.classList.remove('active','done')});
 
@@ -395,8 +387,8 @@ async function selectNavigator(nav,cardEl){
       finchData=await fRes.json();
       if(finchData.success&&finchData.connect_url){
         try{sessionStorage.setItem('beim_finch_url',finchData.connect_url);sessionStorage.setItem('beim_finch_session',finchData.session_id)}catch(e){}
-        // Update step text with result
-        document.querySelector('#step-benefits .step-text').textContent='Found benefits info for '+employer;
+        /* Updated: active language instead of "Found" */
+        document.querySelector('#step-benefits .step-text').textContent='Pulling up benefit details from '+employer+'\u2026';
       }
     }catch(e){console.warn('Finch session failed:',e)}
   }
