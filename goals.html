@@ -13,17 +13,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;min-height:100dvh;overflow-x:hidden;display:flex;flex-direction:column}
-
-/* ── AMBIENT ── */
 .bg-mesh{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 20% 15%,rgba(124,106,240,.06),transparent 70%),radial-gradient(ellipse 500px 400px at 80% 70%,rgba(110,224,245,.04),transparent 70%);animation:meshDrift 35s ease-in-out infinite alternate}
 @keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(25px,-15px) scale(1.02)}}
 .noise{position:fixed;inset:0;z-index:0;opacity:.014;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
-
-/* ── FULL-SCREEN CHAT LAYOUT ── */
 .chat-app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:680px;margin:0 auto;width:100%}
-
-/* ── HEADER ── */
 .chat-header{display:flex;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;backdrop-filter:blur(20px);background:rgba(6,6,16,.85)}
 .ch-back{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--mu);text-decoration:none;font-size:14px;transition:all .2s;flex-shrink:0}
 .ch-back:hover{border-color:var(--border-h);color:var(--tx)}
@@ -33,36 +27,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .ch-info{flex:1;min-width:0}
 .ch-name{font-size:15px;font-weight:700;color:#fff}
 .ch-status{font-size:11px;color:var(--gn);font-weight:600}
-.ch-progress{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .step-indicator{display:flex;align-items:center;gap:6px}
 .step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
 .step-dot.done{background:var(--gn)}
 .step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
-.ch-prog-bar{width:72px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
-.ch-prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pu),var(--cy));transition:width .6s var(--ease);width:0%}
-.ch-prog-label{font-size:10px;font-weight:700;color:var(--dm);min-width:26px;text-align:right;font-family:'DM Mono',monospace}
-
-/* ── MESSAGES AREA ── */
 .messages{flex:1;overflow-y:auto;padding:20px 24px 100px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
 .messages::-webkit-scrollbar{width:4px}
 .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:4px}
-
-/* Message bubbles */
 .msg{display:flex;gap:10px;animation:msgIn .4s var(--ease) both;max-width:100%}
 .msg.user{flex-direction:row-reverse}
 @keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
 .msg-avatar{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;margin-top:2px}
 .msg-avatar img{width:100%;height:100%;object-fit:cover}
 .msg-avatar.you{background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mu);font-weight:600}
-
 .bubble{font-size:14px;line-height:1.7;padding:12px 16px;border-radius:18px;max-width:85%;position:relative}
 .bubble.nav{color:rgba(240,240,255,.85);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
 .bubble.nav.ev{background:rgba(110,224,245,.04);border-color:rgba(110,224,245,.1)}
 .bubble.nav.br{background:rgba(124,106,240,.04);border-color:rgba(124,106,240,.1)}
 .bubble.usr{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:rgba(240,240,255,.75)}
-
-/* Typing indicator */
 .typing-dots{display:flex;gap:4px;padding:12px 16px;border-radius:18px;align-items:center}
 .typing-dots.ev{background:rgba(110,224,245,.04);border:1px solid rgba(110,224,245,.1)}
 .typing-dots.br{background:rgba(124,106,240,.04);border:1px solid rgba(124,106,240,.1)}
@@ -70,10 +52,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .typing-dots span:nth-child(2){animation-delay:.15s}
 .typing-dots span:nth-child(3){animation-delay:.3s}
 @keyframes dotPulse{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
-
-/* ── INTERACTIVE ELEMENTS (inside bubbles) ── */
-
-/* Goal chips */
 .goal-section{margin-top:10px}
 .goal-tier-label{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dm);margin-bottom:6px;margin-top:12px}
 .goal-tier-label:first-child{margin-top:0}
@@ -85,8 +63,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .goal-chip.locked{pointer-events:none;opacity:.8}
 .goal-counter{font-size:11px;color:var(--dm);margin-top:10px}
 .goal-counter strong{color:var(--tx)}
-
-/* Sub-goal chips */
 .sub-section{margin-top:10px}
 .sub-goal-label{font-size:11px;font-weight:700;color:var(--mu);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .sub-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
@@ -94,8 +70,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .sub-chip:hover{border-color:rgba(110,224,245,.3);color:var(--tx)}
 .sub-chip.selected{border-color:rgba(110,224,245,.4);background:rgba(110,224,245,.06);color:var(--cy)}
 .sub-chip.locked{pointer-events:none;opacity:.8}
-
-/* Ranking */
 .rank-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);margin-bottom:6px;transition:all .2s}
 .rank-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
 .rank-num.r1{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--gd)}
@@ -106,15 +80,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .rank-arrow{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu);width:24px;height:20px;border-radius:6px;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;transition:all .15s}
 .rank-arrow:hover{border-color:rgba(255,255,255,.2);color:var(--tx);background:rgba(255,255,255,.08)}
 .rank-arrow.disabled{opacity:.15;pointer-events:none}
-
-/* Preference buttons */
 .pref-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .pref-btn{font-size:12px;font-weight:600;padding:10px 18px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:rgba(240,240,255,.7);cursor:pointer;transition:all .25s var(--ease);text-align:center;flex:1;min-width:120px}
 .pref-btn:hover{border-color:rgba(124,106,240,.3);background:rgba(124,106,240,.04);color:#fff}
 .pref-btn.selected{border-color:rgba(124,106,240,.5);background:rgba(124,106,240,.1);color:#fff}
 .pref-btn.locked{pointer-events:none;opacity:.8}
-
-/* Slider */
 .slider-wrap{margin-top:12px}
 .slider-row{display:flex;align-items:center;gap:14px}
 .slider-row input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;background:rgba(255,255,255,.08);outline:none;cursor:pointer}
@@ -122,14 +92,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .slider-val{font-size:16px;font-weight:700;color:var(--cy);min-width:32px;text-align:center;font-family:'DM Mono',monospace}
 .slider-labels{display:flex;justify-content:space-between;margin-top:4px}
 .slider-labels span{font-size:9px;color:var(--dm);font-weight:600;letter-spacing:.5px;text-transform:uppercase}
-
-/* Action button */
 .action-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:11px 22px;border-radius:100px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease)}
 .action-btn:hover{box-shadow:0 6px 28px rgba(124,106,240,.3);transform:translateY(-1px)}
 .action-btn:disabled{opacity:.3;pointer-events:none}
 .action-btn.locked{pointer-events:none;opacity:.35}
-
-/* Summary card */
 .summary-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;margin-top:12px}
 .sum-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .sum-row:last-child{border-bottom:none}
@@ -140,41 +106,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .sum-badge.secondary{background:rgba(124,106,240,.08);border:1px solid rgba(124,106,240,.18);color:var(--pu)}
 .sum-badge.tertiary{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
 .sum-subs{font-size:10px;color:var(--dm);margin-top:2px}
-
-/* Well-being meter */
 .wb-meter{margin-top:12px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px}
 .wb-title{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dm);margin-bottom:8px}
 .wb-bar-wrap{height:8px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden;margin-bottom:6px}
 .wb-bar-fill{height:100%;border-radius:8px;transition:width .8s var(--ease)}
 .wb-row{display:flex;justify-content:space-between;align-items:center}
 .wb-label{font-size:11px;color:var(--mu)}.wb-value{font-size:14px;font-weight:700;font-family:'DM Mono',monospace}
-
-/* Preference summary */
 .pref-summary{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .pref-tag{font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--mu)}
-
-/* ── INPUT BAR (fixed bottom) ── */
 .input-bar{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,6,16,.92);backdrop-filter:blur(20px);padding:4px 8px}
 .input-field{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:14px 16px}
 .input-field::placeholder{color:var(--dm)}
 .send-btn{background:none;border:none;padding:14px 16px;cursor:pointer;font-size:16px;color:var(--dm);transition:color .2s}
 .send-btn:hover{color:var(--cy)}
-
-/* ── FIXED BOTTOM CTA ── */
 .bottom-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:10;padding:16px 24px;background:linear-gradient(to top,var(--bg) 70%,transparent);justify-content:center}
 .bottom-cta.show{display:flex}
 .bottom-cta-btn{width:100%;max-width:640px;padding:16px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;border-radius:var(--radius-s);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .25s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
 .bottom-cta-btn:hover{box-shadow:0 12px 48px rgba(124,106,240,.3);transform:translateY(-2px)}
-
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── RESPONSIVE ── */
 @media(max-width:680px){
   .messages{padding:16px 16px 100px}
   .chat-header{padding:12px 16px}
   .input-bar{padding:4px 4px}
   .bubble{font-size:13px;padding:10px 14px;max-width:90%}
-  .ch-prog-bar{width:56px}
 }
 </style>
 </head>
@@ -182,9 +136,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 <div class="bg-mesh"></div><div class="noise"></div>
 
 <div class="chat-app">
-  <!-- ── HEADER ── -->
   <div class="chat-header">
-    <a class="ch-back" href="insurance.html" title="Back">←</a>
+    <a class="ch-back" href="insurance.html" title="Back">&larr;</a>
     <div class="ch-avatar" id="headerAvatar"></div>
     <div class="ch-info">
       <div class="ch-name" id="headerName">Care Navigator</div>
@@ -200,19 +153,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
     </div>
   </div>
 
-  <!-- ── MESSAGES ── -->
   <div class="messages" id="messages"></div>
 
-  <!-- ── INPUT ── -->
   <div class="input-bar">
-    <input class="input-field" id="chatInput" type="text" placeholder="Ask anything about your goals…" autocomplete="off"/>
-    <button class="send-btn" onclick="sendFreeText()">➤</button>
+    <input class="input-field" id="chatInput" type="text" placeholder="Ask anything about your goals\u2026" autocomplete="off"/>
+    <button class="send-btn" onclick="sendFreeText()">&#10148;</button>
   </div>
 </div>
 
-<!-- ── BOTTOM CTA ── -->
 <div class="bottom-cta" id="bottomCta">
-  <button class="bottom-cta-btn" onclick="goToProducts()">Find My Products →</button>
+  <button class="bottom-cta-btn" onclick="goToProducts()">Find My Products &rarr;</button>
 </div>
 
 <script>
@@ -220,47 +170,101 @@ var W='https://beim-health-analyzer.steven-03f.workers.dev';
 var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
 
 var GOALS=[
-  {id:'screenings',icon:'🩺',label:'Screenings & Labs',tier:'Preventive',subs:['Blood work','Cancer screening','Vision exam','Dental cleaning','Hearing test','STI screening','Skin check']},
-  {id:'vaccines',icon:'💉',label:'Vaccines & Immunizations',tier:'Preventive',subs:['Flu shot','COVID booster','Shingles','HPV','Tetanus','Travel vaccines']},
-  {id:'primary',icon:'🏥',label:'Doctor Visits & Primary Care',tier:'Care',subs:['Annual wellness visit','Specialist referral','Chronic care follow-up','Telehealth visit']},
-  {id:'chronic',icon:'📋',label:'Chronic Condition Management',tier:'Care',subs:['Weight management','Diabetes/blood sugar','Heart & blood pressure','Hormones & thyroid','Autoimmune']},
-  {id:'mental',icon:'🧠',label:'Mental Health & Stress',tier:'Mental & Recovery',subs:['Therapy/counseling','Anxiety','Sleep quality','Burnout & stress','ADHD/focus']},
-  {id:'recovery',icon:'🏋️',label:'Recovery & Physical Therapy',tier:'Mental & Recovery',subs:['Injury recovery','Post-surgery rehab','Chronic pain','Athletic performance','Mobility']},
-  {id:'supplements',icon:'💊',label:'Supplements & Nutrition',tier:'Wellness',subs:['Vitamins & minerals','Gut health','Protein & fitness','Adaptogens','Probiotics']},
-  {id:'wellness',icon:'✨',label:'Skin, Hair & Anti-Aging',tier:'Wellness',subs:['Hair loss','Skincare','Anti-aging','Acne','Sun protection']},
-  {id:'devices',icon:'⌚',label:'Wellness Tech & Devices',tier:'Wellness',subs:['Wearables','Recovery devices','Sleep tech','Light therapy','Air quality']},
-  {id:'energy',icon:'⚡',label:'Energy & Optimization',tier:'Wellness',subs:['Energy & focus','Nootropics','Fertility','Sexual health','Longevity']}
+  {id:'screenings',icon:'\uD83E\uDE7A',label:'Screenings & Labs',tier:'Preventive',subs:['Blood work','Cancer screening','Vision exam','Dental cleaning','Hearing test','STI screening','Skin check']},
+  {id:'vaccines',icon:'\uD83D\uDC89',label:'Vaccines & Immunizations',tier:'Preventive',subs:['Flu shot','COVID booster','Shingles','HPV','Tetanus','Travel vaccines']},
+  {id:'primary',icon:'\uD83C\uDFE5',label:'Doctor Visits & Primary Care',tier:'Care',subs:['Annual wellness visit','Specialist referral','Chronic care follow-up','Telehealth visit']},
+  {id:'chronic',icon:'\uD83D\uDCCB',label:'Chronic Condition Management',tier:'Care',subs:['Weight management','Diabetes/blood sugar','Heart & blood pressure','Hormones & thyroid','Autoimmune']},
+  {id:'mental',icon:'\uD83E\uDDE0',label:'Mental Health & Stress',tier:'Mental & Recovery',subs:['Therapy/counseling','Anxiety','Sleep quality','Burnout & stress','ADHD/focus']},
+  {id:'recovery',icon:'\uD83C\uDFCB\uFE0F',label:'Recovery & Physical Therapy',tier:'Mental & Recovery',subs:['Injury recovery','Post-surgery rehab','Chronic pain','Athletic performance','Mobility']},
+  {id:'supplements',icon:'\uD83D\uDC8A',label:'Supplements & Nutrition',tier:'Wellness',subs:['Vitamins & minerals','Gut health','Protein & fitness','Adaptogens','Probiotics']},
+  {id:'wellness',icon:'\u2728',label:'Skin, Hair & Anti-Aging',tier:'Wellness',subs:['Hair loss','Skincare','Anti-aging','Acne','Sun protection']},
+  {id:'devices',icon:'\u231A',label:'Wellness Tech & Devices',tier:'Wellness',subs:['Wearables','Recovery devices','Sleep tech','Light therapy','Air quality']},
+  {id:'energy',icon:'\u26A1',label:'Energy & Optimization',tier:'Wellness',subs:['Energy & focus','Nootropics','Fertility','Sexual health','Longevity']}
 ];
 
-var nav,firstName='',lastName='',employer='',email='',bal=0,acct='HSA',hasIns=false;
+/* ── Fallback strings (one per goalStep) ── */
+var FALLBACKS={
+  goals_selected:'Good picks. Let me get more specific \u2014 tag anything that applies within each goal so I can dial in the product matches.',
+  subs_tagged:'Got it. Now rank your 3 goals \u2014 #1 gets the heaviest weight when I score products for you. Use the arrows to reorder.',
+  ranked:'Locked in. Quick question \u2014 what kind of products are you looking for? This helps me calibrate price vs quantity.',
+  budget_set:'Got it. Have you used your HSA or FSA for wellness products before? Helps me know how much to explain as we go.',
+  experience_set:'Almost done \u2014 two quick questions about where you are in life right now. Not medical, just how you\'re feeling. This helps me match products to your actual situation, not just a checklist.<br><br><strong>On a scale of 1\u201310, how satisfied are you with your life overall?</strong><br><span style="font-size:11px;color:var(--dm)">Work, relationships, daily life \u2014 the big picture.</span>',
+  wb_life:'Noted. <strong>Last one \u2014 how\'s your energy and motivation on a typical day?</strong><br><span style="font-size:11px;color:var(--dm)">How you feel when you wake up, whether you sustain focus through the day.</span>',
+  wb_energy:'Got the full picture now. Let me put your profile together.',
+  summary:'I\'ve got everything I need. Your goals, preferences, and well-being baseline are all factored in. Hit <strong>Find My Products</strong> when you\'re ready \u2014 I\'ll match everything to your balance and clinical evidence.'
+};
+
+var nav,navName='',firstName='',lastName='',employer='',email='',bal=0,acct='HSA',deadline='',hasIns=false;
 var chatHistory=[],chatLog=[];
 var selected=[],ranked=[],subSelected={};
 var wellbeing={life:0,energy:0};
 var budgetPref='',expLevel='';
-var STEP=0,TOTAL_STEPS=7; // intro, goals, subs, rank, budget, wellbeing-life, wellbeing-energy, summary
-var pendingResume=null; // stores the function to call after free-text AI response
+var STEP=0;
 
 function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 function goalObj(id){return GOALS.find(function(x){return x.id===id})}
 function goalLabel(id){var g=goalObj(id);return g?g.label:id}
 
-function setProgress(step){/* dots are static — no dynamic update needed */}
+/* ══════════════════════════════════════════
+   AI REACTION ENGINE
+   Single swap point for future Voiceflow migration.
+   Replace the fetch call inside this function with
+   a Voiceflow interact API call when ready.
+   ══════════════════════════════════════════ */
+function getAIReaction(goalStep,extraUI,callback){
+  showTyping();
+  var ctx={
+    page:'goals',goalStep:goalStep,
+    firstName:firstName,employer:employer,
+    balance:bal,acctType:acct,deadline:deadline,
+    goals:selected.map(function(id){return goalLabel(id)}),
+    goalIds:selected,
+    ranked:ranked.map(function(id){return goalLabel(id)}),
+    rankedIds:ranked,
+    subGoals:subSelected,
+    budgetPref:budgetPref,expLevel:expLevel,
+    wellbeing:wellbeing,
+    hasInsurance:hasIns
+  };
+  var controller=new AbortController();
+  var timeout=setTimeout(function(){controller.abort()},4000);
+
+  fetch(W+'/api/chat',{
+    method:'POST',signal:controller.signal,
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:'[goalStep:'+goalStep+']',history:chatHistory.slice(-6),navigator:nav,context:ctx})
+  })
+  .then(function(r){clearTimeout(timeout);return r.json()})
+  .then(function(d){
+    removeTyping();
+    var reply=d.reply||FALLBACKS[goalStep]||'Let\u2019s keep going.';
+    addNavBubble(reply,extraUI);
+    if(callback)callback();
+  })
+  .catch(function(){
+    clearTimeout(timeout);removeTyping();
+    addNavBubble(FALLBACKS[goalStep]||'Let\u2019s keep going.',extraUI);
+    if(callback)callback();
+  });
+}
 
 /* ── INIT ── */
 window.addEventListener('DOMContentLoaded',function(){
   var p=new URLSearchParams(location.search);
   nav=p.get('nav')||sGet('beim_nav')||'brooks';if(nav==='skip')nav='brooks';
+  navName=nav==='everly'?'Everly':'Brooks';
   firstName=p.get('first_name')?decodeURIComponent(p.get('first_name')):(sGet('beim_first_name')||'');
   lastName=p.get('last_name')?decodeURIComponent(p.get('last_name')):(sGet('beim_last_name')||'');
   employer=p.get('employer')?decodeURIComponent(p.get('employer')):(sGet('beim_employer')||'');
   email=p.get('email')?decodeURIComponent(p.get('email')):(sGet('beim_email')||'');
   bal=parseFloat(p.get('balance'))||0;acct=p.get('acct')||'HSA';
+  deadline=p.get('deadline')||sGet('beim_fsa_deadline')||'';
   hasIns=p.get('benefits')==='verified';
 
-  var img=AVATARS[nav]||AVATARS.brooks,name=nav==='everly'?'Everly':'Brooks';
+  var img=AVATARS[nav]||AVATARS.brooks;
   document.getElementById('headerAvatar').innerHTML='<img src="'+img+'"/><span class="ch-avatar-dot"></span>';
-  document.getElementById('headerName').textContent=name;
+  document.getElementById('headerName').textContent=navName;
 
   document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendFreeText()}});
 
@@ -294,13 +298,6 @@ function showTyping(){
 }
 function removeTyping(){var el=document.getElementById('typingMsg');if(el)el.remove()}
 function scrollToBottom(){var c=document.getElementById('messages');setTimeout(function(){c.scrollTop=c.scrollHeight},60)}
-
-function navTypeThen(html,extra,delay,cb){
-  showTyping();
-  setTimeout(function(){removeTyping();addNavBubble(html,extra);if(cb)cb()},delay||1200);
-}
-
-/* Lock previous interactive elements */
 function lockAll(){
   document.querySelectorAll('.goal-chip:not(.locked),.sub-chip:not(.locked),.pref-btn:not(.locked)').forEach(function(c){c.classList.add('locked')});
   document.querySelectorAll('.action-btn:not(.locked)').forEach(function(b){b.classList.add('locked');b.disabled=true});
@@ -312,13 +309,18 @@ function lockAll(){
    ══════════════════════════════════════════ */
 
 function startConversation(){
-  STEP=0;setProgress(0);
-  var name=nav==='everly'?'Everly':'Brooks';
+  STEP=0;
+  // Continuation tone — no intro, they already know each other
   var balStr=bal>0?' You\'ve got <strong>$'+bal.toLocaleString()+' '+acct+'</strong> to work with.':'';
-  var insStr=hasIns?' And your insurance is verified — I\'ll make sure we use it first.':'';
-  addNavBubble('Hey'+(firstName?' '+esc(firstName):'')+'! I\'m '+name+'.'+balStr+insStr+' Let me ask you a few questions so I can match you with the right products. It\'ll take about 2 minutes.');
-  navTypeThen('Let\'s start — <strong>pick your top 3 health priorities</strong> from below. I organized them by clinical importance, but pick whatever matters most to you.',buildGoalChips(),1800);
-  STEP=1;setProgress(1);
+  var insStr=hasIns?' Insurance is verified \u2014 I\'ll use it first.':'';
+  addNavBubble('Alright'+(firstName?', '+esc(firstName):'')+' \u2014 let\u2019s figure out what matters most to you.'+balStr+insStr+' I need to ask you a few things so I can match you with the right products. About 2 minutes.');
+  // Second bubble with goal chips — scripted (no AI needed before user input)
+  showTyping();
+  setTimeout(function(){
+    removeTyping();
+    addNavBubble('<strong>Pick your top 3 health priorities</strong> from below. I organized them by type, but pick whatever matters most to you.',buildGoalChips());
+    STEP=1;
+  },1600);
 }
 
 /* ── STEP 1: GOAL SELECTION ── */
@@ -340,7 +342,6 @@ function buildGoalChips(){
   html+='</div>';
   return html;
 }
-
 function pickGoal(el,id){
   var idx=selected.indexOf(id);
   if(idx>-1){selected.splice(idx,1);el.classList.remove('selected')}
@@ -353,13 +354,13 @@ function pickGoal(el,id){
   });
   var btn=document.getElementById('goalConfirmBtn');if(btn)btn.disabled=selected.length<3;
 }
-
 function confirmGoals(){
   lockAll();
   var names=selected.map(function(id){var g=goalObj(id);return g.icon+' '+g.label}).join(', ');
   addUserBubble('My top 3: '+names);
-  STEP=2;setProgress(2);
-  navTypeThen('Great picks! Now let me get specific — <strong>tag anything that applies</strong> within each goal. The more specific you are, the better my product matches.',buildSubChips(),1200);
+  STEP=2;
+  // AI reacts to the combination, then shows sub-goal chips
+  getAIReaction('goals_selected',buildSubChips());
 }
 
 /* ── STEP 2: SUB-GOALS ── */
@@ -371,30 +372,28 @@ function buildSubChips(){
     g.subs.forEach(function(s){html+='<span class="sub-chip" data-sg="'+id+'" onclick="pickSub(this,\''+id+'\',\''+esc(s)+'\')">'+s+'</span>'});
     html+='</div>';
   });
-  html+='<button class="action-btn" onclick="confirmSubs()">Continue →</button></div>';
+  html+='<button class="action-btn" onclick="confirmSubs()">Continue \u2192</button></div>';
   return html;
 }
-
 function pickSub(el,goalId,sub){
   if(!subSelected[goalId])subSelected[goalId]=[];
   var arr=subSelected[goalId],idx=arr.indexOf(sub);
   if(idx>-1){arr.splice(idx,1);el.classList.remove('selected')}
   else{arr.push(sub);el.classList.add('selected')}
 }
-
 function confirmSubs(){
   lockAll();
   var allSubs=[];selected.forEach(function(id){if(subSelected[id])subSelected[id].forEach(function(s){allSubs.push(s)})});
-  addUserBubble(allSubs.length?'Specifics: '+allSubs.join(', '):'Keeping it broad — no specifics.');
+  addUserBubble(allSubs.length?'Specifics: '+allSubs.join(', '):'Keeping it broad \u2014 no specifics.');
   ranked=selected.slice();
-  STEP=3;setProgress(3);
-  navTypeThen('Now <strong>rank your 3 goals</strong> — #1 gets the heaviest weight when I score products for you. Use the arrows to reorder.',buildRanker(),1100);
+  STEP=3;
+  getAIReaction('subs_tagged',buildRanker());
 }
 
 /* ── STEP 3: RANKING ── */
 function buildRanker(){
   var html='<div id="rankContainer">'+renderRankItems()+'</div>';
-  html+='<button class="action-btn" onclick="confirmRank()">Lock In Rankings →</button>';
+  html+='<button class="action-btn" onclick="confirmRank()">Lock In Rankings \u2192</button>';
   return html;
 }
 function renderRankItems(){
@@ -402,8 +401,8 @@ function renderRankItems(){
   ranked.forEach(function(id,i){
     var g=goalObj(id);
     html+='<div class="rank-item"><div class="rank-num '+cls[i]+'">'+(i+1)+'</div><span class="sum-icon">'+g.icon+'</span><span class="rank-label">'+g.label+'</span><div class="rank-arrows">';
-    html+='<button class="rank-arrow'+(i===0?' disabled':'')+'" onclick="moveRank('+i+',-1)">▲</button>';
-    html+='<button class="rank-arrow'+(i===ranked.length-1?' disabled':'')+'" onclick="moveRank('+i+',1)">▼</button>';
+    html+='<button class="rank-arrow'+(i===0?' disabled':'')+'" onclick="moveRank('+i+',-1)">\u25B2</button>';
+    html+='<button class="rank-arrow'+(i===ranked.length-1?' disabled':'')+'" onclick="moveRank('+i+',1)">\u25BC</button>';
     html+='</div></div>';
   });
   return html;
@@ -416,16 +415,16 @@ function moveRank(i,d){
 function confirmRank(){
   lockAll();
   addUserBubble(ranked.map(function(id,i){var g=goalObj(id);return'#'+(i+1)+' '+g.icon+' '+g.label}).join(', '));
-  STEP=4;setProgress(4);
-  navTypeThen('Good. Quick question — <strong>what kind of products are you looking for?</strong> This helps me calibrate price vs quantity.',buildBudgetPrefs(),1200);
+  STEP=4;
+  getAIReaction('ranked',buildBudgetPrefs());
 }
 
 /* ── STEP 4: BUDGET & EXPERIENCE ── */
 function buildBudgetPrefs(){
   var html='<div class="pref-row">';
-  html+='<span class="pref-btn" onclick="pickBudget(\'premium\',this)">🎯 Fewer, premium products</span>';
-  html+='<span class="pref-btn" onclick="pickBudget(\'value\',this)">💰 More products, best value</span>';
-  html+='<span class="pref-btn" onclick="pickBudget(\'mix\',this)">⚖️ Mix of both</span>';
+  html+='<span class="pref-btn" onclick="pickBudget(\'premium\',this)">\uD83C\uDFAF Fewer, premium products</span>';
+  html+='<span class="pref-btn" onclick="pickBudget(\'value\',this)">\uD83D\uDCB0 More products, best value</span>';
+  html+='<span class="pref-btn" onclick="pickBudget(\'mix\',this)">\u2696\uFE0F Mix of both</span>';
   html+='</div>';
   return html;
 }
@@ -436,14 +435,13 @@ function pickBudget(val,el){
   lockAll();
   var labels={premium:'Fewer, premium products',value:'More products, best value',mix:'Mix of both'};
   addUserBubble(labels[val]);
-  navTypeThen('Got it. <strong>Have you used your HSA or FSA for wellness products before?</strong> This helps me know what level of guidance you need.',buildExpPrefs(),1000);
+  getAIReaction('budget_set',buildExpPrefs());
 }
-
 function buildExpPrefs(){
   var html='<div class="pref-row">';
-  html+='<span class="pref-btn" onclick="pickExp(\'new\',this)">🆕 This is new to me</span>';
-  html+='<span class="pref-btn" onclick="pickExp(\'some\',this)">👍 Some experience</span>';
-  html+='<span class="pref-btn" onclick="pickExp(\'pro\',this)">🏆 I know my way around</span>';
+  html+='<span class="pref-btn" onclick="pickExp(\'new\',this)">\uD83C\uDD95 This is new to me</span>';
+  html+='<span class="pref-btn" onclick="pickExp(\'some\',this)">\uD83D\uDC4D Some experience</span>';
+  html+='<span class="pref-btn" onclick="pickExp(\'pro\',this)">\uD83C\uDFC6 I know my way around</span>';
   html+='</div>';
   return html;
 }
@@ -454,28 +452,29 @@ function pickExp(val,el){
   lockAll();
   var labels={'new':'This is new to me','some':'Some experience','pro':'I know my way around'};
   addUserBubble(labels[val]);
-  STEP=5;setProgress(5);
-  navTypeThen('Almost done — two quick questions about where you are in life right now. No medical info, just how you\'re feeling. This helps me match products to your <strong>actual situation</strong>, not just a checklist.<br><br><strong>On a scale of 1–10, how satisfied are you with your life overall?</strong><br><span style="font-size:11px;color:var(--dm)">Work, relationships, daily life — the big picture.</span>',buildSlider('wbLife','Not at all','Deeply satisfied','submitWbLife'),1400);
+  STEP=5;
+  // AI reacts to experience + transitions to well-being + shows first slider
+  getAIReaction('experience_set',buildSlider('wbLife','Not at all','Deeply satisfied','submitWbLife'));
 }
 
 /* ── STEP 5-6: WELL-BEING ── */
 function buildSlider(id,lo,hi,fnName){
-  return '<div class="slider-wrap"><div class="slider-row"><input type="range" id="'+id+'" min="1" max="10" value="5" oninput="document.getElementById(\''+id+'Val\').textContent=this.value"/><span class="slider-val" id="'+id+'Val">5</span></div><div class="slider-labels"><span>'+lo+'</span><span>'+hi+'</span></div></div><button class="action-btn" onclick="'+fnName+'()">Submit →</button>';
+  return '<div class="slider-wrap"><div class="slider-row"><input type="range" id="'+id+'" min="1" max="10" value="5" oninput="document.getElementById(\''+id+'Val\').textContent=this.value"/><span class="slider-val" id="'+id+'Val">5</span></div><div class="slider-labels"><span>'+lo+'</span><span>'+hi+'</span></div></div><button class="action-btn" onclick="'+fnName+'()">Submit \u2192</button>';
 }
-
 function submitWbLife(){
   wellbeing.life=parseInt(document.getElementById('wbLife').value);
   lockAll();addUserBubble('Life satisfaction: '+wellbeing.life+'/10');
-  STEP=6;setProgress(6);
-  var react=wellbeing.life<=3?'I hear you — that matters, and it\'ll shape what I recommend.':wellbeing.life<=6?'Middle of the road — let\'s find things that move the needle.':'That\'s solid.';
-  navTypeThen(react+' <strong>Last one — how\'s your energy and motivation on a typical day?</strong><br><span style="font-size:11px;color:var(--dm)">How you feel when you wake up, whether you sustain focus through the day.</span>',buildSlider('wbEnergy','Running on empty','Fully charged','submitWbEnergy'),1200);
+  STEP=6;
+  getAIReaction('wb_life',buildSlider('wbEnergy','Running on empty','Fully charged','submitWbEnergy'));
 }
-
 function submitWbEnergy(){
   wellbeing.energy=parseInt(document.getElementById('wbEnergy').value);
   lockAll();addUserBubble('Energy & motivation: '+wellbeing.energy+'/10');
-  STEP=7;setProgress(7);
-  buildSummary();
+  STEP=7;
+  // AI reacts to energy score (no extra UI — summary comes next)
+  getAIReaction('wb_energy',null,function(){
+    setTimeout(buildSummary,1200);
+  });
 }
 
 /* ── STEP 7: SUMMARY ── */
@@ -487,35 +486,28 @@ function buildSummary(){
 
   var badges=['primary','secondary','tertiary'];
   var badgeLabels=['Primary','Secondary','Tertiary'];
-  var sum='<div class="summary-card">';
+  var card='<div class="summary-card">';
   ranked.forEach(function(id,i){
     var g=goalObj(id);var subs=subSelected[id]&&subSelected[id].length?subSelected[id].join(', '):'';
-    sum+='<div class="sum-row"><span class="sum-icon">'+g.icon+'</span><div style="flex:1"><div class="sum-label">'+g.label+'</div>'+(subs?'<div class="sum-subs">'+esc(subs)+'</div>':'')+'</div><span class="sum-badge '+badges[i]+'">'+badgeLabels[i]+'</span></div>';
+    card+='<div class="sum-row"><span class="sum-icon">'+g.icon+'</span><div style="flex:1"><div class="sum-label">'+g.label+'</div>'+(subs?'<div class="sum-subs">'+esc(subs)+'</div>':'')+'</div><span class="sum-badge '+badges[i]+'">'+badgeLabels[i]+'</span></div>';
   });
-  sum+='</div>';
+  card+='</div>';
 
   var meter='<div class="wb-meter"><div class="wb-title">Your Well-Being Baseline</div><div class="wb-bar-wrap"><div class="wb-bar-fill" id="wbBarFill" style="width:0%;background:'+wbColor+'"></div></div><div class="wb-row"><span class="wb-label">'+wbLabel+'</span><span class="wb-value" style="color:'+wbColor+'">'+avg+'/10</span></div></div>';
 
   var prefs='<div class="pref-summary">';
-  if(budgetPref)prefs+='<span class="pref-tag">'+(budgetPref==='premium'?'🎯 Premium':budgetPref==='value'?'💰 Best value':'⚖️ Mixed')+'</span>';
-  if(expLevel)prefs+='<span class="pref-tag">'+(expLevel==='new'?'🆕 New to HSA':expLevel==='some'?'👍 Some experience':'🏆 Experienced')+'</span>';
-  if(bal>0)prefs+='<span class="pref-tag">💳 $'+bal.toLocaleString()+' '+acct+'</span>';
-  if(hasIns)prefs+='<span class="pref-tag">🛡️ Insurance verified</span>';
+  if(budgetPref)prefs+='<span class="pref-tag">'+(budgetPref==='premium'?'\uD83C\uDFAF Premium':budgetPref==='value'?'\uD83D\uDCB0 Best value':'\u2696\uFE0F Mixed')+'</span>';
+  if(expLevel)prefs+='<span class="pref-tag">'+(expLevel==='new'?'\uD83C\uDD95 New to HSA':expLevel==='some'?'\uD83D\uDC4D Some experience':'\uD83C\uDFC6 Experienced')+'</span>';
+  if(bal>0)prefs+='<span class="pref-tag">\uD83D\uDCB3 $'+bal.toLocaleString()+' '+acct+'</span>';
+  if(hasIns)prefs+='<span class="pref-tag">\uD83D\uDEE1\uFE0F Insurance verified</span>';
   prefs+='</div>';
 
-  var g1=goalObj(ranked[0]);
-  var insight='';
-  if(wellbeing.energy<=4&&selected.includes('energy'))insight='Your energy score tells me optimization products aren\'t just nice-to-have — they\'re a priority. I\'ll weight energy-boosting products higher.';
-  else if(wellbeing.life<=4&&selected.includes('mental'))insight='Your life satisfaction combined with mental health as a goal — therapy tools and stress products will be front and center.';
-  else if(wellbeing.energy<=4)insight='Low energy is a signal. Even though it\'s not your #1 goal, I\'ll make sure energy-supporting products appear in your matches.';
-  else insight='Your well-being baseline is solid. With <strong>'+g1.icon+' '+g1.label+'</strong> as your top priority, I\'ll focus on products that help you level up.';
+  var structuredUI=card+meter+prefs;
 
-  var fullHTML='Here\'s your complete profile — this is what I\'ll use to score every product:'+sum+meter+prefs+'<div style="margin-top:12px;font-size:13px;color:rgba(240,240,255,.6);line-height:1.65">'+insight+'</div><div style="margin-top:10px;font-size:11px;color:var(--dm)">I\'ll cross-reference this with your'+(hasIns?' insurance,':'')+' '+acct+' balance, and our clinical grading to find the best matches. Hit <strong>Find My Products</strong> when you\'re ready.</div>';
-
-  navTypeThen(fullHTML,null,1800,function(){
+  // AI generates the narrative summary, frontend appends the structured card
+  getAIReaction('summary',structuredUI,function(){
     setTimeout(function(){var bar=document.getElementById('wbBarFill');if(bar)bar.style.width=wbPct+'%'},200);
     document.getElementById('bottomCta').classList.add('show');
-    setProgress(TOTAL_STEPS);
     try{
       sessionStorage.setItem('beim_goals',JSON.stringify(ranked));
       sessionStorage.setItem('beim_goal_subs',JSON.stringify(subSelected));
@@ -526,29 +518,28 @@ function buildSummary(){
   });
 }
 
-/* ── FREE TEXT (doesn't break flow) ── */
+/* ── FREE TEXT ── */
 function sendFreeText(){
   var input=document.getElementById('chatInput'),text=input.value.trim();
   if(!text)return;input.value='';
   addUserBubble(text);showTyping();
-  var ctx={page:'goals',balance:bal,acctType:acct,goals:ranked.length?ranked:selected,step:STEP,wellbeing:wellbeing};
+  var ctx={page:'goals',balance:bal,acctType:acct,goals:ranked.length?ranked.map(goalLabel):selected.map(goalLabel),goalIds:ranked.length?ranked:selected,step:STEP,wellbeing:wellbeing,subGoals:subSelected,budgetPref:budgetPref,expLevel:expLevel,hasInsurance:hasIns};
   if(firstName)ctx.firstName=firstName;if(employer)ctx.employer=employer;
   fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-8),navigator:nav,context:ctx})})
   .then(function(r){return r.json()}).then(function(d){
     removeTyping();
-    var reply=d.reply||'Good question! Keep going with the steps above — I\'m tracking everything.';
-    // Append a gentle nudge back to the flow if mid-step
+    var reply=d.reply||'Good question! Keep going with the steps above \u2014 I\u2019m tracking everything.';
     if(STEP<7){
       var nudge='';
-      if(STEP===1)nudge=' Go ahead and pick your top 3 goals above when you\'re ready.';
-      else if(STEP===2)nudge=' Tag your specifics above whenever you\'re ready.';
+      if(STEP===1)nudge=' Go ahead and pick your top 3 goals above when you\u2019re ready.';
+      else if(STEP===2)nudge=' Tag your specifics above whenever you\u2019re ready.';
       else if(STEP===3)nudge=' Set your rankings above and lock them in.';
       else if(STEP>=4&&STEP<5)nudge=' Answer the question above to continue.';
       else if(STEP>=5)nudge=' Use the slider above to answer.';
       reply+=nudge;
     }
     addNavBubble(reply);
-  }).catch(function(){removeTyping();addNavBubble('I hit a snag — try again in a moment. The steps above still work.')});
+  }).catch(function(){removeTyping();addNavBubble('I hit a snag \u2014 try again in a moment. The steps above still work.')});
 }
 
 /* ── NAVIGATION ── */
