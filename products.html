@@ -235,13 +235,16 @@ var LMN_FEE=35;
    USPSTF PREVENTATIVE CODES — Insurance-First Logic
    ICD-10 anchor codes make the claim $0 (NOT symptom codes)
    ═══════════════════════════════════════════════ */
+// NOTE: product_match patterns are EXACT product name matches only.
+// Do NOT use broad terms like "Cholesterol" or "Weight Management" — those catch supplements/programs.
+// When you procure actual screening kits, add their exact product names here.
 var PREVENTATIVE_CODES=[
-  {category:"Cardiovascular",product_match:"Statin|Lipid Panel|Cholesterol|Heart Health Panel",uspstf_grade:"B",cpt_code:"80061",icd10_screening:"Z13.6",icd10_label:"Screening for cardiovascular disorders",rules:{age_min:40,age_max:75},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had a lipid panel or cholesterol screening in the past 12 months?"},
-  {category:"Colorectal",product_match:"Cologuard|FIT Test|Colon|Colorectal",uspstf_grade:"A",cpt_code:"81528",icd10_screening:"Z12.11",icd10_label:"Screening for malignant neoplasm of colon",rules:{age_min:45,age_max:75},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had a colonoscopy or at-home colon screening in the past 12 months?"},
-  {category:"Diabetes",product_match:"A1c|Glucose|Diabetes|Blood Sugar|Metabolic Panel",uspstf_grade:"B",cpt_code:"83036",icd10_screening:"Z13.1",icd10_label:"Screening for diabetes mellitus",rules:{age_min:35,age_max:70},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an A1c or glucose screening in the past 12 months?"},
-  {category:"Metabolic / Obesity",product_match:"Obesity|Weight Management|Peptide|GLP-1|Semaglutide|Tirzepatide",uspstf_grade:"B",cpt_code:"99401",icd10_screening:"Z68.30",icd10_label:"BMI 30.0+ obesity counseling",rules:{age_min:18,age_max:99},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had obesity or metabolic counseling with a physician in the past 12 months?"},
-  {category:"STI Screening",product_match:"STI|STD|Chlamydia|Gonorrhea|Syphilis|HIV Test|Sexual Health Panel",uspstf_grade:"A",cpt_code:"87491",icd10_screening:"Z11.3",icd10_label:"Screening for STIs",rules:{age_min:15,age_max:65},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an STI screening in the past 12 months?"},
-  {category:"Annual Physical",product_match:"Annual Physical|General Exam|Wellness Exam|Comprehensive Panel",uspstf_grade:"A",cpt_code:"99395",icd10_screening:"Z00.00",icd10_label:"General adult medical examination",rules:{age_min:18,age_max:99},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an annual physical or wellness exam in the past 12 months?"}
+  {category:"Cardiovascular",product_match:"Lipid Panel Test|Lipid Panel Kit|CardioCheck|Cholesterol Screening Kit",uspstf_grade:"B",cpt_code:"80061",icd10_screening:"Z13.6",icd10_label:"Screening for cardiovascular disorders",rules:{age_min:40,age_max:75},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had a lipid panel or cholesterol screening in the past 12 months?"},
+  {category:"Colorectal",product_match:"Cologuard|FIT Test|Second Generation FIT",uspstf_grade:"A",cpt_code:"81528",icd10_screening:"Z12.11",icd10_label:"Screening for malignant neoplasm of colon",rules:{age_min:45,age_max:75},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had a colonoscopy or at-home colon screening in the past 12 months?"},
+  {category:"Diabetes",product_match:"A1c Test Kit|A1c Home Test|HbA1c Kit|Glucose Screening Kit",uspstf_grade:"B",cpt_code:"83036",icd10_screening:"Z13.1",icd10_label:"Screening for diabetes mellitus",rules:{age_min:35,age_max:70},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an A1c or glucose screening in the past 12 months?"},
+  {category:"Metabolic / Obesity",product_match:"Obesity Counseling Program|Metabolic Counseling",uspstf_grade:"B",cpt_code:"99401",icd10_screening:"Z68.30",icd10_label:"BMI 30.0+ obesity counseling",rules:{age_min:18,age_max:99},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had obesity or metabolic counseling with a physician in the past 12 months?"},
+  {category:"STI Screening",product_match:"STI Test Kit|STI Panel|STD Test Kit|Sexual Health Panel|Chlamydia Test|Gonorrhea Test|HIV Test Kit",uspstf_grade:"A",cpt_code:"87491",icd10_screening:"Z11.3",icd10_label:"Screening for STIs",rules:{age_min:15,age_max:65},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an STI screening in the past 12 months?"},
+  {category:"Annual Physical",product_match:"Annual Physical|Wellness Exam|Comprehensive Wellness Panel",uspstf_grade:"A",cpt_code:"99395",icd10_screening:"Z00.00",icd10_label:"General adult medical examination",rules:{age_min:18,age_max:99},insurance_cost:0,order_fee_hsa:PHYSICIAN_ORDER_FEE,screening_question:"Had an annual physical or wellness exam in the past 12 months?"}
 ];
 
 var FALLBACKS={
@@ -392,13 +395,12 @@ function scoreAllProducts(){
 
     // Layer 1: USPSTF Preventative Code Match
     var prodName=(p.product_name||'').toLowerCase();
-    var prodCat=(p.category||'').toLowerCase();
     for(var ci=0;ci<PREVENTATIVE_CODES.length;ci++){
       var code=PREVENTATIVE_CODES[ci];
       var patterns=code.product_match.split('|');
       var matched=false;
       for(var pi=0;pi<patterns.length;pi++){
-        if(prodName.indexOf(patterns[pi].toLowerCase())>-1||prodCat.indexOf(patterns[pi].toLowerCase())>-1){matched=true;break}
+        if(prodName.indexOf(patterns[pi].toLowerCase())>-1){matched=true;break}
       }
       if(matched&&userAge){
         if(userAge>=code.rules.age_min&&userAge<=code.rules.age_max&&!completedScreenings[code.category]){
@@ -669,7 +671,7 @@ function runPhase1(){
     addNavBubble("No additional insurance-matched products for your profile. Let\u2019s move to your "+acct+".");
     setTimeout(function(){checkIn(2)},1500);return;
   }
-  var show=insProducts.slice(0,6);
+  var show=insProducts.slice(0,5);
   var totalValue=0;show.forEach(function(p){totalValue+=p._price});
   var header='<div class="phase-hdr"><div class="phase-icon ins">\uD83D\uDEE1\uFE0F</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 \u2014 use insurance, save your '+acct+'</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
   var cards=buildProductCards(show);
@@ -684,7 +686,7 @@ function runPhase2(){
   var remaining=bal-getHsaAllocated();
   var hsaProducts=allProducts.filter(function(p){
     return!p._insMatch&&!p._prevMatch&&p._score>0&&p._goalMatch&&p.hsa_fsa_eligible==='Yes'&&p._price<=remaining+100;
-  }).slice(0,8);
+  }).slice(0,5);
   if(!hsaProducts.length){
     addNavBubble("No "+acct+"-matched products fit your current budget. Let\u2019s look at performance gaps.");
     setTimeout(function(){checkIn(3)},1500);return;
@@ -701,7 +703,7 @@ function runPhase3(){
   PHASE=3;
   var alreadyShown=new Set();
   allProducts.forEach(function(p){if(p._insMatch||p._prevMatch||p._goalMatch)alreadyShown.add(p.product_name)});
-  var gapProducts=allProducts.filter(function(p){return!alreadyShown.has(p.product_name)&&p._score>10}).slice(0,6);
+  var gapProducts=allProducts.filter(function(p){return!alreadyShown.has(p.product_name)&&p._score>10}).slice(0,5);
   if(!gapProducts.length){checkIn('finish');return}
   var header='<div class="phase-hdr"><div class="phase-icon perf">\u26A1</div><div><div class="phase-title">Performance Gaps</div><div class="phase-sub">High-value products beyond your stated goals</div></div></div>';
   var cards=buildProductCards(gapProducts);
