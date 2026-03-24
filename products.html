@@ -17,10 +17,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .bg-mesh::before{content:'';position:absolute;width:160%;height:160%;top:-30%;left:-30%;background:radial-gradient(ellipse 700px 600px at 20% 15%,rgba(124,106,240,.06),transparent 70%),radial-gradient(ellipse 500px 400px at 80% 70%,rgba(110,224,245,.04),transparent 70%);animation:meshDrift 35s ease-in-out infinite alternate}
 @keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(25px,-15px) scale(1.02)}}
 .noise{position:fixed;inset:0;z-index:0;opacity:.014;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
-
 .chat-app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:720px;margin:0 auto;width:100%}
-
-/* ── HEADER ── */
 .chat-header{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;backdrop-filter:blur(20px);background:rgba(6,6,16,.88)}
 .ch-back{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--mu);text-decoration:none;font-size:14px;transition:all .2s;flex-shrink:0}
 .ch-back:hover{border-color:rgba(255,255,255,.15);color:var(--tx)}
@@ -34,8 +31,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .step-dot{width:28px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);transition:all .4s var(--ease)}
 .step-dot.done{background:var(--gn)}
 .step-dot.active{background:linear-gradient(90deg,var(--cy),var(--pu));width:40px;box-shadow:0 0 12px rgba(110,224,245,.15)}
-
-/* ── MESSAGES ── */
 .messages{flex:1;overflow-y:auto;padding:20px 24px 120px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
 .messages::-webkit-scrollbar{width:4px}
 .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:4px}
@@ -57,8 +52,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .typing-dots span:nth-child(2){animation-delay:.15s}
 .typing-dots span:nth-child(3){animation-delay:.3s}
 @keyframes dotP{0%,60%,100%{opacity:.25;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
-
-/* ── INLINE PHONE CAPTURE ── */
 .phone-capture{margin-top:10px;padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
 .phone-capture .pc-label{font-size:12px;font-weight:700;color:var(--cy);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .phone-capture .pc-label span{font-size:14px}
@@ -79,8 +72,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .phone-capture .pc-skip:hover{color:var(--mu)}
 .phone-capture .pc-done{display:flex;align-items:center;gap:8px;color:var(--gn);font-size:13px;font-weight:600}
 .phone-capture .pc-done span{font-size:16px}
-
-/* ── PHASE HEADER ── */
 .phase-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);margin-bottom:8px}
 .phase-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .phase-icon.ins{background:rgba(61,217,182,.1);border:1px solid rgba(61,217,182,.2)}
@@ -91,8 +82,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .phase-badge{margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px}
 .phase-badge.green{background:rgba(61,217,182,.08);border:1px solid rgba(61,217,182,.18);color:var(--gn)}
 .phase-badge.cyan{background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.15);color:var(--cy)}
-
-/* ── PRODUCT CARDS ── */
 .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .prod-card{background:rgba(8,8,18,.6);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s var(--ease);position:relative}
 .prod-card:hover{border-color:rgba(255,255,255,.16);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
@@ -130,29 +119,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .prod-free{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:var(--gn)}
 .prod-strike{font-size:9px;color:var(--dm);text-decoration:line-through}
 .prod-lmn-note{font-size:8px;color:var(--pu);margin-top:3px;font-weight:600}
-
 .action-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:11px 22px;border-radius:100px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s var(--ease)}
 .action-btn:hover{box-shadow:0 6px 28px rgba(124,106,240,.3);transform:translateY(-1px)}
 .action-btn:disabled{opacity:.3;pointer-events:none}
 .action-btn.locked{pointer-events:none;opacity:.35}
 .action-btn.secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
 .action-btn.secondary:hover{background:rgba(255,255,255,.1)}
-
-/* ── CHECK-IN BUTTONS ── */
 .checkin-btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .checkin-btn{padding:9px 18px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--tx)}
 .checkin-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
 .checkin-btn.primary{background:linear-gradient(135deg,var(--pu),var(--bl));border:none;color:#fff;font-weight:700}
 .checkin-btn.primary:hover{box-shadow:0 4px 16px rgba(124,106,240,.3)}
-
-/* ── INPUT BAR ── */
 .input-bar{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,6,16,.92);backdrop-filter:blur(20px);padding:4px 8px}
 .input-field{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;padding:14px 16px}
 .input-field::placeholder{color:var(--dm)}
 .send-btn{background:none;border:none;padding:14px 16px;cursor:pointer;font-size:16px;color:var(--dm);transition:color .2s}
 .send-btn:hover{color:var(--cy)}
-
-/* ── STICKY TALLY ── */
 .tally-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;transform:translateY(100%);transition:transform .35s var(--ease);background:rgba(10,10,20,.96);backdrop-filter:blur(24px);border-top:1px solid rgba(124,106,240,.18);padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
 .tally-bar.visible{transform:translateY(0)}
 .tally-stat{text-align:center}
@@ -163,7 +145,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 .tally-cta{padding:11px 24px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
 .tally-cta:hover{box-shadow:0 6px 24px rgba(124,106,240,.4)}
 .tally-clear{background:none;border:1px solid rgba(255,255,255,.1);color:var(--dm);padding:11px 14px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;cursor:pointer}
-
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:680px){.messages{padding:16px 16px 120px}.chat-header{padding:12px 16px}.bubble{font-size:13px;padding:10px 14px;max-width:95%}.prod-grid{grid-template-columns:1fr}.step-indicator{display:none}.tally-bar{padding:10px 16px;gap:10px}}
 </style>
@@ -172,7 +153,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 <div class="bg-mesh"></div><div class="noise"></div>
 <div class="chat-app">
   <div class="chat-header">
-    <a class="ch-back" href="goals.html" title="Back">←</a>
+    <a class="ch-back" href="goals.html" title="Back">&larr;</a>
     <div class="ch-avatar" id="headerAvatar"></div>
     <div class="ch-info"><div class="ch-name" id="headerName">Care Navigator</div><div class="ch-status">Unlocking Session</div></div>
     <div class="step-indicator">
@@ -181,8 +162,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
   </div>
   <div class="messages" id="messages"></div>
   <div class="input-bar">
-    <input class="input-field" id="chatInput" type="text" placeholder="Ask about any product…" autocomplete="off"/>
-    <button class="send-btn" onclick="sendFreeText()">➤</button>
+    <input class="input-field" id="chatInput" type="text" placeholder="Ask about any product\u2026" autocomplete="off"/>
+    <button class="send-btn" onclick="sendFreeText()">&#10148;</button>
   </div>
 </div>
 <div class="tally-bar" id="tallyBar">
@@ -193,20 +174,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
   <div class="tally-stat"><div class="tally-num white" id="tallyCount">0</div><div class="tally-label">Products</div></div>
   <div class="tally-div"></div>
   <div class="tally-stat"><div class="tally-num green" id="tallyTotal">$0</div><div class="tally-label">Total benefit value</div></div>
-  <button class="tally-cta" onclick="goToIntelligence()">Product Intelligence →</button>
+  <button class="tally-cta" onclick="goToIntelligence()">Product Intelligence &rarr;</button>
   <button class="tally-clear" onclick="clearSelections()">Clear</button>
 </div>
 
 <script>
-/* ═══════════════════════════════════════
-   CONFIG
-   ═══════════════════════════════════════ */
 var CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vSkKfZAWrcH9YyJ8Ks5VTEJV950qVsjBjho6zo0GtAUvQAxjH-y5d3cvuUHkwTHXQ/pub?output=csv';
 var W='https://beim-health-analyzer.steven-03f.workers.dev';
 var W_SMS='https://beim-webhooks.steven-03f.workers.dev';
 var TWILIO_LIVE=true;
 var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
-
 var GOAL_MAP={
   screenings:['Labs & Biomarkers','Immunity & Prevention'],vaccines:['Immunity & Prevention'],
   primary:['Labs & Biomarkers','General Wellness'],chronic:['Weight Management','Heart & Cardiovascular','Hormones & Fertility'],
@@ -217,11 +194,19 @@ var GOAL_MAP={
 var HAPPINESS_CATS=['Sleep Quality','Energy & Focus','Brain Health','General Wellness'];
 var TAX_RATE=0.30;
 
-/* ═══════════════════════════════════════
-   STATE
-   ═══════════════════════════════════════ */
+/* ── FALLBACKS ── */
+var FALLBACKS={
+  session_open:'I\u2019ve matched your profile against our full catalog. Let me walk you through three rounds \u2014 insurance unlocks, HSA optimization, and performance gaps. Tap any product to add it to your plan.',
+  phase_insurance:'These are covered by your insurance at $0 under USPSTF guidelines. Use insurance first, save your HSA for what insurance doesn\u2019t cover.',
+  checkin_1:'Take a look and tap any products you want. When you\u2019re ready, we\u2019ll move to your HSA picks.',
+  phase_hsa:'These match your top goals and fit your '+('HSA')+'. Every dollar here saves you ~30% in taxes.',
+  checkin_2:'How are we doing? Want to adjust anything, or should I show you the performance gaps?',
+  phase_gaps:'These didn\u2019t match your top 3 directly, but scored high on clinical grade and your profile.',
+  summary:'Session complete. Your selections are locked in \u2014 hit Product Intelligence for the clinical deep-dive on each product before checkout.'
+};
+
 var nav,navName,firstName='',lastName='',employer='',email='',bal=0,acct='HSA',userGoals=[],userSex='all',userAge=null,hasIns=false,ins=null;
-var wbLife=5,wbEnergy=5,budgetPref='mix',expLevel='some';
+var wbLife=5,wbEnergy=5,budgetPref='mix',expLevel='some',deadline='';
 var allProducts=[],selectedProducts=[],chatHistory=[],chatLog=[];
 var PHASE=0,phoneCaptured=false,phoneNumber='';
 
@@ -229,9 +214,57 @@ function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-/* ═══════════════════════════════════════
-   INIT
-   ═══════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   AI REACTION ENGINE
+   Single swap point for Voiceflow migration.
+   ══════════════════════════════════════════ */
+function getAIReaction(productStep,extraUI,callback){
+  showTyping();
+  var topProducts=[];
+  if(productStep==='phase_insurance')topProducts=allProducts.filter(function(p){return p._insMatch&&p._score>0}).slice(0,4).map(function(p){return p.product_name});
+  else if(productStep==='phase_hsa')topProducts=allProducts.filter(function(p){return!p._insMatch&&p._score>0&&p._goalMatch}).slice(0,4).map(function(p){return p.product_name});
+  else if(productStep==='phase_gaps'){var shown=new Set();allProducts.forEach(function(p){if(p._insMatch||p._goalMatch)shown.add(p.product_name)});topProducts=allProducts.filter(function(p){return!shown.has(p.product_name)&&p._score>10}).slice(0,4).map(function(p){return p.product_name})}
+
+  var ctx={
+    page:'products',productStep:productStep,
+    firstName:firstName,employer:employer,
+    balance:bal,acctType:acct,deadline:deadline,
+    goals:userGoals,
+    wellbeing:{life:wbLife,energy:wbEnergy},
+    budgetPref:budgetPref,expLevel:expLevel,
+    hasInsurance:hasIns,
+    selectedCount:selectedProducts.length,
+    selectedNames:selectedProducts.map(function(p){return p.product_name}).join(', '),
+    matchedCount:allProducts.filter(function(p){return p._score>10}).length,
+    topProductNames:topProducts.join(', '),
+    hsaRemaining:Math.max(0,bal-getHsaAllocated()),
+    insValue:selectedProducts.filter(function(p){return p._insMatch}).reduce(function(s,p){return s+p._price},0),
+    hsaDeployed:selectedProducts.filter(function(p){return!p._insMatch}).reduce(function(s,p){return s+p._price},0)
+  };
+
+  var controller=new AbortController();
+  var timeout=setTimeout(function(){controller.abort()},4000);
+
+  fetch(W+'/api/chat',{
+    method:'POST',signal:controller.signal,
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:'[productStep:'+productStep+']',history:chatHistory.slice(-6),navigator:nav,context:ctx})
+  })
+  .then(function(r){clearTimeout(timeout);return r.json()})
+  .then(function(d){
+    removeTyping();
+    var reply=d.reply||FALLBACKS[productStep]||'Let\u2019s keep going.';
+    addNavBubble(reply+(extraUI||''));
+    if(callback)callback();
+  })
+  .catch(function(){
+    clearTimeout(timeout);removeTyping();
+    addNavBubble((FALLBACKS[productStep]||'Let\u2019s keep going.')+(extraUI||''));
+    if(callback)callback();
+  });
+}
+
+/* ── INIT ── */
 window.addEventListener('DOMContentLoaded',function(){
   var p=new URLSearchParams(location.search);
   nav=p.get('nav')||sGet('beim_nav')||'brooks';if(nav==='skip')nav='brooks';
@@ -241,6 +274,7 @@ window.addEventListener('DOMContentLoaded',function(){
   employer=p.get('employer')?decodeURIComponent(p.get('employer')):(sGet('beim_employer')||'');
   email=p.get('email')?decodeURIComponent(p.get('email')):(sGet('beim_email')||'');
   bal=parseFloat(p.get('balance'))||0;acct=p.get('acct')||'HSA';
+  deadline=p.get('deadline')||sGet('beim_fsa_deadline')||'';
   userSex=p.get('gender')||sGet('beim_gender')||'all';
   var gs=p.get('goals')||'';if(gs)userGoals=gs.split(',');else try{userGoals=JSON.parse(sGet('beim_goals')||'[]')}catch(e){}
   wbLife=parseInt(p.get('wb_life'))||5;wbEnergy=parseInt(p.get('wb_energy'))||5;
@@ -249,32 +283,30 @@ window.addEventListener('DOMContentLoaded',function(){
   hasIns=p.get('benefits')==='verified';
   try{ins=JSON.parse(sGet('beim_insurance'))}catch(e){}
   try{var dob=sGet('beim_dob');if(dob)userAge=Math.floor((Date.now()-new Date(dob).getTime())/31557600000)}catch(e){}
-
-  // Check if phone already captured
   var existingPhone=sGet('beim_phone');
   if(existingPhone){phoneCaptured=true;phoneNumber=existingPhone}
+
+  // Update HSA fallback with actual acct type
+  FALLBACKS.phase_hsa='These match your top goals and fit your '+acct+'. Every dollar here saves you ~30% in taxes.';
 
   var img=AVATARS[nav]||AVATARS.brooks;
   document.getElementById('headerAvatar').innerHTML='<img src="'+img+'"/><span class="ch-avatar-dot"></span>';
   document.getElementById('headerName').textContent=navName;
   document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendFreeText()}});
 
-  addNavBubble("Pulling up your profile and matching products…");
+  addNavBubble("Pulling up your profile and matching products\u2026");
   loadCSV();
 });
 
-/* ═══════════════════════════════════════
-   CSV LOADER + PARSER
-   ═══════════════════════════════════════ */
+/* ── CSV ── */
 function loadCSV(){
   fetch(CSV_URL).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(function(csv){
     allProducts=parseCSV(csv);
     if(!allProducts.length){addNavBubble("Couldn't load products. Try refreshing.");return}
     scoreAllProducts();
     startSession();
-  }).catch(function(e){console.error('CSV failed:',e);addNavBubble("Product catalog couldn't load — try refreshing the page.")});
+  }).catch(function(e){console.error('CSV failed:',e);addNavBubble("Product catalog couldn't load \u2014 try refreshing the page.")});
 }
-
 function parseCSV(text){
   var lines=text.split('\n');if(lines.length<2)return[];
   var headers=csvLine(lines[0]),out=[];
@@ -300,12 +332,10 @@ function parseCSV(text){
 }
 function csvLine(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(q){if(ch==='"'&&l[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else{if(ch==='"')q=true;else if(ch===','){r.push(c.trim());c=''}else c+=ch}}r.push(c.trim());return r}
 
-/* ═══════════════════════════════════════
-   SCORING ENGINE
-   ═══════════════════════════════════════ */
+/* ── SCORING ── */
 function scoreAllProducts(){
   allProducts.forEach(function(p){
-    var score=0,tags=[];
+    var score=0;
     var ut=(p.uspstf_screening_tags||'').split('|').filter(Boolean);
     var ur=(p.uspstf_age_sex_rules||'').split('|').filter(Boolean);
     p._insMatch=false;
@@ -314,7 +344,7 @@ function scoreAllProducts(){
         var rule=ur[i]||'',parts=rule.split(':'),sex=parts[0]||'all',ageRange=(parts[1]||'0-99').split('-');
         var sexOk=sex==='all'||(sex==='female'&&userSex==='F')||(sex==='male'&&userSex==='M');
         var ageOk=!userAge||(userAge>=+ageRange[0]&&userAge<=+ageRange[1]);
-        if(sexOk&&ageOk){p._insMatch=true;score+=50;tags.push('ins');break}
+        if(sexOk&&ageOk){p._insMatch=true;score+=50;break}
       }
     }
     var gt=(p.goal_tags||'').split('|').map(function(t){return t.trim()}).filter(Boolean);
@@ -322,7 +352,7 @@ function scoreAllProducts(){
     for(var gi=0;gi<userGoals.length;gi++){
       var mapped=GOAL_MAP[userGoals[gi]]||[];
       for(var mi=0;mi<mapped.length;mi++){
-        if(gt.indexOf(mapped[mi])>-1){p._goalMatch=true;p._goalRank=Math.min(p._goalRank,gi);score+=[35,22,12][gi]||5;tags.push('g'+(gi+1));break}
+        if(gt.indexOf(mapped[mi])>-1){p._goalMatch=true;p._goalRank=Math.min(p._goalRank,gi);score+=[35,22,12][gi]||5;break}
       }
       if(p._goalMatch)break;
     }
@@ -337,11 +367,10 @@ function scoreAllProducts(){
     if(happinessAvg<=5){var isHappinessCat=gt.some(function(t){return HAPPINESS_CATS.indexOf(t)>-1});if(isHappinessCat)score=Math.round(score*1.2)}
     var genderApp=(p.gender_applicability||'a')[0].toLowerCase();
     if(genderApp!=='a'&&userSex!=='all'&&genderApp!==(userSex==='F'?'f':'m'))score=-999;
-    p._score=score;p._tags=tags;
+    p._score=score;
   });
   allProducts.sort(function(a,b){return b._score-a._score});
 }
-
 function confScore(p){
   var s=0;var g=(p.grade||'').trim();
   s+=g==='A'?35:g==='B'?22:g==='C'?10:0;
@@ -352,55 +381,42 @@ function confScore(p){
   return Math.min(99,Math.max(15,s));
 }
 
-/* ═══════════════════════════════════════
-   PERSONAL SHOPPER SESSION FLOW
-   ═══════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   SESSION FLOW — AI-DRIVEN
+   ══════════════════════════════════════════ */
 function startSession(){
   document.getElementById('messages').innerHTML='';
 
-  // Phase 0: Greeting + profile recap
-  var greeting=(firstName?firstName:'Hey there')+", welcome to your unlocking session. I'm "+navName+" — think of me as your personal health benefits shopper.";
-  addNavBubble(greeting);
-
-  setTimeout(function(){
-    var recap="Here's what I know about you:";
-    if(bal>0)recap+=' <strong>$'+bal.toLocaleString()+' '+acct+'</strong>.';
-    if(hasIns)recap+=' Insurance verified.';
-    if(userGoals.length){
-      var goalLabels=userGoals.map(function(g){
-        var m=GOAL_MAP[g];return m&&m[0]?m[0]:g;
+  // Phone capture check — if not captured, show it first with callback-to-session
+  // If already captured, go straight to AI session opener
+  if(!phoneCaptured){
+    showPhoneCapture(function(){
+      // After phone is handled (captured or skipped), fire AI session opener
+      getAIReaction('session_open',null,function(){
+        setTimeout(function(){showSessionPhases()},2000);
       });
-      recap+=' Top goals: <strong>'+goalLabels.join(', ')+'</strong>.';
-    }
-    if(wbEnergy<=5)recap+=' I noticed your energy score is '+wbEnergy+'/10 — I\'ll weight products for that.';
-    recap+=" I've matched <strong>"+allProducts.filter(function(p){return p._score>10}).length+" products</strong> from our catalog to your profile.";
-    addNavBubble(recap);
-
-    // Phone capture (if not already captured)
-    setTimeout(function(){
-      if(!phoneCaptured){
-        showPhoneCapture();
-      } else {
-        addNavBubble("I've got your number on file — I'll text you a summary when we're done. Let's get into it.");
-        setTimeout(function(){showSessionIntro()},1500);
-      }
-    },2000);
-  },2200);
+    });
+  } else {
+    getAIReaction('session_open',null,function(){
+      setTimeout(function(){showSessionPhases()},2000);
+    });
+  }
 }
 
-/* ── INLINE PHONE CAPTURE ── */
-function showPhoneCapture(){
-  var html="Before we dive in — want me to text you this session? That way you've got your picks saved on your phone and can reach me anytime.";
+/* ── PHONE CAPTURE (payoff of calculator soft tease) ── */
+function showPhoneCapture(afterCallback){
+  // This is the payoff — the calculator page told them "once we match your products, I can text you directly"
+  var html="Remember I mentioned I\u2019d set up a direct line once we found your matches? Here\u2019s where we do that \u2014 drop your number and I\u2019ll text you this session so you\u2019ve got everything on your phone.";
   html+='<div class="phone-capture" id="phoneCapture">';
-  html+='<div class="pc-label"><span>📱</span> Text me your session</div>';
+  html+='<div class="pc-label"><span>\uD83D\uDCF1</span> Take '+navName+' with you</div>';
   html+='<div class="pc-row"><input class="pc-input" id="pcPhone" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend" onclick="submitPhone()">Text me</button></div>';
   html+='<div class="pc-consent"><input type="checkbox" id="pcChk" checked/><label for="pcChk">I agree to receive texts from Beim Health. Msg & data rates may apply. Reply STOP anytime.</label></div>';
   html+='<div class="pc-err" id="pcErr">&nbsp;</div>';
-  html+='<button class="pc-skip" onclick="skipPhone()">Skip for now — show me the products</button>';
+  html+='<button class="pc-skip" onclick="skipPhone()">Skip for now</button>';
   html+='</div>';
   addNavBubble(html);
+  window._phoneAfterCallback=afterCallback;
 
-  // Auto-format phone as they type
   setTimeout(function(){
     var inp=document.getElementById('pcPhone');
     if(inp){
@@ -436,18 +452,13 @@ function submitPhone(){
 
   errEl.textContent='\u00a0';
   document.getElementById('pcPhone').classList.remove('err');
-  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending…';
+  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending\u2026';
 
   phoneCaptured=true;phoneNumber=phone;
   sSet('beim_phone',phone);
 
-  if(!TWILIO_LIVE){
-    // Save locally, skip Twilio
-    phoneSuccess();
-    return;
-  }
+  if(!TWILIO_LIVE){phoneSuccess();return}
 
-  // Build plan URL with context
   var params=new URLSearchParams();
   params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
   if(firstName)params.set('first_name',encodeURIComponent(firstName));
@@ -461,19 +472,14 @@ function submitPhone(){
     body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:allProducts.filter(function(p){return p._score>10}).length,plan_url:planUrl,lead_id:lid})
   }).then(function(r){return r.json()}).then(function(d){
     if(d.success){phoneSuccess()}
-    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text me';errEl.textContent='Couldn\'t send — '+(d.message||d.error||'try again')}
-  }).catch(function(){
-    // Network error — still save phone locally and proceed
-    phoneSuccess();
-  });
+    else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text me';errEl.textContent='Couldn\u2019t send \u2014 '+(d.message||d.error||'try again')}
+  }).catch(function(){phoneSuccess()});
 }
 
 function phoneSuccess(){
   var capture=document.getElementById('phoneCapture');
-  if(capture){
-    capture.innerHTML='<div class="pc-done"><span>✅</span> Got it — I\'ll text you a summary when we\'re done.</div>';
-  }
-  setTimeout(function(){showSessionIntro()},1500);
+  if(capture)capture.innerHTML='<div class="pc-done"><span>\u2705</span> Done \u2014 check your phone. I\u2019ll text you a full summary when we\u2019re finished here.</div>';
+  if(window._phoneAfterCallback){setTimeout(window._phoneAfterCallback,1500);window._phoneAfterCallback=null}
 }
 
 function skipPhone(){
@@ -481,16 +487,15 @@ function skipPhone(){
   if(capture)capture.remove();
   addUserBubble("Skip for now");
   setTimeout(function(){
-    addNavBubble("No worries — I'll offer again at the end. Let's get into your products.");
-    setTimeout(function(){showSessionIntro()},1200);
+    addNavBubble("No problem \u2014 I\u2019ll offer again at the end.");
+    if(window._phoneAfterCallback){setTimeout(window._phoneAfterCallback,1200);window._phoneAfterCallback=null}
   },600);
 }
 
-/* ── SESSION INTRO → PHASES ── */
-function showSessionIntro(){
-  addNavBubble("I'm going to walk you through three rounds:<br><strong>1. Insurance Unlocks</strong> — products covered at $0<br><strong>2. HSA Optimization</strong> — best use of your tax-free dollars<br><strong>3. Performance Gaps</strong> — high-value picks beyond your goals<br><br>Tap any product to add it to your plan. Ready?");
-  // Auto-continue after a beat
-  setTimeout(function(){runPhase1()},3000);
+/* ── SESSION PHASES INTRO ── */
+function showSessionPhases(){
+  addNavBubble("I\u2019m going to walk you through three rounds:<br><strong>1. Insurance Unlocks</strong> \u2014 products covered at $0<br><strong>2. HSA Optimization</strong> \u2014 best use of your tax-free dollars<br><strong>3. Performance Gaps</strong> \u2014 high-value picks beyond your goals<br><br>Tap any product to add it to your plan.");
+  setTimeout(function(){runPhase1()},2500);
 }
 
 /* ── PHASE 1: Insurance Unlocks ── */
@@ -498,15 +503,14 @@ function runPhase1(){
   PHASE=1;
   var insProducts=allProducts.filter(function(p){return p._insMatch&&p._score>0});
   if(!insProducts.length){
-    addNavBubble("No insurance-matched products found for your profile. Let's move to your HSA.");
+    addNavBubble("No insurance-matched products found for your profile. Let\u2019s move to your HSA.");
     setTimeout(function(){checkIn(2)},1500);return;
   }
   var show=insProducts.slice(0,6);
   var totalValue=0;show.forEach(function(p){totalValue+=p._price});
-  var header='<div class="phase-hdr"><div class="phase-icon ins">🛡️</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 — use insurance, save your HSA</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
-  var intro='These are <strong>covered by your insurance at $0</strong> based on USPSTF guidelines. That\'s <strong>$'+totalValue.toLocaleString()+'</strong> in value sitting on the table.';
+  var header='<div class="phase-hdr"><div class="phase-icon ins">\uD83D\uDEE1\uFE0F</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 \u2014 use insurance, save your HSA</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
   var cards=buildProductCards(show);
-  navTypeThen(header+intro+cards,null,1800,function(){
+  getAIReaction('phase_insurance',header+cards,function(){
     setTimeout(function(){checkIn(2)},2000);
   });
 }
@@ -520,16 +524,13 @@ function runPhase2(){
   }).slice(0,8);
 
   if(!hsaProducts.length){
-    addNavBubble("No HSA-matched products fit your current budget. Let's look at performance gaps.");
+    addNavBubble("No HSA-matched products fit your current budget. Let\u2019s look at performance gaps.");
     setTimeout(function(){checkIn(3)},1500);return;
   }
 
-  var header='<div class="phase-hdr"><div class="phase-icon hsa">💳</div><div><div class="phase-title">HSA Optimization</div><div class="phase-sub">Deploy tax-free dollars on your top goals</div></div><span class="phase-badge cyan">$'+Math.round(remaining)+' available</span></div>';
-  var g1=userGoals[0]?GOAL_MAP[userGoals[0]]:'';
-  var g1Label=g1&&g1[0]?g1[0]:'your goals';
-  var intro='These match <strong>'+g1Label+'</strong> and fit your '+acct+'. Every dollar here saves you ~'+Math.round(TAX_RATE*100)+'% in taxes.';
+  var header='<div class="phase-hdr"><div class="phase-icon hsa">\uD83D\uDCB3</div><div><div class="phase-title">HSA Optimization</div><div class="phase-sub">Deploy tax-free dollars on your top goals</div></div><span class="phase-badge cyan">$'+Math.round(remaining)+' available</span></div>';
   var cards=buildProductCards(hsaProducts);
-  navTypeThen(header+intro+cards,null,1800,function(){
+  getAIReaction('phase_hsa',header+cards,function(){
     setTimeout(function(){checkIn(3)},2000);
   });
 }
@@ -543,47 +544,25 @@ function runPhase3(){
 
   if(!gapProducts.length){checkIn('finish');return}
 
-  var header='<div class="phase-hdr"><div class="phase-icon perf">⚡</div><div><div class="phase-title">Performance Gaps</div><div class="phase-sub">High-value products beyond your stated goals</div></div></div>';
-  var intro='These didn\'t match your top 3 directly, but scored high on clinical grade and your profile.'+(wbEnergy<=5?' Since your energy is <strong>'+wbEnergy+'/10</strong>, I\'m weighting energy and sleep products higher.':'');
+  var header='<div class="phase-hdr"><div class="phase-icon perf">\u26A1</div><div><div class="phase-title">Performance Gaps</div><div class="phase-sub">High-value products beyond your stated goals</div></div></div>';
   var cards=buildProductCards(gapProducts);
-  navTypeThen(header+intro+cards,null,1800,function(){
+  getAIReaction('phase_gaps',header+cards,function(){
     setTimeout(function(){checkIn('finish')},2000);
   });
 }
 
-/* ═══════════════════════════════════════
-   CHECK-IN (Personal Shopper Pause)
-   ═══════════════════════════════════════ */
+/* ── CHECK-INS (AI-driven) ── */
 function checkIn(nextPhase){
   var n=selectedProducts.length;
-  var msg,btnLabel,btnNext;
+  var step=nextPhase===2?'checkin_1':nextPhase===3?'checkin_2':'summary';
 
-  if(nextPhase===2){
-    msg=n>0
-      ? "That's "+n+" product"+(n>1?'s':'')+' so far. Everything look good? Any questions before we move to your HSA picks?'
-      : "Take a look and tap any products you want. When you're ready, we'll move to your HSA optimization.";
-    btnLabel='Show me HSA picks →';
-    btnNext='advanceToPhase(2)';
-  } else if(nextPhase===3){
-    msg=n>0
-      ? n+' product'+(n>1?'s':'')+' in your plan now. How are we doing? Want to adjust anything, or should I show you the performance gaps?'
-      : "No products selected yet — that's okay. Let me show you some high-value picks that might catch your eye.";
-    btnLabel='Show performance gaps →';
-    btnNext='advanceToPhase(3)';
-  } else {
-    msg=n>0
-      ? "That's a wrap on the catalog walk-through. You've got <strong>"+n+" product"+(n>1?'s':'')+"</strong> in your plan. Want to review anything, or are you ready for the intelligence deep-dive?"
-      : "That covers everything I've matched for you. Take a look through and select the products you want — I'm right here if you have questions.";
-    btnLabel='See my summary →';
-    btnNext='finishSession()';
-  }
+  if(step==='summary'){finishSession();return}
 
-  var html=msg;
-  html+='<div class="checkin-btns">';
-  html+='<button class="checkin-btn primary" onclick="'+btnNext+'">'+btnLabel+'</button>';
-  html+='<button class="checkin-btn" onclick="askQuestion()">I have a question</button>';
-  html+='</div>';
-  addNavBubble(html);
+  var btnLabel=nextPhase===2?'Show me HSA picks \u2192':'Show performance gaps \u2192';
+  var btnNext=nextPhase===2?'advanceToPhase(2)':'advanceToPhase(3)';
+  var btns='<div class="checkin-btns"><button class="checkin-btn primary" onclick="'+btnNext+'">'+btnLabel+'</button><button class="checkin-btn" onclick="askQuestion()">I have a question</button></div>';
+
+  getAIReaction(step,btns);
 }
 
 function advanceToPhase(phase){
@@ -593,11 +572,11 @@ function advanceToPhase(phase){
 
 function askQuestion(){
   lockBtns();
-  addNavBubble("Go ahead — ask me about any product, a specific health goal, how LMNs work, or anything else. I'm all yours.");
+  addNavBubble("Go ahead \u2014 ask me about any product, a specific health goal, how LMNs work, or anything else.");
   document.getElementById('chatInput').focus();
 }
 
-/* ── FINISH SESSION ── */
+/* ── FINISH SESSION (AI-driven summary) ── */
 function finishSession(){
   lockBtns();PHASE=4;
   var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0;
@@ -607,26 +586,21 @@ function finishSession(){
   });
   var total=insVal+hsaVal;
 
-  var summary='<strong>Session complete'+(firstName?', '+firstName:'')+'.</strong> Here\'s your deployment summary:';
-  summary+='<div style="margin-top:10px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px">';
-  summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Insurance unlocked</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+insVal.toLocaleString()+'</span></div>';
-  summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">HSA deployed</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--cy)">$'+hsaVal.toLocaleString()+'</span></div>';
-  summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Tax savings (~'+Math.round(TAX_RATE*100)+'%)</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+taxSaved.toLocaleString()+'</span></div>';
-  summary+='<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:700"><span style="color:#fff">Total benefit value</span><span style="font-family:DM Mono,monospace;font-size:16px;color:var(--gn)">$'+(total+taxSaved).toLocaleString()+'</span></div>';
-  summary+='</div>';
+  // Structured summary card (always shown, not AI-generated)
+  var card='<div style="margin-top:10px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px">';
+  card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Insurance unlocked</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+insVal.toLocaleString()+'</span></div>';
+  card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">HSA deployed</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--cy)">$'+hsaVal.toLocaleString()+'</span></div>';
+  card+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--mu)">Tax savings (~'+Math.round(TAX_RATE*100)+'%)</span><span style="font-family:DM Mono,monospace;font-weight:700;color:var(--gn)">$'+taxSaved.toLocaleString()+'</span></div>';
+  card+='<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:700"><span style="color:#fff">Total benefit value</span><span style="font-family:DM Mono,monospace;font-size:16px;color:var(--gn)">$'+(total+taxSaved).toLocaleString()+'</span></div>';
+  card+='</div>';
+  card+='<div style="margin-top:8px"><button class="action-btn secondary" onclick="goMarketplace()">Browse Full Marketplace \u2192</button></div>';
 
-  if(n>0){
-    summary+='<div style="margin-top:10px">Hit <strong>Product Intelligence</strong> in the bar below for a clinical deep-dive on each product before checkout.</div>';
-  } else {
-    summary+='<div style="margin-top:10px">Scroll back up and tap products to add them to your plan, then hit Product Intelligence.</div>';
-  }
-  summary+='<div style="margin-top:8px"><button class="action-btn secondary" onclick="goMarketplace()">Browse Full Marketplace →</button></div>';
-
-  navTypeThen(summary,null,2000,function(){
+  // AI generates the narrative, card appended after
+  getAIReaction('summary',card,function(){
     // Second phone capture attempt if they skipped
     if(!phoneCaptured){
       setTimeout(function(){
-        var reask="One more thing — want me to text you this summary? You'll have a direct line to me for follow-up questions too.";
+        var reask="One more thing \u2014 want me to text you this summary? You\u2019ll have a direct line to me for follow-ups.";
         reask+='<div class="phone-capture" id="phoneCapture2">';
         reask+='<div class="pc-row"><input class="pc-input" id="pcPhone2" type="tel" placeholder="(555) 123-4567" maxlength="14"/><button class="pc-send" id="pcSend2" onclick="submitPhoneEnd()">Text my summary</button></div>';
         reask+='<div class="pc-consent"><input type="checkbox" id="pcChk2" checked/><label for="pcChk2">I agree to receive texts. Reply STOP anytime.</label></div>';
@@ -635,21 +609,18 @@ function finishSession(){
         addNavBubble(reask);
         setTimeout(function(){
           var inp=document.getElementById('pcPhone2');
-          if(inp){
-            inp.addEventListener('input',function(){
-              var v=this.value.replace(/\D/g,'').substring(0,10);
-              if(v.length>=7)this.value='('+v.substring(0,3)+') '+v.substring(3,6)+'-'+v.substring(6);
-              else if(v.length>=4)this.value='('+v.substring(0,3)+') '+v.substring(3);
-              else if(v.length>0)this.value='('+v;
-              else this.value='';
-            });
-          }
+          if(inp)inp.addEventListener('input',function(){
+            var v=this.value.replace(/\D/g,'').substring(0,10);
+            if(v.length>=7)this.value='('+v.substring(0,3)+') '+v.substring(3,6)+'-'+v.substring(6);
+            else if(v.length>=4)this.value='('+v.substring(0,3)+') '+v.substring(3);
+            else if(v.length>0)this.value='('+v;
+            else this.value='';
+          });
         },100);
       },2000);
     }
+    pushToZoho();
   });
-
-  pushToZoho();
 }
 
 function submitPhoneEnd(){
@@ -658,44 +629,24 @@ function submitPhoneEnd(){
   var phone=formatPhoneE164(raw);
   var errEl=document.getElementById('pcErr2');
   var btn=document.getElementById('pcSend2');
-
   if(!phone){errEl.textContent='Enter a valid 10-digit US number';return}
   if(!agreed){errEl.textContent='Please agree to receive texts';return}
-
   errEl.textContent='\u00a0';
-  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending…';
-  phoneCaptured=true;phoneNumber=phone;
-  sSet('beim_phone',phone);
-
-  if(!TWILIO_LIVE){
+  btn.classList.add('loading');btn.disabled=true;btn.textContent='Sending\u2026';
+  phoneCaptured=true;phoneNumber=phone;sSet('beim_phone',phone);
+  if(!TWILIO_LIVE){var cap=document.getElementById('phoneCapture2');if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Saved \u2014 I\u2019ll text you a summary.</div>';return}
+  var params=new URLSearchParams();params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
+  if(firstName)params.set('first_name',encodeURIComponent(firstName));if(email)params.set('email',encodeURIComponent(email));
+  var planUrl='https://go.beim.ai/products?'+params.toString();var lid=sGet('beim_lead_id')||null;
+  fetch(W_SMS+'/api/twilio/send-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:selectedProducts.length,plan_url:planUrl,lead_id:lid})})
+  .then(function(r){return r.json()}).then(function(d){
     var cap=document.getElementById('phoneCapture2');
-    if(cap)cap.innerHTML='<div class="pc-done"><span>✅</span> Saved — I\'ll text you a summary.</div>';
-    return;
-  }
-
-  var params=new URLSearchParams();
-  params.set('balance',bal.toFixed(2));params.set('acct',acct);params.set('nav',nav);
-  if(firstName)params.set('first_name',encodeURIComponent(firstName));
-  if(email)params.set('email',encodeURIComponent(email));
-  var planUrl='https://go.beim.ai/products?'+params.toString();
-  var lid=sGet('beim_lead_id')||null;
-
-  fetch(W_SMS+'/api/twilio/send-plan',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({phone:phone,first_name:firstName,navigator:nav,product_count:selectedProducts.length,plan_url:planUrl,lead_id:lid})
-  }).then(function(r){return r.json()}).then(function(d){
-    var cap=document.getElementById('phoneCapture2');
-    if(d.success){if(cap)cap.innerHTML='<div class="pc-done"><span>✅</span> Sent! Check your phone.</div>'}
+    if(d.success){if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Sent! Check your phone.</div>'}
     else{btn.classList.remove('loading');btn.disabled=false;btn.textContent='Text my summary';errEl.textContent=d.message||d.error||'Try again'}
-  }).catch(function(){
-    var cap=document.getElementById('phoneCapture2');
-    if(cap)cap.innerHTML='<div class="pc-done"><span>✅</span> Saved — I\'ll text you.</div>';
-  });
+  }).catch(function(){var cap=document.getElementById('phoneCapture2');if(cap)cap.innerHTML='<div class="pc-done"><span>\u2705</span> Saved \u2014 I\u2019ll text you.</div>'});
 }
 
-/* ═══════════════════════════════════════
-   PRODUCT CARD BUILDER
-   ═══════════════════════════════════════ */
+/* ── PRODUCT CARD BUILDER ── */
 function buildProductCards(products){
   if(!products.length)return'';
   var html='<div class="prod-grid">';
@@ -705,30 +656,28 @@ function buildProductCards(products){
     var badges='';
     var grade=(p.grade||'B').trim();
     badges+='<span class="pb g'+grade.toLowerCase()+'">'+grade+'</span>';
-    if(p._insMatch)badges+='<span class="pb ins0">🛡️ $0</span>';
-    if(p._goalMatch)badges+='<span class="pb goal">🎯 Goal #'+(p._goalRank+1)+'</span>';
-    if(!p._insMatch&&p._price<=bal)badges+='<span class="pb fit">✓ Fits</span>';
+    if(p._insMatch)badges+='<span class="pb ins0">\uD83D\uDEE1\uFE0F $0</span>';
+    if(p._goalMatch)badges+='<span class="pb goal">\uD83C\uDFAF Goal #'+(p._goalRank+1)+'</span>';
+    if(!p._insMatch&&p._price<=bal)badges+='<span class="pb fit">\u2713 Fits</span>';
     else if(!p._insMatch&&p._price>bal&&p._price<=bal+100)badges+='<span class="pb over">+$'+Math.round(p._price-bal)+'</span>';
     var dc=(p.doctor_confidence||'').trim();
-    if(dc==='Very High')badges+='<span class="pb drhi">🩺 Top Pick</span>';
+    if(dc==='Very High')badges+='<span class="pb drhi">\uD83E\uDE7A Top Pick</span>';
     var needsLmn=p.requires_medical_necessity==='Yes';
-    if(needsLmn)badges+='<span class="pb lmn">📋 LMN</span>';
+    if(needsLmn)badges+='<span class="pb lmn">\uD83D\uDCCB LMN</span>';
     else if(p.hsa_fsa_eligible==='Yes')badges+='<span class="pb hsa">'+acct+'</span>';
-    if((p.community_pool||'').toUpperCase()==='TRUE')badges+='<span class="pb pool">🤝 Pool</span>';
+    if((p.community_pool||'').toUpperCase()==='TRUE')badges+='<span class="pb pool">\uD83E\uDD1D Pool</span>';
     var priceHtml=p._insMatch?'<span class="prod-free">$0</span><span class="prod-strike">$'+p._price.toFixed(0)+'</span>':'<span class="prod-price">$'+p._price.toFixed(0)+'</span>';
     var imgUrl=p.product_image_url||'';
-    var imgHtml=imgUrl&&!imgUrl.includes('shopify.com/store')?'<img src="'+esc(imgUrl)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<span class=prod-emoji>🏥</span>\'"/>':'<span class="prod-emoji">🏥</span>';
+    var imgHtml=imgUrl&&!imgUrl.includes('shopify.com/store')?'<img src="'+esc(imgUrl)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<span class=prod-emoji>\uD83C\uDFE5</span>\'"/>':'<span class="prod-emoji">\uD83C\uDFE5</span>';
     var safeName=esc(p.product_name||'').replace(/'/g,"\\'");
     var lmnNote=needsLmn?'<div class="prod-lmn-note">Beim generates your LMN automatically</div>':'';
-    html+='<div class="prod-card'+(isSel?' selected':'')+'" onclick="toggleProduct(\''+safeName+'\',this)"><div class="prod-check">✓</div><div class="prod-img">'+imgHtml+'</div><div class="prod-body"><div class="conf-row"><div class="conf-bar"><div class="conf-fill '+cl+'" style="width:'+cs+'%"></div></div><span class="conf-pct '+cl+'">'+cs+'%</span></div><div class="prod-badges">'+badges+'</div><div class="prod-name">'+esc(p.product_name||'')+'</div><div class="prod-brand">'+esc(p.brand||'')+'</div><div class="prod-hl">'+esc(p.d2c_headline||'')+'</div><div class="prod-price-row">'+priceHtml+'</div>'+lmnNote+'</div></div>';
+    html+='<div class="prod-card'+(isSel?' selected':'')+'" onclick="toggleProduct(\''+safeName+'\',this)"><div class="prod-check">\u2713</div><div class="prod-img">'+imgHtml+'</div><div class="prod-body"><div class="conf-row"><div class="conf-bar"><div class="conf-fill '+cl+'" style="width:'+cs+'%"></div></div><span class="conf-pct '+cl+'">'+cs+'%</span></div><div class="prod-badges">'+badges+'</div><div class="prod-name">'+esc(p.product_name||'')+'</div><div class="prod-brand">'+esc(p.brand||'')+'</div><div class="prod-hl">'+esc(p.d2c_headline||'')+'</div><div class="prod-price-row">'+priceHtml+'</div>'+lmnNote+'</div></div>';
   });
   html+='</div>';
   return html;
 }
 
-/* ═══════════════════════════════════════
-   SELECTION + TALLY
-   ═══════════════════════════════════════ */
+/* ── SELECTION + TALLY ── */
 function toggleProduct(name,card){
   var p=allProducts.find(function(x){return x.product_name===name});if(!p)return;
   var idx=selectedProducts.findIndex(function(s){return s.product_name===name});
@@ -740,26 +689,19 @@ function toggleProduct(name,card){
   });
   updateTally();
 }
-
 function updateTally(){
   var n=selectedProducts.length,insVal=0,hsaVal=0,taxSaved=0;
-  selectedProducts.forEach(function(p){
-    if(p._insMatch)insVal+=p._price;
-    else{hsaVal+=p._price;taxSaved+=Math.round(p._price*TAX_RATE)}
-  });
+  selectedProducts.forEach(function(p){if(p._insMatch)insVal+=p._price;else{hsaVal+=p._price;taxSaved+=Math.round(p._price*TAX_RATE)}});
   document.getElementById('tallyIns').textContent='$'+insVal.toLocaleString();
   document.getElementById('tallyHsa').textContent='$'+hsaVal.toLocaleString();
   document.getElementById('tallyCount').textContent=n;
   document.getElementById('tallyTotal').textContent='$'+(insVal+hsaVal+taxSaved).toLocaleString();
   document.getElementById('tallyBar').classList.toggle('visible',n>0);
 }
-
 function getHsaAllocated(){var t=0;selectedProducts.forEach(function(p){if(!p._insMatch&&p.hsa_fsa_eligible==='Yes')t+=p._price});return t}
 function clearSelections(){selectedProducts=[];document.querySelectorAll('.prod-card.selected').forEach(function(c){c.classList.remove('selected')});updateTally()}
 
-/* ═══════════════════════════════════════
-   CHAT BUBBLES
-   ═══════════════════════════════════════ */
+/* ── CHAT ── */
 function addNavBubble(html){
   chatHistory.push({role:'nav',text:html});chatLog.push({t:Date.now(),r:'nav',m:html.replace(/<[^>]+>/g,'')});
   var img=AVATARS[nav]||AVATARS.brooks,cls=nav==='everly'?'ev':'br';
@@ -781,22 +723,18 @@ function showTyping(){
 }
 function removeTyping(){var el=document.getElementById('typingMsg');if(el)el.remove()}
 function scrollToBottom(){var c=document.getElementById('messages');setTimeout(function(){c.scrollTop=c.scrollHeight},60)}
-function navTypeThen(html,extra,delay,cb){showTyping();setTimeout(function(){removeTyping();addNavBubble(html+(extra||''));if(cb)cb()},delay||1200)}
 function lockBtns(){document.querySelectorAll('.checkin-btn:not(.locked),.action-btn:not(.locked)').forEach(function(b){b.classList.add('locked');b.disabled=true;b.style.pointerEvents='none';b.style.opacity='.35'})}
 
-/* ── FREE TEXT CHAT ── */
 function sendFreeText(){
   var input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;input.value='';
   addUserBubble(text);showTyping();
-  var ctx={page:'products',balance:bal,acctType:acct,goals:userGoals,firstName:firstName,gender:userSex,age:userAge,selectedProducts:selectedProducts.map(function(p){return p.product_name}).join(', ')};
+  var ctx={page:'products',balance:bal,acctType:acct,goals:userGoals,firstName:firstName,gender:userSex,age:userAge,selectedProducts:selectedProducts.map(function(p){return p.product_name}).join(', '),wellbeing:{life:wbLife,energy:wbEnergy},budgetPref:budgetPref,hsaRemaining:Math.max(0,bal-getHsaAllocated())};
   fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-8),navigator:nav,context:ctx})})
   .then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'Ask me about any product.')})
-  .catch(function(){removeTyping();addNavBubble('I hit a snag — try again.')});
+  .catch(function(){removeTyping();addNavBubble('I hit a snag \u2014 try again.')});
 }
 
-/* ═══════════════════════════════════════
-   NAVIGATION
-   ═══════════════════════════════════════ */
+/* ── NAVIGATION ── */
 function goToIntelligence(){
   if(!selectedProducts.length)return;
   var prods=selectedProducts.map(function(p){return{name:p.product_name||'',price:p._price||0,grade:(p.grade||'B').trim(),lmn:p.requires_medical_necessity==='Yes',order:(p.physician_order_required||'').toLowerCase()==='yes',hsa:p.hsa_fsa_eligible==='Yes',insured:p._insMatch||false,pool:(p.community_pool||'').toUpperCase()==='TRUE',brand:p.brand||'',cat:p.category||'',hl:p.d2c_headline||'',goals:p.goal_tags||'',conds:p.conditions||'',stripe_connect_id:p.stripe_connect_id||'',platform_fee_pct:p.platform_fee_pct||'',provider_name:p.provider_name||'',conf:p.doctor_confidence||''}});
@@ -810,23 +748,19 @@ function goToIntelligence(){
   if(userGoals.length)ps.set('goals',userGoals.join(','));
   location.href='intelligence.html?'+ps.toString();
 }
-
 function goMarketplace(){
   var ps=new URLSearchParams();
   if(bal>0)ps.set('balance',bal.toFixed(2));if(acct)ps.set('acct',acct);if(nav)ps.set('nav',nav);
-  if(firstName)ps.set('first_name',encodeURIComponent(firstName));
-  if(email)ps.set('email',encodeURIComponent(email));
+  if(firstName)ps.set('first_name',encodeURIComponent(firstName));if(email)ps.set('email',encodeURIComponent(email));
   location.href='marketplace.html?'+ps.toString();
 }
-
 function pushToZoho(){
   var lid=sGet('beim_lead_id')||null;if(!email&&!lid)return;
   var tx=chatLog.map(function(e){var d=new Date(e.t);return'['+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})+'] '+(e.r==='user'?'User':'Navigator')+': '+e.m}).join('\n');
   var prods=selectedProducts.map(function(p){return p.product_name+' ($'+p._price+')'}).join(', ');
   var totalValue=0;selectedProducts.forEach(function(p){totalValue+=p._price});
   var payload={first_name:firstName,last_name:lastName,employer:employer,navigator:nav,source:'unlocking_session',page:'products',acct_type:acct,balance:bal,chat_transcript:tx,products_selected:prods,products_count:selectedProducts.length,rescue_plan_value:totalValue};
-  if(email)payload.email=email;if(lid)payload.lead_id=lid;
-  if(phoneNumber)payload.phone=phoneNumber;
+  if(email)payload.email=email;if(lid)payload.lead_id=lid;if(phoneNumber)payload.phone=phoneNumber;
   try{fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){return r.json()}).then(function(d){if(d.lead_id)sSet('beim_lead_id',d.lead_id)}).catch(function(){})}catch(e){}
 }
 </script>
