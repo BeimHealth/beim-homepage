@@ -195,12 +195,9 @@ var AVATARS = {
   brooks: 'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'
 };
 
-/* ── VOICEFLOW CONFIG ── */
-// TODO: Replace with your Voiceflow project API key
-var VF_API_KEY = ''; // e.g. 'VF.DM.xxxxxxx.yyyyy'
-var VF_VERSION = 'production';
-var VF_BASE = 'https://general-runtime.voiceflow.com';
-var USE_VOICEFLOW = false; // flip to true once flows are built
+/* ── API CONFIG ── */
+// All calls go through the Cloudflare Worker — it proxies to Voiceflow
+// server-side and pushes to Zoho CRM on every step. No VF key needed here.
 
 /* ══════════════════════════════════════════
    THE 5 STICKY QUESTIONS
@@ -330,88 +327,78 @@ function sSet(k,v) { try { sessionStorage.setItem(k,v) } catch(e) {} }
 function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML }
 
 /* ══════════════════════════════════════════
-   VOICEFLOW INTERACT API (VOICEFLOW_SWAP)
+   WORKER API — All AI + Zoho goes through Cloudflare
    
-   When Voiceflow flows are built:
-   1. Set VF_API_KEY to your project key
-   2. Set USE_VOICEFLOW = true
-   3. The interact() function sends user input to Voiceflow
-      and returns the response traces (text, buttons, etc.)
-   4. Navigator reactions come from Voiceflow instead of
-      the local REACTIONS object
+   Frontend → POST /api/goals-chat → Worker
+     Worker → Voiceflow (AI response, server-side)
+     Worker → Zoho CRM (lead update, every step)
+     Worker ← returns { reply, activated_tags, activated_conditions, matched_count, vf_user_id }
    ══════════════════════════════════════════ */
-async function vfInteract(payload) {
-  if (!USE_VOICEFLOW || !VF_API_KEY) return null;
+async function callGoalsChat(step, stepAnswers, extraFields) {
+  var payload = {
+    step: step,
+    step_answers: stepAnswers || [],
+    lead_id: sGet('beim_lead_id') || null,
+    email: email,
+    first_name: firstName,
+    last_name: lastName,
+    employer: employer,
+    navigator: nav,
+    balance: bal,
+    acct_type: acct,
+    age: age,
+    gender: sGet('beim_gender') || 'all',
+    has_insurance: hasIns,
+    deadline: deadline,
+    all_answers: answers,
+    activated_tags: activatedTags,
+    activated_conditions: activatedConditions,
+    ranked_goals: ranked,
+    budget_pref: budgetPref,
+    exp_level: expLevel,
+    matched_count: matchedCount,
+    chat_history: chatHistory.slice(-6),
+    vf_user_id: vfUserId,
+  };
+  // Merge any extra fields (free_text, etc.)
+  if (extraFields) {
+    for (var k in extraFields) payload[k] = extraFields[k];
+  }
+
   try {
-    var res = await fetch(VF_BASE + '/state/user/' + vfUserId + '/interact', {
+    var res = await fetch(WORKER_URL + '/api/goals-chat', {
       method: 'POST',
-      headers: {
-        'Authorization': VF_API_KEY,
-        'Content-Type': 'application/json',
-        'versionID': VF_VERSION
-      },
-      body: JSON.stringify({ action: payload })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
     });
-    if (!res.ok) return null;
-    var traces = await res.json();
-    // Extract text traces for navigator bubbles
-    var texts = [];
-    for (var i = 0; i < traces.length; i++) {
-      if (traces[i].type === 'text') {
-        texts.push(traces[i].payload.message);
-      }
-    }
-    return texts.length > 0 ? texts.join('<br><br>') : null;
+    var data = await res.json();
+
+    // Update local state from Worker response
+    if (data.activated_tags) activatedTags = data.activated_tags;
+    if (data.activated_conditions) activatedConditions = data.activated_conditions;
+    if (data.matched_count) matchedCount = data.matched_count;
+    if (data.vf_user_id) { vfUserId = data.vf_user_id; sSet('beim_vf_user_id', data.vf_user_id); }
+    if (data.lead_id) sSet('beim_lead_id', data.lead_id);
+
+    return data.reply || null;
   } catch (e) {
-    console.warn('Voiceflow unavailable, using local fallback', e);
+    console.warn('goals-chat call failed, using local fallback', e);
     return null;
   }
 }
 
-async function vfLaunch() {
-  if (!USE_VOICEFLOW || !VF_API_KEY) return;
-  // Launch the Voiceflow conversation with user context
-  try {
-    await fetch(VF_BASE + '/state/user/' + vfUserId + '/interact', {
-      method: 'POST',
-      headers: { 'Authorization': VF_API_KEY, 'Content-Type': 'application/json', 'versionID': VF_VERSION },
-      body: JSON.stringify({
-        action: { type: 'launch' },
-        // Pass user context as launch variables
-        state: {
-          variables: {
-            first_name: firstName,
-            balance: bal,
-            acct_type: acct,
-            age: age,
-            has_insurance: hasIns,
-            navigator: nav,
-            employer: employer,
-            deadline: deadline
-          }
-        }
-      })
-    });
-  } catch (e) { console.warn('VF launch failed', e); }
-}
-
-/* ── Get AI reaction (Voiceflow or local) ── */
+/* ── Get AI reaction via Worker (with local fallback) ── */
 async function getReaction(questionId, userAnswers, callback) {
   showTyping();
 
-  // Try Voiceflow first
-  var vfReply = await vfInteract({
-    type: 'text',
-    payload: JSON.stringify({ step: questionId, answers: userAnswers, balance: bal, acctType: acct, age: age })
-  });
+  // Call Worker endpoint (proxies to Voiceflow + pushes to Zoho)
+  var reply = await callGoalsChat(questionId, userAnswers);
 
   removeTyping();
 
-  if (vfReply) {
-    return vfReply;
-  }
+  if (reply) return reply;
 
-  // Local fallback
+  // Local fallback (only if Worker is completely unreachable)
   var fn = REACTIONS[questionId];
   if (fn) return fn(userAnswers);
   return 'Got it. Let\u2019s keep going.';
@@ -779,37 +766,16 @@ function buildSummary() {
 function sendFreeText() {
   var input = document.getElementById('chatInput'), text = input.value.trim();
   if (!text) return; input.value = '';
+  /* ── WORKER API: Free text goes through /api/goals-chat ── */
   addUserBubble(text); showTyping();
 
-  /* ── VOICEFLOW_SWAP: Free text goes to Voiceflow interact ── */
-  if (USE_VOICEFLOW && VF_API_KEY) {
-    vfInteract({ type: 'text', payload: text }).then(function(reply) {
-      removeTyping();
-      addNavBubble(reply || 'Good question! Keep going with the steps above \u2014 I\u2019m tracking everything.');
-    });
-    return;
-  }
-
-  /* ── LOCAL FALLBACK: Send to Gemini chat (existing worker) ── */
-  var ctx = {
-    page: 'goals', balance: bal, acctType: acct, firstName: firstName,
-    goals: ranked.length ? ranked : activatedTags,
-    step: STEP, budgetPref: budgetPref, expLevel: expLevel,
-    hasInsurance: hasIns
-  };
-  if (employer) ctx.employer = employer;
-
-  fetch(WORKER_URL + '/api/chat', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: text, history: chatHistory.slice(-8), navigator: nav, context: ctx })
-  })
-  .then(function(r) { return r.json() })
-  .then(function(d) {
+  callGoalsChat('free_text', [], { free_text: text }).then(function(reply) {
     removeTyping();
-    var reply = d.reply || 'Good question! Keep going with the steps above.';
-    addNavBubble(reply);
-  })
-  .catch(function() { removeTyping(); addNavBubble('I hit a snag \u2014 try again in a moment.') });
+    addNavBubble(reply || 'Good question! Keep going with the steps above — I\u2019m tracking everything.');
+  }).catch(function() {
+    removeTyping();
+    addNavBubble('I hit a snag — try again in a moment.');
+  });
 }
 
 /* ══════════════════════════════════════════
@@ -842,8 +808,8 @@ window.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Enter') { e.preventDefault(); sendFreeText() }
   });
 
-  // Launch Voiceflow session if enabled
-  if (USE_VOICEFLOW) vfLaunch();
+  // Launch conversation via Worker (Worker forwards to Voiceflow + Zoho)
+  callGoalsChat('launch', []).catch(function() {});
 
   setTimeout(startConversation, 500);
 });
@@ -891,6 +857,8 @@ function goToProducts() {
 }
 
 function pushToZoho() {
+  // Every step already pushed to Zoho via /api/goals-chat.
+  // This final push just ensures the summary + completion flag are captured.
   var lid = sGet('beim_lead_id') || null;
   if (!email && !lid) return;
 
@@ -899,15 +867,13 @@ function pushToZoho() {
     return '[' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + '] ' + (e.r === 'user' ? 'User' : 'Navigator') + ': ' + e.m;
   }).join('\n');
 
-  var top3Labels = ranked.map(function(tag) { return (GOAL_META[tag] || {}).short || tag });
-
   var payload = {
     first_name: firstName, last_name: lastName, employer: employer, navigator: nav,
     source: 'goals_page', page: 'goals', acct_type: acct, balance: bal,
     chat_transcript: tx,
-    health_goal_1: top3Labels[0] || null,
-    health_goal_2: top3Labels[1] || null,
-    health_goal_3: top3Labels[2] || null,
+    health_goal_1: ranked[0] || null,
+    health_goal_2: ranked[1] || null,
+    health_goal_3: ranked[2] || null,
     health_sub_goals: activatedConditions.slice(0, 10).join(', ') || null,
     goals_completed: STEP >= 10,
     age: age || null,
