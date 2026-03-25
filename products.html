@@ -264,12 +264,123 @@ var allProducts=[],selectedProducts=[],chatHistory=[],chatLog=[];
 var PHASE=0,phoneCaptured=false,phoneNumber='';
 var completedScreenings={};
 var preventativeMatches=[];
+// Goals context carried forward
+var activatedTags=[],activatedConditions=[],rankedGoals=[];
+var energyLevel='',bodyConcerns='',appearanceConcern='',mentalState='',additionalInterests='';
+var vfUserId='';
+
+/* ── EXTERNAL PRODUCT MAPPING (fills gaps when Beim catalog is thin) ── */
+var EXTERNAL_PRODUCTS={
+  'Sleep Quality':{products:[
+    {name:'Hatch Restore 2 Sound Machine',price:129.99,store:'fsastore',url:'https://fsastore.com/products/hatch-restore-2',lmn:true,why:'Sleep device for insomnia'},
+    {name:'Blue Light Blocking Glasses',price:29.99,store:'hsastore',url:'https://hsastore.com/collections/blue-light-glasses',lmn:true,why:'Reduces circadian disruption'},
+    {name:'Weighted Blanket (15 lb)',price:59.99,store:'amazon',url:'https://www.amazon.com/s?k=weighted+blanket+hsa+eligible',lmn:true,why:'Deep pressure for sleep'}]},
+  'Recovery & Performance':{products:[
+    {name:'TENS Unit \u2014 Pain Relief',price:39.99,store:'fsastore',url:'https://fsastore.com/collections/tens-units',lmn:false,why:'FDA-cleared electrotherapy'},
+    {name:'Theragun Mini',price:199.00,store:'hsastore',url:'https://hsastore.com/products/therabody-theragun-mini',lmn:true,why:'Percussive recovery therapy'},
+    {name:'Hot/Cold Therapy Wrap',price:24.99,store:'fsastore',url:'https://fsastore.com/collections/hot-cold-therapy',lmn:false,why:'Temperature therapy'}]},
+  'Gut & Digestion':{products:[
+    {name:'Digestive Enzyme Complex',price:34.99,store:'fsastore',url:'https://fsastore.com/collections/digestive-health',lmn:true,why:'Supports digestion'},
+    {name:'Psyllium Husk Fiber',price:19.99,store:'amazon',url:'https://www.amazon.com/s?k=fiber+supplement+hsa+eligible',lmn:true,why:'Soluble fiber for gut health'}]},
+  'Fitness & Energy':{products:[
+    {name:'Resistance Bands Set',price:29.99,store:'fsastore',url:'https://fsastore.com/collections/fitness-equipment',lmn:true,why:'PT and exercise tool'},
+    {name:'Foam Roller',price:34.99,store:'hsastore',url:'https://hsastore.com/collections/fitness',lmn:true,why:'Myofascial release'}]},
+  'Brain Health':{products:[
+    {name:"Lion's Mane Extract",price:39.99,store:'amazon',url:'https://www.amazon.com/s?k=lions+mane+supplement',lmn:true,why:'Nootropic for cognition'},
+    {name:'Omega-3 DHA Brain Formula',price:29.99,store:'fsastore',url:'https://fsastore.com/collections/brain-health',lmn:true,why:'High-DHA for brain health'}]},
+  'Hormones & Fertility':{products:[
+    {name:'Ovulation Test Kit (Digital)',price:44.99,store:'fsastore',url:'https://fsastore.com/collections/fertility',lmn:false,why:'Digital ovulation predictor'},
+    {name:'Prenatal Vitamins',price:34.99,store:'hsastore',url:'https://hsastore.com/collections/prenatal',lmn:false,why:'Complete prenatal vitamins'},
+    {name:'CoQ10 Fertility Support',price:39.99,store:'amazon',url:'https://www.amazon.com/s?k=coq10+fertility',lmn:true,why:'Antioxidant for fertility'}]},
+  'Immunity & Prevention':{products:[
+    {name:'Pulse Oximeter',price:24.99,store:'fsastore',url:'https://fsastore.com/collections/pulse-oximeters',lmn:false,why:'Blood oxygen monitoring'},
+    {name:'Medical Thermometer',price:14.99,store:'hsastore',url:'https://hsastore.com/collections/thermometers',lmn:false,why:'Clinical-grade temp'}]},
+  'Energy & Focus':{products:[
+    {name:'Light Therapy Lamp (10,000 Lux)',price:49.99,store:'fsastore',url:'https://fsastore.com/collections/light-therapy',lmn:true,why:'Bright light for energy/SAD'},
+    {name:'Magnesium L-Threonate',price:39.99,store:'amazon',url:'https://www.amazon.com/s?k=magnesium+l-threonate',lmn:true,why:'Brain magnesium for focus'}]},
+  'Heart & Cardiovascular':{products:[
+    {name:'Blood Pressure Monitor',price:49.99,store:'fsastore',url:'https://fsastore.com/collections/blood-pressure-monitors',lmn:false,why:'Home BP monitoring'}]},
+  'Skin & Anti-Aging':{products:[
+    {name:'Mineral Sunscreen SPF 50',price:19.99,store:'fsastore',url:'https://fsastore.com/collections/sunscreen',lmn:false,why:'UV protection \u2014 no LMN'},
+    {name:'Derma Roller (0.5mm)',price:14.99,store:'amazon',url:'https://www.amazon.com/s?k=derma+roller',lmn:true,why:'Microneedling for skin'}]},
+};
+var STORE_META={fsastore:{badge:'\uD83D\uDED2 FSA Store'},hsastore:{badge:'\uD83C\uDFEA HSA Store'},amazon:{badge:'\uD83D\uDCE6 Amazon HSA/FSA'}};
+
+function getExternalProducts(goalTags,beimCount,maxTotal){
+  maxTotal=maxTotal||5;var needed=Math.max(0,maxTotal-beimCount);if(needed===0)return[];
+  var externals=[],seen={};
+  for(var i=0;i<goalTags.length&&externals.length<needed;i++){
+    var ext=EXTERNAL_PRODUCTS[goalTags[i]];if(!ext)continue;
+    for(var j=0;j<ext.products.length&&externals.length<needed;j++){
+      var p=ext.products[j];if(!seen[p.name]){seen[p.name]=true;externals.push(Object.assign({},p,{goal_tag:goalTags[i]}))}
+    }
+  }
+  return externals;
+}
+function buildExternalCards(products){
+  if(!products.length)return'';
+  var html='<div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.12)">';
+  html+='<div style="font-size:11px;font-weight:700;color:var(--gd);margin-bottom:8px;display:flex;align-items:center;gap:6px"><span>\uD83C\uDF10</span> Outside our marketplace \u2014 but your '+acct+' still works</div>';
+  html+='<div style="display:grid;grid-template-columns:1fr;gap:6px">';
+  products.forEach(function(p){
+    var meta=STORE_META[p.store]||{badge:p.store};
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px">';
+    html+='<div style="flex:1;min-width:0">';
+    html+='<div style="font-size:12px;font-weight:700;color:#fff">'+esc(p.name)+'</div>';
+    html+='<div style="font-size:10px;color:var(--mu);margin-top:2px">'+esc(p.why)+'</div>';
+    html+='<div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap">';
+    html+='<span class="pb" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--gd)">'+meta.badge+'</span>';
+    html+=p.lmn?'<span class="pb lmn">\uD83D\uDCCB LMN needed</span>':'<span class="pb hsa">\u2713 '+acct+' eligible</span>';
+    html+='</div></div>';
+    html+='<div style="text-align:right;flex-shrink:0">';
+    html+='<div style="font-family:DM Mono,monospace;font-size:14px;font-weight:700;color:#fff">$'+p.price.toFixed(0)+'</div>';
+    html+='<a href="'+esc(p.url)+'" target="_blank" rel="noopener" style="font-size:10px;color:var(--cy);text-decoration:none;font-weight:600">View \u2192</a>';
+    html+='</div></div>';
+  });
+  html+='</div>';
+  var needsLmn=products.some(function(p){return p.lmn});
+  if(needsLmn){
+    html+='<div style="margin-top:8px;padding:10px 12px;background:rgba(124,106,240,.06);border:1px solid rgba(124,106,240,.15);border-radius:10px;display:flex;align-items:center;gap:10px">';
+    html+='<span style="font-size:16px;flex-shrink:0">\uD83D\uDCCB</span>';
+    html+='<div style="flex:1;font-size:12px;color:rgba(240,240,255,.75);line-height:1.5">Some of these need an <strong style="color:var(--pu)">LMN</strong> to be '+acct+' eligible. Beim can get you one \u2014 <strong style="color:var(--pu)">$'+LMN_FEE+'</strong>, signed in ~4 hours. Works at any retailer.</div>';
+    html+='<button class="action-btn" style="padding:8px 16px;font-size:11px;margin:0;white-space:nowrap" onclick="requestLmnExternal()">Get my LMN</button>';
+    html+='</div>';
+  }
+  html+='</div>';
+  return html;
+}
+function buildProcurementUI(){
+  var html='<div style="margin-top:12px;padding:14px;border-radius:14px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.15)" id="procureCard2">';
+  html+='<div style="font-size:12px;font-weight:700;color:var(--gd);margin-bottom:8px;display:flex;align-items:center;gap:6px"><span>\uD83D\uDD0D</span> Can\'t find what you need?</div>';
+  html+='<div style="font-size:13px;color:rgba(240,240,255,.7);line-height:1.6;margin-bottom:10px">Tell me what you\'re looking for and your zip code. I\'ll find it near you, verify '+acct+' eligibility, and '+(phoneCaptured?'text you':'follow up')+'.</div>';
+  html+='<div style="display:flex;flex-direction:column;gap:8px">';
+  html+='<input id="procureWhat2" class="pc-input" placeholder="What are you looking for? e.g. colonoscopy, CPAP supplies..." style="font-size:13px"/>';
+  html+='<div style="display:flex;gap:8px"><input id="procureZip2" class="pc-input" placeholder="Zip" maxlength="5" inputmode="numeric" style="width:80px;text-align:center;font-family:DM Mono,monospace"/><button class="action-btn" style="margin:0;padding:10px 20px" onclick="submitProcure2()">Send request</button></div>';
+  html+='</div></div>';
+  return html;
+}
+function submitProcure2(){
+  var what=document.getElementById('procureWhat2').value.trim();
+  var zip=document.getElementById('procureZip2').value.trim();
+  if(!what){document.getElementById('procureWhat2').style.borderColor='var(--rd)';return}
+  addUserBubble('Looking for: '+what+(zip?' (zip: '+zip+')':''));
+  var lid=sGet('beim_lead_id')||null;
+  if(lid||email){fetch(W+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_id:lid,email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,page:'products',source:'procurement_request',chat_transcript:'PROCUREMENT: '+what+' | Zip: '+(zip||'none')+' | Goals: '+rankedGoals.join(', ')})}).catch(function(){})}
+  var card=document.getElementById('procureCard2');
+  if(card)card.innerHTML='<div style="color:var(--gn);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><span>\u2705</span> Got it! I\'ll find <strong>'+esc(what)+'</strong>'+(zip?' near '+esc(zip):'')+' and '+(phoneCaptured?'text you':'follow up')+'.</div>';
+  setTimeout(function(){addNavBubble('I\'ve logged your request for <strong>'+esc(what)+'</strong>'+(zip?' near <strong>'+esc(zip)+'</strong>':'')+'. My team will source it, verify '+acct+' eligibility'+(userAge?' and check if your insurance covers it at $0':'')+', and I\'ll get back to you.')},800);
+}
+function requestLmnExternal(){
+  addUserBubble('I want an LMN for external purchases');
+  addNavBubble('I\'ll set you up with an LMN from our network physician \u2014 <strong>$'+LMN_FEE+'</strong>, signed in about 4 hours. It works at <strong>any retailer</strong> \u2014 FSA Store, HSA Store, Amazon, you name it. Once you have it, your '+acct+' covers everything that qualifies.');
+  sSet('beim_lmn_external','true');
+}
 
 function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-/* ── AI REACTION ENGINE ── */
+/* ── AI REACTION ENGINE — now calls /api/products-chat ── */
 function getAIReaction(productStep,extraUI,callback){
   showTyping();
   var topProducts=[];
@@ -278,35 +389,44 @@ function getAIReaction(productStep,extraUI,callback){
   else if(productStep==='phase_hsa')topProducts=allProducts.filter(function(p){return!p._insMatch&&!p._prevMatch&&p._score>0&&p._goalMatch}).slice(0,4).map(function(p){return p.product_name});
   else if(productStep==='phase_gaps'){var shown=new Set();allProducts.forEach(function(p){if(p._insMatch||p._prevMatch||p._goalMatch)shown.add(p.product_name)});topProducts=allProducts.filter(function(p){return!shown.has(p.product_name)&&p._score>10}).slice(0,4).map(function(p){return p.product_name})}
 
-  var ctx={
-    page:'products',productStep:productStep,
-    firstName:firstName,employer:employer,
-    balance:bal,acctType:acct,deadline:deadline,
-    goals:userGoals,age:userAge,
-    wellbeing:{life:wbLife,energy:wbEnergy},
-    budgetPref:budgetPref,expLevel:expLevel,
-    hasInsurance:hasIns,
-    selectedCount:selectedProducts.length,
-    selectedNames:selectedProducts.map(function(p){return p.product_name}).join(', '),
-    matchedCount:allProducts.filter(function(p){return p._score>10}).length,
-    preventativeCount:preventativeMatches.length,
-    topProductNames:topProducts.join(', '),
-    hsaRemaining:Math.max(0,bal-getHsaAllocated()),
-    insValue:selectedProducts.filter(function(p){return p._insMatch||p._prevMatch}).reduce(function(s,p){return s+p._price},0),
-    hsaDeployed:selectedProducts.filter(function(p){return!p._insMatch&&!p._prevMatch}).reduce(function(s,p){return s+p._price},0)
+  var insVal=selectedProducts.filter(function(p){return p._insMatch||p._prevMatch}).reduce(function(s,p){return s+p._price},0);
+  var hsaVal=selectedProducts.filter(function(p){return!p._insMatch&&!p._prevMatch}).reduce(function(s,p){return s+p._price},0);
+
+  var payload={
+    step:productStep,
+    lead_id:sGet('beim_lead_id')||null,
+    email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,
+    balance:bal,acct_type:acct,age:userAge,gender:userSex,has_insurance:hasIns,deadline:deadline,
+    // Goals context carried forward
+    activated_tags:activatedTags,activated_conditions:activatedConditions,ranked_goals:rankedGoals,
+    energy_level:energyLevel,body_concerns:bodyConcerns,appearance_concern:appearanceConcern,
+    mental_state:mentalState,additional_interests:additionalInterests,
+    budget_pref:budgetPref,exp_level:expLevel,
+    // Products context
+    matched_count:allProducts.filter(function(p){return p._score>10}).length,
+    preventative_count:preventativeMatches.length,
+    selected_count:selectedProducts.length,
+    selected_names:selectedProducts.map(function(p){return p.product_name}).join(', '),
+    insurance_value:insVal,hsa_deployed:hsaVal,
+    hsa_remaining:Math.max(0,bal-getHsaAllocated()),
+    tax_savings:Math.round(hsaVal*TAX_RATE),
+    top_product_names:topProducts.join(', '),
+    chat_history:chatHistory.slice(-6),
+    vf_user_id:vfUserId,
   };
 
   var controller=new AbortController();
-  var timeout=setTimeout(function(){controller.abort()},4000);
+  var timeout=setTimeout(function(){controller.abort()},5000);
 
-  fetch(W+'/api/chat',{
+  fetch(W+'/api/products-chat',{
     method:'POST',signal:controller.signal,
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({message:'[productStep:'+productStep+']',history:chatHistory.slice(-6),navigator:nav,context:ctx})
+    body:JSON.stringify(payload)
   })
   .then(function(r){clearTimeout(timeout);return r.json()})
   .then(function(d){
     removeTyping();
+    if(d.vf_user_id)vfUserId=d.vf_user_id;
     var reply=d.reply||FALLBACKS[productStep]||'Let\u2019s keep going.';
     addNavBubble(reply+(extraUI||''));
     if(callback)callback();
@@ -341,6 +461,31 @@ window.addEventListener('DOMContentLoaded',function(){
   if(!userAge){var sa=sGet('beim_age');if(sa)userAge=parseInt(sa)||null}
   var existingPhone=sGet('beim_phone');
   if(existingPhone){phoneCaptured=true;phoneNumber=existingPhone}
+
+  // ── Load goals context carried from goals-v2.html ──
+  var tagsParam=p.get('tags');
+  if(tagsParam)activatedTags=tagsParam.split(',').filter(Boolean);
+  else try{activatedTags=JSON.parse(sGet('beim_activated_tags')||'[]')}catch(e){activatedTags=[]}
+  var condsParam=p.get('conditions');
+  if(condsParam)activatedConditions=decodeURIComponent(condsParam).split(',').filter(Boolean);
+  else try{activatedConditions=JSON.parse(sGet('beim_activated_conditions')||'[]')}catch(e){activatedConditions=[]}
+  // Ranked goals from goals page (these are goal tag names, not old category IDs)
+  if(activatedTags.length>0&&userGoals.length===0){
+    // If goals came as activated tags (new flow), use them
+    rankedGoals=activatedTags.slice(0,3);
+  } else {
+    rankedGoals=userGoals.slice(0,3);
+  }
+  // Individual question answers from goals flow
+  try{var ans=JSON.parse(sGet('beim_answers')||'{}');
+    energyLevel=(ans.q1_energy||[])[0]||'';
+    bodyConcerns=(ans.q2_body||[]).join(', ');
+    appearanceConcern=(ans.q3_appearance||[])[0]||'';
+    mentalState=(ans.q4_mental||[])[0]||'';
+    additionalInterests=(ans.q5_other||[]).join(', ');
+  }catch(e){}
+  vfUserId=sGet('beim_vf_user_id')||sGet('beim_lead_id')||('beim_'+Date.now());
+
   FALLBACKS.phase_hsa='These match your top goals and fit your '+acct+'. Every dollar here saves you ~30% in taxes.';
   var img=AVATARS[nav]||AVATARS.brooks;
   document.getElementById('headerAvatar').innerHTML='<img src="'+img+'"/><span class="ch-avatar-dot"></span>';
@@ -565,8 +710,19 @@ function submitPhone(){
       product_count:allProducts.filter(function(p){return p._score>10}).length,
       plan_url:'https://go.beim.ai/products',lead_id:lid,
       sms_type:'navigator_intro',
-      balance:bal,acct_type:acct,goals:userGoals.join(', '),
-      age:userAge,has_insurance:hasIns,preventative_count:preventativeMatches.length
+      balance:bal,acct_type:acct,
+      age:userAge,has_insurance:hasIns,preventative_count:preventativeMatches.length,
+      // Full goals context for personalized SMS intro
+      sms_context:{
+        ranked_goals:rankedGoals,
+        energy_level:energyLevel,
+        body_concerns:bodyConcerns,
+        appearance_concern:appearanceConcern,
+        mental_state:mentalState,
+        additional_interests:additionalInterests,
+        activated_tags:activatedTags,
+        matched_count:allProducts.filter(function(p){return p._score>10}).length
+      }
     })
   }).then(function(r){return r.json()}).then(function(d){
     if(d.success){phoneSuccess()}
@@ -667,15 +823,22 @@ function runPhasePreventative(){
 function runPhase1(){
   PHASE=1;
   var insProducts=allProducts.filter(function(p){return p._insMatch&&!p._prevMatch&&p._score>0});
-  if(!insProducts.length){
+  var show=insProducts.slice(0,5);
+  // External products + procurement if thin coverage
+  var extCards='';
+  if(show.length<5){
+    var relevantTags=activatedTags.length?activatedTags:rankedGoals;
+    var externals=getExternalProducts(relevantTags,show.length,5);
+    if(externals.length>0)extCards=buildExternalCards(externals);
+  }
+  if(!show.length&&!extCards){
     addNavBubble("No additional insurance-matched products for your profile. Let\u2019s move to your "+acct+".");
     setTimeout(function(){checkIn(2)},1500);return;
   }
-  var show=insProducts.slice(0,5);
   var totalValue=0;show.forEach(function(p){totalValue+=p._price});
   var header='<div class="phase-hdr"><div class="phase-icon ins">\uD83D\uDEE1\uFE0F</div><div><div class="phase-title">Insurance Unlocks</div><div class="phase-sub">Covered at $0 \u2014 use insurance, save your '+acct+'</div></div><span class="phase-badge green">'+show.length+' unlocked</span></div>';
-  var cards=buildProductCards(show);
-  getAIReaction('phase_insurance',header+cards,function(){
+  var cards=show.length?buildProductCards(show):'';
+  getAIReaction('phase_insurance',header+cards+extCards,function(){
     setTimeout(function(){checkIn(2)},2000);
   });
 }
@@ -687,13 +850,20 @@ function runPhase2(){
   var hsaProducts=allProducts.filter(function(p){
     return!p._insMatch&&!p._prevMatch&&p._score>0&&p._goalMatch&&p.hsa_fsa_eligible==='Yes'&&p._price<=remaining+100;
   }).slice(0,5);
-  if(!hsaProducts.length){
-    addNavBubble("No "+acct+"-matched products fit your current budget. Let\u2019s look at performance gaps.");
-    setTimeout(function(){checkIn(3)},1500);return;
+  // External products to fill gaps
+  var extCards='';
+  if(hsaProducts.length<5){
+    var relevantTags=activatedTags.length?activatedTags:rankedGoals;
+    var externals=getExternalProducts(relevantTags,hsaProducts.length,5);
+    if(externals.length>0)extCards=buildExternalCards(externals);
+  }
+  // Procurement if nothing at all
+  if(!hsaProducts.length&&!extCards){
+    extCards=buildProcurementUI();
   }
   var header='<div class="phase-hdr"><div class="phase-icon hsa">\uD83D\uDCB3</div><div><div class="phase-title">'+acct+' Optimization</div><div class="phase-sub">Deploy tax-free dollars on your top goals</div></div><span class="phase-badge cyan">$'+Math.round(remaining)+' available</span></div>';
-  var cards=buildProductCards(hsaProducts);
-  getAIReaction('phase_hsa',header+cards,function(){
+  var cards=hsaProducts.length?buildProductCards(hsaProducts):'';
+  getAIReaction('phase_hsa',header+cards+extCards,function(){
     setTimeout(function(){checkIn(3)},2000);
   });
 }
@@ -704,10 +874,19 @@ function runPhase3(){
   var alreadyShown=new Set();
   allProducts.forEach(function(p){if(p._insMatch||p._prevMatch||p._goalMatch)alreadyShown.add(p.product_name)});
   var gapProducts=allProducts.filter(function(p){return!alreadyShown.has(p.product_name)&&p._score>10}).slice(0,5);
-  if(!gapProducts.length){checkIn('finish');return}
+  // External products for gaps
+  var extCards='';
+  if(gapProducts.length<3){
+    var relevantTags=activatedTags.length?activatedTags:rankedGoals;
+    var externals=getExternalProducts(relevantTags,gapProducts.length,5);
+    if(externals.length>0)extCards=buildExternalCards(externals);
+  }
+  if(!gapProducts.length&&!extCards){checkIn('finish');return}
   var header='<div class="phase-hdr"><div class="phase-icon perf">\u26A1</div><div><div class="phase-title">Performance Gaps</div><div class="phase-sub">High-value products beyond your stated goals</div></div></div>';
-  var cards=buildProductCards(gapProducts);
-  getAIReaction('phase_gaps',header+cards,function(){
+  var cards=gapProducts.length?buildProductCards(gapProducts):'';
+  // Always show procurement at the end
+  var procure=buildProcurementUI();
+  getAIReaction('phase_gaps',header+cards+extCards+procure,function(){
     setTimeout(function(){checkIn('finish')},2000);
   });
 }
@@ -928,8 +1107,19 @@ function lockBtns(){document.querySelectorAll('.checkin-btn:not(.locked),.action
 function sendFreeText(){
   var input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;input.value='';
   addUserBubble(text);showTyping();
-  var ctx={page:'products',balance:bal,acctType:acct,goals:userGoals,firstName:firstName,gender:userSex,age:userAge,selectedProducts:selectedProducts.map(function(p){return p.product_name}).join(', '),wellbeing:{life:wbLife,energy:wbEnergy},budgetPref:budgetPref,hsaRemaining:Math.max(0,bal-getHsaAllocated()),preventativeCount:preventativeMatches.length};
-  fetch(W+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:chatHistory.slice(-8),navigator:nav,context:ctx})})
+  fetch(W+'/api/products-chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    step:'free_text',free_text:text,
+    lead_id:sGet('beim_lead_id')||null,email:email,first_name:firstName,navigator:nav,
+    balance:bal,acct_type:acct,age:userAge,gender:userSex,has_insurance:hasIns,
+    activated_tags:activatedTags,activated_conditions:activatedConditions,ranked_goals:rankedGoals,
+    energy_level:energyLevel,body_concerns:bodyConcerns,appearance_concern:appearanceConcern,
+    mental_state:mentalState,budget_pref:budgetPref,exp_level:expLevel,
+    selected_count:selectedProducts.length,
+    selected_names:selectedProducts.map(function(p){return p.product_name}).join(', '),
+    hsa_remaining:Math.max(0,bal-getHsaAllocated()),
+    preventative_count:preventativeMatches.length,
+    chat_history:chatHistory.slice(-8),vf_user_id:vfUserId
+  })})
   .then(function(r){return r.json()}).then(function(d){removeTyping();addNavBubble(d.reply||'Ask me about any product.')})
   .catch(function(){removeTyping();addNavBubble('I hit a snag \u2014 try again.')});
 }
