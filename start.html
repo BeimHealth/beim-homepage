@@ -218,6 +218,32 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
   .trans-text{font-size:18px}
 }
 @media(max-width:400px){h1{font-size:28px;letter-spacing:-1.2px}.hero-sub{font-size:14px}}
+/* Value reveal grid in transition */
+.val-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.val-card{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);opacity:0;transform:translateY(10px);animation:valReveal .4s var(--ease) both}
+.vc-1{animation-delay:.1s}.vc-2{animation-delay:.2s}.vc-3{animation-delay:.3s}.vc-4{animation-delay:.4s}.vc-5{animation-delay:.5s}.vc-6{animation-delay:.6s}.vc-7{animation-delay:.7s}.vc-8{animation-delay:.8s}
+@keyframes valReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.val-icon{font-size:14px;flex-shrink:0}
+.val-label{font-size:10px;font-weight:600;color:rgba(240,240,255,.55);line-height:1.4}
+
+/* Return user banner */
+.return-banner{position:fixed;top:0;left:0;right:0;z-index:90;animation:slideDown .4s var(--ease)}
+@keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+.return-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 24px;background:rgba(14,14,28,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(110,224,245,.1)}
+.return-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.return-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.return-content{flex:1;min-width:0}
+.return-title{font-size:13px;font-weight:700;color:#fff}
+.return-sub{font-size:11px;color:var(--dim);line-height:1.4}
+.return-actions{display:flex;gap:6px;flex-shrink:0}
+.return-btn{font-size:11px;font-weight:700;padding:7px 14px;border-radius:100px;text-decoration:none;font-family:'DM Sans',sans-serif;transition:all .25s}
+.return-btn-primary{background:rgba(110,224,245,.12);border:1px solid rgba(110,224,245,.2);color:var(--cyan)}
+.return-btn-primary:hover{background:rgba(110,224,245,.2)}
+.return-btn-secondary{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--muted)}
+.return-btn-secondary:hover{color:var(--text)}
+.return-dismiss{position:absolute;top:50%;right:12px;transform:translateY(-50%);background:none;border:none;color:var(--dim);font-size:14px;cursor:pointer;padding:4px 8px}
+
+@media(max-width:600px){.val-grid{grid-template-columns:1fr}.return-inner{flex-wrap:wrap;gap:10px}.return-actions{width:100%}.return-btn{flex:1;text-align:center}}
 </style>
 </head>
 <body>
@@ -285,8 +311,16 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
     <div class="field-wrap" style="margin-bottom:3px"><input type="text" id="employerInput" class="capture-input" placeholder="Employer (optional)" autocomplete="organization"/><span class="field-label">Employer</span></div>
     <div class="employer-hint">They'll check your employer's benefits automatically <span class="finch-badge"><svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Finch</span></div>
     <div class="optin-row">
-      <input type="checkbox" id="optinCheck" class="optin-check"/>
-      <label for="optinCheck" class="optin-label">I agree to receive texts and emails from Beim Health. Your Care Navigator communicates via SMS — they'll text you within a minute of choosing below. Message & data rates may apply. <a href="https://beim.ai/privacy-policy" target="_blank">Privacy Policy</a>.</label>
+      <input type="checkbox" id="optinSms" class="optin-check"/>
+      <label for="optinSms" class="optin-label">I agree to receive SMS updates regarding my HSA/FSA plan from Beim Health. My Care Navigator will communicate with me via text message. Message & data rates may apply. Reply STOP to opt out.</label>
+    </div>
+    <div class="optin-row" style="border-top:none;padding-top:6px">
+      <input type="checkbox" id="optinHealth" class="optin-check"/>
+      <label for="optinHealth" class="optin-label">I acknowledge that SMS is not a fully secure channel and I consent to receive notifications that may contain health-related insights.</label>
+    </div>
+    <div class="optin-row" style="border-top:none;padding-top:6px">
+      <input type="checkbox" id="optinEmail" class="optin-check"/>
+      <label for="optinEmail" class="optin-label">I agree to receive emails from Beim Health about my benefits, product recommendations, and account updates. <a href="https://beim.ai/privacy-policy" target="_blank">Privacy Policy</a>.</label>
     </div>
     <div class="field-error" id="optinError">&nbsp;</div>
   </div>
@@ -347,16 +381,67 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
   </div>
 </div>
 
-<!-- Transition overlay -->
+<!-- Transition overlay — value reveal -->
 <div class="transition-overlay" id="transOverlay">
-  <div id="transAvatarWrap"></div>
-  <div class="trans-text" id="transText">Setting up your direct line…</div>
-  <div class="trans-sub" id="transSub">Your navigator is about to text you</div>
-  <div class="search-steps" id="searchSteps">
-    <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Creating your profile…</div></div>
-    <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Looking into your benefits…</div></div>
-    <div class="search-step" id="step-sms"><div class="step-icon">💬</div><div class="step-text">Sending your first text…</div></div>
-    <div class="search-step" id="step-ready"><div class="step-icon">✨</div><div class="step-text">Your navigator is ready</div></div>
+  <!-- Phase 1: Loading steps (visible first) -->
+  <div id="transPhase1">
+    <div id="transAvatarWrap"></div>
+    <div class="trans-text" id="transText">Setting up your direct line…</div>
+    <div class="trans-sub" id="transSub">Your navigator is about to text you</div>
+    <div class="search-steps" id="searchSteps">
+      <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Creating your profile…</div></div>
+      <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Looking into your benefits…</div></div>
+      <div class="search-step" id="step-sms"><div class="step-icon">💬</div><div class="step-text">Sending your first text…</div></div>
+      <div class="search-step" id="step-ready"><div class="step-icon">✨</div><div class="step-text">Your navigator is ready</div></div>
+    </div>
+  </div>
+
+  <!-- Phase 2: Value reveal (shown after loading completes) -->
+  <div id="transPhase2" style="display:none;max-width:480px;width:100%;padding:0 20px;">
+    <div id="transAvatar2" style="text-align:center;margin-bottom:16px;"></div>
+    <div style="text-align:center;margin-bottom:6px;" class="trans-text" id="transTitle2">Check your phone!</div>
+    <div style="text-align:center;margin-bottom:28px;" class="trans-sub" id="transSub2">Your conversation has started.</div>
+
+    <!-- Save this number box -->
+    <div id="saveNumberBox" style="background:rgba(17,17,37,.9);border:1px solid rgba(110,224,245,.15);border-radius:16px;padding:18px 22px;text-align:center;margin-bottom:22px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(110,224,245,.6);margin-bottom:6px;">Save this number</div>
+      <div id="twilioNumberDisplay" style="font-family:'DM Mono',monospace;font-size:26px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:1px;"></div>
+      <div style="font-size:11px;color:rgba(240,240,255,.4);line-height:1.5;">This is <span id="navNameInBox"></span>'s direct line. Text anytime — they don't forget your conversation.</div>
+    </div>
+
+    <!-- What your navigator does grid -->
+    <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(240,240,255,.3);margin-bottom:12px;text-align:center;">What <span id="navNameInGrid"></span> does for you</div>
+    <div class="val-grid" id="valGrid">
+      <div class="val-card vc-1"><span class="val-icon">🔍</span><span class="val-label">Searches 1,000+ products for you</span></div>
+      <div class="val-card vc-2"><span class="val-icon">🏥</span><span class="val-label">Checks insurance & finds $0 options</span></div>
+      <div class="val-card vc-3"><span class="val-icon">📋</span><span class="val-label">Handles LMNs & physician orders</span></div>
+      <div class="val-card vc-4"><span class="val-icon">💰</span><span class="val-label">Manages your HSA/FSA balance</span></div>
+      <div class="val-card vc-5"><span class="val-icon">🧬</span><span class="val-label">Clinical evidence on every product</span></div>
+      <div class="val-card vc-6"><span class="val-icon">📸</span><span class="val-label">Upload insurance card — they verify</span></div>
+      <div class="val-card vc-7"><span class="val-icon">💊</span><span class="val-label">Guides you to HSA-approved products</span></div>
+      <div class="val-card vc-8"><span class="val-icon">🏋️</span><span class="val-label">Maximizes your wellbeing & savings</span></div>
+    </div>
+
+    <!-- Bottom links -->
+    <div style="text-align:center;margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://go.beim.ai/marketplace" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(110,224,245,.6);text-decoration:none;padding:8px 16px;border-radius:100px;background:rgba(110,224,245,.04);border:1px solid rgba(110,224,245,.1);font-weight:600;font-family:'DM Sans',sans-serif;">Browse all products →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Returning user banner -->
+<div class="return-banner" id="returnBanner" style="display:none;">
+  <div class="return-inner">
+    <div class="return-avatar" id="returnAvatar"></div>
+    <div class="return-content">
+      <div class="return-title" id="returnTitle">Welcome back!</div>
+      <div class="return-sub" id="returnSub">You're already working with a navigator.</div>
+    </div>
+    <div class="return-actions">
+      <a id="returnTextBtn" href="#" class="return-btn return-btn-primary">Text them →</a>
+      <a href="https://go.beim.ai/marketplace" class="return-btn return-btn-secondary">Browse products</a>
+    </div>
+    <button class="return-dismiss" onclick="document.getElementById('returnBanner').style.display='none'" aria-label="Dismiss">✕</button>
   </div>
 </div>
 
@@ -374,7 +459,9 @@ document.getElementById('firstNameInput').addEventListener('input',function(){th
 document.getElementById('lastNameInput').addEventListener('input',function(){this.classList.remove('error');showFieldError('nameError','')});
 document.getElementById('emailInput').addEventListener('input',function(){this.classList.remove('error');showFieldError('emailError','')});
 document.getElementById('phoneInput').addEventListener('input',function(){this.classList.remove('error');showFieldError('phoneError','')});
-document.getElementById('optinCheck').addEventListener('change',function(){showFieldError('optinError','')});
+document.getElementById('optinSms').addEventListener('change',function(){showFieldError('optinError','')});
+document.getElementById('optinHealth').addEventListener('change',function(){showFieldError('optinError','')});
+document.getElementById('optinEmail').addEventListener('change',function(){showFieldError('optinError','')});
 document.getElementById('emailInput').addEventListener('blur',function(){if(this.value&&validateEmail(this.value)){this.classList.add('success');this.classList.remove('error')}else{this.classList.remove('success')}});
 document.getElementById('phoneInput').addEventListener('blur',function(){if(this.value&&validatePhone(this.value)){this.classList.add('success');this.classList.remove('error')}else{this.classList.remove('success')}});
 
@@ -388,13 +475,15 @@ async function selectNavigator(nav,cardEl){
   var email=document.getElementById('emailInput').value.trim();
   var phone=document.getElementById('phoneInput').value.trim();
   var employer=document.getElementById('employerInput').value.trim();
-  var optedIn=document.getElementById('optinCheck').checked;
+  var smsOptIn=document.getElementById('optinSms').checked;
+  var healthOptIn=document.getElementById('optinHealth').checked;
+  var emailOptIn=document.getElementById('optinEmail').checked;
 
   if(!firstName){document.getElementById('firstNameInput').classList.add('error');showFieldError('nameError','First name required');document.getElementById('firstNameInput').focus();return}
   if(!lastName){document.getElementById('lastNameInput').classList.add('error');showFieldError('nameError','Last name required');document.getElementById('lastNameInput').focus();return}
   if(!email||!validateEmail(email)){document.getElementById('emailInput').classList.add('error');showFieldError('emailError','Valid email required');document.getElementById('emailInput').focus();return}
   if(!phone||!validatePhone(phone)){document.getElementById('phoneInput').classList.add('error');showFieldError('phoneError','Your navigator needs your number to text you');document.getElementById('phoneInput').focus();return}
-  if(!optedIn){showFieldError('optinError','Please agree to continue');document.getElementById('optinCheck').focus();return}
+  if(!smsOptIn||!healthOptIn){showFieldError('optinError','Both SMS consent checkboxes are required to use your Care Navigator');document.getElementById('optinSms').focus();return}
 
   selected=nav;
   if(cardEl)cardEl.classList.add('selected');
@@ -405,7 +494,7 @@ async function selectNavigator(nav,cardEl){
   try{sessionStorage.setItem('beim_nav',nav);sessionStorage.setItem('beim_nav_name',navigatorName);sessionStorage.setItem('beim_first_name',firstName);sessionStorage.setItem('beim_last_name',lastName);sessionStorage.setItem('beim_email',email);sessionStorage.setItem('beim_phone',formattedPhone);sessionStorage.setItem('beim_employer',employer);sessionStorage.setItem('beim_gender',gender)}catch(e){}
 
   if(nav==='skip'){
-    try{await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:'skip',navigator_name:'Browse All',email_opt_in:optedIn,source:'start_page',page:'start',phone:formattedPhone})})}catch(e){}
+    try{await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:'skip',navigator_name:'Browse All',sms_opt_in:smsOptIn,health_sms_consent:healthOptIn,email_opt_in:emailOptIn,source:'start_page',page:'start',phone:formattedPhone})})}catch(e){}
     window.location.href='https://go.beim.ai/marketplace';return;
   }
 
@@ -438,7 +527,7 @@ async function selectNavigator(nav,cardEl){
 
   var leadId=null;
   try{
-    var leadRes=await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,navigator_name:navigatorName,email_opt_in:optedIn,source:'start_page',page:'start',acct_type:acct,balance:bal,phone:formattedPhone})});
+    var leadRes=await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,navigator_name:navigatorName,sms_opt_in:smsOptIn,health_sms_consent:healthOptIn,email_opt_in:emailOptIn,source:'start_page',page:'start',acct_type:acct,balance:bal,phone:formattedPhone})});
     var leadData=await leadRes.json();
     if(leadData.lead_id){leadId=leadData.lead_id;try{sessionStorage.setItem('beim_lead_id',leadId)}catch(e){}}
   }catch(e){}
@@ -461,14 +550,50 @@ async function selectNavigator(nav,cardEl){
   setTimeout(function(){activateStep('step-ready')},6400);
   setTimeout(function(){completeStep('step-ready')},7200);
 
+  // Phase 2: Switch to value reveal
   setTimeout(function(){
-    text.textContent='Check your phone, '+firstName+'!';
-    sub.innerHTML=navigatorName+' just texted you at <strong>'+phone+'</strong>.<br>Your conversation starts there.<br><br><a href="https://go.beim.ai/marketplace">Or browse all products →</a>';
+    var TWILIO_NUMBER='(833) 361-4745'; // REPLACE with your actual Twilio number
+    document.getElementById('transPhase1').style.display='none';
+    var p2=document.getElementById('transPhase2');
+    p2.style.display='block';
+    if(nav==='everly'){
+      document.getElementById('transAvatar2').innerHTML='<div class="trans-avatar ev" style="margin:0 auto"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly"/></div>';
+    } else {
+      document.getElementById('transAvatar2').innerHTML='<div class="trans-avatar br" style="margin:0 auto"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks"/></div>';
+    }
+    document.getElementById('transTitle2').textContent='Check your phone, '+firstName+'!';
+    document.getElementById('transSub2').textContent=navigatorName+' just texted you at '+phone+'. Your conversation starts there.';
+    document.getElementById('twilioNumberDisplay').textContent=TWILIO_NUMBER;
+    document.getElementById('navNameInBox').textContent=navigatorName;
+    document.getElementById('navNameInGrid').textContent=navigatorName;
   },7800);
 }
 
 document.querySelectorAll('.nav-card').forEach(function(c){c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}})});
-window.addEventListener('pageshow',function(){selected=null;document.querySelectorAll('.nav-card').forEach(function(c){c.classList.remove('selected')});document.getElementById('transOverlay').classList.remove('active')});
+window.addEventListener('pageshow',function(){selected=null;document.querySelectorAll('.nav-card').forEach(function(c){c.classList.remove('selected')});document.getElementById('transOverlay').classList.remove('active');document.getElementById('transPhase1').style.display='';document.getElementById('transPhase2').style.display='none'});
+
+// Returning user detection
+(function(){
+  var TWILIO_NUMBER='(833) 361-4745'; // REPLACE with your actual Twilio number
+  try{
+    var savedNav=sessionStorage.getItem('beim_nav');
+    var savedName=sessionStorage.getItem('beim_first_name');
+    var savedNavName=sessionStorage.getItem('beim_nav_name');
+    if(savedNav&&savedNav!=='skip'&&savedName&&savedNavName){
+      var banner=document.getElementById('returnBanner');
+      var avatarEl=document.getElementById('returnAvatar');
+      if(savedNav==='everly'){
+        avatarEl.innerHTML='<img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly" style="border:1.5px solid rgba(110,224,245,.2);border-radius:50%"/>';
+      } else {
+        avatarEl.innerHTML='<img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" style="border:1.5px solid rgba(124,106,240,.2);border-radius:50%"/>';
+      }
+      document.getElementById('returnTitle').textContent='Welcome back, '+savedName+'!';
+      document.getElementById('returnSub').textContent='You\u2019re already working with '+savedNavName+'. Text them at '+TWILIO_NUMBER;
+      document.getElementById('returnTextBtn').href='sms:+1'+TWILIO_NUMBER.replace(/\D/g,'');
+      banner.style.display='block';
+    }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
