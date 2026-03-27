@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hemoglobin A1c — Beim Health</title>
+<meta name="description" content="Know your numbers - physician-ordered lab testing"/>
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/68aa0add7f19a355edf12086_Untitled%20(256%20x%20256%20px).png"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f0f1a;--card:#1a1a2e;--border:rgba(255,255,255,.07);--cy:#6ee0f5;--pu:#6454f0;--bl:#6aa3f3;--gn:#3dd9b6;--gd:#f59e0b;--rd:#ef4444;--tx:#f0f0ff;--mu:#8a8da8;--dm:#5a5d78}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;min-height:100vh}
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(100,84,240,.09),transparent 70%);top:-15%;left:-10%}
+.orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(110,224,245,.06),transparent 70%);bottom:-10%;right:-10%}
+
+/* Nav */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:0 24px;height:56px;background:rgba(15,15,26,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.back-btn{margin-left:auto;font-size:12px;font-weight:600;color:var(--mu);padding:6px 14px;border-radius:8px;border:1px solid var(--border);text-decoration:none;transition:all .2s}
+.back-btn:hover{border-color:rgba(255,255,255,.15);color:var(--tx)}
+
+/* Page */
+.page{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:72px 20px 60px}
+
+/* Product image */
+.pd-image-wrap{width:100%;height:200px;background:var(--card);border:1px solid var(--border);border-radius:20px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:20px}
+.pd-img{max-width:100%;max-height:100%;object-fit:contain;padding:16px}
+.pd-emoji{font-size:56px;opacity:.3}
+
+/* Header */
+.pd-header{margin-bottom:20px}
+.pd-cat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:6px}
+.pd-name{font-size:clamp(22px,4vw,30px);font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.15;margin-bottom:4px}
+.pd-brand{font-size:13px;color:var(--mu);margin-bottom:10px}
+.pd-headline{font-size:14px;color:rgba(240,240,255,.5);line-height:1.6;margin-bottom:14px}
+
+/* Badges */
+.pd-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.pd-badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;text-transform:uppercase;white-space:nowrap}
+.pd-badge.grade-a{background:rgba(61,217,182,.12);border:1px solid rgba(61,217,182,.3);color:var(--gn)}
+.pd-badge.grade-b{background:rgba(106,163,243,.1);border:1px solid rgba(106,163,243,.25);color:var(--bl)}
+.pd-badge.grade-c{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--gd)}
+.pd-badge.hsa{background:rgba(110,224,245,.08);border:1px solid rgba(110,224,245,.2);color:var(--cy)}
+.pd-badge.lmn{background:rgba(100,84,240,.08);border:1px solid rgba(100,84,240,.2);color:var(--pu)}
+.pd-badge.order{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);color:var(--gd)}
+.pd-badge.pool{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);color:var(--gd)}
+
+/* Price row */
+.pd-price-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+.pd-price{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;color:#fff}
+.pd-price-meta{flex:1}
+.pd-price-hsa{font-size:11px;color:var(--gn);font-weight:600}
+.pd-price-lmn{font-size:11px;color:var(--pu);font-weight:500;margin-top:2px}
+
+/* Confidence bar */
+.pd-conf{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.pd-conf-label{font-size:10px;color:var(--dm);font-weight:600;flex-shrink:0}
+.pd-conf-bar{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden}
+.pd-conf-fill{height:100%;border-radius:6px}
+.pd-conf-fill.hi{background:var(--gn)}.pd-conf-fill.md{background:var(--cy)}.pd-conf-fill.lo{background:var(--gd)}
+.pd-conf-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;min-width:32px;text-align:right}
+.pd-conf-val.hi{color:var(--gn)}.pd-conf-val.md{color:var(--cy)}.pd-conf-val.lo{color:var(--gd)}
+
+/* Stars */
+.pd-stars{font-size:13px;color:var(--gd);margin-bottom:14px}
+.pd-stars .count{font-size:11px;color:var(--dm);margin-left:4px}
+
+/* Description */
+.pd-desc{font-size:13px;color:rgba(240,240,255,.55);line-height:1.7;margin-bottom:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+
+/* Tags */
+.pd-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px}
+.pd-tag{font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(110,224,245,.06);border:1px solid rgba(110,224,245,.12);color:var(--cy)}
+.pd-cond{font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(100,84,240,.06);border:1px solid rgba(100,84,240,.12);color:var(--pu)}
+
+/* Sections */
+.pd-section{margin-bottom:16px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+.pd-section-title{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dm);margin-bottom:10px}
+
+/* Review */
+.pd-review-text{font-size:13px;font-style:italic;color:rgba(240,240,255,.55);line-height:1.65;margin-bottom:6px}
+.pd-reviewer{font-size:11px;color:var(--mu);font-weight:600}
+
+/* LMN */
+.pd-lmn-box{padding:12px;background:rgba(100,84,240,.04);border:1px solid rgba(100,84,240,.12);border-radius:10px}
+.pd-lmn-title{font-size:12px;font-weight:700;color:var(--pu);margin-bottom:4px}
+.pd-lmn-text{font-size:12px;color:rgba(240,240,255,.5);line-height:1.6;margin-bottom:6px}
+.pd-lmn-notes{font-size:11px;color:var(--dm);line-height:1.5;margin-top:6px}
+.pd-lmn-icd{font-family:'DM Mono',monospace;font-size:10px;color:var(--dm);margin-top:6px}
+
+/* Math */
+.pd-math-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pd-math-item{padding:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:10px}
+.pd-math-label{font-size:10px;color:var(--dm);font-weight:600;margin-bottom:3px}
+.pd-math-val{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:#fff}
+.pd-math-val.green{color:var(--gn)}.pd-math-val.cyan{color:var(--cy)}
+.pd-hsa-msg{font-size:11px;color:var(--gn);margin-top:8px;font-weight:500}
+
+/* Pool */
+.pd-pool{padding:12px;background:rgba(245,158,11,.04);border:1px solid rgba(245,158,11,.12);border-radius:10px;margin-bottom:16px}
+.pd-pool-title{font-size:12px;font-weight:700;color:var(--gd);margin-bottom:4px}
+.pd-pool-text{font-size:12px;color:rgba(240,240,255,.5)}
+
+/* Complementary */
+.pd-comp{font-size:13px;color:rgba(240,240,255,.6);font-weight:600}
+.pd-comp-reason{font-size:11px;color:var(--dm);margin-top:4px;line-height:1.5}
+
+/* CTA */
+.pd-cta{position:fixed;bottom:0;left:0;right:0;z-index:800;padding:12px 20px;background:rgba(15,15,26,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;gap:10px;align-items:center}
+.pd-cta-text{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--mu);padding:10px 16px;border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:all .2s;flex:1;justify-content:center}
+.pd-cta-text:hover{border-color:rgba(110,224,245,.2);color:var(--cy)}
+.pd-cta-btn{padding:12px 24px;border-radius:12px;background:linear-gradient(135deg,var(--pu),var(--bl));color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;text-align:center;flex:1}
+.pd-cta-btn:hover{box-shadow:0 8px 24px rgba(100,84,240,.35)}
+
+/* Trust */
+.pd-trust{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0 80px;padding-top:16px;border-top:1px solid var(--border)}
+.pd-trust-item{font-size:10px;color:var(--dm);display:flex;align-items:center;gap:4px}
+.pd-trust-item::before{content:'✓';color:var(--gn);font-weight:700;font-size:9px}
+
+@media(max-width:480px){.pd-math-grid{grid-template-columns:1fr}.pd-cta{flex-direction:column}.page{padding:64px 14px 48px}}
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div><div class="orb orb-2"></div>
+
+<div class="topbar">
+  <a href="https://go.beim.ai/marketplace" class="logo">Beim Health</a>
+  <a href="https://go.beim.ai/marketplace" class="back-btn">← All Products</a>
+</div>
+
+<div class="page">
+  <div class="pd-image-wrap"><div class="pd-emoji">🩸</div></div>
+
+  <div class="pd-header">
+    <div class="pd-cat">Lab Testing</div>
+    <div class="pd-name">Hemoglobin A1c</div>
+    <div class="pd-brand">Quest Diagnostics</div>
+    <div class="pd-headline">Know your numbers - physician-ordered lab testing</div>
+  </div>
+
+  <div class="pd-badges"><span class="pd-badge grade-b">Grade B</span><span class="pd-badge hsa">HSA/FSA</span><span class="pd-badge order">Physician Order</span></div>
+
+  
+
+  <div class="pd-price-row">
+    <div class="pd-price">$15.95</div>
+    <div class="pd-price-meta">
+      <div class="pd-price-hsa">✓ HSA/FSA Eligible</div>
+      
+    </div>
+  </div>
+
+  <div class="pd-conf">
+    <div class="pd-conf-label">Physician Confidence</div>
+    <div class="pd-conf-bar"><div class="pd-conf-fill lo" style="width:35%"></div></div>
+    <div class="pd-conf-val lo">35%</div>
+  </div>
+
+  <div class="pd-desc">Hemoglobin A1c — physician-ordered lab test. Results available within 3-5 business days. HSA/FSA eligible. No insurance needed.</div>
+
+  <div class="pd-tags"><span class="pd-tag">Labs &amp; Biomarkers</span></div>
+  <div class="pd-tags"><span class="pd-cond">Diabetes</span><span class="pd-cond">Pre-Diabetes</span><span class="pd-cond">Metabolic Screening</span></div>
+
+  
+    <div class="pd-section">
+      <div class="pd-section-title">Clinical Review</div>
+      <div class="pd-review">
+        <div class="pd-review-text">"Laboratory panel for clinical assessment. Results typically available within 5-7 business days. Physician order required."</div>
+        <div class="pd-reviewer">Quest Diagnostics, CLIA-Certified Lab</div>
+      </div>
+    </div>
+  
+  
+    <div class="pd-section">
+      <div class="pd-section-title">HSA/FSA Math</div>
+      <div class="pd-math-grid">
+        <div class="pd-math-item"><div class="pd-math-label">Product Price</div><div class="pd-math-val">$15.95</div></div>
+        <div class="pd-math-item"><div class="pd-math-label">Tax Savings (~30%)</div><div class="pd-math-val green">~$5</div></div>
+        <div class="pd-math-item"><div class="pd-math-label">Effective Cost</div><div class="pd-math-val cyan">~$11</div></div>
+        
+      </div>
+      <div class="pd-hsa-msg">Use your HSA credits — $15.95 covered</div>
+    </div>
+  
+  
+
+  <div class="pd-trust">
+    <span class="pd-trust-item">HIPAA compliant</span>
+    <span class="pd-trust-item">Clinically graded</span>
+    <span class="pd-trust-item">Physician-backed</span>
+    <span class="pd-trust-item">HSA/FSA ready</span>
+  </div>
+</div>
+
+<div class="pd-cta">
+  <a href="sms:+18333614745?body=Tell%20me%20about%20Hemoglobin%20A1c" class="pd-cta-text">💬 Ask your navigator</a>
+  <a href="https://go.beim.ai/start" class="pd-cta-btn">Get Started →</a>
+</div>
+
+</body>
+</html>
