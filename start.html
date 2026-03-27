@@ -330,7 +330,7 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
 
   <div class="nav-grid">
     <!-- EVERLY -->
-    <div class="nav-card everly" id="cardEverly" onclick="selectNavigator('everly',this)" role="button" tabindex="0" aria-label="Choose Everly as your Care Navigator">
+    <div class="nav-card everly" id="cardEverly" onclick="highlightNavigator('everly',this)" role="button" tabindex="0" aria-label="Choose Everly as your Care Navigator">
       <div class="avatar-wrap"><div class="avatar-ring"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly" class="avatar-img" loading="lazy"/></div><span class="online-dot"></span></div>
       <div class="nav-name">Everly</div>
       <div class="nav-role">Care Navigator</div>
@@ -346,11 +346,11 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
       <div class="nav-specs"><span class="spec-tag">Hair & Skin</span><span class="spec-tag">Hormones</span><span class="spec-tag">Weight</span><span class="spec-tag">Sleep</span><span class="spec-tag">Postpartum</span></div>
       <div class="ticker-label">Products she's matching now</div>
       <div class="ticker-wrap"><div class="ticker-track" style="--dur:38s"><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Women · $88</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Oura Ring 4 · $349</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧴</span><span class="tp-text">SkinCeuticals CE · $182</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩺</span><span class="tp-text">Everlywell Thyroid · $59</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💆</span><span class="tp-text">Theragun Mini · $199</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🌿</span><span class="tp-text">Ritual Prenatal · $39</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day · $190</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Women · $88</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Oura Ring 4 · $349</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧴</span><span class="tp-text">SkinCeuticals CE · $182</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩺</span><span class="tp-text">Everlywell Thyroid · $59</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💆</span><span class="tp-text">Theragun Mini · $199</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🌿</span><span class="tp-text">Ritual Prenatal · $39</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day · $190</span><span class="tp-grade">A</span></div></div></div>
-      <button class="nav-cta-btn" type="button">Text with Everly →</button>
+      <button class="nav-cta-btn" type="button" onclick="event.stopPropagation();commitNavigator()">Text with Everly →</button>
     </div>
 
     <!-- BROOKS -->
-    <div class="nav-card brooks" id="cardBrooks" onclick="selectNavigator('brooks',this)" role="button" tabindex="0" aria-label="Choose Brooks as your Care Navigator">
+    <div class="nav-card brooks" id="cardBrooks" onclick="highlightNavigator('brooks',this)" role="button" tabindex="0" aria-label="Choose Brooks as your Care Navigator">
       <div class="avatar-wrap"><div class="avatar-ring"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks" class="avatar-img" loading="lazy"/></div><span class="online-dot"></span></div>
       <div class="nav-name">Brooks</div>
       <div class="nav-role">Care Navigator</div>
@@ -366,11 +366,11 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
       <div class="nav-specs"><span class="spec-tag">Testosterone</span><span class="spec-tag">Weight Loss</span><span class="spec-tag">Heart</span><span class="spec-tag">Recovery</span><span class="spec-tag">Labs</span></div>
       <div class="ticker-label">Products he's matching now</div>
       <div class="ticker-wrap"><div class="ticker-track" style="--dur:36s"><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Men · $209</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Whoop 4.0 · $239</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🏋️</span><span class="tp-text">Theragun Pro · $399</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩸</span><span class="tp-text">InsideTracker · $189</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧊</span><span class="tp-text">Cold Plunge · $499</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💤</span><span class="tp-text">Eight Sleep · $2,049</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day · $190</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">💊</span><span class="tp-text">Nutrafol Men · $209</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">⌚</span><span class="tp-text">Whoop 4.0 · $239</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🏋️</span><span class="tp-text">Theragun Pro · $399</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🩸</span><span class="tp-text">InsideTracker · $189</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🧊</span><span class="tp-text">Cold Plunge · $499</span><span class="tp-grade">B+</span></div><div class="ticker-pill"><span class="tp-icon">💤</span><span class="tp-text">Eight Sleep · $2,049</span><span class="tp-grade">A</span></div><div class="ticker-pill"><span class="tp-icon">🥗</span><span class="tp-text">ProLon 5-Day · $190</span><span class="tp-grade">A</span></div></div></div>
-      <button class="nav-cta-btn" type="button">Text with Brooks →</button>
+      <button class="nav-cta-btn" type="button" onclick="event.stopPropagation();commitNavigator()">Text with Brooks →</button>
     </div>
   </div>
 
-  <div class="skip-row"><button class="skip-link" onclick="selectNavigator('skip',null)">Just browse all products <span class="skip-arrow">→</span></button></div>
+  <div class="skip-row"><button class="skip-link" onclick="skipNavigator()">Just browse all products <span class="skip-arrow">→</span></button></div>
 
   <div class="bottom-trust">
     <span class="bt-item">🔒 HIPAA compliant</span>
@@ -389,10 +389,10 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
     <div class="trans-text" id="transText">Setting up your direct line…</div>
     <div class="trans-sub" id="transSub">Your navigator is about to text you</div>
     <div class="search-steps" id="searchSteps">
-      <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Creating your profile…</div></div>
-      <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Looking into your benefits…</div></div>
-      <div class="search-step" id="step-sms"><div class="step-icon">💬</div><div class="step-text">Sending your first text…</div></div>
-      <div class="search-step" id="step-ready"><div class="step-icon">✨</div><div class="step-text">Your navigator is ready</div></div>
+      <div class="search-step" id="step-lead"><div class="step-icon">📧</div><div class="step-text">Getting you set up…</div></div>
+      <div class="search-step" id="step-benefits"><div class="step-icon">🏥</div><div class="step-text">Checking your benefits…</div></div>
+      <div class="search-step" id="step-sms"><div class="step-icon">💬</div><div class="step-text">Starting your conversation…</div></div>
+      <div class="search-step" id="step-ready"><div class="step-icon">✨</div><div class="step-text">You're all set</div></div>
     </div>
   </div>
 
@@ -448,6 +448,8 @@ h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.06;letter-spacin
 <script>
 var WORKER_URL='https://beim-health-analyzer.steven-03f.workers.dev';
 var selected=null;
+var highlighted=null;
+var highlightedCard=null;
 var NAV_NAMES={everly:'Everly',brooks:'Brooks',skip:'Browse All'};
 
 function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
@@ -466,10 +468,26 @@ document.getElementById('emailInput').addEventListener('blur',function(){if(this
 document.getElementById('phoneInput').addEventListener('blur',function(){if(this.value&&validatePhone(this.value)){this.classList.add('success');this.classList.remove('error')}else{this.classList.remove('success')}});
 
 function activateStep(id){var s=document.getElementById(id);if(!s)return;s.classList.add('active');s.querySelector('.step-icon').innerHTML='<div class="step-spinner"></div>'}
-function completeStep(id){var s=document.getElementById(id);if(!s)return;s.classList.remove('active');s.classList.add('done');s.querySelector('.step-icon').textContent='✓'}
+function completeStep(id){var s=document.getElementById(id);if(!s)return;s.classList.remove('active');s.classList.add('done');s.querySelector('.step-icon').textContent='\u2713'}
 
-async function selectNavigator(nav,cardEl){
+// Step 1: Highlight a navigator card (no commitment yet)
+function highlightNavigator(nav,cardEl){
   if(selected)return;
+  document.querySelectorAll('.nav-card').forEach(function(c){c.classList.remove('selected')});
+  if(highlighted===nav){highlighted=null;highlightedCard=null;return}
+  highlighted=nav;
+  highlightedCard=cardEl;
+  cardEl.classList.add('selected');
+  var btn=cardEl.querySelector('.nav-cta-btn');
+  if(btn){setTimeout(function(){btn.scrollIntoView({behavior:'smooth',block:'nearest'})},150)}
+}
+
+// Step 2: Commit via CTA button
+async function commitNavigator(){
+  if(selected||!highlighted)return;
+  var nav=highlighted;
+  var cardEl=highlightedCard;
+
   var firstName=document.getElementById('firstNameInput').value.trim();
   var lastName=document.getElementById('lastNameInput').value.trim();
   var email=document.getElementById('emailInput').value.trim();
@@ -486,17 +504,11 @@ async function selectNavigator(nav,cardEl){
   if(!smsOptIn||!healthOptIn){showFieldError('optinError','Both SMS consent checkboxes are required to use your Care Navigator');document.getElementById('optinSms').focus();return}
 
   selected=nav;
-  if(cardEl)cardEl.classList.add('selected');
   var gender=nav==='everly'?'F':nav==='brooks'?'M':'all';
   var navigatorName=NAV_NAMES[nav]||'Browse All';
   var formattedPhone=formatPhone(phone);
 
   try{sessionStorage.setItem('beim_nav',nav);sessionStorage.setItem('beim_nav_name',navigatorName);sessionStorage.setItem('beim_first_name',firstName);sessionStorage.setItem('beim_last_name',lastName);sessionStorage.setItem('beim_email',email);sessionStorage.setItem('beim_phone',formattedPhone);sessionStorage.setItem('beim_employer',employer);sessionStorage.setItem('beim_gender',gender)}catch(e){}
-
-  if(nav==='skip'){
-    try{await fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:'skip',navigator_name:'Browse All',sms_opt_in:smsOptIn,health_sms_consent:healthOptIn,email_opt_in:emailOptIn,source:'start_page',page:'start',phone:formattedPhone})})}catch(e){}
-    window.location.href='https://go.beim.ai/marketplace';return;
-  }
 
   var overlay=document.getElementById('transOverlay');
   var wrap=document.getElementById('transAvatarWrap');
@@ -505,17 +517,17 @@ async function selectNavigator(nav,cardEl){
 
   if(nav==='everly'){
     wrap.innerHTML='<div class="trans-avatar ev"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png" alt="Everly"/></div>';
-    text.textContent=firstName+', Everly is about to text you\u2026';
+    text.textContent='Hey '+firstName+', getting everything ready\u2026';
   } else {
     wrap.innerHTML='<div class="trans-avatar br"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks"/></div>';
-    text.textContent=firstName+', Brooks is about to text you\u2026';
+    text.textContent='Hey '+firstName+', getting everything ready\u2026';
   }
-  sub.textContent='Setting up your direct line to '+navigatorName;
+  sub.textContent='Give us a sec while we pull a few things together';
 
-  document.querySelector('#step-lead .step-text').textContent='Creating your profile\u2026';
-  document.querySelector('#step-benefits .step-text').textContent=employer?'Checking benefits with '+employer+'\u2026':'Checking benefit options\u2026';
-  document.querySelector('#step-sms .step-text').textContent=navigatorName+' is composing your first text\u2026';
-  document.querySelector('#step-ready .step-text').textContent='Check your phone — '+navigatorName+' just texted you';
+  document.querySelector('#step-lead .step-text').textContent='Setting up your profile\u2026';
+  document.querySelector('#step-benefits .step-text').textContent=employer?'Checking '+employer+'\u2019s benefits\u2026':'Looking into your benefit options\u2026';
+  document.querySelector('#step-sms .step-text').textContent=navigatorName+' is getting ready to text you\u2026';
+  document.querySelector('#step-ready .step-text').textContent='You\u2019re all set \u2014 check your phone!';
 
   document.querySelectorAll('.search-step').forEach(function(s){s.classList.remove('active','done')});
   setTimeout(function(){overlay.classList.add('active')},200);
@@ -541,7 +553,7 @@ async function selectNavigator(nav,cardEl){
   setTimeout(function(){activateStep('step-sms')},4200);
 
   try{
-    var smsRes=await fetch(WORKER_URL+'/api/sms-launch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:formattedPhone,email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,email_opt_in:optedIn,balance:bal,acct_type:acct,gender:gender})});
+    var smsRes=await fetch(WORKER_URL+'/api/sms-launch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:formattedPhone,email:email,first_name:firstName,last_name:lastName,employer:employer,navigator:nav,email_opt_in:emailOptIn,balance:bal,acct_type:acct,gender:gender})});
     var smsData=await smsRes.json();
     if(smsData.vf_user_id){try{sessionStorage.setItem('beim_vf_user_id',smsData.vf_user_id)}catch(e){}}
   }catch(e){}
@@ -550,9 +562,8 @@ async function selectNavigator(nav,cardEl){
   setTimeout(function(){activateStep('step-ready')},6400);
   setTimeout(function(){completeStep('step-ready')},7200);
 
-  // Phase 2: Switch to value reveal
   setTimeout(function(){
-    var TWILIO_NUMBER='(833) 361-4745'; // REPLACE with your actual Twilio number
+    var TWILIO_NUMBER='(833) 361-4745';
     document.getElementById('transPhase1').style.display='none';
     var p2=document.getElementById('transPhase2');
     p2.style.display='block';
@@ -562,19 +573,34 @@ async function selectNavigator(nav,cardEl){
       document.getElementById('transAvatar2').innerHTML='<div class="trans-avatar br" style="margin:0 auto"><img src="https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png" alt="Brooks"/></div>';
     }
     document.getElementById('transTitle2').textContent='Check your phone, '+firstName+'!';
-    document.getElementById('transSub2').textContent=navigatorName+' just texted you at '+phone+'. Your conversation starts there.';
+    document.getElementById('transSub2').textContent=navigatorName+' just texted you. From here on out, everything happens over text \u2014 just reply to keep the conversation going.';
     document.getElementById('twilioNumberDisplay').textContent=TWILIO_NUMBER;
     document.getElementById('navNameInBox').textContent=navigatorName;
     document.getElementById('navNameInGrid').textContent=navigatorName;
   },7800);
 }
 
-document.querySelectorAll('.nav-card').forEach(function(c){c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}})});
-window.addEventListener('pageshow',function(){selected=null;document.querySelectorAll('.nav-card').forEach(function(c){c.classList.remove('selected')});document.getElementById('transOverlay').classList.remove('active');document.getElementById('transPhase1').style.display='';document.getElementById('transPhase2').style.display='none'});
+function skipNavigator(){
+  if(selected)return;
+  selected='skip';
+  var firstName=document.getElementById('firstNameInput').value.trim();
+  var lastName=document.getElementById('lastNameInput').value.trim();
+  var email=document.getElementById('emailInput').value.trim();
+  var phone=document.getElementById('phoneInput').value.trim();
+  var employer=document.getElementById('employerInput').value.trim();
+  var smsOptIn=document.getElementById('optinSms').checked;
+  var healthOptIn=document.getElementById('optinHealth').checked;
+  var emailOptIn=document.getElementById('optinEmail').checked;
+  var formattedPhone=phone?formatPhone(phone):'';
+  try{fetch(WORKER_URL+'/api/beim-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email||'',first_name:firstName,last_name:lastName,employer:employer,navigator:'skip',navigator_name:'Browse All',sms_opt_in:smsOptIn,health_sms_consent:healthOptIn,email_opt_in:emailOptIn,source:'start_page',page:'start',phone:formattedPhone})})}catch(e){}
+  window.location.href='https://go.beim.ai/marketplace';
+}
 
-// Returning user detection
+document.querySelectorAll('.nav-card').forEach(function(c){c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}})});
+window.addEventListener('pageshow',function(){selected=null;highlighted=null;highlightedCard=null;document.querySelectorAll('.nav-card').forEach(function(c){c.classList.remove('selected')});document.getElementById('transOverlay').classList.remove('active');document.getElementById('transPhase1').style.display='';document.getElementById('transPhase2').style.display='none'});
+
 (function(){
-  var TWILIO_NUMBER='(833) 361-4745'; // REPLACE with your actual Twilio number
+  var TWILIO_NUMBER='(833) 361-4745';
   try{
     var savedNav=sessionStorage.getItem('beim_nav');
     var savedName=sessionStorage.getItem('beim_first_name');
