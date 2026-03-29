@@ -310,15 +310,53 @@ window.addEventListener('DOMContentLoaded',function(){
   var p=new URLSearchParams(location.search);
   STATE.bal=parseFloat(p.get('balance'))||0;
   STATE.acct=p.get('acct')||'HSA';
-  try{STATE.products=JSON.parse(sGet('beim_checkout_products')||'[]')}catch(e){STATE.products=[]}
-  if(!STATE.products.length){try{STATE.products=JSON.parse(sGet('beim_selected_products')||'[]')}catch(e){}}
-  if(!STATE.products.length){location.href='products.html';return}
+  
+  // Try loading products from URL params first (SMS flow)
+  var urlProducts=p.get('cart');
+  if(urlProducts){
+    try{STATE.products=JSON.parse(decodeURIComponent(urlProducts))}catch(e){STATE.products=[]}
+  }
+  
+  // If no URL cart, try a simpler format: product names + prices as comma pairs
+  // e.g. ?items=ProLon+5-Day:190,Oura+Ring:349&lmns=ProLon+5-Day
+  if(!STATE.products.length && p.get('items')){
+    var items=p.get('items').split(',');
+    var lmns=(p.get('lmns')||'').split(',');
+    var orders=(p.get('orders')||'').split(',');
+    items.forEach(function(item){
+      var parts=item.split(':');
+      if(parts.length>=2){
+        var name=decodeURIComponent(parts[0]);
+        var price=parseFloat(parts[1])||0;
+        STATE.products.push({
+          name:name,
+          price:price,
+          cat:'',
+          hsa:true,
+          lmn:lmns.indexOf(encodeURIComponent(name))>-1||lmns.indexOf(name)>-1,
+          order:orders.indexOf(encodeURIComponent(name))>-1||orders.indexOf(name)>-1,
+          insured:false,
+          brand:''
+        });
+      }
+    });
+  }
 
-  // Pre-fill from session + URL params
+  // Fall back to sessionStorage (web flow)
+  if(!STATE.products.length){try{STATE.products=JSON.parse(sGet('beim_checkout_products')||'[]')}catch(e){STATE.products=[]}}
+  if(!STATE.products.length){try{STATE.products=JSON.parse(sGet('beim_selected_products')||'[]')}catch(e){}}
+  
+  // If still no products, show empty state instead of redirecting
+  if(!STATE.products.length){
+    document.getElementById('orderItems').innerHTML='<div style="text-align:center;padding:32px;color:var(--mu)"><div style="font-size:32px;margin-bottom:12px">🛒</div><div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px">No products yet</div><div style="font-size:13px;line-height:1.6">Text your Care Navigator to add products, or <a href="marketplace.html" style="color:var(--cy)">browse the marketplace</a>.</div></div>';
+    return;
+  }
+
+  // Pre-fill from URL params (SMS flow) or session (web flow)
   var fn=p.get('first_name');if(fn){fn=decodeURIComponent(fn);document.getElementById('fnInput').value=fn;document.getElementById('pageTitle').innerHTML='Authorize '+esc(fn)+'\'s <span class="grad">order</span>'}
-  try{var em=sGet('beim_email');if(em)document.getElementById('emailInput').value=em}catch(e){}
-  try{var ln=sGet('beim_last_name');if(ln)document.getElementById('lnInput').value=ln}catch(e){}
-  try{var ph=sGet('beim_phone');if(ph)document.getElementById('phoneInput').value=ph}catch(e){}
+  var ln=p.get('last_name');if(ln){document.getElementById('lnInput').value=decodeURIComponent(ln)}else{try{var sln=sGet('beim_last_name');if(sln)document.getElementById('lnInput').value=sln}catch(e){}}
+  var em=p.get('email');if(em){document.getElementById('emailInput').value=decodeURIComponent(em)}else{try{var sem=sGet('beim_email');if(sem)document.getElementById('emailInput').value=sem}catch(e){}}
+  var ph=p.get('phone');if(ph){document.getElementById('phoneInput').value=decodeURIComponent(ph)}else{try{var sph=sGet('beim_phone');if(sph)document.getElementById('phoneInput').value=sph}catch(e){}}
 
   // Phone auto-format
   document.getElementById('phoneInput').addEventListener('input',function(){
