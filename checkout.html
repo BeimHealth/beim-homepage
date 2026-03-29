@@ -190,7 +190,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
       <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div>
     </div>
     <span class="nav-secure">🔒 Secure Checkout</span>
-    <a href="intelligence.html" class="nav-back" id="backLink">← Back</a>
+    <a href="marketplace" class="nav-back" id="backLink">← Back</a>
   </div>
 </nav>
 <div class="page-header">
@@ -311,52 +311,53 @@ window.addEventListener('DOMContentLoaded',function(){
   STATE.bal=parseFloat(p.get('balance'))||0;
   STATE.acct=p.get('acct')||'HSA';
   
-  // Try loading products from URL params first (SMS flow)
-  var urlProducts=p.get('cart');
-  if(urlProducts){
-    try{STATE.products=JSON.parse(decodeURIComponent(urlProducts))}catch(e){STATE.products=[]}
+  // Try loading from checkout session (SMS flow)
+  var sessionId=p.get('s');
+  if(sessionId){
+    try{
+      // Decode URL-safe base64
+      var b64=sessionId.replace(/-/g,'+').replace(/_/g,'/');
+      while(b64.length%4)b64+='=';
+      var session=JSON.parse(atob(b64));
+      
+      // Load products from session
+      if(session.products&&session.products.length){
+        STATE.products=session.products;
+      }
+      // Load balance and acct type
+      if(session.balance)STATE.bal=session.balance;
+      if(session.acct_type)STATE.acct=session.acct_type;
+      
+      // Pre-fill member info
+      if(session.member){
+        if(session.member.first_name){
+          document.getElementById('fnInput').value=session.member.first_name;
+          document.getElementById('pageTitle').innerHTML='Authorize '+esc(session.member.first_name)+'\'s <span class="grad">order</span>';
+        }
+        if(session.member.last_name)document.getElementById('lnInput').value=session.member.last_name;
+        if(session.member.email)document.getElementById('emailInput').value=session.member.email;
+        if(session.member.phone)document.getElementById('phoneInput').value=session.member.phone;
+      }
+    }catch(e){console.error('Session decode failed:',e)}
   }
   
-  // If no URL cart, try a simpler format: product names + prices as comma pairs
-  // e.g. ?items=ProLon+5-Day:190,Oura+Ring:349&lmns=ProLon+5-Day
-  if(!STATE.products.length && p.get('items')){
-    var items=p.get('items').split(',');
-    var lmns=(p.get('lmns')||'').split(',');
-    var orders=(p.get('orders')||'').split(',');
-    items.forEach(function(item){
-      var parts=item.split(':');
-      if(parts.length>=2){
-        var name=decodeURIComponent(parts[0]);
-        var price=parseFloat(parts[1])||0;
-        STATE.products.push({
-          name:name,
-          price:price,
-          cat:'',
-          hsa:true,
-          lmn:lmns.indexOf(encodeURIComponent(name))>-1||lmns.indexOf(name)>-1,
-          order:orders.indexOf(encodeURIComponent(name))>-1||orders.indexOf(name)>-1,
-          insured:false,
-          brand:''
-        });
-      }
-    });
-  }
-
   // Fall back to sessionStorage (web flow)
   if(!STATE.products.length){try{STATE.products=JSON.parse(sGet('beim_checkout_products')||'[]')}catch(e){STATE.products=[]}}
   if(!STATE.products.length){try{STATE.products=JSON.parse(sGet('beim_selected_products')||'[]')}catch(e){}}
   
   // If still no products, show empty state instead of redirecting
   if(!STATE.products.length){
-    document.getElementById('orderItems').innerHTML='<div style="text-align:center;padding:32px;color:var(--mu)"><div style="font-size:32px;margin-bottom:12px">🛒</div><div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px">No products yet</div><div style="font-size:13px;line-height:1.6">Text your Care Navigator to add products, or <a href="marketplace.html" style="color:var(--cy)">browse the marketplace</a>.</div></div>';
+    document.getElementById('orderItems').innerHTML='<div style="text-align:center;padding:32px;color:var(--mu)"><div style="font-size:32px;margin-bottom:12px">🛒</div><div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px">No products yet</div><div style="font-size:13px;line-height:1.6">Text your Care Navigator at <a href="sms:+18333614745" style="color:var(--cy)">(833) 361-4745</a> to add products, or <a href="marketplace" style="color:var(--cy)">browse the marketplace</a>.</div></div>';
     return;
   }
 
-  // Pre-fill from URL params (SMS flow) or session (web flow)
-  var fn=p.get('first_name');if(fn){fn=decodeURIComponent(fn);document.getElementById('fnInput').value=fn;document.getElementById('pageTitle').innerHTML='Authorize '+esc(fn)+'\'s <span class="grad">order</span>'}
-  var ln=p.get('last_name');if(ln){document.getElementById('lnInput').value=decodeURIComponent(ln)}else{try{var sln=sGet('beim_last_name');if(sln)document.getElementById('lnInput').value=sln}catch(e){}}
-  var em=p.get('email');if(em){document.getElementById('emailInput').value=decodeURIComponent(em)}else{try{var sem=sGet('beim_email');if(sem)document.getElementById('emailInput').value=sem}catch(e){}}
-  var ph=p.get('phone');if(ph){document.getElementById('phoneInput').value=decodeURIComponent(ph)}else{try{var sph=sGet('beim_phone');if(sph)document.getElementById('phoneInput').value=sph}catch(e){}}
+  // Pre-fill from URL params or session (if not already set above)
+  if(!sessionId){
+    var fn=p.get('first_name');if(fn){fn=decodeURIComponent(fn);document.getElementById('fnInput').value=fn;document.getElementById('pageTitle').innerHTML='Authorize '+esc(fn)+'\'s <span class="grad">order</span>'}
+    var ln=p.get('last_name');if(ln){document.getElementById('lnInput').value=decodeURIComponent(ln)}else{try{var sln=sGet('beim_last_name');if(sln)document.getElementById('lnInput').value=sln}catch(e){}}
+    var em=p.get('email');if(em){document.getElementById('emailInput').value=decodeURIComponent(em)}else{try{var sem=sGet('beim_email');if(sem)document.getElementById('emailInput').value=sem}catch(e){}}
+    var ph=p.get('phone');if(ph){document.getElementById('phoneInput').value=decodeURIComponent(ph)}else{try{var sph=sGet('beim_phone');if(sph)document.getElementById('phoneInput').value=sph}catch(e){}}
+  }
 
   // Phone auto-format
   document.getElementById('phoneInput').addEventListener('input',function(){
