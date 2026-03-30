@@ -340,12 +340,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
         <li><a href="https://www.beim.ai/for-employers">For Employers</a></li>
         <li><a href="https://www.beim.ai/for-clinics">For Clinics</a></li>
         <li><a href="https://www.beim.ai/for-investors">Investor Inquiries</a></li>
-        <li><a href="mailto:partnerships@beim.ai">Partnership Inquiries</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#d3a3b2a1a7bdb6a1a0bbbaa3a093b1b6babefdb2ba">Partnership Inquiries</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Contact</div>
-      <div class="footer-contact-item"><a href="mailto:support@beim.ai">support@beim.ai</a></div>
+      <div class="footer-contact-item"><a href="/cdn-cgi/l/email-protection#8af9fffafae5f8fecae8efe3e7a4ebe3"><span class="__cf_email__" data-cfemail="35464045455a47417557505c581b545c">[email&#160;protected]</span></a></div>
       <div class="footer-contact-item">5900 Balcones Dr<br>Austin, TX 78731</div>
     </div>
   </div>
@@ -362,11 +362,23 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
 
 <div class="copied" id="copiedToast">✓ Link copied!</div>
 
+
+<style>
+.pool-input{width:100%;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.09);border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none;margin-bottom:8px;transition:border-color 0.2s}
+.pool-input::placeholder{color:var(--dim)}
+.pool-input:focus{border-color:rgba(61,217,182,0.3)}
+</style>
+<script src="https://js.stripe.com/v3/"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
+var W='https://beim-health-analyzer.steven-03f.workers.dev';
 var CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSkKfZAWrcH9YyJ8Ks5VTEJV950qVsjBjho6zo0GtAUvQAxjH-y5d3cvuUHkwTHXQ/pub?output=csv';
+var STRIPE_PK='pk_live_51PO5XXHRZWTSVNTMNBdQtms2w5aOz6js156wKR9NxDOZyYdDcHzPEJHikJT99stGCewpzHSmdOJsTYJKPWg54pUw00hDV5uZPa';
+var stripe=Stripe(STRIPE_PK);
+var elements=stripe.elements({appearance:{theme:'night',variables:{colorPrimary:'#3dd9b6',colorBackground:'#1a1a2e',colorText:'#f0f0ff',colorDanger:'#ef4444',fontFamily:'DM Sans,sans-serif',borderRadius:'10px'}}});
 var AV={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
 var GM={A:{ico:'🏆',lbl:'Gold Standard',crit:'Multi-RCT',cr:'90–100%'},B:{ico:'✅',lbl:'Strong Evidence',crit:'RCT / Large Cohort',cr:'75–89%'},C:{ico:'🔬',lbl:'Emerging',crit:'Pilot / Mechanistic',cr:'50–74%'}};
-var nv,fn='',bal=0,act='HSA',poolCart=0;
+var nv,fn='',bal=0,act='HSA',allProducts=[],livePools={};
 
 function sG(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
@@ -374,16 +386,14 @@ function cc(v){return v>=90?'var(--green)':v>=75?'var(--cyan)':v>=50?'var(--gold
 function dcP(s){return s==='Very High'?95:s==='High'?84:s==='Moderate'?68:s==='Low'?42:50}
 function stH(sc){if(!sc)return'';var s=parseFloat(sc);if(isNaN(s))return'';var r=Math.round(s),st='';for(var i=0;i<5;i++)st+=i<r?'★':'☆';return'<div class="stars"><span class="s">'+st+'</span><span class="rc">'+s.toFixed(1)+'</span></div>';}
 function catE(c){var l=(c||'').toLowerCase();if(l.indexOf('weight')>-1)return'⚖️';if(l.indexOf('monitor')>-1||l.indexOf('ring')>-1)return'⌚';if(l.indexOf('cancer')>-1||l.indexOf('screen')>-1)return'🔬';if(l.indexOf('fitness')>-1)return'🏋️';return'🏥';}
+function toSlug(n){return(n||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 
 window.addEventListener('DOMContentLoaded',function(){
   var p=new URLSearchParams(location.search);
   nv=p.get('nav')||sG('beim_nav')||'brooks';if(nv==='skip')nv='brooks';
   fn=p.get('first_name')?decodeURIComponent(p.get('first_name')):(sG('beim_first_name')||'');
   bal=parseFloat(p.get('balance'))||0;act=p.get('acct')||'HSA';
-
   var img=AV[nv]||AV.brooks,nm=nv==='everly'?'Everly':'Brooks';
-
-  // Balance bar
   if(bal>0){
     document.getElementById('balBar').classList.add('visible');
     document.getElementById('pageWrap').classList.add('has-bal');
@@ -392,11 +402,32 @@ window.addEventListener('DOMContentLoaded',function(){
     document.getElementById('balVal').textContent='$'+bal.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
     document.getElementById('balAcct').textContent=act;
   }
-
-  fetch(CSV).then(function(r){return r.text()}).then(function(c){
-    var all=pCSV(c),pools=all.filter(function(p){return p._pool;});
-    pools.sort(function(a,b){return b._pp-a._pp;});
-    render(pools);
+  // Load CSV for product details + live pool data from API
+  Promise.all([
+    fetch(CSV).then(function(r){return r.text()}),
+    fetch(W+'/api/pool/status-all').then(function(r){return r.json()}).catch(function(){return{pools:[]}})
+  ]).then(function(results){
+    var csvText=results[0],liveData=results[1];
+    allProducts=pCSV(csvText);
+    var csvPools=allProducts.filter(function(p){return p._pool});
+    if(liveData.pools&&liveData.pools.length){
+      liveData.pools.forEach(function(lp){livePools[lp.slug]=lp});
+    }
+    csvPools.forEach(function(p){
+      var slug=toSlug(p.product_name);
+      var live=livePools[slug];
+      if(live){
+        p._pp=live.progress_pct;
+        p._ps=live.spots_left;
+        p._spotsTotal=live.spots_total;
+        p._spotsFilled=live.spots_filled;
+        p._exp=live.days_left;
+        p._poolStatus=live.status;
+        p._liveSlug=slug;
+      }
+    });
+    csvPools.sort(function(a,b){return b._pp-a._pp});
+    render(csvPools);
   }).catch(function(e){
     console.error(e);
     document.getElementById('tiles').innerHTML='<div class="empty"><div class="empty-ico">⚠️</div><div class="empty-t">Couldn\'t load pools</div></div>';
@@ -404,7 +435,6 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 
 function pCSV(t){var ls=t.split('\n');if(ls.length<2)return[];var h=cL(ls[0]),out=[];for(var i=1;i<ls.length;i++){if(!ls[i].trim())continue;var v=cL(ls[i]),r={};for(var j=0;j<h.length;j++)r[h[j]]=v[j]||'';var a=(r.product_active||'').replace(/['"]/g,'').trim().toUpperCase();if(a!=='TRUE'&&a!=='YES')continue;var ps=(r.price||'').replace(/[$,]/g,'').trim();var pr=parseFloat(ps);if(!pr||pr<=0)continue;r._p=pr;var cp=(r.community_pool||'').replace(/['"]/g,'').trim().toUpperCase();r._pool=cp==='TRUE'||cp==='YES';if(r._pool){r._pp=parseInt(r.pool_progress)||0;r._ps=parseInt(r.pool_spots_left)||0;var ppS=(r.pool_price||'').replace(/[$,]/g,'').trim();r._pr=parseFloat(ppS)||r._p*0.9;r._exp=parseInt(r.pool_expiration_days)||30;}r.hsa_fsa_eligible=(r.hsa_fsa_eligible||'').replace(/['"]/g,'').trim();r.requires_medical_necessity=(r.requires_medical_necessity||'').replace(/['"]/g,'').trim();out.push(r);}return out;}
-
 function cL(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(q){if(ch==='"'&&l[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else{if(ch==='"')q=true;else if(ch===','){r.push(c.trim());c=''}else c+=ch}}r.push(c.trim());return r;}
 
 function render(pools){
@@ -424,25 +454,42 @@ function render(pools){
     var needsLmn=p.requires_medical_necessity==='Yes';
     var bd='';if(p.hsa_fsa_eligible==='Yes')bd+='<span class="tb hsa">✓ HSA/FSA</span>';if(needsLmn)bd+='<span class="tb lmn">📋 LMN</span>';bd+='<span class="tb pool">🤝 Pool</span>';
     var condsH='';if(conds.length){condsH='<div class="cond-pills">';conds.slice(0,5).forEach(function(c,i){condsH+='<span class="cp '+(i<1?'pri':'sec')+'">'+esc(c.trim())+'</span>';});condsH+='</div>';}
+    var slug=p._liveSlug||toSlug(p.product_name);
     var sn=esc(p.product_name||'').replace(/'/g,"\\'");
     var urgency=p._exp<=7?'🔥 '+p._exp+'d left':p._exp<=14?'⏳ '+p._exp+'d left':p._exp+'d left';
     var urgencyClass=p._exp<=7?' style="color:var(--red);border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.08)"':'';
+    var isFull=p._poolStatus==='filled'||p._poolStatus==='charged';
+    var isExpired=p._poolStatus==='expired';
 
     html+='<div class="tile">';
-    // Top: image + info
     html+='<div class="t-top"><div class="t-img">'+imgH+'</div><div class="t-info"><div class="t-row1"><span class="t-grade g'+g.toLowerCase()+'">CEL '+g+'</span><span class="t-cat">'+esc(p.category||'')+'</span></div><div class="t-nm">'+esc(p.product_name)+'</div><div class="t-brand">'+esc(p.brand||'')+'</div><div class="t-badges">'+bd+'</div></div></div>';
-    // Mid: price + pool
     html+='<div class="t-mid"><div class="t-price"><div class="t-price-old">Retail $'+p._p.toFixed(2)+'</div><div class="t-price-new">$'+eff.toFixed(2)+'</div><div class="t-price-save">↓ $'+saved.toFixed(0)+' off ('+savePct+'%)</div>';
     if(bal>0){html+='<div class="t-hsa-split"><div class="t-hsa-row"><span class="t-hsa-k">'+act+' covers</span><span class="t-hsa-v gn">-$'+hsa.toFixed(2)+'</span></div><div class="t-hsa-row"><span class="t-hsa-k">Out of pocket</span><span class="t-hsa-v '+(oop===0?'gn':'gd')+'">$'+oop.toFixed(2)+(oop===0?' ✓':'')+'</span></div></div>';}
     html+='</div>';
-    html+='<div class="t-pool"><div class="t-pool-hdr"><span class="t-pool-title">🤝 Community Pool</span><span class="t-pool-timer"'+urgencyClass+'>'+urgency+'</span></div><div class="t-pool-bar"><div class="t-pool-fill" style="width:'+p._pp+'%"></div></div><div class="t-pool-meta"><span><strong>'+p._ps+'</strong> spots left</span><span><strong>'+p._pp+'%</strong> filled</span></div><div class="t-pool-refund">Auto-refund if pool doesn\'t fill</div></div></div>';
-    // Actions
-    html+='<div class="t-actions"><button class="btn-pool" onclick="joinPool(\''+sn+'\')">🤝 Join Pool — Save $'+saved.toFixed(0)+'</button><button class="btn-expand" id="exp'+idx+'" onclick="toggleDetail('+idx+')">Clinical Detail <span class="arrow">▼</span></button></div>';
-    // Share
+    html+='<div class="t-pool"><div class="t-pool-hdr"><span class="t-pool-title">🤝 Community Pool</span><span class="t-pool-timer"'+urgencyClass+'>'+urgency+'</span></div><div class="t-pool-bar"><div class="t-pool-fill" style="width:'+p._pp+'%"></div></div><div class="t-pool-meta"><span><strong>'+p._ps+'</strong> spots left</span><span><strong>'+p._pp+'%</strong> filled</span></div><div class="t-pool-refund">No charge until pool fills · Auto-refund guarantee</div></div></div>';
+
+    if(isFull){
+      html+='<div class="t-actions"><div style="text-align:center;padding:12px;color:var(--green);font-weight:700;font-size:13px">✓ Pool Filled — Processing Orders</div></div>';
+    } else if(isExpired){
+      html+='<div class="t-actions"><div style="text-align:center;padding:12px;color:var(--dim);font-weight:600;font-size:13px">Pool Expired — No Charges Made</div></div>';
+    } else {
+      html+='<div class="t-actions"><button class="btn-pool" id="joinBtn'+idx+'" onclick="showJoinForm('+idx+',\''+slug+'\',\''+sn+'\','+saved.toFixed(0)+')">🤝 Join Pool — Save $'+saved.toFixed(0)+'</button><button class="btn-expand" id="exp'+idx+'" onclick="toggleDetail('+idx+')">Clinical Detail <span class="arrow">▼</span></button></div>';
+    }
+
+    // Join form (hidden)
+    html+='<div id="joinForm'+idx+'" style="display:none;padding:14px;background:rgba(61,217,182,0.04);border:1px solid rgba(61,217,182,0.12);border-radius:12px;margin:10px 0">';
+    html+='<div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px">🔒 Pre-authorize your card — you won\'t be charged until the pool fills</div>';
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><input class="pool-input" id="poolFn'+idx+'" type="text" placeholder="First name" value="'+esc(fn)+'"/><input class="pool-input" id="poolLn'+idx+'" type="text" placeholder="Last name"/></div>';
+    html+='<input class="pool-input" id="poolEmail'+idx+'" type="email" placeholder="Email" value="'+esc(sG('beim_email')||'')+'"/>';
+    html+='<input class="pool-input" id="poolPhone'+idx+'" type="tel" placeholder="Phone (optional)"/>';
+    html+='<div id="poolCard'+idx+'" style="padding:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;margin:8px 0"></div>';
+    html+='<div id="poolErr'+idx+'" style="font-size:11px;color:var(--red);min-height:16px;margin-bottom:6px"></div>';
+    html+='<button class="btn-pool" id="poolSubmit'+idx+'" onclick="submitJoin('+idx+',\''+slug+'\')">🔒 Pre-Authorize & Join</button>';
+    html+='<div style="font-size:10px;color:var(--dim);margin-top:6px;text-align:center">Your card will only be charged ($'+eff.toFixed(2)+') if the pool fills. Otherwise nothing happens.</div>';
+    html+='</div>';
+
     html+='<div class="t-share"><span class="t-share-lbl">Share:</span><a class="sh" onclick="shareSMS(\''+sn+'\','+saved.toFixed(0)+')">💬</a><a class="sh" onclick="shareX(\''+sn+'\','+saved.toFixed(0)+')"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a class="sh" onclick="shareFB(\''+sn+'\')"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a class="sh" onclick="copyLink(\''+sn+'\')">🔗</a></div>';
-    // Trust
     html+='<div class="t-trust"><span class="tt">HSA/FSA Eligible</span><span class="tt">30-Day Returns</span><span class="tt">IRS Receipt</span><span class="tt">Auto-Refund</span></div>';
-    // Expandable clinical detail
     html+='<div class="t-detail" id="det'+idx+'"><div class="t-detail-inner">';
     html+='<div class="conf"><div class="conf-top"><span class="conf-lbl">Physician Confidence</span><span class="conf-val" style="color:'+clr+'">'+dcV+'%</span></div><div class="conf-bar"><div class="conf-fill" style="width:'+dcV+'%;background:'+clr+'"></div></div><div class="conf-sub"><strong style="color:'+clr+'">'+(dc||'Moderate')+'</strong> confidence</div>'+stH(p.patient_review_score)+'<div class="gex"><span class="gex-ico">'+gm.ico+'</span><div class="gex-bd"><strong>'+gm.lbl+' · '+gm.crit+' · '+gm.cr+'</strong></div></div></div>';
     html+='<div class="conds"><div class="conds-title">Matched Conditions</div>'+condsH+'</div>';
@@ -453,6 +500,63 @@ function render(pools){
   el.innerHTML=html;
 }
 
+var poolCards={};
+
+function showJoinForm(idx,slug,name,saved){
+  var form=document.getElementById('joinForm'+idx);
+  var btn=document.getElementById('joinBtn'+idx);
+  if(form.style.display==='none'){
+    form.style.display='block';
+    btn.textContent='Cancel';
+    btn.style.background='rgba(255,255,255,0.05)';
+    btn.style.borderColor='rgba(255,255,255,0.1)';
+    btn.style.color='var(--muted)';
+    if(!poolCards[idx]){
+      var cardEl=elements.create('card',{style:{base:{fontSize:'13px',color:'#f0f0ff','::placeholder':{color:'#5a5d78'}},invalid:{color:'#ef4444'}}});
+      cardEl.mount('#poolCard'+idx);
+      poolCards[idx]=cardEl;
+    }
+  } else {
+    form.style.display='none';
+    btn.textContent='🤝 Join Pool — Save $'+saved;
+    btn.style.background='';btn.style.borderColor='';btn.style.color='';
+  }
+}
+
+async function submitJoin(idx,slug){
+  var btn=document.getElementById('poolSubmit'+idx);
+  var errEl=document.getElementById('poolErr'+idx);
+  var email=document.getElementById('poolEmail'+idx).value.trim();
+  var firstName=document.getElementById('poolFn'+idx).value.trim();
+  var lastName=document.getElementById('poolLn'+idx).value.trim();
+  var phone=document.getElementById('poolPhone'+idx).value.trim();
+  if(!email||!email.includes('@')){errEl.textContent='Email required';return}
+  if(!firstName){errEl.textContent='First name required';return}
+  errEl.textContent='';
+  btn.disabled=true;btn.textContent='Verifying card…';
+  try{
+    var result=await stripe.createPaymentMethod({type:'card',card:poolCards[idx],billing_details:{name:firstName+' '+lastName,email:email}});
+    if(result.error){errEl.textContent=result.error.message;btn.disabled=false;btn.textContent='🔒 Pre-Authorize & Join';return}
+    var res=await fetch(W+'/api/pool/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      slug:slug,email:email,first_name:firstName,last_name:lastName,phone:phone,
+      payment_method_id:result.paymentMethod.id
+    })});
+    var data=await res.json();
+    if(data.success){
+      var form=document.getElementById('joinForm'+idx);
+      form.innerHTML='<div style="text-align:center;padding:16px"><div style="font-size:24px;margin-bottom:8px">✅</div><div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:4px">You\'re in the pool!</div><div style="font-size:12px;color:var(--muted)">Card pre-authorized. You\'ll only be charged when the pool fills. '+data.pool.spots_left+' spots remaining.</div></div>';
+      var joinBtn=document.getElementById('joinBtn'+idx);
+      if(joinBtn)joinBtn.style.display='none';
+    } else {
+      errEl.textContent=data.error||'Failed to join pool';
+      btn.disabled=false;btn.textContent='🔒 Pre-Authorize & Join';
+    }
+  }catch(e){
+    errEl.textContent='Something went wrong: '+e.message;
+    btn.disabled=false;btn.textContent='🔒 Pre-Authorize & Join';
+  }
+}
+
 function toggleDetail(idx){
   var det=document.getElementById('det'+idx);
   var btn=document.getElementById('exp'+idx);
@@ -460,26 +564,16 @@ function toggleDetail(idx){
   btn.classList.toggle('open');
 }
 
-function joinPool(n){
-  var bp=new URLSearchParams();
-  if(bal>0)bp.set('balance',bal.toFixed(2));if(act)bp.set('acct',act);if(nv)bp.set('nav',nv);
-  if(fn)bp.set('first_name',encodeURIComponent(fn));
-  var em=sG('beim_email');if(em)bp.set('email',encodeURIComponent(em));
-  bp.set('pool_join',encodeURIComponent(n));
-  location.href='https://go.beim.ai/products?'+bp.toString();
-}
-
-/* ── Share functions ── */
 var poolUrl='https://go.beim.ai/community-pool';
 function shareSMS(name,saved){window.open('sms:?&body='+encodeURIComponent('Check out '+name+' on Beim Health Community Pool — save $'+saved+' with group buying. HSA/FSA eligible! '+poolUrl));}
-function shareX(name,saved){window.open('https://x.com/intent/tweet?text='+encodeURIComponent('I joined the Community Pool for '+name+' on @BeimHealth — saving $'+saved+' with group buying. HSA/FSA eligible!')+'&url='+encodeURIComponent(poolUrl),'_blank');}
+function shareX(name,saved){window.open('https://x.com/intent/tweet?text='+encodeURIComponent('I joined the Community Pool for '+name+' on @BeimHealth — saving $'+saved+'!')+'&url='+encodeURIComponent(poolUrl),'_blank');}
 function shareFB(name){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(poolUrl),'_blank');}
 function copyLink(name){var slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');navigator.clipboard.writeText(poolUrl+'?product='+slug).then(showCopied).catch(function(){prompt('Copy:',poolUrl);});}
-function sharePageSMS(){window.open('sms:?&body='+encodeURIComponent('Beim Health Community Pool — group buying for HSA/FSA eligible health products. More people join, everyone saves! '+poolUrl));}
-function sharePageX(){window.open('https://x.com/intent/tweet?text='+encodeURIComponent('Group buying for health products — HSA/FSA eligible, tax-free savings. @BeimHealth Community Pool')+'&url='+encodeURIComponent(poolUrl),'_blank');}
+function sharePageSMS(){window.open('sms:?&body='+encodeURIComponent('Beim Health Community Pool — group buying for HSA/FSA health products. '+poolUrl));}
+function sharePageX(){window.open('https://x.com/intent/tweet?text='+encodeURIComponent('Group buying for health products — HSA/FSA eligible. @BeimHealth')+'&url='+encodeURIComponent(poolUrl),'_blank');}
 function sharePageFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(poolUrl),'_blank');}
 function copyPageLink(){navigator.clipboard.writeText(poolUrl).then(showCopied).catch(function(){prompt('Copy:',poolUrl);});}
-function showCopied(){var t=document.getElementById('copiedToast');t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
+function showCopied(){var t=document.getElementById('copiedToast');t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2000);}
 </script>
 </body>
 </html>
