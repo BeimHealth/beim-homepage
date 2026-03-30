@@ -650,11 +650,10 @@ async function handleCheckout(){
   if(phone)sSet('beim_phone',phone);
 
   btn.disabled=true;btn.innerHTML='<span style="display:inline-block;animation:spin .8s linear infinite">⟳</span> Processing…';
-  abandonedCheckoutFired=true; // Prevent abandoned checkout SMS
+  abandonedCheckoutFired=true;
 
   var couponPct=appliedCoupon?appliedCoupon.pct:0;
   var isFree=couponPct>=100||STATE.totals.subtotal<=0;
-  pushToZoho(email,fn,ln,state,phone,'pending');
 
   if(isFree){
     saveOrderAndRedirect(email,fn,ln,state,phone,null);
@@ -685,10 +684,8 @@ async function handleCheckout(){
     });
     if(result.error){
       btn.innerHTML='🛡️ Place Order';btn.disabled=false;abandonedCheckoutFired=false;
-      document.getElementById('card-errors').textContent=result.error.message;
-      pushToZoho(email,fn,ln,state,phone,'failed');return}
+      document.getElementById('card-errors').textContent=result.error.message;return}
     if(result.paymentIntent&&result.paymentIntent.status==='succeeded'){
-      pushToZoho(email,fn,ln,state,phone,'completed',null,result.paymentIntent.id);
       saveOrderAndRedirect(email,fn,ln,state,phone,result.paymentIntent.id);
     } else {
       btn.innerHTML='🛡️ Place Order';btn.disabled=false;abandonedCheckoutFired=false;
@@ -714,10 +711,7 @@ function saveOrderAndRedirect(email,fn,ln,state,phone,stripeId){
     ts:new Date().toISOString()
   }));
 
-  // Final Zoho push with order number
-  pushToZoho(email,fn,ln,state,phone,'completed',orderNum,stripeId);
-
-  // Convert Lead → Contact + Create Deal
+  // Convert Lead → Contact + Create Deal (single call, no duplicate)
   var lid=sGet('beim_lead_id')||null;
   var shipAddr=sGet('beim_shipping_address')||'';
   var billAddr=sGet('beim_billing_address')||'';
@@ -728,9 +722,8 @@ function saveOrderAndRedirect(email,fn,ln,state,phone,stripeId){
     totals:t,acct_type:STATE.acct,balance:STATE.bal,lmn_path:STATE.lmnPath,
     navigator:sGet('beim_nav')||'brooks',
     shipping_address:shipAddr,billing_address:billAddr,
-    coupon_code:appliedCoupon?appliedCoupon.code:null,coupon_discount:t.discount||0,
-    source_channel:new URLSearchParams(location.search).get('source')||'marketplace'
-  })}).catch(function(){})}catch(e){}
+    coupon_code:appliedCoupon?appliedCoupon.code:null,coupon_discount:t.discount||0
+  })}).catch(function(e){console.error('Convert lead failed:',e)})}catch(e){}
 
   // Clear checkout started flag
   try{sessionStorage.removeItem('beim_checkout_started');sessionStorage.removeItem('beim_abandoned_checkout')}catch(e){}
