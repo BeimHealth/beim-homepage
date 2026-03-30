@@ -779,7 +779,10 @@ function goCheckout(){
     conf:p.doctor_confidence||'',
     purchase_type:p.purchase_type||'one_time',
     subscription_frequency:p.subscription_frequency||'',
-    subscription_discount_pct:p.subscription_discount_pct||'0'
+    subscription_discount_pct:p.subscription_discount_pct||'0',
+    fulfillment_type:p.fulfillment_type||'physical',
+    fulfillment_url:p.fulfillment_url||'',
+    fulfillment_instructions:p.fulfillment_instructions||''
   }});
   try{sessionStorage.setItem('beim_selected_products',JSON.stringify(prods))}catch(e){}
   pushToZoho();
