@@ -125,9 +125,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
 
 <script>
 var W='https://beim-health-analyzer.steven-03f.workers.dev';
-var W_SMS='https://beim-webhooks.steven-03f.workers.dev';
-var PORTAL_URL='https://beta.joinfreely.com/beim-patient-portal';
-var INTAKE_URL='https://beta.joinfreely.com/beim-ai-health-intake';
+var PORTAL_URL='https://go.beim.ai/portal';
+var INTAKE_URL='https://go.beim.ai/intake';
 var AVATARS={everly:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69adc9cb864a991d937219da_Gemini_Generated_Image_uuevmuuevmuuevmu%20(1)%20-%20Edited.png',brooks:'https://cdn.prod.website-files.com/68a9f0181d51caed859528b5/69aee445c428d6a66c5ca3c3_Gemini_Generated_Image_utzzfnutzzfnutzz%20-%20Edited.png'};
 
 var nav,navName,firstName='',email='',phone='',order=null,chatHistory=[];
@@ -282,38 +281,48 @@ function sendPostPurchaseSMS(){
   var prodNames=order.products.slice(0,2).map(function(p){return p.name}).join(' and ');
   if(order.products.length>2)prodNames+=' + '+(order.products.length-2)+' more';
   var hasLmn=order.products.some(function(p){return p.lmn});
+  var hasPhysOrder=order.products.some(function(p){return p.order});
 
-  // Build a conversational, contextual message — not the rescue plan template
   var smsBody=firstName?firstName+', ':'';
   smsBody+='order #'+(order.orderNum||'')+' is confirmed! ';
   smsBody+=prodNames+'. ';
 
   if(t.hsaCov>0&&t.oop<=0){
-    smsBody+='Your '+( order.acctType||'HSA')+' covered everything — $0 out of pocket. ';
+    smsBody+='Your '+(order.acctType||'HSA')+' covered everything — $0 out of pocket.';
   } else if(t.hsaCov>0){
-    smsBody+='$'+t.hsaCov.toFixed(0)+' from your '+(order.acctType||'HSA')+', $'+t.oop.toFixed(0)+' out of pocket. ';
+    smsBody+='$'+t.hsaCov.toFixed(0)+' from your '+(order.acctType||'HSA')+', $'+t.oop.toFixed(0)+' out of pocket.';
   }
+
+  // Digital access links
+  order.products.forEach(function(p){
+    var ft=(p.fulfillment_type||'physical').toLowerCase();
+    if((ft==='digital_access'||ft==='digital_download')&&p.fulfillment_url){
+      smsBody+='\n\n'+p.name+':\n'+p.fulfillment_url;
+    }
+  });
 
   if(hasLmn&&(order.lmnPath||'beim')==='beim'){
-    smsBody+='\n\nNext step: quick health intake so a physician can sign off on your LMN.\n'+INTAKE_URL;
-  } else {
-    smsBody+='\n\nTrack everything in your portal:\n'+PORTAL_URL;
+    smsBody+='\n\nNext step — quick health intake for your LMN (90 sec):\n'+INTAKE_URL;
+  }
+  if(hasPhysOrder){
+    smsBody+='\n\nYour physician order is being processed — I\'ll update you when it\'s signed.';
   }
 
-  smsBody+='\n\nText me anytime with questions.';
+  smsBody+='\n\nTrack your order:\n'+PORTAL_URL;
+  smsBody+='\n\nText me anytime — '+navName;
 
-  // Use the existing conversation (don't create a new one)
+  // Log to Zoho
   var lid=sGet('beim_lead_id')||null;
-  fetch(W_SMS+'/api/twilio/send-plan',{
+  fetch(W+'/api/beim-lead',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      phone:phone,first_name:firstName,navigator:nav,
-      product_count:order.products.length,
-      plan_url:PORTAL_URL,lead_id:lid,
-      // Pass custom message body — Worker will use this if provided
-      custom_message:smsBody
+      email:email,first_name:firstName,phone:phone,navigator:nav,
+      source:'confirmation',page:'confirmation',
+      payment_status:'completed',order_number:order.orderNum,
+      chat_transcript:'[POST-PURCHASE SMS SENT]\n'+smsBody,
+      lead_id:lid
     })
-  }).catch(function(){/* non-critical */});
+  }).catch(function(){});
 }
 
 /* ── LMN TEMPLATE ── */
