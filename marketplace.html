@@ -776,7 +776,10 @@ function goCheckout(){
     stripe_connect_id:p.stripe_connect_id||'',
     platform_fee_pct:p.platform_fee_pct||'',
     provider_name:p.provider_name||'',
-    conf:p.doctor_confidence||''
+    conf:p.doctor_confidence||'',
+    purchase_type:p.purchase_type||'one_time',
+    subscription_frequency:p.subscription_frequency||'',
+    subscription_discount_pct:p.subscription_discount_pct||'0'
   }});
   try{sessionStorage.setItem('beim_selected_products',JSON.stringify(prods))}catch(e){}
   pushToZoho();
