@@ -479,18 +479,28 @@ function renderOrder(){
     // Subscription toggle per product
     var subToggle='';
     var pt=p.purchase_type||'one_time';
-    var canSub=(pt==='both'||pt==='subscription');
     var isSub=STATE.subChoices&&STATE.subChoices[i]==='subscription';
     var freq=p.subscription_frequency||'monthly';
     var disc=parseInt(p.subscription_discount_pct)||0;
     var displayPrice=p._effective||p.price||0;
+    var freqLabel=freq==='annual'?'year':'month';
 
-    if(canSub){
-      subToggle='<div style="margin-top:6px;display:flex;align-items:center;gap:8px">';
-      subToggle+='<label style="font-size:11px;color:var(--mu);display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" '+(isSub?'checked':'')+' onchange="toggleSub('+i+')" style="accent-color:var(--cy);width:14px;height:14px"/> Subscribe '+freq;
-      if(disc>0)subToggle+=' <span style="color:var(--gn);font-weight:700">(save '+disc+'%)</span>';
-      subToggle+='</label></div>';
+    if(pt==='both'){
+      // Toggle between one-time and subscription
+      subToggle='<div style="margin-top:8px;display:flex;gap:6px">';
+      subToggle+='<button onclick="setSubChoice('+i+',\'one_time\')" style="flex:1;padding:7px 10px;border-radius:8px;font-family:DM Sans,sans-serif;font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all 0.2s;'+(!isSub?'background:rgba(110,224,245,0.08);border-color:rgba(110,224,245,0.3);color:var(--cy)':'background:transparent;border-color:rgba(255,255,255,0.08);color:var(--dm)')+'">One-time</button>';
+      subToggle+='<button onclick="setSubChoice('+i+',\'subscription\')" style="flex:1;padding:7px 10px;border-radius:8px;font-family:DM Sans,sans-serif;font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all 0.2s;'+(isSub?'background:rgba(61,217,182,0.08);border-color:rgba(61,217,182,0.3);color:var(--gn)':'background:transparent;border-color:rgba(255,255,255,0.08);color:var(--dm)')+'">Subscribe per '+freqLabel+(disc>0?' <span style="color:var(--gn)">(−'+disc+'%)</span>':'')+'</button>';
+      subToggle+='</div>';
+    } else if(pt==='subscription'){
+      // Subscription only — no toggle, just a label
+      isSub=true;
+      if(!STATE.subChoices)STATE.subChoices={};
+      STATE.subChoices[i]='subscription';
+      subToggle='<div style="margin-top:6px;display:flex;align-items:center;gap:6px">';
+      subToggle+='<span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(61,217,182,0.08);border:1px solid rgba(61,217,182,0.2);color:var(--gn)">🔄 Subscription — per '+freqLabel+'</span>';
+      subToggle+='</div>';
     }
+    // one_time: no toggle shown
 
     // Shipping estimate
     var shipEst='<div style="font-size:9px;color:var(--dm);margin-top:4px">📦 Est. delivery: 5–7 business days</div>';
@@ -556,6 +566,12 @@ function renderPayment(){
 function toggleSub(index){
   if(!STATE.subChoices)STATE.subChoices={};
   STATE.subChoices[index]=STATE.subChoices[index]==='subscription'?'one_time':'subscription';
+  calculate();renderOrder();renderSidebar();renderPayment();
+}
+
+function setSubChoice(index,choice){
+  if(!STATE.subChoices)STATE.subChoices={};
+  STATE.subChoices[index]=choice;
   calculate();renderOrder();renderSidebar();renderPayment();
 }
 
@@ -700,6 +716,21 @@ function saveOrderAndRedirect(email,fn,ln,state,phone,stripeId){
 
   // Final Zoho push with order number
   pushToZoho(email,fn,ln,state,phone,'completed',orderNum,stripeId);
+
+  // Convert Lead → Contact + Create Deal
+  var lid=sGet('beim_lead_id')||null;
+  var shipAddr=sGet('beim_shipping_address')||'';
+  var billAddr=sGet('beim_billing_address')||'';
+  try{fetch(W+'/api/convert-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    lead_id:lid,email:email,phone:phone,first_name:fn,last_name:ln,
+    order_number:orderNum,stripe_payment_id:stripeId,payment_status:'completed',
+    products:STATE.products.map(function(p){return{name:p.name,price:p._effective||p.price,lmn:!!p.lmn,order:!!p.order,hsa:!!p.hsa,cat:p.cat||'',brand:p.brand||'',purchase_type:p.purchase_type||'',subscription_frequency:p.subscription_frequency||''}}),
+    totals:t,acct_type:STATE.acct,balance:STATE.bal,lmn_path:STATE.lmnPath,
+    navigator:sGet('beim_nav')||'brooks',
+    shipping_address:shipAddr,billing_address:billAddr,
+    coupon_code:appliedCoupon?appliedCoupon.code:null,coupon_discount:t.discount||0,
+    source_channel:new URLSearchParams(location.search).get('source')||'marketplace'
+  })}).catch(function(){})}catch(e){}
 
   // Clear checkout started flag
   try{sessionStorage.removeItem('beim_checkout_started');sessionStorage.removeItem('beim_abandoned_checkout')}catch(e){}
