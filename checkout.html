@@ -242,9 +242,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
       <div class="form-field"><div class="field-label">Last Name</div><input class="field-input" id="lnInput" type="text" placeholder="Last" autocomplete="family-name"/></div>
     </div>
     <div class="form-field"><div class="field-label">Email</div><input class="field-input" id="emailInput" type="email" placeholder="you@example.com" autocomplete="email"/><div class="field-hint">Order confirmation + IRS-compliant HSA receipt sent here</div></div>
-    <div class="form-field"><div class="field-label">Phone (optional)</div><input class="field-input" id="phoneInput" type="tel" placeholder="(512) 555-1234" autocomplete="tel"/><div class="field-hint">For order updates and your direct line to your Care Navigator</div></div>
-    <div class="form-field"><div class="field-label">State</div><select class="field-select" id="stateInput"><option value="">Select state…</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option></select></div>
+    <div class="form-field"><div class="field-label">Phone</div><input class="field-input" id="phoneInput" type="tel" placeholder="(512) 555-1234" autocomplete="tel"/><div class="field-hint">For order updates and shipping notifications</div></div>
   </div></div></div>
+
+  <div class="sec-label">Shipping Address</div>
+  <div class="pay-card"><div class="pay-section"><div class="form-group">
+    <div class="form-field"><div class="field-label">Street Address</div><input class="field-input" id="shipStreet" type="text" placeholder="123 Main St" autocomplete="shipping street-address"/></div>
+    <div class="form-field"><div class="field-label">Apt / Suite / Unit <span style="color:var(--dm)">(optional)</span></div><input class="field-input" id="shipApt" type="text" placeholder="Apt 4B" autocomplete="shipping address-line2"/></div>
+    <div class="form-row">
+      <div class="form-field"><div class="field-label">City</div><input class="field-input" id="shipCity" type="text" placeholder="Austin" autocomplete="shipping address-level2"/></div>
+      <div class="form-field"><div class="field-label">State</div><select class="field-select" id="stateInput" autocomplete="shipping address-level1"><option value="">Select…</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option></select></div>
+    </div>
+    <div class="form-field" style="max-width:180px"><div class="field-label">Zip Code</div><input class="field-input" id="shipZip" type="text" placeholder="78676" maxlength="10" autocomplete="shipping postal-code" style="font-family:'DM Mono',monospace"/></div>
+    <div class="field-hint" style="margin-top:4px">📦 Estimated delivery: 5–7 business days</div>
+  </div></div></div>
+
+  <div class="sec-label">Billing Address</div>
+  <div class="pay-card"><div class="pay-section">
+    <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mu);cursor:pointer;margin-bottom:10px"><input type="checkbox" id="sameAsShipping" checked onchange="toggleBilling()" style="accent-color:var(--cy);width:14px;height:14px"/> Same as shipping address</label>
+    <div id="billingFields" style="display:none"><div class="form-group">
+      <div class="form-field"><div class="field-label">Street Address</div><input class="field-input" id="billStreet" type="text" placeholder="123 Main St" autocomplete="billing street-address"/></div>
+      <div class="form-field"><div class="field-label">Apt / Suite / Unit <span style="color:var(--dm)">(optional)</span></div><input class="field-input" id="billApt" type="text" placeholder="" autocomplete="billing address-line2"/></div>
+      <div class="form-row">
+        <div class="form-field"><div class="field-label">City</div><input class="field-input" id="billCity" type="text" placeholder="" autocomplete="billing address-level2"/></div>
+        <div class="form-field"><div class="field-label">State</div><select class="field-select" id="billState" autocomplete="billing address-level1"><option value="">Select…</option><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option></select></div>
+      </div>
+      <div class="form-field" style="max-width:180px"><div class="field-label">Zip Code</div><input class="field-input" id="billZip" type="text" placeholder="" maxlength="10" autocomplete="billing postal-code" style="font-family:'DM Mono',monospace"/></div>
+    </div></div>
+  </div></div>
   <div class="portal-note"><strong>📋 After checkout:</strong> If any products need an LMN, you'll complete a short health intake in the Beim portal. Medical data stays HIPAA-compliant and separate from payment.</div>
 </div>
 
@@ -304,12 +329,21 @@ var abandonedCheckoutFired=false;
 function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
-function emoji(c){var l=(c||'').toLowerCase();if(l.includes('sleep'))return'😴';if(l.includes('weight'))return'⚖️';if(l.includes('hair')||l.includes('skin'))return'✨';if(l.includes('lab'))return'🔬';if(l.includes('supplement'))return'💊';return'🏥'}
+function emoji(c){var l=(c||'').toLowerCase();if(l.includes('sleep'))return'😴';if(l.includes('weight'))return'⚖️';if(l.includes('hair')||l.includes('skin'))return'✨';if(l.includes('lab'))return'🔬';if(l.includes('supplement'))return'💊';if(l.includes('heart'))return'❤️';if(l.includes('fitness'))return'🏋️';return'🏥'}
+function toggleBilling(){var show=!document.getElementById('sameAsShipping').checked;document.getElementById('billingFields').style.display=show?'block':'none'}
+var paymentMode='hsa'; // 'hsa' or 'cash'
 
 window.addEventListener('DOMContentLoaded',function(){
   var p=new URLSearchParams(location.search);
   STATE.bal=parseFloat(p.get('balance'))||0;
   STATE.acct=p.get('acct')||'HSA';
+  paymentMode=p.get('payment')||'hsa';
+  
+  // If cash mode, adjust UI — hide HSA-specific elements but keep physician order requirements
+  if(paymentMode==='cash'){
+    STATE.bal=0;
+    STATE.acct='Cash';
+  }
   
   // Try loading from checkout session (SMS flow)
   var sessionId=p.get('s');
@@ -582,11 +616,33 @@ async function handleCheckout(){
   var ln=document.getElementById('lnInput').value.trim();
   var state=document.getElementById('stateInput').value;
   var phone=document.getElementById('phoneInput').value.trim();
+  var shipStreet=document.getElementById('shipStreet').value.trim();
+  var shipCity=document.getElementById('shipCity').value.trim();
+  var shipZip=document.getElementById('shipZip').value.trim();
+
+  // Validate required fields
   if(!fn){document.getElementById('fnInput').focus();document.getElementById('fnInput').style.borderColor='rgba(239,68,68,.4)';setTimeout(function(){document.getElementById('fnInput').style.borderColor=''},2000);return}
   if(!email||!email.includes('@')){document.getElementById('emailInput').focus();document.getElementById('emailInput').style.borderColor='rgba(239,68,68,.4)';setTimeout(function(){document.getElementById('emailInput').style.borderColor=''},2000);return}
+  if(!shipStreet){document.getElementById('shipStreet').focus();document.getElementById('shipStreet').style.borderColor='rgba(239,68,68,.4)';setTimeout(function(){document.getElementById('shipStreet').style.borderColor=''},2000);return}
+  if(!shipCity){document.getElementById('shipCity').focus();return}
   if(!state){document.getElementById('stateInput').focus();return}
+  if(!shipZip){document.getElementById('shipZip').focus();return}
+
+  // Build address strings
+  var shipApt=(document.getElementById('shipApt').value||'').trim();
+  var shippingAddress=shipStreet+(shipApt?' '+shipApt:'')+', '+shipCity+', '+state+' '+shipZip;
+  var billingAddress=shippingAddress;
+  if(!document.getElementById('sameAsShipping').checked){
+    var bs=document.getElementById('billStreet').value.trim();
+    var ba=(document.getElementById('billApt').value||'').trim();
+    var bc=document.getElementById('billCity').value.trim();
+    var bst=document.getElementById('billState').value;
+    var bz=document.getElementById('billZip').value.trim();
+    if(bs)billingAddress=bs+(ba?' '+ba:'')+', '+bc+', '+bst+' '+bz;
+  }
 
   sSet('beim_checkout_state',state);sSet('beim_email',email);sSet('beim_first_name',fn);
+  sSet('beim_shipping_address',shippingAddress);sSet('beim_billing_address',billingAddress);
   if(ln)sSet('beim_last_name',ln);
   if(phone)sSet('beim_phone',phone);
 
@@ -670,17 +726,29 @@ function pushToZoho(email,fn,ln,state,phone,status,orderNum,stripeId){
   var emp=sGet('beim_employer')||'';
   var nav=sGet('beim_nav')||'brooks';
   if(!email&&!lid)return;
-  var prodList=STATE.products.map(function(p){return p.name+' ($'+(p.price||0)+')'+(p.lmn?' [LMN]':'')+(p.stripe_connect_id?' [Connect:'+p.stripe_connect_id+']':'')}).join(', ');
+  var subProducts=[];
+  var prodList=STATE.products.map(function(p,i){
+    var label=p.name+' ($'+(p.price||0)+')';
+    if(p.lmn)label+=' [LMN:'+(STATE.lmnChoices[i]||'beim')+']';
+    if(p.order)label+=' [PhysOrder]';
+    if(STATE.subChoices[i]==='subscription')label+=' [Subscribe:'+p.subscription_frequency+']';
+    if(STATE.subChoices[i]==='subscription')subProducts.push(p.name);
+    return label;
+  }).join(', ');
   var t=STATE.totals;
+  var shipAddr=sGet('beim_shipping_address')||'';
+  var billAddr=sGet('beim_billing_address')||'';
+  var lmnProds=STATE.products.filter(function(p,i){return p.lmn&&(STATE.lmnChoices[i]||'beim')==='beim'}).map(function(p){return p.name}).join(', ');
   var payload={
     email:email,first_name:fn||'',last_name:ln||'',employer:emp,navigator:nav,
     source:'checkout',page:'checkout',acct_type:STATE.acct,balance:STATE.bal,
-    chat_transcript:'[CHECKOUT]\nProducts: '+prodList+'\nHSA: $'+t.hsaCov.toFixed(2)+'\nOOP: $'+t.oop.toFixed(2)+'\nLMN Path: '+STATE.lmnPath+'\nState: '+(state||'')+'\nPhone: '+(phone||'')+'\nStatus: '+(status||'pending'),
+    chat_transcript:'[CHECKOUT]\nProducts: '+prodList+'\nPayment Mode: '+paymentMode+'\nHSA: $'+t.hsaCov.toFixed(2)+'\nOOP: $'+t.oop.toFixed(2)+'\nShipping: '+shipAddr+'\nBilling: '+billAddr+'\nSubscriptions: '+(subProducts.length?subProducts.join(', '):'none')+'\nStatus: '+(status||'pending'),
     order_total:t.subtotal,hsa_charged:t.hsaCov,oop_charged:t.oop,
-    lmn_path:STATE.lmnPath,checkout_state:state||'',payment_status:status||'pending',
+    checkout_state:state||'',payment_status:status||'pending',
     products_selected:prodList,products_count:STATE.products.length,
     rescue_plan_value:t.subtotal+(t.discount||0)
   };
+  if(lmnProds)payload.lmn_products=lmnProds;
   if(lid)payload.lead_id=lid;if(phone)payload.phone=phone;
   if(orderNum)payload.order_number=orderNum;
   if(stripeId)payload.stripe_payment_id=stripeId;
