@@ -296,7 +296,7 @@ var cardElement=elements.create('card',{style:{base:{fontSize:'14px',color:'#f0f
 cardElement.mount('#card-element');
 cardElement.on('change',function(e){document.getElementById('card-errors').textContent=e.error?e.error.message:''});
 
-var STATE={bal:0,acct:'HSA',products:[],lmnPath:'beim',totals:{subtotal:0,hsaCov:0,oop:0,lmnFee:0,discount:0}};
+var STATE={bal:0,acct:'HSA',products:[],lmnPath:'beim',totals:{subtotal:0,hsaCov:0,oop:0,lmnFee:0,discount:0},subChoices:{},lmnChoices:{},lmnFiles:{}};
 var appliedCoupon=null;
 var COUPONS={BEIM100:{pct:100},BEIM50:{pct:50},BEIM25:{pct:25},TEST:{pct:100},FREECHECK:{pct:100},SXSW:{pct:100},LAUNCH99:{pct:99}};
 var abandonedCheckoutFired=false;
@@ -405,29 +405,36 @@ window.addEventListener('beforeunload',function(){
 
 function calculate(){
   var subtotal=0,hsaCov=0,remaining=STATE.bal;
-  var needsPhys=STATE.products.some(function(p){return p.lmn||p.order});
-  var physFee=(needsPhys&&STATE.lmnPath==='beim')?35:0;
-  STATE.products.forEach(function(p){
-    var price=p.price||0;p._effective=price;subtotal+=price;
+  var needsPhys=STATE.products.some(function(p){return p.order});
+  var needsBeimLmn=STATE.products.some(function(p,i){return p.lmn&&(STATE.lmnChoices[i]||'beim')==='beim'});
+  var lmnFee=needsBeimLmn?35:0;
+  var orderFee=needsPhys?75:0;
+
+  STATE.products.forEach(function(p,i){
+    var price=p.price||0;
+    // Apply subscription discount if toggled
+    var isSub=STATE.subChoices[i]==='subscription';
+    var disc=parseInt(p.subscription_discount_pct)||0;
+    if(isSub&&disc>0)price=price*(1-disc/100);
+    p._effective=price;
+    subtotal+=price;
     var hsa=p.hsa?Math.min(price,remaining):0;
     p._hsaCov=hsa;p._oop=price-hsa;hsaCov+=hsa;remaining-=hsa;
   });
-  if(physFee>0&&remaining>0){var physHsa=Math.min(physFee,remaining);hsaCov+=physHsa;remaining-=physHsa}
-  subtotal+=physFee;var oop=subtotal-hsaCov;var discount=0;
+  // Fees are HSA eligible
+  if(lmnFee>0&&remaining>0){var lmnHsa=Math.min(lmnFee,remaining);hsaCov+=lmnHsa;remaining-=lmnHsa}
+  if(orderFee>0&&remaining>0){var orderHsa=Math.min(orderFee,remaining);hsaCov+=orderHsa;remaining-=orderHsa}
+  subtotal+=lmnFee+orderFee;var oop=subtotal-hsaCov;var discount=0;
   if(appliedCoupon){discount=subtotal*(appliedCoupon.pct/100);subtotal-=discount;oop=Math.max(0,subtotal-hsaCov);if(subtotal<=hsaCov){oop=0;hsaCov=subtotal}}
-  STATE.totals={subtotal:subtotal,hsaCov:hsaCov,oop:oop,lmnFee:physFee,discount:discount};
+  STATE.totals={subtotal:subtotal,hsaCov:hsaCov,oop:oop,lmnFee:lmnFee,orderFee:orderFee,discount:discount};
 }
 
 function renderOrder(){
-  var needsPhys=STATE.products.some(function(p){return p.lmn||p.order});
+  var needsPhys=STATE.products.some(function(p){return p.order});
   if(needsPhys){
     document.getElementById('lmnSection').classList.add('show');
-    var lmnCount=STATE.products.filter(function(p){return p.lmn}).length;
-    var orderCount=STATE.products.filter(function(p){return p.order&&!p.lmn}).length;
-    if(lmnCount&&orderCount)document.getElementById('lmnTitle').textContent=lmnCount+' need LMN, '+orderCount+' need physician order';
-    else if(lmnCount)document.getElementById('lmnTitle').textContent=lmnCount+' product'+(lmnCount>1?'s':'')+' need a Letter of Medical Necessity';
-    else document.getElementById('lmnTitle').textContent=orderCount+' product'+(orderCount>1?'s':'')+' need a physician order';
-    document.getElementById('lmnDesc').innerHTML='One $35 fee covers all LMNs and physician orders in this order.';
+    document.getElementById('lmnTitle').textContent='Physician Order Required';
+    document.getElementById('lmnDesc').innerHTML='$75 physician order fee covers ICD-10 coding and insurance claims for all physician-ordered items. <strong>HSA/FSA eligible.</strong>';
   }
   var html='';
   STATE.products.forEach(function(p,i){
@@ -435,16 +442,50 @@ function renderOrder(){
     if(p.insured)tags+='<span class="oi-tag ins">🛡️ $0 Insurance</span>';
     if(p.hsa)tags+='<span class="oi-tag hsa">✓ '+STATE.acct+'</span>';
     if(p.lmn)tags+='<span class="oi-tag lmn">📋 LMN</span>';
+    if(p.order)tags+='<span class="oi-tag lmn">📋 Physician Order</span>';
     if(p.pool)tags+='<span class="oi-tag pool">🤝 Pool</span>';
-    html+='<div class="order-item"><div class="oi-icon">'+emoji(p.cat)+'</div><div class="oi-body"><div class="oi-name">'+esc(p.name)+'</div><div class="oi-meta">'+esc(p.cat||p.brand||'')+'</div><div class="oi-tags">'+tags+'</div></div><div class="oi-right"><div class="oi-price">'+(p.insured?'<span style="color:var(--gn)">$0</span>':'$'+p._effective.toFixed(2))+'</div>'+(p._hsaCov>0?'<div class="oi-hsa-line">'+STATE.acct+': −$'+p._hsaCov.toFixed(2)+'</div>':'')+(p._oop>0?'<div class="oi-oop-line">OOP: $'+p._oop.toFixed(2)+'</div>':'')+'</div><button class="oi-remove" onclick="removeItem('+i+')">×</button></div>';
+
+    // Subscription toggle
+    var subToggle='';
+    var pt=p.purchase_type||'one_time';
+    var canSub=(pt==='both'||pt==='subscription');
+    var isSub=STATE.subChoices&&STATE.subChoices[i]==='subscription';
+    var freq=p.subscription_frequency||'monthly';
+    var disc=parseInt(p.subscription_discount_pct)||0;
+    var displayPrice=p.price||0;
+    if(isSub&&disc>0)displayPrice=displayPrice*(1-disc/100);
+
+    if(canSub){
+      subToggle='<div style="margin-top:6px;display:flex;align-items:center;gap:8px">';
+      subToggle+='<label style="font-size:11px;color:var(--mu);display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" '+(isSub?'checked':'')+' onchange="toggleSub('+i+')" style="accent-color:var(--cy);width:13px;height:13px"/> Subscribe '+freq;
+      if(disc>0)subToggle+=' <span style="color:var(--gn);font-weight:600">(save '+disc+'%)</span>';
+      subToggle+='</label></div>';
+    }
+
+    // Inline LMN options
+    var lmnHtml='';
+    if(p.lmn){
+      var lmnPath=STATE.lmnChoices?STATE.lmnChoices[i]:'beim';
+      if(!lmnPath)lmnPath='beim';
+      lmnHtml+='<div style="margin-top:8px;padding:8px 10px;background:rgba(245,158,11,.03);border:1px solid rgba(245,158,11,.08);border-radius:8px">';
+      lmnHtml+='<div style="font-size:9px;font-weight:700;color:var(--gd);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">LMN Required</div>';
+      lmnHtml+='<label style="display:flex;align-items:center;gap:6px;font-size:11px;color:'+(lmnPath==='beim'?'var(--tx)':'var(--mu)')+';cursor:pointer;padding:3px 0"><input type="radio" name="lmn'+i+'" '+(lmnPath==='beim'?'checked':'')+' onchange="setLmnChoice('+i+',\'beim\')" style="accent-color:var(--gd);width:12px;height:12px"/> Beim physician — <span style="font-family:DM Mono,monospace;color:var(--gd)">$35</span></label>';
+      lmnHtml+='<label style="display:flex;align-items:center;gap:6px;font-size:11px;color:'+(lmnPath==='upload'?'var(--tx)':'var(--mu)')+';cursor:pointer;padding:3px 0"><input type="radio" name="lmn'+i+'" '+(lmnPath==='upload'?'checked':'')+' onchange="setLmnChoice('+i+',\'upload\')" style="accent-color:var(--gd);width:12px;height:12px"/> Upload my LMN</label>';
+      if(lmnPath==='upload')lmnHtml+='<div style="margin:4px 0 2px;padding:8px;border:1px dashed rgba(255,255,255,.1);border-radius:6px;text-align:center;font-size:10px;color:var(--dm);cursor:pointer;position:relative">📎 Drop LMN file or click<input type="file" accept=".pdf,.png,.jpg,.jpeg" onchange="handleLmnFile('+i+',this)" style="position:absolute;inset:0;opacity:0;cursor:pointer"/></div>'+(STATE.lmnFiles&&STATE.lmnFiles[i]?'<div style="font-size:10px;color:var(--gn);margin-top:2px">✓ '+esc(STATE.lmnFiles[i])+'</div>':'');
+      lmnHtml+='<label style="display:flex;align-items:center;gap:6px;font-size:11px;color:'+(lmnPath==='own'?'var(--tx)':'var(--mu)')+';cursor:pointer;padding:3px 0"><input type="radio" name="lmn'+i+'" '+(lmnPath==='own'?'checked':'')+' onchange="setLmnChoice('+i+',\'own\')" style="accent-color:var(--gd);width:12px;height:12px"/> Use my own doctor — <a href="#" onclick="event.preventDefault();generateLmnTemplate('+i+')" style="color:var(--cy);font-size:10px">download template</a></label>';
+      lmnHtml+='</div>';
+    }
+
+    html+='<div class="order-item"><div class="oi-icon">'+emoji(p.cat)+'</div><div class="oi-body"><div class="oi-name">'+esc(p.name)+'</div><div class="oi-meta">'+esc(p.cat||p.brand||'')+'</div><div class="oi-tags">'+tags+'</div>'+subToggle+lmnHtml+'</div><div class="oi-right"><div class="oi-price">'+(p.insured?'<span style="color:var(--gn)">$0</span>':'$'+displayPrice.toFixed(2))+'</div>'+(isSub?'<div style="font-size:9px;color:var(--cy)">per '+freq.replace('ly','')+'</div>':'')+(p._hsaCov>0?'<div class="oi-hsa-line">'+STATE.acct+': −$'+p._hsaCov.toFixed(2)+'</div>':'')+(p._oop>0?'<div class="oi-oop-line">OOP: $'+p._oop.toFixed(2)+'</div>':'')+'</div><button class="oi-remove" onclick="removeItem('+i+')">×</button></div>';
   });
   document.getElementById('orderItems').innerHTML=html;renderTotals();
 }
 
 function renderTotals(){
-  var t=STATE.totals,prodSub=t.subtotal-t.lmnFee+t.discount;
+  var t=STATE.totals,prodSub=t.subtotal-t.lmnFee-(t.orderFee||0)+t.discount;
   var html='<div class="total-row"><span class="total-key">Products</span><span class="total-val">$'+prodSub.toFixed(2)+'</span></div>';
-  if(t.lmnFee>0)html+='<div class="total-row"><span class="total-key">Network Physician <span style="font-size:9px;color:var(--gn)">('+STATE.acct+' eligible)</span></span><span class="total-val">$'+t.lmnFee.toFixed(2)+'</span></div>';
+  if(t.lmnFee>0)html+='<div class="total-row"><span class="total-key">Beim Physician LMN <span style="font-size:9px;color:var(--gn)">('+STATE.acct+' eligible)</span></span><span class="total-val">$'+t.lmnFee.toFixed(2)+'</span></div>';
+  if(t.orderFee>0)html+='<div class="total-row"><span class="total-key">Physician Order <span style="font-size:9px;color:var(--gn)">('+STATE.acct+' eligible)</span></span><span class="total-val">$'+(t.orderFee).toFixed(2)+'</span></div>';
   if(t.discount>0)html+='<div class="total-row"><span class="total-key">Promo</span><span class="total-val green">−$'+t.discount.toFixed(2)+'</span></div>';
   html+='<div class="total-row"><span class="total-key">'+STATE.acct+' Covers</span><span class="total-val green">−$'+t.hsaCov.toFixed(2)+'</span></div>';
   if(t.oop>0)html+='<div class="total-row"><span class="total-key">Out of Pocket</span><span class="total-val gold">$'+t.oop.toFixed(2)+'</span></div>';
@@ -469,6 +510,35 @@ function renderPayment(){
   document.getElementById('splitOop').textContent='$'+t.oop.toFixed(2);
   document.getElementById('paySub').textContent=t.oop<=0?'Your '+STATE.acct+' covers everything':'HSA/FSA or debit/credit';
   document.getElementById('hsaCoveredNotice').classList.toggle('show',t.subtotal>0&&t.oop<=0);
+}
+
+function toggleSub(index){
+  if(!STATE.subChoices)STATE.subChoices={};
+  STATE.subChoices[index]=STATE.subChoices[index]==='subscription'?'one_time':'subscription';
+  calculate();renderOrder();renderSidebar();renderPayment();
+}
+
+function setLmnChoice(index,path){
+  if(!STATE.lmnChoices)STATE.lmnChoices={};
+  STATE.lmnChoices[index]=path;
+  calculate();renderOrder();renderSidebar();renderPayment();
+}
+
+function handleLmnFile(index,input){
+  if(!input.files.length)return;
+  if(!STATE.lmnFiles)STATE.lmnFiles={};
+  STATE.lmnFiles[index]=input.files[0].name;
+  renderOrder();
+}
+
+function generateLmnTemplate(index){
+  var p=STATE.products[index];
+  if(!p)return;
+  var fn=document.getElementById('fnInput').value||'[Name]',ln=document.getElementById('lnInput').value||'';
+  var dob=sGet('beim_dob')||'[DOB]';
+  var date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Letter of Medical Necessity</title><style>body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;font-size:13px;line-height:1.7}h1{font-size:20px}table{width:100%;border-collapse:collapse;margin:16px 0}th{background:#f3f4f6;padding:8px;text-align:left;font-size:11px;text-transform:uppercase;border-bottom:2px solid #e5e7eb}td{padding:8px;border-bottom:1px solid #f3f4f6}.sig{border-bottom:1px solid #111;width:280px;margin:30px 0 4px;display:inline-block}@media print{button{display:none}}</style></head><body><div style="color:#7c6af0;font-weight:800;font-size:16px">Beim Health</div><h1>Letter of Medical Necessity</h1><p>Date: '+date+'</p><p><strong>Patient:</strong> '+esc(fn+' '+ln)+'<br><strong>DOB:</strong> '+esc(dob)+'</p><p>The following product is medically necessary under IRC §213(d) and IRS Publication 502.</p><table><thead><tr><th>Product</th><th>Category</th><th>Price</th></tr></thead><tbody><tr><td>'+esc(p.name)+'</td><td>'+esc(p.cat||'')+'</td><td>$'+(p.price||0).toFixed(2)+'</td></tr></tbody></table><p><strong>Medical Justification:</strong> The listed product directly treats, mitigates, or prevents the medical conditions noted and is medically necessary for this patient.</p><div style="margin-top:40px"><p><strong>Physician Signature:</strong></p><span class="sig"></span><p style="font-size:11px;color:#888">Printed Name / NPI / Date</p></div><p style="font-size:10px;color:#888;margin-top:30px">Generated by Beim Health. For physician review and signature.</p><script>window.print()<\/script></body></html>';
+  window.open(URL.createObjectURL(new Blob([html],{type:'text/html'})),'_blank');
 }
 
 function setLmnPath(path,el){
