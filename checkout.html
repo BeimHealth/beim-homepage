@@ -206,19 +206,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webk
     <div class="lmn-notice">
       <span class="lmn-notice-icon">🩺</span>
       <div class="lmn-notice-body">
-        <strong id="lmnTitle">Products need physician involvement</strong>
+        <strong id="lmnTitle">Physician Order Required</strong>
         <span id="lmnDesc"></span>
         <div class="irs-ref">Under <strong>IRS Publication 502</strong> and IRC §213(d), medical expenses include products prescribed for diagnosis, treatment, or prevention of disease. <a href="https://www.irs.gov/publications/p502" target="_blank">Read IRS Pub 502 →</a></div>
       </div>
-    </div>
-    <div class="lmn-options">
-      <div class="lmn-opt active" onclick="setLmnPath('beim',this)"><div class="lmn-radio"></div><div class="lmn-text"><strong>Beim network physician — $35 <span class="lmn-hsa-tag">HSA/FSA eligible</span></strong>Signed in ~4 hours. Short health intake after checkout.</div></div>
-      <div class="lmn-opt" onclick="setLmnPath('own',this)"><div class="lmn-radio"></div><div class="lmn-text"><strong>Use my own doctor — auto-generated letter</strong>Pre-filled LMN with ICD-10 codes. Your doctor reviews and signs.</div></div>
-      <div class="lmn-opt" onclick="setLmnPath('have',this)"><div class="lmn-radio"></div><div class="lmn-text"><strong>I already have an LMN</strong>No charge — ensure your HSA admin has it on file.</div></div>
-    </div>
-    <div class="own-doc-panel" id="ownDocPanel">
-      <div class="own-doc-text">We'll generate a <strong>pre-filled Letter of Medical Necessity</strong> with your product details, ICD-10 codes, and clinical justification. Your doctor reviews, edits, and signs.</div>
-      <button class="own-doc-btn" onclick="generateLmnTemplate()">📄 Download LMN Template</button>
     </div>
   </div>
 
