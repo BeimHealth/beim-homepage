@@ -400,6 +400,10 @@ window.addEventListener('DOMContentLoaded',function(){
 
   // Restore cart from sessionStorage
   try{var c=JSON.parse(sessionStorage.getItem('beim_mp_cart'));if(c&&c.length)cart=c}catch(e){}
+  // Update cart badge immediately
+  var badge=document.getElementById('cartCount');
+  badge.textContent=cart.length;
+  badge.classList.toggle('empty',cart.length===0);
 
   loadCSV();
 });
@@ -730,12 +734,12 @@ function toSlug(name){
   return(name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
 
-/* ── PRODUCT DETAIL → Webflow CMS ── */
+/* ── PRODUCT DETAIL → Beim Product Pages ── */
 function goProductDetail(name){
   var p=allProducts.find(function(x){return x.product_name===name});
   if(!p)return;
-  var slug=toSlug(p.product_name);
-  window.open('https://www.beim.ai/products/'+slug,'_blank');
+  var slug=p.webflow_slug||toSlug(p.product_name);
+  window.open('https://go.beim.ai/'+slug,'_blank');
 }
 
 /* ── DEEP-LINK HANDLER ── */
